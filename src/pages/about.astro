@@ -1,63 +1,359 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE } from '../consts';
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`À propos | ${SITE_TITLE}`}
+			description="À propos de Marc Michon, ingénieur cybersécurité spécialisé en Vulnerability Management, Exposure Management, Threat Intelligence et opérations de sécurité."
+		/>
+	</head>
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+	<body>
+		<Header />
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+		<main>
+			<section class="about-hero">
+				<div>
+					<p class="section-tag">À PROPOS</p>
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+					<h1>Ingénieur cybersécurité</h1>
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+					<p class="intro">
+						J’interviens sur des projets où la cybersécurité doit produire des résultats
+						opérationnels mesurables : visibilité, priorisation, remédiation, détection
+						et amélioration continue.
+					</p>
+				</div>
+
+				<img src="/Images/moi.jpeg" alt="Marc Michon" />
+			</section>
+
+			<section class="timeline">
+				<h2>Parcours</h2>
+
+				<div class="timeline-grid">
+					<div class="timeline-item">
+						<span>01</span>
+						<h3>Intégration</h3>
+						<p>Déploiement, structuration et optimisation de plateformes cybersécurité.</p>
+					</div>
+
+					<div class="timeline-item">
+						<span>02</span>
+						<h3>Exploitation</h3>
+						<p>MCO, RUN, support, amélioration continue et accompagnement opérationnel.</p>
+					</div>
+
+					<div class="timeline-item">
+						<span>03</span>
+						<h3>Expertise terrain</h3>
+						<p>Vulnerability Management, Exposure Management, Threat Intelligence et SecOps.</p>
+					</div>
+				</div>
+			</section>
+
+			<section class="tech-stack">
+				<h2>Technologies principales</h2>
+
+				<div class="badges">
+					<span>Rapid7</span>
+					<span>Recorded Future</span>
+					<span>SentinelOne</span>
+					<span>Netskope</span>
+					<span>Fortinet</span>
+					<span>BeyondTrust</span>
+					<span>Microsoft Security</span>
+					<span>SIEM / SOAR</span>
+				</div>
+			</section>
+
+			<section class="content-grid">
+				<div class="main-content">
+					<h2>Mon approche</h2>
+
+					<p>
+						Mon objectif est de transformer les outils de sécurité en capacités
+						opérationnelles concrètes : visibilité, priorisation, remédiation,
+						détection et pilotage dans la durée.
+					</p>
+
+					<p>
+						Je m’intéresse particulièrement aux sujets où la technique rencontre
+						l’exploitation réelle : qualité de l’inventaire, tagging, ownership,
+						remédiation, automatisation, supervision et amélioration continue.
+					</p>
+
+					<h2>Domaines de travail</h2>
+
+					<ul>
+						<li>Vulnerability Management et programmes de remédiation</li>
+						<li>Exposure Management et surface d’attaque</li>
+						<li>Threat Intelligence et enrichissement des investigations</li>
+						<li>Security Operations : SIEM, SOAR, SOC et MSSP</li>
+						<li>Intégration, exploitation et amélioration continue des plateformes</li>
+					</ul>
+				</div>
+
+				<aside class="side-card">
+					<h3>Repères</h3>
+
+					<div class="item">
+						<strong>Rapid7</strong>
+						<span>Tech Champion</span>
+					</div>
+
+					<div class="item">
+						<strong>10+</strong>
+						<span>années d’expérience</span>
+					</div>
+
+					<div class="item">
+						<strong>VM / Exposure</strong>
+						<span>spécialisation terrain</span>
+					</div>
+
+					<div class="item">
+						<strong>MSSP / RUN</strong>
+						<span>exploitation & services managés</span>
+					</div>
+				</aside>
+			</section>
+		</main>
+
+		<Footer />
+	</body>
+</html>
+
+<style>
+	body {
+		background: #f8fafc;
+	}
+
+	main {
+		width: min(1320px, calc(100% - 4rem));
+		margin: 0 auto;
+		padding: 3rem 0 5rem;
+	}
+
+	.about-hero {
+		display: grid;
+		grid-template-columns: 1.35fr 0.65fr;
+		align-items: center;
+		gap: 4rem;
+		padding: 4.5rem;
+		border-radius: 32px;
+		background:
+			linear-gradient(rgba(2,8,23,.82), rgba(2,8,23,.82)),
+			url('/Images/fondsite.png');
+		background-size: cover;
+		background-position: center;
+		color: white;
+		box-shadow: 0 25px 60px rgba(2,8,23,.2);
+		margin-bottom: 3rem;
+	}
+
+	.section-tag {
+		color: #60a5fa;
+		font-weight: 800;
+		font-size: .85rem;
+		letter-spacing: .12em;
+		text-transform: uppercase;
+	}
+
+	h1 {
+		font-size: 4.3rem;
+		line-height: .95;
+		margin: 1rem 0 2rem;
+		letter-spacing: -0.05em;
+		color: white;
+	}
+
+	.intro {
+		max-width: 820px;
+		font-size: 1.25rem;
+		line-height: 1.8;
+		color: #dbeafe;
+	}
+
+	.about-hero img {
+		width: 280px;
+		height: 360px;
+		object-fit: cover;
+		border-radius: 28px;
+		justify-self: end;
+		box-shadow: 0 30px 70px rgba(0,0,0,.45);
+	}
+
+	.about-section {
+		background: white;
+		border: 1px solid #e5e7eb;
+		border-radius: 24px;
+		padding: 2.5rem;
+		margin-bottom: 2rem;
+		box-shadow: 0 10px 30px rgba(15,23,42,.04);
+	}
+
+	.about-section h2 {
+		font-size: 2rem;
+		margin: 0 0 1.5rem;
+	}
+
+	.timeline-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1.5rem;
+	}
+
+	.timeline-item {
+		padding: 1.5rem;
+		border: 1px solid #e5e7eb;
+		border-radius: 18px;
+		background: #f8fafc;
+	}
+
+	.timeline-item span {
+		color: #2563eb;
+		font-weight: 900;
+		font-size: .85rem;
+	}
+
+	.timeline-item h3 {
+		margin: .75rem 0;
+		font-size: 1.25rem;
+	}
+
+	.timeline-item p {
+		margin: 0;
+		color: #475569;
+		line-height: 1.6;
+	}
+
+	.badges {
+		display: flex;
+		flex-wrap: wrap;
+		gap: .75rem;
+	}
+
+	.badges span {
+		display: inline-flex;
+		align-items: center;
+		padding: .75rem 1rem;
+		border-radius: 999px;
+		background: #eef2ff;
+		color: #2563eb;
+		font-weight: 800;
+		font-size: .95rem;
+		border: 1px solid #dbe4ff;
+	}
+
+	.content-grid {
+		display: grid;
+		grid-template-columns: 1fr 360px;
+		gap: 3rem;
+		align-items: start;
+		margin-top: 2rem;
+	}
+
+	.timeline {
+	margin-bottom: 3rem;
+}
+
+.tech-stack {
+	margin-bottom: 3rem;
+}
+
+.content-grid {
+	margin-top: 1rem;
+}
+	.main-content,
+	.side-card {
+		background: white;
+		border: 1px solid #e5e7eb;
+		border-radius: 24px;
+		box-shadow: 0 10px 30px rgba(15,23,42,.04);
+	}
+
+	.main-content {
+		padding: 3rem;
+	}
+
+	.main-content h2 {
+		font-size: 2rem;
+		margin: 0 0 1.25rem;
+	}
+
+	.main-content h2:not(:first-child) {
+		margin-top: 3rem;
+	}
+
+	.main-content p,
+	.main-content li {
+		font-size: 1.1rem;
+		line-height: 1.8;
+		color: #334155;
+	}
+
+	.main-content ul {
+		padding-left: 1.3rem;
+	}
+
+	.side-card {
+		padding: 2rem;
+		position: sticky;
+		top: 2rem;
+	}
+
+	.side-card h3 {
+		font-size: 1.6rem;
+		margin: 0 0 1.5rem;
+	}
+
+	.item {
+		padding: 1.25rem 0;
+		border-top: 1px solid #e5e7eb;
+	}
+
+	.item strong {
+		display: block;
+		font-size: 1.15rem;
+		color: #0f172a;
+	}
+
+	.item span {
+		display: block;
+		color: #64748b;
+		margin-top: .25rem;
+	}
+
+	@media (max-width: 900px) {
+		main {
+			width: min(100% - 2rem, 1320px);
+		}
+
+		.about-hero {
+			grid-template-columns: 1fr;
+			padding: 3rem 2rem;
+		}
+
+		.about-hero img {
+			justify-self: start;
+			width: 100%;
+			height: auto;
+		}
+
+		.timeline-grid,
+		.content-grid {
+			grid-template-columns: 1fr;
+		}
+
+		h1 {
+			font-size: 3rem;
+		}
+	}
+</style>
