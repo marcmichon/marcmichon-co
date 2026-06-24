@@ -1,0 +1,144 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE } from '../../consts';
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`Pourquoi les programmes VM échouent rarement à cause du moteur de scan | ${SITE_TITLE}`}
+			description="Retour terrain sur les véritables causes d’échec des programmes de Vulnerability Management."
+		/>
+	</head>
+
+	<body>
+		<Header />
+
+		<main>
+			<a href="/notes-de-terrain" class="back">← Retour aux notes de terrain</a>
+
+			<p class="category">VM FUNDAMENTALS</p>
+
+			<h1>Pourquoi les programmes VM échouent rarement à cause du moteur de scan</h1>
+
+			<p class="meta">3 min de lecture</p>
+
+			<p class="lead">
+				Le moteur de scan est souvent accusé à tort. Dans beaucoup de programmes de
+				Vulnerability Management, les difficultés viennent rarement de la capacité à détecter
+				des vulnérabilités. Elles viennent plutôt de ce qu’il se passe après.
+			</p>
+
+			<h2>Le scan n’est qu’un point de départ</h2>
+
+			<p>
+				Scanner un environnement permet de produire de la visibilité. Mais cette visibilité
+				n’a de valeur que si elle est ensuite comprise, contextualisée, priorisée et transformée
+				en actions concrètes.
+			</p>
+
+			<p>
+				Un programme VM ne se résume donc pas à lancer des scans réguliers. Il doit permettre
+				aux équipes sécurité, infrastructure et applicatives de comprendre quoi traiter,
+				pourquoi le traiter, avec quelle priorité et dans quel délai.
+			</p>
+
+			<h2>Les vraies causes d’échec</h2>
+
+			<p>
+				Sur le terrain, les problèmes viennent plus souvent de la gouvernance, du manque de
+				qualification des assets, de l’absence de propriétaires clairement identifiés, ou encore
+				de processus de remédiation insuffisamment structurés.
+			</p>
+
+			<p>
+				Un scanner peut détecter une vulnérabilité critique. Mais si personne ne sait à qui
+				appartient l’asset, quelle application est concernée, quel est le contexte métier ou
+				qui doit corriger, le risque reste présent.
+			</p>
+
+			<h2>Transformer la donnée en action</h2>
+
+			<p>
+				La valeur d’un programme VM repose sur sa capacité à transformer une donnée technique
+				en décision opérationnelle : qualifier, prioriser, assigner, suivre et mesurer.
+			</p>
+
+			<p>
+				C’est là que des éléments comme le tagging, les groupes dynamiques, les projets de
+				remédiation, les tableaux de bord et les workflows d’escalade deviennent essentiels.
+			</p>
+
+			<h2>Conclusion</h2>
+
+			<p>
+				Un bon moteur de scan est nécessaire. Mais il ne suffit pas. La réussite d’un programme
+				de Vulnerability Management dépend surtout de l’organisation mise autour de l’outil :
+				gouvernance, ownership, priorisation et capacité à faire avancer la remédiation.
+			</p>
+		</main>
+
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		max-width: 820px;
+		margin: 0 auto;
+		padding: 5rem 1.5rem;
+	}
+
+	.back {
+		display: inline-block;
+		margin-bottom: 2rem;
+		color: #2563eb;
+		font-weight: 700;
+		text-decoration: none;
+	}
+
+	.category {
+		color: #2563eb;
+		font-weight: 800;
+		letter-spacing: .1em;
+		font-size: .85rem;
+	}
+
+	h1 {
+		font-size: 3.5rem;
+		line-height: 1.05;
+		margin-bottom: 1rem;
+	}
+
+	.meta {
+		color: #64748b;
+		margin-bottom: 2rem;
+	}
+
+	.lead {
+		font-size: 1.35rem;
+		line-height: 1.7;
+		color: #334155;
+		margin-bottom: 3rem;
+	}
+
+	h2 {
+		font-size: 1.8rem;
+		margin-top: 3rem;
+	}
+
+	p {
+		font-size: 1.1rem;
+		line-height: 1.8;
+		color: #334155;
+	}
+
+	@media (max-width: 768px) {
+		h1 {
+			font-size: 2.6rem;
+		}
+	}
+</style>
