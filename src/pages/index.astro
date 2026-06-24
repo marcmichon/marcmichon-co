@@ -69,6 +69,47 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		</div>
 
 	</section>
+
+	<section class="articles-section">
+	<div class="section-header">
+		<div>
+			<p class="section-tag">NOTES DE TERRAIN</p>
+			<h2>Retours d’expérience sur le terrain</h2>
+		</div>
+
+		<a href="/notes-de-terrain" class="see-all">Voir tous les articles →</a>
+	</div>
+
+	<div class="articles-grid">
+		<article class="article-card">
+			<p class="article-category">VM FUNDAMENTALS</p>
+			<h3>Pourquoi les programmes VM échouent rarement à cause du moteur de scan</h3>
+			<p>Le vrai problème se situe souvent ailleurs : gouvernance, processus et remédiation.</p>
+			<span>3 min de lecture</span>
+		</article>
+
+		<article class="article-card">
+			<p class="article-category">VM FUNDAMENTALS</p>
+			<h3>Pourquoi les assets inconnus détruisent votre visibilité sécurité</h3>
+			<p>On ne protège pas ce qu'on ne connaît pas.</p>
+			<span>4 min de lecture</span>
+		</article>
+
+		<article class="article-card">
+			<p class="article-category">VM FUNDAMENTALS</p>
+			<h3>Pourquoi le tagging est une fonctionnalité sous-estimée</h3>
+			<p>Transformer une donnée brute en contexte exploitable.</p>
+			<span>4 min de lecture</span>
+		</article>
+
+		<article class="article-card">
+			<p class="article-category">VM FUNDAMENTALS</p>
+			<h3>Une vulnérabilité critique détectée n’a jamais réduit le risque</h3>
+			<p>Détecter n’est que la première étape.</p>
+			<span>5 min de lecture</span>
+		</article>
+	</div>
+</section>
 </main>
 
 		<Footer />
@@ -162,6 +203,88 @@ h2 {
 
 @media (max-width: 520px) {
 	.cards {
+		grid-template-columns: 1fr;
+	}
+}
+
+.articles-section {
+	margin-top: 5rem;
+}
+
+.section-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 2rem;
+	margin-bottom: 2rem;
+}
+
+.section-tag,
+.article-category {
+	font-size: .8rem;
+	font-weight: 800;
+	letter-spacing: .08em;
+	color: #2563eb;
+	text-transform: uppercase;
+}
+
+.see-all {
+	color: #2563eb;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.articles-grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 1.75rem;
+}
+
+.article-card {
+	border: 1px solid #e5e7eb;
+	border-radius: 18px;
+	background: white;
+	padding: 1.6rem;
+	min-height: 280px;
+	box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+	transition: all .2s ease;
+}
+
+.article-card:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1);
+}
+
+.article-card h3 {
+	font-size: 1.15rem;
+	line-height: 1.35;
+	margin: .75rem 0 1rem;
+}
+
+.article-card p {
+	color: #475569;
+	line-height: 1.6;
+}
+
+.article-card span {
+	display: block;
+	margin-top: 1.25rem;
+	font-size: .85rem;
+	color: #64748b;
+}
+
+@media (max-width: 1100px) {
+	.articles-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 640px) {
+	.section-header {
+		display: block;
+	}
+
+	.articles-grid {
 		grid-template-columns: 1fr;
 	}
 }
