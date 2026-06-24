@@ -1,0 +1,165 @@
+<section class="hero-premium">
+	<div class="hero-grid">
+		<div class="hero-text">
+			<h1>Marc Michon</h1>
+
+<p class="role">
+	Cybersecurity Engineer
+</p>
+
+			<p class="champion">
+				<img src="/Images/R7.svg" alt="Rapid7" />
+				<span>Rapid7 Tech Champion</span>
+			</p>
+
+			<p class="intro">
+				Architecture, intégration et exploitation de plateformes de cybersécurité
+				pour améliorer la visibilité, la détection et la réduction de la surface d’attaque.
+			</p>
+
+			<div class="actions">
+				<a href="/blog">Découvrir mes articles</a>
+				<a href="https://www.linkedin.com/in/michonmarc/" class="secondary" target="_blank">
+					Me contacter
+				</a>
+			</div>
+		</div>
+
+		<div class="hero-photo">
+			<img src="/Images/moi.jpeg" alt="Marc Michon" />
+		</div>
+
+		<div class="hero-domains">
+			<div>Vulnerability<br />Management</div>
+			<div>Exposure<br />Management</div>
+			<div>Security<br />Operations</div>
+			<div>Threat<br />Intelligence</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.hero-premium {
+		background:
+			radial-gradient(circle at 35% 40%, rgba(37, 99, 235, 0.35), transparent 30%),
+			linear-gradient(135deg, #020817 0%, #06142d 45%, #031b4d 100%);
+		color: white;
+		padding: 5rem 4rem 7rem;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.hero-grid {
+		max-width: 1180px;
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: 1.3fr 0.8fr 0.7fr;
+		align-items: center;
+		gap: 3rem;
+	}
+
+	
+
+h1 {
+	font-size: 5.2rem;
+	white-space: nowrap;
+	color: white;
+}
+
+.role {
+	font-size: 2.5rem;
+	font-weight: 700;
+	color: #3b82f6;
+	margin: 0.6rem 0 1.2rem 0;
+	line-height: 1.1;
+}
+
+.hero-text {
+	color: white;
+}
+
+	.champion {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		color: #60a5fa;
+		font-size: 1.45rem;
+		font-weight: 800;
+		margin: 1.4rem 0 2rem;
+	}
+
+	.champion img {
+		height: 24px;
+		width: auto;
+	}
+
+	.intro {
+		max-width: 560px;
+		color: #dbeafe;
+		font-size: 1.1rem;
+		line-height: 1.8;
+	}
+
+	.actions {
+		display: flex;
+		gap: 1rem;
+		margin-top: 2rem;
+	}
+
+	.actions a {
+		background: #2563eb;
+		color: white;
+		padding: 0.9rem 1.2rem;
+		border-radius: 8px;
+		text-decoration: none;
+		font-weight: 800;
+	}
+
+	.actions a.secondary {
+		background: transparent;
+		border: 1px solid rgba(255,255,255,.35);
+	}
+
+	.hero-photo img {
+		width: 290px;
+		height: 380px;
+		object-fit: cover;
+		border-radius: 28px;
+		filter: drop-shadow(0 30px 60px rgba(0,0,0,.45));
+	}
+
+	.hero-domains {
+		display: grid;
+		gap: 1rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		font-size: 0.9rem;
+		color: #e5edff;
+	}
+
+	.hero-domains div {
+		border-left: 2px solid #2563eb;
+		padding: 1rem;
+		background: rgba(255,255,255,.04);
+		border-radius: 12px;
+	}
+
+	@media (max-width: 900px) {
+		.hero-premium {
+			padding: 4rem 1.5rem;
+		}
+
+		.hero-grid {
+			grid-template-columns: 1fr;
+		}
+
+		h1 {
+			font-size: 3.4rem;
+		}
+
+		.hero-photo img {
+			width: 100%;
+			height: auto;
+		}
+	}
+</style>
