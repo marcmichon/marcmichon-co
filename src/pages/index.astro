@@ -14,51 +14,73 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		<Header />
 
 		<main>
-			<section class="hero">
-	<p class="eyebrow">Marc Michon</p>
+	<section class="hero">
 
-	<h1>Cybersecurity Engineer</h1>
+	<div class="hero-content">
 
-	<p class="subtitle">Rapid7 Tech Champion</p>
+		<div class="hero-text">
 
-	<p class="intro">
-		J’aide les organisations à améliorer leur visibilité...
-	</p>
+			<h1>Marc Michon</h1>
 
-	<div class="badges">
-		<span>+10 ans d'expérience</span>
-		<span>Rapid7 Tech Champion</span>
-		<span>Exposure Management</span>
-		<span>Threat Intelligence</span>
-		<span>MSSP</span>
-		<span>Architecture Sécurité</span>
+			<p class="role">Cybersecurity Engineer</p>
+
+			<div class="subtitle">
+				<img src="/Images/R7.svg" alt="Rapid7" />
+				<span>Rapid7 Tech Champion</span>
+			</div>
+
+			<p class="intro">
+				<strong>Architecture • Intégration • Exploitation</strong>
+				<br /><br />
+				Spécialiste des plateformes de détection,
+				de gestion des vulnérabilités et de réduction
+				de la surface d'attaque.
+			</p>
+
+		</div>
+
+		<div class="hero-photo">
+			<img src="/Images/moi.jpeg" alt="Marc Michon" />
+		</div>
+
 	</div>
+
 </section>
 
 			<section>
-				<h2>Expertises</h2>
 
-				<ul>
-					<li>Vulnerability Management</li>
-					<li>Exposure Management</li>
-					<li>Threat Intelligence</li>
-					<li>Security Operations</li>
-					<li>MSSP / Services managés</li>
-				</ul>
-			</section>
+	<h2>Expertises</h2>
 
-			<section>
-				<h2>Technologies</h2>
+	<div class="cards">
 
-				<ul>
-					<li>Rapid7 InsightVM / InsightIDR / Exposure Command</li>
-					<li>Recorded Future</li>
-					<li>SentinelOne</li>
-					<li>Nutanix</li>
-					<li>BeyondTrust</li>
-					<li>Palo Alto Networks</li>
-				</ul>
-			</section>
+		<div class="card">
+			<h3>Vulnerability Management</h3>
+			<p>Structuration de programmes VM et remédiation.</p>
+		</div>
+
+		<div class="card">
+			<h3>Exposure Management</h3>
+			<p>Réduction de la surface d'attaque.</p>
+		</div>
+
+		<div class="card">
+			<h3>Threat Intelligence</h3>
+			<p>Analyse et contextualisation des menaces.</p>
+		</div>
+
+		<div class="card">
+			<h3>Security Operations</h3>
+			<p>SOC, SIEM, SOAR et opérations de sécurité.</p>
+		</div>
+
+		<div class="card">
+			<h3>MSSP</h3>
+			<p>Services managés et accompagnement RUN.</p>
+		</div>
+
+	</div>
+
+</section>
 		</main>
 
 		<Footer />
@@ -68,38 +90,46 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 <style>
 	main {
 		width: 100%;
-		max-width: 960px;
+		max-width: 1120px;
 		margin: 0 auto;
-		padding: 4rem 1.5rem;
+		padding: 5rem 1.5rem;
 	}
 
 	.hero {
-		margin-bottom: 4rem;
+		max-width: 900px;
+		margin-bottom: 5rem;
 	}
 
-	.eyebrow {
-		color: var(--accent);
-		font-weight: 700;
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
-	}
+.hero h1 {
+	font-size: 4.8rem;
+	font-weight: 900;
+	line-height: 0.95;
+	margin: 0;
+	letter-spacing: -0.04em;
+}
 
-	h1 {
-		font-size: 4rem;
-		margin: 0;
-		line-height: 1.05;
-	}
+.role {
+	font-size: 2.3rem;
+	font-weight: 700;
+	color: #2563eb;
+	line-height: 1.1;
+	margin: 0.4rem 0 1rem 0;
+}
 
-	.subtitle {
-		font-size: 1.5rem;
-		font-weight: 700;
-		margin-top: 1rem;
-	}
+.subtitle {
+	font-size: 1.5rem;
+	font-weight: 700;
+	margin: 0 0 2rem 0;
+	color: #1f2937;
+}
 
-	.intro {
-		font-size: 1.2rem;
-		max-width: 720px;
-	}
+.intro {
+	font-size: 1.45rem;
+	line-height: 1.8;
+	max-width: 1000px;
+	margin: 0;
+	color: #273044;
+}
 
 	.badges {
 		display: flex;
@@ -109,12 +139,12 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	}
 
 	.badges span {
-		padding: 0.5rem 0.9rem;
+		padding: 0.55rem 0.95rem;
 		border-radius: 999px;
 		background: #eef2ff;
-		color: #3b5bdb;
+		color: #3056d3;
 		font-size: 0.9rem;
-		font-weight: 600;
+		font-weight: 700;
 		border: 1px solid #dbe4ff;
 	}
 
@@ -130,4 +160,63 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	li {
 		margin-bottom: 0.5rem;
 	}
+	.subtitle img {
+	height: 20px;
+	width: auto;
+}
+
+.subtitle {
+	margin-top: 1rem;
+	margin-bottom: 2rem;
+}
+
+.hero-content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 4rem;
+}
+
+.hero-text {
+	flex: 1;
+}
+
+.hero-photo img {
+	width: 240px;
+	height: 240px;
+	object-fit: cover;
+	border-radius: 20px;
+	box-shadow: 0 10px 30px rgba(0,0,0,.15);
+}
+
+.cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+	gap: 1.5rem;
+}
+
+.card {
+	padding: 1.5rem;
+	border: 1px solid #e5e7eb;
+	border-radius: 16px;
+	background: white;
+	transition: .2s;
+}
+
+.card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 8px 25px rgba(0,0,0,.08);
+}
+
+.card h3 {
+	margin-top: 0;
+	margin-bottom: .75rem;
+	font-size: 1.2rem;
+}
+
+.card p {
+	margin: 0;
+	color: #475569;
+	line-height: 1.6;
+}
 </style>
