@@ -1,0 +1,78 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE } from '../../consts';
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`Pourquoi les assets inconnus détruisent votre visibilité sécurité | ${SITE_TITLE}`}
+			description="Retour terrain sur l’importance de l’inventaire et de la visibilité dans un programme de sécurité."
+		/>
+	</head>
+
+	<body>
+		<Header />
+		<main>
+			<a href="/notes-de-terrain" class="back">← Retour aux notes de terrain</a>
+			<p class="category">VM FUNDAMENTALS</p>
+			<h1>Pourquoi les assets inconnus détruisent votre visibilité sécurité</h1>
+			<p class="meta">4 min de lecture</p>
+
+			<p class="lead">
+				On ne protège pas ce qu’on ne connaît pas. Les actifs inconnus constituent souvent
+				le premier angle mort d’un programme de sécurité.
+			</p>
+
+			<h2>La visibilité avant la sécurité</h2>
+			<p>
+				Avant de parler de vulnérabilités, de détection ou de remédiation, il faut savoir
+				ce qui compose réellement le système d’information.
+			</p>
+
+			<p>
+				Un serveur oublié, une VM temporaire, une application exposée ou un environnement de test
+				peuvent rapidement devenir des zones non supervisées.
+			</p>
+
+			<h2>Le risque des angles morts</h2>
+			<p>
+				Un actif inconnu est rarement scanné, rarement maintenu, rarement surveillé et rarement
+				rattaché à un propriétaire clair.
+			</p>
+
+			<p>
+				C’est précisément ce qui le rend dangereux : il existe dans l’environnement, mais en dehors
+				des processus de sécurité.
+			</p>
+
+			<h2>Inventaire continu</h2>
+			<p>
+				La découverte d’actifs ne doit pas être un exercice ponctuel. Elle doit devenir un processus
+				continu, capable de détecter les évolutions de la surface d’attaque.
+			</p>
+
+			<h2>Conclusion</h2>
+			<p>
+				La visibilité est la base de tout programme de sécurité. Avant de prioriser les vulnérabilités,
+				il faut d’abord s’assurer que les actifs sont connus, qualifiés et rattachés aux bons propriétaires.
+			</p>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main { max-width: 820px; margin: 0 auto; padding: 5rem 1.5rem; }
+	.back { display: inline-block; margin-bottom: 2rem; color: #2563eb; font-weight: 700; text-decoration: none; }
+	.category { color: #2563eb; font-weight: 800; letter-spacing: .1em; font-size: .85rem; }
+	h1 { font-size: 3.5rem; line-height: 1.05; margin-bottom: 1rem; }
+	.meta { color: #64748b; margin-bottom: 2rem; }
+	.lead { font-size: 1.35rem; line-height: 1.7; color: #334155; margin-bottom: 3rem; }
+	h2 { font-size: 1.8rem; margin-top: 3rem; }
+	p { font-size: 1.1rem; line-height: 1.8; color: #334155; }
+	@media (max-width: 768px) { h1 { font-size: 2.6rem; } }
+</style>

@@ -73,42 +73,43 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	<section class="articles-section">
 	<div class="section-header">
 		<div>
-			<p class="section-tag">NOTES DE TERRAIN</p>
+			<p class="section-tag">  </p>
 			<h2>Retours d’expérience sur le terrain</h2>
 		</div>
 
-		<a href="/notes-de-terrain" class="see-all">Voir tous les articles →</a>
+		<a href="/notes-de-terrain" class="see-all">
+			Voir tous les articles →
+		</a>
 	</div>
 
 	<div class="articles-grid">
-		<article class="article-card">
-			
+		<a href="/articles/programmes-vm-echec-scan" class="article-card">
 			<p class="article-category">VM FUNDAMENTALS</p>
 			<h3>Pourquoi les programmes VM échouent rarement à cause du moteur de scan</h3>
 			<p>Le vrai problème se situe souvent ailleurs : gouvernance, processus et remédiation.</p>
 			<span>3 min de lecture</span>
-		</article>
+		</a>
 
-		<article class="article-card">
+		<a href="/articles/assets-inconnus-visibilite" class="article-card">
 			<p class="article-category">VM FUNDAMENTALS</p>
 			<h3>Pourquoi les assets inconnus détruisent votre visibilité sécurité</h3>
 			<p>On ne protège pas ce qu'on ne connaît pas.</p>
 			<span>4 min de lecture</span>
-		</article>
+		</a>
 
-		<article class="article-card">
+		<a href="/articles/tagging-sous-estime" class="article-card">
 			<p class="article-category">VM FUNDAMENTALS</p>
 			<h3>Pourquoi le tagging est une fonctionnalité sous-estimée</h3>
 			<p>Transformer une donnée brute en contexte exploitable.</p>
 			<span>4 min de lecture</span>
-		</article>
+		</a>
 
-		<article class="article-card">
+		<a href="/articles/vulnerabilite-critique-risque" class="article-card">
 			<p class="article-category">VM FUNDAMENTALS</p>
 			<h3>Une vulnérabilité critique détectée n’a jamais réduit le risque</h3>
 			<p>Détecter n’est que la première étape.</p>
 			<span>5 min de lecture</span>
-		</article>
+		</a>
 	</div>
 </section>
 
@@ -282,11 +283,15 @@ h2 {
 	min-height: 280px;
 	box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
 	transition: all .2s ease;
+	text-decoration: none;
+	color: inherit;
+	display: block;
+	cursor: pointer;
 }
 
 .article-card:hover {
 	transform: translateY(-4px);
-	box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1);
+	box-shadow: 0 12px 30px rgba(15,23,42,.08);
 }
 
 .article-card h3 {
