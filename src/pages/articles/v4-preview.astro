@@ -8,6 +8,7 @@ import Callout from '../../components/article/Callout.astro';
 import Checklist from '../../components/article/Checklist.astro';
 import RelatedArticles from '../../components/article/RelatedArticles.astro';
 import ArticleQuote from '../../components/article/ArticleQuote.astro';
+import ExecutiveSummary from '../../components/article/ExecutiveSummary.astro';
 import { SITE_TITLE } from '../../consts';
 
 const toc = [
@@ -38,11 +39,28 @@ const toc = [
 				title="Le tagging est le pilier oublié du Vulnerability Management"
 				subtitle="Un programme VM ne se limite pas à détecter des vulnérabilités. Sans contexte, ownership et structuration, la donnée reste difficilement exploitable."
 				image="/Images/tagging.png"
-				readTime="18 min de lecture"
+				readTime="6 min de lecture"
 				level="Intermédiaire"
 				updated="Mis à jour : juillet 2026"
 				technologies={['Rapid7', 'InsightVM', 'Exposure Management', 'Jira', 'ServiceNow']}
 			/>
+
+			<ExecutiveSummary title="Executive Summary">
+				<ul>
+					<li>
+						<strong>Un scanner</strong> détecte les vulnérabilités, mais ne fournit pas le contexte métier nécessaire à leur traitement.
+					</li>
+					<li>
+						<strong>Le tagging</strong> relie chaque actif à son application, son propriétaire, son environnement et sa criticité.
+					</li>
+					<li>
+						Sans stratégie de tagging, les dashboards deviennent rapidement difficiles à exploiter.
+					</li>
+					<li>
+						Un programme de Vulnerability Management mature repose autant sur la qualité des métadonnées que sur la qualité des scans.
+					</li>
+				</ul>
+			</ExecutiveSummary>
 
 			<ArticleLayout toc={toc}>
 				<h2 id="contexte">Pourquoi cet article ?</h2>

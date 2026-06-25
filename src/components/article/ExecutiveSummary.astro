@@ -1,0 +1,99 @@
+---
+interface Props {
+    title?: string;
+}
+
+const {
+    title = "Executive Summary"
+} = Astro.props;
+---
+
+<section class="executive-summary">
+
+    <p class="summary-tag">
+        À RETENIR
+    </p>
+
+    <h2>{title}</h2>
+
+    <div class="summary-content">
+        <slot />
+    </div>
+
+</section>
+
+<style>
+
+.executive-summary{
+
+    margin:4rem 0;
+
+    padding:2.8rem;
+
+    border-radius:28px;
+
+    background:
+        linear-gradient(180deg,#ffffff,#f8fbff);
+
+    border:1px solid #dbeafe;
+
+    box-shadow:
+        0 20px 45px rgba(15,23,42,.05);
+
+}
+
+.summary-tag{
+
+    color:#2563eb;
+
+    font-size:.82rem;
+
+    font-weight:800;
+
+    letter-spacing:.14em;
+
+    text-transform:uppercase;
+
+    margin-bottom:.6rem;
+
+}
+
+.executive-summary h2{
+
+    margin:0 0 1.8rem;
+
+    font-size:2rem;
+
+}
+
+.summary-content{
+
+    display:grid;
+
+    gap:1rem;
+
+}
+
+.summary-content ul{
+
+    margin:0;
+
+    padding-left:1.4rem;
+
+}
+
+.summary-content li{
+
+    margin-bottom:.8rem;
+
+    line-height:1.8;
+
+}
+
+.summary-content strong{
+
+    color:#0f172a;
+
+}
+
+</style>
