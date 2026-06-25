@@ -1,0 +1,215 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ArticleHero from '../../components/article/ArticleHero.astro';
+import ArticleLayout from '../../components/article/ArticleLayout.astro';
+import Callout from '../../components/article/Callout.astro';
+import Checklist from '../../components/article/Checklist.astro';
+import RelatedArticles from '../../components/article/RelatedArticles.astro';
+import ArticleQuote from '../../components/article/ArticleQuote.astro';
+import { SITE_TITLE } from '../../consts';
+
+const toc = [
+	{ id: 'contexte', label: 'Contexte' },
+	{ id: 'probleme', label: 'Le vrai problème' },
+	{ id: 'modele', label: 'Modèle de tagging' },
+	{ id: 'bonnes-pratiques', label: 'Bonnes pratiques' },
+	{ id: 'checklist', label: 'Checklist' },
+	{ id: 'conclusion', label: 'Conclusion' },
+];
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`Preview V4 Article | ${SITE_TITLE}`}
+			description="Preview du template V4 des notes de terrain."
+		/>
+	</head>
+
+	<body>
+		<Header />
+
+		<main>
+			<ArticleHero
+				tag="VM FUNDAMENTALS"
+				title="Le tagging est le pilier oublié du Vulnerability Management"
+				subtitle="Un programme VM ne se limite pas à détecter des vulnérabilités. Sans contexte, ownership et structuration, la donnée reste difficilement exploitable."
+				image="/Images/tagging.png"
+				readTime="18 min de lecture"
+				level="Intermédiaire"
+				updated="Mis à jour : juillet 2026"
+				technologies={['Rapid7', 'InsightVM', 'Exposure Management', 'Jira', 'ServiceNow']}
+			/>
+
+			<ArticleLayout toc={toc}>
+				<h2 id="contexte">Pourquoi cet article ?</h2>
+
+				<p>
+					Dans beaucoup de programmes de Vulnerability Management, le tagging est considéré
+					comme une simple fonctionnalité d’organisation. En réalité, c’est souvent l’un des
+					éléments qui détermine si la plateforme devient exploitable ou si elle reste une
+					base de données technique difficile à piloter.
+				</p>
+
+				<p>
+					Le moteur de scan peut fonctionner correctement, les vulnérabilités peuvent être
+					détectées, les rapports peuvent être générés. Mais si les assets ne sont pas reliés
+					à une application, un owner, une criticité, un environnement ou un périmètre métier,
+					la remédiation devient rapidement difficile à organiser.
+				</p>
+
+				<Callout type="field">
+					<p>
+						Sur le terrain, le problème n’est pas toujours l’absence de données. Le problème
+						est souvent l’absence de contexte exploitable autour de ces données.
+					</p>
+				</Callout>
+
+				<h2 id="probleme">Le vrai problème : la donnée sans contexte</h2>
+
+				<p>
+					Une vulnérabilité critique détectée sur un serveur n’a pas la même importance selon
+					que ce serveur héberge une application métier critique, un environnement de test,
+					une exposition Internet ou une machine sans owner identifié.
+				</p>
+
+				<p>
+					Le tagging sert précisément à transformer une donnée brute en information
+					exploitable. Il permet de répondre à des questions simples, mais essentielles :
+				</p>
+
+				<ul>
+					<li>À qui appartient cet asset ?</li>
+					<li>Quelle application est concernée ?</li>
+					<li>Quel est l’environnement : production, préproduction, test ?</li>
+					<li>Quelle est la criticité métier ?</li>
+					<li>Quelle équipe doit traiter la remédiation ?</li>
+				</ul>
+
+				<Callout type="warning">
+					<p>
+						Un tag créé sans convention claire devient rapidement une dette opérationnelle.
+						Plus le programme VM grandit, plus cette dette devient difficile à corriger.
+					</p>
+				</Callout>
+
+				<h2 id="modele">Construire un modèle de tagging utile</h2>
+
+				<p>
+					Un bon modèle de tagging ne doit pas chercher à tout décrire. Il doit d’abord
+					permettre de piloter les cas d’usage essentiels : visibilité, priorisation,
+					remédiation, reporting et ownership.
+				</p>
+
+				<p>
+					Pour un programme VM, les familles de tags les plus utiles sont généralement :
+				</p>
+
+				<ul>
+					<li><strong>Application</strong> : rattacher l’asset à un périmètre applicatif.</li>
+					<li><strong>Owner</strong> : identifier l’équipe responsable.</li>
+					<li><strong>Environnement</strong> : production, test, préproduction, développement.</li>
+					<li><strong>Criticité</strong> : métier, technique ou exposition.</li>
+					<li><strong>Localisation</strong> : datacenter, cloud, région, site.</li>
+				</ul>
+
+				<ArticleQuote>
+					Un scanner produit de la visibilité. Le tagging transforme cette visibilité en capacité de décision.
+				</ArticleQuote>
+
+				<h2 id="bonnes-pratiques">Bonnes pratiques de mise en œuvre</h2>
+
+				<Callout type="best">
+					<p>
+						Commencer simple. Un modèle de tagging efficace repose souvent sur quelques
+						dimensions stables, bien documentées et réellement utilisées dans les tableaux
+						de bord et les projets de remédiation.
+					</p>
+				</Callout>
+
+				<p>
+					La tentation est souvent de créer beaucoup de tags très rapidement. C’est rarement
+					la bonne approche. Il est préférable de définir un modèle clair, de le tester sur un
+					périmètre représentatif, puis de l’étendre progressivement.
+				</p>
+
+				<Callout type="error">
+					<p>
+						Erreur fréquente : créer des tags au fil de l’eau, sans convention de nommage,
+						sans propriétaire du référentiel et sans règle de revue. Le résultat est presque
+						toujours une taxonomie incohérente.
+					</p>
+				</Callout>
+
+				<h2 id="checklist">Checklist opérationnelle</h2>
+
+				<Checklist
+					title="Checklist de cadrage tagging VM"
+					items={[
+						'Définir les familles de tags réellement utiles au pilotage.',
+						'Documenter la convention de nommage.',
+						'Identifier la source de vérité pour les owners et applications.',
+						'Distinguer les tags techniques des tags métier.',
+						'Tester le modèle sur un périmètre pilote.',
+						'Utiliser les tags dans les dashboards et projets de remédiation.',
+						'Prévoir une revue régulière de la qualité du tagging.',
+					]}
+				/>
+
+				<h2 id="conclusion">Conclusion</h2>
+
+				<p>
+					Le tagging n’est pas un détail cosmétique. C’est l’une des briques qui permet de
+					transformer un inventaire technique en programme de remédiation pilotable.
+				</p>
+
+				<p>
+					Une plateforme de Vulnerability Management sans stratégie de tagging produit de la
+					donnée, mais peine à produire des décisions. À l’inverse, un modèle de tagging bien
+					conçu permet d’aligner la sécurité, l’infrastructure, les équipes applicatives et le
+					management autour d’une même lecture du risque.
+				</p>
+
+				<RelatedArticles
+					articles={[
+						{
+							href: '/articles/programmes-vm-echec-scan',
+							category: 'VM FUNDAMENTALS',
+							title: 'Pourquoi les programmes VM échouent rarement à cause du moteur de scan',
+							description: 'Le vrai problème se situe souvent ailleurs : gouvernance, processus et remédiation.',
+						},
+						{
+							href: '/articles/assets-inconnus-visibilite',
+							category: 'VM FUNDAMENTALS',
+							title: 'Pourquoi les assets inconnus détruisent votre visibilité sécurité',
+							description: 'On ne protège pas ce qu’on ne connaît pas.',
+						},
+					]}
+				/>
+			</ArticleLayout>
+		</main>
+
+		<Footer />
+	</body>
+</html>
+
+<style>
+	body {
+		background: #f8fafc;
+	}
+
+	main {
+		width: min(1320px, calc(100% - 4rem));
+		margin: 0 auto;
+		padding: 3rem 0 5rem;
+	}
+
+	@media (max-width: 640px) {
+		main {
+			width: min(100% - 2rem, 1320px);
+		}
+	}
+</style>

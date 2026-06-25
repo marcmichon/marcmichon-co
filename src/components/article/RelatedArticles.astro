@@ -1,0 +1,82 @@
+---
+const {
+	title = 'Articles liés',
+	articles = [],
+} = Astro.props;
+---
+
+<section class="related">
+	<h3>{title}</h3>
+
+	<div class="related-grid">
+		{articles.map((article) => (
+			<a href={article.href} class="related-card">
+				<span>{article.category}</span>
+				<strong>{article.title}</strong>
+				<p>{article.description}</p>
+			</a>
+		))}
+	</div>
+</section>
+
+<style>
+	.related {
+		margin-top: 4rem;
+	}
+
+	.related h3 {
+		font-size: 1.8rem;
+		margin: 0 0 1.5rem;
+	}
+
+	.related-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.25rem;
+	}
+
+	.related-card {
+		display: block;
+		padding: 1.5rem;
+		border: 1px solid #e5e7eb;
+		border-radius: 20px;
+		background: #f8fafc;
+		text-decoration: none;
+		color: inherit;
+		transition: .25s ease;
+	}
+
+	.related-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 15px 40px rgba(15,23,42,.08);
+	}
+
+	.related-card span {
+		display: block;
+		color: #2563eb;
+		font-size: .75rem;
+		font-weight: 900;
+		letter-spacing: .1em;
+		text-transform: uppercase;
+		margin-bottom: .75rem;
+	}
+
+	.related-card strong {
+		display: block;
+		font-size: 1.15rem;
+		line-height: 1.35;
+		color: #0f172a;
+	}
+
+	.related-card p {
+		color: #475569;
+		line-height: 1.6;
+		margin: .75rem 0 0;
+	}
+
+	@media (max-width: 700px) {
+		.related-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

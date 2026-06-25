@@ -1,0 +1,38 @@
+---
+const {
+	author = 'Marc Michon',
+} = Astro.props;
+---
+
+<blockquote class="article-quote">
+	<p><slot /></p>
+	<footer>{author}</footer>
+</blockquote>
+
+<style>
+	.article-quote {
+		margin: 3rem 0;
+		padding: 3rem;
+		border-radius: 28px;
+		background:
+			radial-gradient(circle at 50% 0%, rgba(37,99,235,.20), transparent 35%),
+			linear-gradient(135deg, #020817 0%, #06142d 55%, #031b4d 100%);
+		color: white;
+		box-shadow: 0 25px 60px rgba(2,8,23,.22);
+	}
+
+	.article-quote p {
+		margin: 0;
+		font-size: 1.8rem;
+		line-height: 1.45;
+		font-weight: 900;
+		letter-spacing: -0.03em;
+		color: white;
+	}
+
+	.article-quote footer {
+		margin-top: 1.5rem;
+		color: #93c5fd;
+		font-weight: 800;
+	}
+</style>
