@@ -1,0 +1,255 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`Contact | ${SITE_TITLE}`}
+			description="Contacter Marc Michon, ingénieur cybersécurité spécialisé en Vulnerability Management, Exposure Management et opérations de sécurité."
+		/>
+	</head>
+
+	<body>
+		<Header />
+
+		<main>
+			<section class="contact-hero">
+				<p class="section-tag">CONTACT</p>
+
+				<h1>Échanger autour d’un sujet cybersécurité</h1>
+
+				<p class="intro">
+					Vous souhaitez discuter de Vulnerability Management, Exposure Management,
+					Threat Intelligence, opérations de sécurité ou intégration de plateformes ?
+					Le plus simple est de me contacter directement via LinkedIn.
+				</p>
+			</section>
+
+			<section class="contact-grid">
+				<a href="https://www.linkedin.com/in/michonmarc/" class="contact-card" target="_blank">
+					<div class="contact-logo linkedin">
+						<img src="/Images/linkedin.svg" alt="LinkedIn" />
+					</div>
+
+					<h2>LinkedIn</h2>
+
+					<p>
+						Le canal principal pour échanger,
+						suivre mes publications et me contacter.
+					</p>
+
+					<strong>Voir mon profil →</strong>
+				</a>
+
+				<a href="mailto:michon.marc@gmail.com" class="contact-card">
+					<div class="contact-logo outlook">
+						<img src="/Images/outlook.svg" alt="Email" />
+					</div>
+
+					<h2>Email</h2>
+
+					<p>
+						Pour une prise de contact directe
+						ou un échange plus détaillé.
+					</p>
+
+					<strong>Envoyer un email →</strong>
+				</a>
+
+				<a href="https://github.com/marcmichon" class="contact-card" target="_blank">
+					<div class="contact-logo github">
+						<img src="/Images/github.svg" alt="GitHub" />
+					</div>
+
+					<h2>GitHub</h2>
+
+					<p>
+						Consulter mes projets,
+						expérimentations et travaux techniques.
+					</p>
+
+					<strong>Voir GitHub →</strong>
+				</a>
+			</section>
+
+			<section class="contact-note">
+				<p>
+					Je privilégie les échanges concrets autour de projets, problématiques terrain,
+					intégration de solutions, exploitation opérationnelle et amélioration continue.
+				</p>
+			</section>
+		</main>
+
+		<Footer />
+	</body>
+</html>
+
+<style>
+	body {
+		background: #f8fafc;
+	}
+
+	main {
+		width: min(1320px, calc(100% - 4rem));
+		margin: 0 auto;
+		padding: 3rem 0 5rem;
+	}
+
+	.contact-hero {
+		padding: 5rem;
+		border-radius: 32px;
+		margin-bottom: 4rem;
+		color: white;
+		background:
+			linear-gradient(rgba(2,8,23,.82), rgba(2,8,23,.82)),
+			url('/Images/fondsite.png');
+		background-size: cover;
+		background-position: center;
+		box-shadow: 0 25px 60px rgba(2,8,23,.2);
+	}
+
+	.section-tag {
+		color: #60a5fa;
+		font-weight: 800;
+		font-size: .85rem;
+		letter-spacing: .12em;
+		text-transform: uppercase;
+	}
+
+	h1 {
+		font-size: 4.8rem;
+		line-height: .95;
+		margin: 1rem 0 2rem;
+		letter-spacing: -0.05em;
+		color: white;
+		max-width: 900px;
+	}
+
+	.intro {
+		max-width: 850px;
+		font-size: 1.3rem;
+		line-height: 1.8;
+		color: #dbeafe;
+	}
+
+	.contact-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 2rem;
+		margin-bottom: 4rem;
+	}
+
+	.contact-card {
+		background: white;
+		border: 1px solid #e5e7eb;
+		border-radius: 24px;
+		padding: 2.5rem;
+		text-decoration: none;
+		color: inherit;
+		min-height: 320px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		transition: all .25s ease;
+		box-shadow: 0 10px 30px rgba(15,23,42,.04);
+	}
+
+	.contact-card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 20px 50px rgba(15,23,42,.10);
+	}
+
+	.contact-logo {
+		height: 88px;
+		margin: 0 auto 2rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.contact-logo img {
+		width: auto;
+		height: auto;
+		object-fit: contain;
+		transition: .25s ease;
+	}
+
+	.contact-logo.linkedin img {
+		width: 88px;
+		max-height: 88px;
+	}
+
+	.contact-logo.outlook img {
+		width: 88px;
+		max-height: 88px;
+	}
+
+	.contact-logo.github img {
+		width: 72px;
+		max-height: 72px;
+	}
+
+	.contact-card:hover .contact-logo img {
+		transform: scale(1.08);
+	}
+
+	.contact-card h2 {
+		font-size: 1.8rem;
+		margin: 0 0 1rem;
+	}
+
+	.contact-card p {
+		color: #475569;
+		line-height: 1.7;
+		margin: 0 0 2rem;
+		flex-grow: 1;
+	}
+
+	.contact-card strong {
+		color: #2563eb;
+	}
+
+	.contact-note {
+		background:
+			radial-gradient(circle at 50% 0%, rgba(37,99,235,.20), transparent 35%),
+			linear-gradient(135deg, #020817 0%, #06142d 55%, #031b4d 100%);
+		color: white;
+		padding: 3.5rem;
+		border-radius: 32px;
+		box-shadow: 0 25px 60px rgba(2,8,23,.22);
+		text-align: center;
+	}
+
+	.contact-note p {
+		max-width: 850px;
+		margin: 0 auto;
+		font-size: 1.6rem;
+		line-height: 1.5;
+		font-weight: 800;
+	}
+
+	@media (max-width: 900px) {
+		main {
+			width: min(100% - 2rem, 1320px);
+		}
+
+		.contact-hero,
+		.contact-note {
+			padding: 3rem 2rem;
+		}
+
+		h1 {
+			font-size: 3rem;
+		}
+
+		.contact-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
