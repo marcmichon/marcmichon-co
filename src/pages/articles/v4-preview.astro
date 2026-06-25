@@ -10,6 +10,7 @@ import RelatedArticles from '../../components/article/RelatedArticles.astro';
 import ArticleQuote from '../../components/article/ArticleQuote.astro';
 import ExecutiveSummary from '../../components/article/ExecutiveSummary.astro';
 import { SITE_TITLE } from '../../consts';
+import TerrainNote from '../../components/article/TerrainNote.astro';
 
 const toc = [
 	{ id: 'contexte', label: 'Contexte' },
@@ -107,6 +108,30 @@ const toc = [
 					<li>Quelle équipe doit traiter la remédiation ?</li>
 				</ul>
 
+ <TerrainNote context="Programme VM • 20 000 assets">
+	<p>
+		Chez un client de plus de <strong>20 000 assets</strong>, la plateforme
+		détectait correctement les vulnérabilités.
+	</p>
+
+	<p>
+		En revanche, aucun actif n'était rattaché à une application ni à un
+		propriétaire. Les tableaux de bord existaient, mais restaient difficilement
+		exploitables.
+	</p>
+
+	<p>
+		Après la mise en place d'un modèle de tagging partagé, les équipes ont pu
+		structurer la priorisation et utiliser les dashboards comme support de
+		remédiation.
+	</p>
+
+	<ul>
+		<li>Dashboards exploitables</li>
+		<li>Priorisation simplifiée</li>
+		<li>Ownership clarifié</li>
+	</ul>
+</TerrainNote>
 				<Callout type="warning">
 					<p>
 						Un tag créé sans convention claire devient rapidement une dette opérationnelle.

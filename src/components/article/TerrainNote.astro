@@ -1,0 +1,112 @@
+---
+interface Props {
+	title?: string;
+	context?: string;
+}
+
+const {
+	title = 'Retour terrain',
+	context = '',
+} = Astro.props;
+---
+
+<section class="terrain-note">
+	<div class="terrain-note-header">
+		<div>
+			<p class="terrain-label">{title}</p>
+
+			{context && (
+				<p class="terrain-context">{context}</p>
+			)}
+		</div>
+	</div>
+
+	<div class="terrain-note-content">
+		<slot />
+	</div>
+</section>
+
+<style>
+	.terrain-note {
+		margin: 4rem 0;
+		padding: 2.6rem;
+		border-radius: 28px;
+		background:
+			radial-gradient(circle at 15% 0%, rgba(37,99,235,.10), transparent 35%),
+			linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+		border: 1px solid #bfdbfe;
+		border-left: 6px solid #2563eb;
+		box-shadow: 0 20px 45px rgba(37,99,235,.08);
+	}
+
+	.terrain-note-header {
+		margin-bottom: 2rem;
+		padding-bottom: 1.4rem;
+		border-bottom: 1px solid #dbeafe;
+	}
+
+	.terrain-label {
+		margin: 0;
+		color: #2563eb;
+		font-size: .82rem;
+		font-weight: 900;
+		letter-spacing: .14em;
+		text-transform: uppercase;
+	}
+
+	.terrain-context {
+		margin: .5rem 0 0;
+		color: #0f172a;
+		font-size: 1.25rem;
+		font-weight: 900;
+		line-height: 1.25;
+		letter-spacing: -0.03em;
+	}
+
+	.terrain-note-content {
+		color: #334155;
+		font-size: 1.08rem;
+		line-height: 1.85;
+	}
+
+	.terrain-note-content :global(p) {
+		margin: 0 0 1.2rem;
+	}
+
+	.terrain-note-content :global(p:last-child) {
+		margin-bottom: 0;
+	}
+
+	.terrain-note-content :global(strong) {
+		color: #0f172a;
+		font-weight: 900;
+	}
+
+	.terrain-note-content :global(ul) {
+		margin: 1.5rem 0 0;
+		padding: 0;
+		list-style: none;
+		display: grid;
+		gap: .75rem;
+	}
+
+	.terrain-note-content :global(li) {
+		position: relative;
+		padding-left: 2rem;
+		color: #334155;
+	}
+
+	.terrain-note-content :global(li::before) {
+		content: "✓";
+		position: absolute;
+		left: 0;
+		color: #2563eb;
+		font-weight: 900;
+	}
+
+	@media (max-width: 640px) {
+		.terrain-note {
+			padding: 2rem;
+		}
+	}
+</style>
