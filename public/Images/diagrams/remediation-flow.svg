@@ -1,0 +1,64 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="720" rx="32" fill="#F8FAFC"></rect>
+
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#0F172A" flood-opacity="0.10"></feDropShadow>
+    </filter>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#2563EB"></stop>
+      <stop offset="1" stop-color="#60A5FA"></stop>
+    </linearGradient>
+  </defs>
+
+  <text x="600" y="70" text-anchor="middle" font-family="Inter, Arial" font-size="34" font-weight="800" fill="#0F172A">
+    Transformer une vulnérabilité connue en action suivie
+  </text>
+
+  <text x="600" y="108" text-anchor="middle" font-family="Inter, Arial" font-size="18" fill="#64748B">
+    La remédiation repose sur l’ownership, la priorisation, le pilotage et le suivi.
+  </text>
+
+  <g filter="url(#shadow)">
+    <rect x="60" y="260" width="160" height="110" rx="22" fill="white" stroke="#DBEAFE"></rect>
+    <text x="140" y="305" text-anchor="middle" font-family="Inter, Arial" font-size="18" font-weight="800" fill="#0F172A">Détection</text>
+    <text x="140" y="335" text-anchor="middle" font-family="Inter, Arial" font-size="14" fill="#64748B">Constat</text>
+
+    <rect x="260" y="260" width="160" height="110" rx="22" fill="white" stroke="#DBEAFE"></rect>
+    <text x="340" y="305" text-anchor="middle" font-family="Inter, Arial" font-size="18" font-weight="800" fill="#0F172A">Ownership</text>
+    <text x="340" y="335" text-anchor="middle" font-family="Inter, Arial" font-size="14" fill="#64748B">Responsable</text>
+
+    <rect x="460" y="240" width="190" height="150" rx="28" fill="url(#blue)"></rect>
+    <text x="555" y="300" text-anchor="middle" font-family="Inter, Arial" font-size="24" font-weight="900" fill="white">Priorisation</text>
+    <text x="555" y="332" text-anchor="middle" font-family="Inter, Arial" font-size="15" fill="#DBEAFE">Risque réel</text>
+
+    <rect x="690" y="260" width="160" height="110" rx="22" fill="white" stroke="#DBEAFE"></rect>
+    <text x="770" y="305" text-anchor="middle" font-family="Inter, Arial" font-size="18" font-weight="800" fill="#0F172A">Plan</text>
+    <text x="770" y="335" text-anchor="middle" font-family="Inter, Arial" font-size="14" fill="#64748B">Actions</text>
+
+    <rect x="890" y="260" width="160" height="110" rx="22" fill="white" stroke="#DBEAFE"></rect>
+    <text x="970" y="305" text-anchor="middle" font-family="Inter, Arial" font-size="18" font-weight="800" fill="#0F172A">Suivi</text>
+    <text x="970" y="335" text-anchor="middle" font-family="Inter, Arial" font-size="14" fill="#64748B">Pilotage</text>
+
+    <rect x="480" y="500" width="240" height="90" rx="24" fill="#0F172A"></rect>
+    <text x="600" y="540" text-anchor="middle" font-family="Inter, Arial" font-size="21" font-weight="900" fill="white">Réduction du risque</text>
+    <text x="600" y="565" text-anchor="middle" font-family="Inter, Arial" font-size="14" fill="#DBEAFE">Résultat attendu</text>
+  </g>
+
+  <g stroke="#2563EB" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M225 315H255"></path>
+    <path d="M245 305L255 315L245 325"></path>
+
+    <path d="M425 315H455"></path>
+    <path d="M445 305L455 315L445 325"></path>
+
+    <path d="M655 315H685"></path>
+    <path d="M675 305L685 315L675 325"></path>
+
+    <path d="M855 315H885"></path>
+    <path d="M875 305L885 315L875 325"></path>
+
+    <path d="M555 395V495"></path>
+    <path d="M545 485L555 495L565 485"></path>
+  </g>
+</svg>
