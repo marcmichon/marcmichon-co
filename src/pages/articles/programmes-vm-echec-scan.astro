@@ -2,15 +2,35 @@
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import ArticleHero from '../../components/article/ArticleHero.astro';
+import ArticleLayout from '../../components/article/ArticleLayout.astro';
+import Callout from '../../components/article/Callout.astro';
+import Checklist from '../../components/article/Checklist.astro';
+import RelatedArticles from '../../components/article/RelatedArticles.astro';
+import ArticleQuote from '../../components/article/ArticleQuote.astro';
+import ExecutiveSummary from '../../components/article/ExecutiveSummary.astro';
 import { SITE_TITLE } from '../../consts';
+import TerrainNote from '../../components/article/TerrainNote.astro';
+import ArchitectureDiagram from '../../components/article/ArchitectureDiagram.astro';
+import DecisionTable from '../../components/article/DecisionTable.astro';
+
+const toc = [
+	{ id: 'contexte', label: 'Pourquoi cet article ?' },
+	{ id: 'faux-coupable', label: 'Le faux coupable' },
+	{ id: 'probleme', label: 'Le vrai problème' },
+	{ id: 'programme', label: 'Construire un programme' },
+	{ id: 'bonnes-pratiques', label: 'Bonnes pratiques' },
+	{ id: 'checklist', label: 'Checklist' },
+	{ id: 'conclusion', label: 'Conclusion' },
+];
 ---
 
 <!doctype html>
 <html lang="fr">
 	<head>
 		<BaseHead
-			title={`Pourquoi les programmes VM échouent rarement à cause du moteur de scan | ${SITE_TITLE}`}
-			description="Retour terrain sur les véritables causes d’échec des programmes de Vulnerability Management."
+			title={`Preview V4 Article | ${SITE_TITLE}`}
+			description="Preview du template V4 des notes de terrain."
 		/>
 	</head>
 
@@ -18,67 +38,288 @@ import { SITE_TITLE } from '../../consts';
 		<Header />
 
 		<main>
-			<a href="/notes-de-terrain" class="back">← Retour aux notes de terrain</a>
+	<ArticleHero
+	tag="VM FUNDAMENTALS"
+	title="Pourquoi les programmes de Vulnerability Management échouent rarement à cause du moteur de scan"
+	subtitle="Les scanners détectent des vulnérabilités. Les programmes de sécurité réussissent ou échouent surtout à cause de la gouvernance, des processus et de la capacité de remédiation."
+	image="/Images/programmes-vm.png"
+	readTime="9 min de lecture"
+	level="Intermédiaire"
+	updated="Mis à jour : juillet 2026"
+	technologies={[
+		'Vulnerability Management',
+		'Remédiation',
+		'Gouvernance',
+		'KPIs',
+		'Exposure Management'
+	]}
+/>
+/>
+		<ExecutiveSummary title="Executive Summary">
+	<ul>
+		<li>
+			<strong>Un scanner</strong> détecte les vulnérabilités, mais ne réduit pas le risque à lui seul.
+		</li>
 
-			<p class="category">VM FUNDAMENTALS</p>
+		<li>
+			<strong>Un programme VM mature</strong> repose sur une gouvernance claire, des owners identifiés et des processus de remédiation efficaces.
+		</li>
 
-			<h1>Pourquoi les programmes VM échouent rarement à cause du moteur de scan</h1>
+		<li>
+			Les difficultés proviennent rarement de l’outil utilisé, mais plus souvent de l’organisation qui l’entoure.
+		</li>
 
-			<p class="meta">3 min de lecture</p>
+		<li>
+			La réussite d’un programme de Vulnerability Management dépend davantage des équipes, des processus et du pilotage que de la technologie.
+		</li>
+	</ul>
+</ExecutiveSummary>
 
-			<p class="lead">
-				Le moteur de scan est souvent accusé à tort. Dans beaucoup de programmes de
-				Vulnerability Management, les difficultés viennent rarement de la capacité à détecter
-				des vulnérabilités. Elles viennent plutôt de ce qu’il se passe après.
-			</p>
+			<ArticleLayout toc={toc}>
+	<h2 id="contexte">Pourquoi cet article ?</h2>
 
-			<h2>Le scan n’est qu’un point de départ</h2>
+	<p>
+		Imaginez deux entreprises utilisant le même scanner de vulnérabilités,
+		avec le même moteur de détection, les mêmes signatures et les mêmes capacités techniques.
+	</p>
 
-			<p>
-				Scanner un environnement permet de produire de la visibilité. Mais cette visibilité
-				n’a de valeur que si elle est ensuite comprise, contextualisée, priorisée et transformée
-				en actions concrètes.
-			</p>
+	<p>
+		Quelques mois plus tard, leurs résultats sont pourtant radicalement différents.
+		La première réduit progressivement son exposition. La seconde accumule plusieurs
+		dizaines de milliers de vulnérabilités sans jamais parvenir à inverser la tendance.
+	</p>
 
-			<p>
-				Un programme VM ne se résume donc pas à lancer des scans réguliers. Il doit permettre
-				aux équipes sécurité, infrastructure et applicatives de comprendre quoi traiter,
-				pourquoi le traiter, avec quelle priorité et dans quel délai.
-			</p>
+	<p>
+		Le moteur de scan est identique. La différence ne vient donc pas uniquement de l’outil.
+		Elle vient du programme construit autour de cet outil.
+	</p>
 
-			<h2>Les vraies causes d’échec</h2>
+	<Callout type="field">
+		<p>
+			Sur le terrain, les programmes VM échouent rarement parce que le scanner ne détecte rien.
+			Ils échouent plus souvent parce que personne ne transforme réellement les résultats en actions.
+		</p>
+	</Callout>
 
-			<p>
-				Sur le terrain, les problèmes viennent plus souvent de la gouvernance, du manque de
-				qualification des assets, de l’absence de propriétaires clairement identifiés, ou encore
-				de processus de remédiation insuffisamment structurés.
-			</p>
+	<h2 id="faux-coupable">Le faux coupable : le moteur de scan</h2>
 
-			<p>
-				Un scanner peut détecter une vulnérabilité critique. Mais si personne ne sait à qui
-				appartient l’asset, quelle application est concernée, quel est le contexte métier ou
-				qui doit corriger, le risque reste présent.
-			</p>
+	<p>
+		Il est tentant d’expliquer l’échec d’un programme de Vulnerability Management
+		par les limites du scanner : performances, couverture, faux positifs, authentification
+		ou profondeur des contrôles.
+	</p>
 
-			<h2>Transformer la donnée en action</h2>
+	<p>
+		Ces sujets existent et doivent être traités. Mais ils ne suffisent pas à expliquer
+		pourquoi certains programmes progressent tandis que d’autres stagnent.
+	</p>
 
-			<p>
-				La valeur d’un programme VM repose sur sa capacité à transformer une donnée technique
-				en décision opérationnelle : qualifier, prioriser, assigner, suivre et mesurer.
-			</p>
+	<p>
+		Un scanner produit de la visibilité. Il identifie des vulnérabilités, mesure une exposition
+		technique et alimente des rapports. Mais il ne décide pas à la place des équipes,
+		ne contacte pas les owners, ne planifie pas les corrections et ne pilote pas les exceptions.
+	</p>
 
-			<p>
-				C’est là que des éléments comme le tagging, les groupes dynamiques, les projets de
-				remédiation, les tableaux de bord et les workflows d’escalade deviennent essentiels.
-			</p>
+	<h2 id="probleme">Le vrai problème : transformer la donnée en action</h2>
 
-			<h2>Conclusion</h2>
+	<p>
+		Le vrai défi commence après la détection.
+	</p>
 
-			<p>
-				Un bon moteur de scan est nécessaire. Mais il ne suffit pas. La réussite d’un programme
-				de Vulnerability Management dépend surtout de l’organisation mise autour de l’outil :
-				gouvernance, ownership, priorisation et capacité à faire avancer la remédiation.
-			</p>
+	<p>
+		Une vulnérabilité doit être qualifiée, priorisée, rattachée à un propriétaire,
+		intégrée dans un processus de remédiation, suivie dans le temps et expliquée
+		aux parties prenantes.
+	</p>
+
+	<p>
+		Sans gouvernance, ownership, SLA, indicateurs et capacité de remédiation,
+		le scanner devient rapidement une machine à produire du backlog.
+	</p>
+
+	<TerrainNote context="Programme VM • Backlog non maîtrisé">
+		<p>
+			Lors d’une revue de maturité VM, la plateforme détectait correctement les vulnérabilités
+			et les scans s’exécutaient régulièrement.
+		</p>
+
+		<p>
+			Le problème se situait ailleurs : absence d’owners fiables, priorisation peu claire,
+			tableaux de bord peu exploités et aucun rituel de pilotage partagé entre la sécurité
+			et les équipes techniques.
+		</p>
+
+		<p>
+			Le programme n’avait pas besoin d’un nouveau scanner. Il avait besoin d’un cadre
+			opérationnel permettant de transformer les résultats en actions suivies.
+		</p>
+
+		<ul>
+			<li>Ownership clarifié</li>
+			<li>Priorisation partagée</li>
+			<li>Suivi de remédiation structuré</li>
+		</ul>
+	</TerrainNote>
+
+
+<ArchitectureDiagram
+	title="Du scan au programme"
+	image="/Images/diagrams/vm-program-flow.svg"
+	caption="Un programme VM mature transforme la détection technique en remédiation suivie et pilotée."
+	source="marcmichon.co"
+/>
+
+<DecisionTable
+	title="Identifier pourquoi le programme bloque"
+	headers={[
+		"Symptôme",
+		"Cause probable",
+		"Impact",
+		"Action"
+	]}
+	rows={[
+		[
+			"Backlog en hausse",
+			"Absence de priorisation",
+			"🔴 Élevé",
+			"Définir des critères de traitement"
+		],
+		[
+			"Vulnérabilités sans responsable",
+			"Ownership absent ou incomplet",
+			"🔴 Élevé",
+			"Rattacher les assets aux équipes"
+		],
+		[
+			"Dashboards peu utilisés",
+			"Indicateurs non actionnables",
+			"🟠 Moyen",
+			"Aligner les KPIs sur les usages"
+		],
+		[
+			"Corrections non suivies",
+			"Pas de rituel de pilotage",
+			"🟠 Moyen",
+			"Mettre en place une revue régulière"
+		]
+	]}
+/>
+
+
+	<h2 id="programme">Construire un programme de Vulnerability Management</h2>
+
+<p>
+	Un programme mature ne se limite pas à lancer des scans régulièrement.
+	Il transforme des résultats techniques en décisions opérationnelles.
+</p>
+
+<p>
+	Cela suppose de définir des responsabilités, des règles de priorisation,
+	des indicateurs de pilotage, des objectifs de remédiation et des échanges
+	réguliers entre les équipes sécurité, infrastructure et applicatives.
+</p>
+
+<p>
+	Le scanner constitue uniquement le point de départ.
+	La valeur du programme apparaît lorsque les vulnérabilités détectées
+	deviennent effectivement des actions suivies jusqu'à leur résolution.
+</p>
+
+<ArticleQuote>
+	Un scanner détecte les vulnérabilités.
+	Un programme de sécurité réduit le risque.
+</ArticleQuote>
+
+<h2 id="bonnes-pratiques">Bonnes pratiques</h2>
+
+<Callout type="best">
+	<p>
+		Construisez un programme avant de chercher à optimiser votre scanner.
+		Un bon moteur de détection ne compensera jamais l'absence
+		de gouvernance, d'ownership ou de processus de remédiation.
+	</p>
+</Callout>
+
+<Callout type="warning">
+	<p>
+		Les indicateurs doivent mesurer la capacité à réduire le risque,
+		pas uniquement le nombre de vulnérabilités détectées.
+	</p>
+</Callout>
+
+<Callout type="error">
+	<p>
+		L'erreur la plus fréquente consiste à considérer le déploiement
+		de la plateforme comme la fin du projet.
+		En réalité, le véritable travail commence après la première campagne
+		de scans.
+	</p>
+</Callout>
+
+				<h2 id="checklist">Checklist opérationnelle</h2>
+
+<Checklist
+	title="Checklist d'un programme VM mature"
+	items={[
+		'Identifier clairement les owners.',
+		'Définir des règles de priorisation.',
+		'Mettre en place des SLA.',
+		'Suivre des KPIs de remédiation.',
+		'Organiser des revues régulières.',
+		'Automatiser lorsque cela apporte de la valeur.',
+		'Mesurer la réduction réelle du risque.',
+	]}
+/>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>
+	Le succès d'un programme de Vulnerability Management ne dépend
+	pas principalement du scanner utilisé.
+	Il dépend de la capacité de l'organisation à transformer
+	la visibilité en décisions puis en actions.
+</p>
+
+<p>
+	Un moteur de scan performant constitue une excellente base.
+	Mais sans gouvernance, sans ownership et sans suivi,
+	il ne produit qu'un inventaire toujours plus important
+	de vulnérabilités.
+</p>
+
+<p>
+	La maturité d'un programme se mesure moins par la qualité
+	de son outil que par sa capacité à réduire durablement
+	l'exposition au risque.
+</p>
+
+<Callout type="field">
+	<p>
+		<strong>Question pour votre organisation :</strong>
+
+		Si votre scanner disparaissait demain matin,
+		quels processus de votre programme continueraient
+		de fonctionner normalement ?
+	</p>
+</Callout>
+
+<RelatedArticles
+	articles={[
+		{
+			href: '/articles/tagging-vulnerability-management',
+			category: 'VM FUNDAMENTALS',
+			title: 'Le tagging est le pilier oublié du Vulnerability Management',
+			description: 'Pourquoi un modèle de tagging transforme un inventaire technique en outil de pilotage opérationnel.',
+		},
+		{
+			href: '/articles/assets-inconnus-visibilite',
+			category: 'VM FUNDAMENTALS',
+		title: 'Pourquoi les assets inconnus détruisent votre visibilité sécurité',
+description: 'Comment connaître réellement son patrimoine avant de piloter la réduction du risque.',
+		},
+	]}
+/>
+			</ArticleLayout>
 		</main>
 
 		<Footer />
@@ -86,59 +327,19 @@ import { SITE_TITLE } from '../../consts';
 </html>
 
 <style>
+	body {
+		background: #f8fafc;
+	}
+
 	main {
-		max-width: 820px;
+		width: min(1320px, calc(100% - 4rem));
 		margin: 0 auto;
-		padding: 5rem 1.5rem;
+		padding: 3rem 0 5rem;
 	}
 
-	.back {
-		display: inline-block;
-		margin-bottom: 2rem;
-		color: #2563eb;
-		font-weight: 700;
-		text-decoration: none;
-	}
-
-	.category {
-		color: #2563eb;
-		font-weight: 800;
-		letter-spacing: .1em;
-		font-size: .85rem;
-	}
-
-	h1 {
-		font-size: 3.5rem;
-		line-height: 1.05;
-		margin-bottom: 1rem;
-	}
-
-	.meta {
-		color: #64748b;
-		margin-bottom: 2rem;
-	}
-
-	.lead {
-		font-size: 1.35rem;
-		line-height: 1.7;
-		color: #334155;
-		margin-bottom: 3rem;
-	}
-
-	h2 {
-		font-size: 1.8rem;
-		margin-top: 3rem;
-	}
-
-	p {
-		font-size: 1.1rem;
-		line-height: 1.8;
-		color: #334155;
-	}
-
-	@media (max-width: 768px) {
-		h1 {
-			font-size: 2.6rem;
+	@media (max-width: 640px) {
+		main {
+			width: min(100% - 2rem, 1320px);
 		}
 	}
 </style>

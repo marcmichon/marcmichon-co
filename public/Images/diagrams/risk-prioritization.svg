@@ -1,0 +1,55 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" xmlns="http://www.w3.org/2000/svg">
+
+<rect width="1200" height="720" rx="28" fill="#F8FAFC"></rect>
+
+<text x="600" y="70" text-anchor="middle" font-size="34" font-family="Inter" font-weight="800" fill="#0F172A">
+
+Construire une priorité de remédiation
+
+</text>
+
+<text x="600" y="110" text-anchor="middle" font-size="18" font-family="Inter" fill="#64748B">
+
+CVSS n'est qu'une composante du risque.
+
+</text>
+
+<rect x="460" y="150" width="280" height="90" rx="20" fill="#2563EB"></rect>
+
+<text x="600" y="205" text-anchor="middle" font-size="26" font-family="Inter" font-weight="800" fill="white">
+
+CVSS
+
+</text>
+
+<rect x="100" y="340" width="180" height="80" rx="18" fill="white" stroke="#CBD5E1"></rect>
+<text x="190" y="388" text-anchor="middle" font-size="18" font-family="Inter" font-weight="700">Exposition</text>
+
+<rect x="330" y="340" width="180" height="80" rx="18" fill="white" stroke="#CBD5E1"></rect>
+<text x="420" y="388" text-anchor="middle" font-size="18" font-family="Inter" font-weight="700">Exploit</text>
+
+<rect x="560" y="340" width="180" height="80" rx="18" fill="white" stroke="#CBD5E1"></rect>
+<text x="650" y="388" text-anchor="middle" font-size="18" font-family="Inter" font-weight="700">Métier</text>
+
+<rect x="790" y="340" width="180" height="80" rx="18" fill="white" stroke="#CBD5E1"></rect>
+<text x="880" y="388" text-anchor="middle" font-size="18" font-family="Inter" font-weight="700">Contrôles</text>
+
+<line x1="600" y1="240" x2="190" y2="340" stroke="#2563EB" stroke-width="3"></line>
+<line x1="600" y1="240" x2="420" y2="340" stroke="#2563EB" stroke-width="3"></line>
+<line x1="600" y1="240" x2="650" y2="340" stroke="#2563EB" stroke-width="3"></line>
+<line x1="600" y1="240" x2="880" y2="340" stroke="#2563EB" stroke-width="3"></line>
+
+<rect x="360" y="540" width="480" height="100" rx="22" fill="#2563EB"></rect>
+
+<text x="600" y="595" text-anchor="middle" font-size="30" font-family="Inter" font-weight="900" fill="white">
+
+PRIORITÉ DE REMÉDIATION
+
+</text>
+
+<line x1="190" y1="420" x2="600" y2="540" stroke="#2563EB" stroke-width="3"></line>
+<line x1="420" y1="420" x2="600" y2="540" stroke="#2563EB" stroke-width="3"></line>
+<line x1="650" y1="420" x2="600" y2="540" stroke="#2563EB" stroke-width="3"></line>
+<line x1="880" y1="420" x2="600" y2="540" stroke="#2563EB" stroke-width="3"></line>
+
+</svg>

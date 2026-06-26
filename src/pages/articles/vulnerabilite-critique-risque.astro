@@ -2,71 +2,337 @@
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import ArticleHero from '../../components/article/ArticleHero.astro';
+import ArticleLayout from '../../components/article/ArticleLayout.astro';
+import Callout from '../../components/article/Callout.astro';
+import Checklist from '../../components/article/Checklist.astro';
+import RelatedArticles from '../../components/article/RelatedArticles.astro';
+import ArticleQuote from '../../components/article/ArticleQuote.astro';
+import ExecutiveSummary from '../../components/article/ExecutiveSummary.astro';
 import { SITE_TITLE } from '../../consts';
+import TerrainNote from '../../components/article/TerrainNote.astro';
+import ArchitectureDiagram from '../../components/article/ArchitectureDiagram.astro';
+import DecisionTable from '../../components/article/DecisionTable.astro';
+
+const toc = [
+	{ id: 'contexte', label: 'Pourquoi cet article ?' },
+	{ id: 'faux-reflexe', label: 'Le faux réflexe' },
+	{ id: 'probleme', label: 'Le vrai problème' },
+	{ id: 'prioriser', label: 'Prioriser le risque' },
+	{ id: 'bonnes-pratiques', label: 'Bonnes pratiques' },
+	{ id: 'checklist', label: 'Checklist' },
+	{ id: 'conclusion', label: 'Conclusion' },
+];
 ---
 
 <!doctype html>
 <html lang="fr">
 	<head>
 		<BaseHead
-			title={`Une vulnérabilité critique détectée n’a jamais réduit le risque | ${SITE_TITLE}`}
-			description="Retour terrain sur la différence entre détection de vulnérabilités et réduction réelle du risque."
+			title={`Preview V4 Article | ${SITE_TITLE}`}
+			description="Preview du template V4 des notes de terrain."
 		/>
 	</head>
 
 	<body>
 		<Header />
+
 		<main>
-			<a href="/notes-de-terrain" class="back">← Retour aux notes de terrain</a>
-			<p class="category">VM FUNDAMENTALS</p>
-			<h1>Une vulnérabilité critique détectée n’a jamais réduit le risque</h1>
-			<p class="meta">5 min de lecture</p>
+	<ArticleHero
+	tag="VM FUNDAMENTALS"
+	title="Pourquoi une CVSS 10 n'est pas toujours votre priorité"
+	subtitle="Une vulnérabilité critique n’a pas toujours le même niveau de risque selon son exposition, son exploitabilité, son contexte métier et la capacité réelle de remédiation."
+	image="/Images/cvss-risque.png"
+	readTime="9 min de lecture"
+	level="Intermédiaire"
+	updated="Mis à jour : juillet 2026"
+	technologies={[
+		'CVSS',
+		'EPSS',
+		'CISA KEV',
+		'Risk Based Prioritization',
+		'Exposure Management'
+	]}
+/>
+/>
+		<ExecutiveSummary title="Executive Summary">
+	<ul>
+		<li>
+			<strong>CVSS mesure une sévérité technique</strong>, mais ne suffit pas à déterminer une priorité opérationnelle.
+		</li>
 
-			<p class="lead">
-				Détecter une vulnérabilité critique est important. Mais tant qu’elle n’est pas qualifiée,
-				assignée, corrigée et vérifiée, le risque demeure.
-			</p>
+		<li>
+			<strong>La priorité</strong> dépend aussi de l’exposition, de l’exploitabilité, du contexte métier et de la présence d’exploits actifs.
+		</li>
 
-			<h2>Détecter n’est pas corriger</h2>
-			<p>
-				Une vulnérabilité détectée reste exploitable tant qu’aucune action n’a été menée.
-				La détection améliore la visibilité, mais elle ne réduit pas automatiquement le risque.
-			</p>
+		<li>
+			Une vulnérabilité critique sur un actif isolé peut être moins urgente qu’une vulnérabilité moins sévère exposée sur Internet.
+		</li>
 
-			<h2>La chaîne de réduction du risque</h2>
-			<p>
-				Pour réduire réellement le risque, il faut une chaîne complète : détection, qualification,
-				priorisation, attribution, remédiation et vérification.
-			</p>
+		<li>
+			Un programme mature ne corrige pas uniquement les scores les plus hauts : il traite d’abord les risques les plus probables et les plus impactants.
+		</li>
+	</ul>
+</ExecutiveSummary>
 
-			<p>
-				Si une seule de ces étapes échoue, la vulnérabilité reste présente dans l’environnement.
-			</p>
+			<<ArticleLayout toc={toc}>
+	<h2 id="contexte">Pourquoi cet article ?</h2>
 
-			<h2>Mesurer ce qui compte</h2>
-			<p>
-				Les indicateurs les plus utiles ne sont pas uniquement le nombre de vulnérabilités détectées,
-				mais aussi le délai moyen de correction, le taux de remédiation et l’évolution de l’exposition.
-			</p>
+	<p>
+		Une vulnérabilité CVSS 10 apparaît dans votre tableau de bord.
+		Que faites-vous ?
+	</p>
 
-			<h2>Conclusion</h2>
-			<p>
-				Une vulnérabilité critique détectée représente une information. Une vulnérabilité critique
-				corrigée représente une réduction du risque.
-			</p>
+	<p>
+		Dans beaucoup d'organisations, la réponse est immédiate :
+		« nous la corrigeons en priorité ».
+	</p>
+
+	<p>
+		Pourtant, cette décision est parfois la mauvaise.
+		Non pas parce que CVSS est inutile,
+		mais parce qu'il répond à une question différente de celle que se pose
+		un responsable sécurité.
+	</p>
+
+	<Callout type="field">
+		<p>
+			CVSS mesure la gravité technique d'une vulnérabilité.
+			Il ne mesure pas le risque réel pour votre organisation.
+		</p>
+	</Callout>
+
+	<h2 id="faux-reflexe">Le faux réflexe : trier uniquement par CVSS</h2>
+
+	<p>
+		Les tableaux de bord sont souvent triés du score le plus élevé au plus faible.
+		Ce fonctionnement est pratique, mais il peut conduire à concentrer les efforts
+		sur des vulnérabilités peu exposées tout en retardant le traitement
+		de risques beaucoup plus concrets.
+	</p>
+
+	<p>
+		Une CVSS 10 sur un serveur isolé n'a pas nécessairement le même impact
+		qu'une CVSS 8.2 exposée sur Internet avec un exploit public disponible.
+	</p>
+
+	<h2 id="probleme">Le vrai problème : prioriser le risque plutôt que le score</h2>
+
+	<p>
+		La priorité opérationnelle repose sur plusieurs facteurs :
+		la sévérité technique, l'exposition, l'exploitabilité,
+		la criticité métier, les contrôles compensatoires
+		et la capacité réelle de remédiation.
+	</p>
+
+	<p>
+		CVSS reste un excellent indicateur,
+		mais il ne constitue qu'une partie de l'équation.
+	</p>
+
+	<TerrainNote context="Priorisation • Arbitrage opérationnel">
+		<p>
+			Lors d'une campagne de remédiation,
+			deux vulnérabilités devaient être traitées.
+		</p>
+
+		<p>
+			La première affichait une CVSS 10
+			sur un serveur de recette isolé.
+			La seconde une CVSS 8.1
+			sur une application exposée à Internet
+			pour laquelle un exploit public existait déjà.
+		</p>
+
+		<p>
+			Le traitement a commencé par la seconde.
+			Le score était inférieur,
+			mais le risque était nettement plus élevé.
+		</p>
+
+		<ul>
+			<li>Contexte pris en compte</li>
+			<li>Exposition analysée</li>
+			<li>Décision basée sur le risque</li>
+		</ul>
+	</TerrainNote>
+
+
+<ArchitectureDiagram
+	title="Construire une priorité de remédiation"
+	image="/Images/diagrams/risk-prioritization.svg"
+	caption="La priorité résulte de plusieurs facteurs, dont CVSS n'est qu'un élément."
+	source="marcmichon.co"
+/>
+
+<DecisionTable
+	title="CVSS ou risque ?"
+	headers={[
+		"Situation",
+		"CVSS",
+		"Risque réel",
+		"Priorité"
+	]}
+	rows={[
+		[
+			"Serveur de recette isolé",
+			"10.0",
+			"🟡 Faible",
+			"Normale"
+		],
+		[
+			"Portail Internet avec exploit public",
+			"8.1",
+			"🔴 Très élevé",
+			"Immédiate"
+		],
+		[
+			"Serveur interne protégé",
+			"9.8",
+			"🟠 Moyen",
+			"Rapide"
+		],
+		[
+			"Poste utilisateur non exposé",
+			"7.5",
+			"🟢 Faible",
+			"Planifiée"
+		]
+	]}
+/>
+
+
+	<h2 id="prioriser">Prioriser le risque plutôt que le score</h2>
+
+<p>
+	Une bonne priorisation consiste à rapprocher plusieurs informations plutôt
+	qu'à suivre uniquement un classement par CVSS.
+</p>
+
+<p>
+	Une vulnérabilité devient prioritaire lorsqu'elle combine plusieurs facteurs :
+	un score élevé, une forte exposition, une exploitation connue,
+	une criticité métier importante et peu de contrôles compensatoires.
+</p>
+
+<p>
+	C'est précisément cette approche qui permet de concentrer les efforts
+	sur les vulnérabilités qui réduiront réellement le risque de l'organisation.
+</p>
+
+<ArticleQuote>
+	CVSS mesure une vulnérabilité.
+	Le risque mesure votre réalité.
+</ArticleQuote>
+
+<h2 id="bonnes-pratiques">Bonnes pratiques</h2>
+
+<Callout type="best">
+	<p>
+		Utilisez CVSS comme point de départ, jamais comme unique critère
+		de priorisation. Intégrez systématiquement l'exposition,
+		le contexte métier et l'existence d'exploits publics.
+	</p>
+</Callout>
+
+<Callout type="warning">
+	<p>
+		Une vulnérabilité critique non exposée n'est pas toujours
+		la première à corriger. À l'inverse, une vulnérabilité moins sévère
+		peut devenir prioritaire si elle est facilement exploitable.
+	</p>
+</Callout>
+
+<Callout type="error">
+	<p>
+		L'erreur la plus fréquente consiste à vouloir traiter
+		toutes les CVSS 9 et 10 avant le reste,
+		sans prendre en compte le contexte réel.
+	</p>
+</Callout>
+
+				<h2 id="checklist">Checklist opérationnelle</h2>
+
+<h2 id="checklist">Checklist opérationnelle</h2>
+
+<Checklist
+	title="Checklist de priorisation des vulnérabilités"
+	items={[
+		'Vérifier le score CVSS.',
+		'Identifier si un exploit public existe.',
+		'Évaluer l’exposition Internet.',
+		'Prendre en compte la criticité métier.',
+		'Identifier les contrôles compensatoires.',
+		'Définir une priorité basée sur le risque.',
+		'Mesurer la réduction réelle du risque après remédiation.',
+	]}
+/>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>
+	CVSS constitue un excellent indicateur de sévérité technique,
+	mais il ne représente qu'une partie du risque.
+</p>
+
+<p>
+	La priorité opérationnelle résulte toujours d'une combinaison
+	de facteurs techniques, métier et contextuels.
+</p>
+
+<p>
+	Les organisations les plus matures ne corrigent pas
+	les vulnérabilités ayant le score le plus élevé.
+	Elles corrigent d'abord celles qui réduisent le plus
+	leur exposition réelle.
+</p>
+
+<Callout type="field">
+	<p>
+		<strong>Question pour votre organisation :</strong>
+
+		Aujourd'hui, combien de vos vulnérabilités critiques
+		sont réellement exploitables dans votre contexte ?
+	</p>
+</Callout>
+
+<RelatedArticles
+	articles={[
+		{
+			href: '/articles/programmes-vm-echec-scan',
+			category: 'VM FUNDAMENTALS',
+			title: 'Pourquoi les programmes de Vulnerability Management échouent rarement à cause du moteur de scan',
+			description: 'Pourquoi la gouvernance, les processus et les équipes font la différence.',
+		},
+		{
+			href: '/articles/assets-inconnus-visibilite',
+			category: 'VM FUNDAMENTALS',
+			title: 'Pourquoi les assets inconnus détruisent votre visibilité sécurité',
+			description: 'Avant de réduire le risque, encore faut-il connaître son patrimoine.',
+		},
+	]}
+/>
+			</ArticleLayout>
 		</main>
+
 		<Footer />
 	</body>
 </html>
 
 <style>
-	main { max-width: 820px; margin: 0 auto; padding: 5rem 1.5rem; }
-	.back { display: inline-block; margin-bottom: 2rem; color: #2563eb; font-weight: 700; text-decoration: none; }
-	.category { color: #2563eb; font-weight: 800; letter-spacing: .1em; font-size: .85rem; }
-	h1 { font-size: 3.5rem; line-height: 1.05; margin-bottom: 1rem; }
-	.meta { color: #64748b; margin-bottom: 2rem; }
-	.lead { font-size: 1.35rem; line-height: 1.7; color: #334155; margin-bottom: 3rem; }
-	h2 { font-size: 1.8rem; margin-top: 3rem; }
-	p { font-size: 1.1rem; line-height: 1.8; color: #334155; }
-	@media (max-width: 768px) { h1 { font-size: 2.6rem; } }
+	body {
+		background: #f8fafc;
+	}
+
+	main {
+		width: min(1320px, calc(100% - 4rem));
+		margin: 0 auto;
+		padding: 3rem 0 5rem;
+	}
+
+	@media (max-width: 640px) {
+		main {
+			width: min(100% - 2rem, 1320px);
+		}
+	}
 </style>

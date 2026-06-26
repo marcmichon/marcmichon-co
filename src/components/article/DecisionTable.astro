@@ -1,0 +1,177 @@
+---
+interface Props {
+	title?: string;
+	headers: string[];
+	rows: string[][];
+}
+
+const {
+	title = "Tableau de décision",
+	headers,
+	rows,
+} = Astro.props;
+---
+
+<section class="decision-table">
+
+	<div class="table-header">
+		<p class="eyebrow">TABLEAU DE DÉCISION</p>
+
+		<h3>{title}</h3>
+	</div>
+
+	<div class="table-wrapper">
+
+		<table>
+
+			<thead>
+				<tr>
+					{headers.map(header => (
+						<th>{header}</th>
+					))}
+				</tr>
+			</thead>
+
+			<tbody>
+
+				{rows.map(row => (
+
+					<tr>
+
+						{row.map(cell => (
+							<td>{cell}</td>
+						))}
+
+					</tr>
+
+				))}
+
+			</tbody>
+
+		</table>
+
+	</div>
+
+</section>
+
+<style>
+
+.decision-table{
+
+	margin:4rem 0;
+
+	border-radius:28px;
+
+	background:white;
+
+	border:1px solid #e2e8f0;
+
+	box-shadow:
+	0 15px 35px rgba(15,23,42,.05);
+
+	overflow:hidden;
+
+}
+
+.table-header{
+
+	padding:2rem 2rem 1.5rem;
+
+	border-bottom:1px solid #e2e8f0;
+
+}
+
+.eyebrow{
+
+	margin:0;
+
+	color:#2563eb;
+
+	font-size:.82rem;
+
+	font-weight:900;
+
+	letter-spacing:.16em;
+
+	text-transform:uppercase;
+
+}
+
+.table-header h3{
+
+	margin:.4rem 0 0;
+
+	font-size:1.8rem;
+
+	font-weight:900;
+
+	color:#0f172a;
+
+}
+
+.table-wrapper{
+
+	overflow:auto;
+
+}
+
+table{
+
+	width:100%;
+
+	border-collapse:collapse;
+
+}
+
+th{
+
+	background:#f8fafc;
+
+	color:#0f172a;
+
+	font-weight:800;
+
+	text-align:left;
+
+	padding:1rem 1.25rem;
+
+	border-bottom:1px solid #e2e8f0;
+
+}
+
+td{
+
+	padding:1rem 1.25rem;
+
+	border-bottom:1px solid #eef2f7;
+
+	color:#334155;
+
+	line-height:1.6;
+
+}
+
+tbody tr:hover{
+
+	background:#f8fbff;
+
+}
+
+tbody tr:last-child td{
+
+	border-bottom:none;
+
+}
+
+@media(max-width:768px){
+
+	th,
+	td{
+
+		white-space:nowrap;
+
+	}
+
+}
+
+</style>

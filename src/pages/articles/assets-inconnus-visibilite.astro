@@ -2,77 +2,335 @@
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import ArticleHero from '../../components/article/ArticleHero.astro';
+import ArticleLayout from '../../components/article/ArticleLayout.astro';
+import Callout from '../../components/article/Callout.astro';
+import Checklist from '../../components/article/Checklist.astro';
+import RelatedArticles from '../../components/article/RelatedArticles.astro';
+import ArticleQuote from '../../components/article/ArticleQuote.astro';
+import ExecutiveSummary from '../../components/article/ExecutiveSummary.astro';
 import { SITE_TITLE } from '../../consts';
+import TerrainNote from '../../components/article/TerrainNote.astro';
+import ArchitectureDiagram from '../../components/article/ArchitectureDiagram.astro';
+import DecisionTable from '../../components/article/DecisionTable.astro';
+
+const toc = [
+	{ id: 'contexte', label: 'Pourquoi cet article ?' },
+	{ id: 'illusion', label: 'Le faux sentiment de maîtrise' },
+	{ id: 'probleme', label: 'Le vrai problème' },
+	{ id: 'visibilite', label: 'Construire une visibilité fiable' },
+	{ id: 'bonnes-pratiques', label: 'Bonnes pratiques' },
+	{ id: 'checklist', label: 'Checklist' },
+	{ id: 'conclusion', label: 'Conclusion' },
+];
 ---
 
 <!doctype html>
 <html lang="fr">
 	<head>
 		<BaseHead
-			title={`Pourquoi les assets inconnus détruisent votre visibilité sécurité | ${SITE_TITLE}`}
-			description="Retour terrain sur l’importance de l’inventaire et de la visibilité dans un programme de sécurité."
+			title={`Preview V4 Article | ${SITE_TITLE}`}
+			description="Preview du template V4 des notes de terrain."
 		/>
 	</head>
 
 	<body>
 		<Header />
+
 		<main>
-			<a href="/notes-de-terrain" class="back">← Retour aux notes de terrain</a>
-			<p class="category">VM FUNDAMENTALS</p>
-			<h1>Pourquoi les assets inconnus détruisent votre visibilité sécurité</h1>
-			<p class="meta">4 min de lecture</p>
+			<ArticleHero
+	tag="VM FUNDAMENTALS"
+	title="Pourquoi les assets inconnus détruisent votre visibilité sécurité"
+	subtitle="La majorité des organisations pensent connaître leur système d'information. Pourtant, les actifs absents des inventaires représentent souvent le premier angle mort d'un programme de cybersécurité."
+	image="/Images/assets-inconnus.png"
+	readTime="8 min de lecture"
+	level="Intermédiaire"
+	updated="Mis à jour : juillet 2026"
+	technologies={[
+		'Rapid7',
+		'SentinelOne',
+		'CMDB',
+		'Discovery',
+		'Exposure Management'
+	]}
+/>
+			<ExecutiveSummary title="Executive Summary">
+	<ul>
+		<li>
+			<strong>Un actif inconnu</strong> ne sera ni scanné, ni supervisé, ni corrigé.
+		</li>
 
-			<p class="lead">
-				On ne protège pas ce qu’on ne connaît pas. Les actifs inconnus constituent souvent
-				le premier angle mort d’un programme de sécurité.
-			</p>
+		<li>
+			<strong>Aucun outil</strong> ne possède à lui seul une vision complète du système d'information.
+		</li>
 
-			<h2>La visibilité avant la sécurité</h2>
-			<p>
-				Avant de parler de vulnérabilités, de détection ou de remédiation, il faut savoir
-				ce qui compose réellement le système d’information.
-			</p>
+		<li>
+			La visibilité repose sur la consolidation de plusieurs sources d'inventaire.
+		</li>
 
-			<p>
-				Un serveur oublié, une VM temporaire, une application exposée ou un environnement de test
-				peuvent rapidement devenir des zones non supervisées.
-			</p>
+		<li>
+			Avant de réduire les vulnérabilités, une organisation doit connaître son patrimoine réel.
+		</li>
+	</ul>
+</ExecutiveSummary>
 
-			<h2>Le risque des angles morts</h2>
-			<p>
-				Un actif inconnu est rarement scanné, rarement maintenu, rarement surveillé et rarement
-				rattaché à un propriétaire clair.
-			</p>
+			<ArticleLayout toc={toc}>
+	<h2 id="contexte">Pourquoi cet article ?</h2>
 
-			<p>
-				C’est précisément ce qui le rend dangereux : il existe dans l’environnement, mais en dehors
-				des processus de sécurité.
-			</p>
+	<p>
+		Dans beaucoup d’organisations, la visibilité sécurité repose sur une hypothèse
+		simple : le parc informatique est connu, inventorié et suivi.
+	</p>
 
-			<h2>Inventaire continu</h2>
-			<p>
-				La découverte d’actifs ne doit pas être un exercice ponctuel. Elle doit devenir un processus
-				continu, capable de détecter les évolutions de la surface d’attaque.
-			</p>
+	<p>
+		En pratique, cette hypothèse est rarement totalement vraie. La CMDB décrit une
+		partie du système d’information, le scanner de vulnérabilités en voit une autre,
+		l’EDR remonte les machines protégées, le DHCP observe les équipements connectés,
+		et le cloud ajoute des ressources parfois éphémères.
+	</p>
 
-			<h2>Conclusion</h2>
-			<p>
-				La visibilité est la base de tout programme de sécurité. Avant de prioriser les vulnérabilités,
-				il faut d’abord s’assurer que les actifs sont connus, qualifiés et rattachés aux bons propriétaires.
-			</p>
+	<p>
+		Le problème ne vient pas nécessairement d’un manque d’outils. Il vient plutôt
+		d’un manque de consolidation entre les sources d’inventaire.
+	</p>
+
+	<Callout type="field">
+		<p>
+			Sur le terrain, le premier angle mort d’un programme de sécurité n’est pas
+			toujours la vulnérabilité critique. C’est souvent l’actif qui n’apparaît dans
+			aucun référentiel fiable.
+		</p>
+	</Callout>
+
+		<h2 id="illusion">Le faux sentiment de maîtrise</h2>
+
+<p>
+	Une entreprise peut disposer d’une CMDB, d’un EDR, d’un scanner de vulnérabilités,
+	d’un annuaire Active Directory, d’un MDM et d’outils cloud… tout en ayant encore
+	des angles morts.
+</p>
+
+<p>
+	Chaque outil observe une réalité différente. La CMDB décrit les actifs déclarés.
+	L’EDR voit les machines protégées. Le scanner voit ce qu’il parvient à atteindre.
+	Le DHCP observe les équipements connectés. Le cloud expose des ressources qui
+	peuvent apparaître et disparaître rapidement.
+</p>
+
+<p>
+	Le risque apparaît lorsque ces visions restent séparées. L’organisation pense
+	connaître son parc, mais aucune source ne permet réellement de répondre seule à
+	la question : <strong>qu’est-ce qui existe vraiment ?</strong>
+</p>
+
+<h2 id="probleme">Le vrai problème : ce qui n’est pas vu n’est pas traité</h2>
+
+<p>
+	Une vulnérabilité détectée peut être analysée, priorisée et corrigée. Un actif
+	inconnu, lui, ne rentre dans aucun processus.
+</p>
+
+<p>
+	Il ne sera pas scanné, pas supervisé, pas patché, pas rattaché à un propriétaire
+	et parfois même jamais identifié comme faisant partie du système d’information.
+</p>
+
+<p>
+	C’est précisément pour cette raison que les assets inconnus peuvent représenter
+	un risque supérieur à une vulnérabilité critique correctement détectée.
+</p>
+
+<TerrainNote context="Découverte sécurité • Plusieurs milliers d’actifs">
+	<p>
+		Lors d’un projet de consolidation d’inventaire, le rapprochement entre la CMDB,
+		le scanner de vulnérabilités et l’EDR a mis en évidence plusieurs centaines
+		d’actifs absents de tout inventaire officiel.
+	</p>
+
+	<p>
+		Certaines machines existaient depuis plusieurs années. D’autres étaient encore
+		utilisées quotidiennement, mais sans propriétaire clairement identifié.
+	</p>
+
+	<p>
+		Le premier bénéfice du projet n’a pas été la réduction immédiate des vulnérabilités.
+		Le premier bénéfice a été la découverte du patrimoine réel.
+	</p>
+
+	<ul>
+		<li>Actifs oubliés identifiés</li>
+		<li>Vision consolidée du parc</li>
+		<li>Ownership clarifié</li>
+	</ul>
+</TerrainNote>
+
+
+<ArchitectureDiagram
+	title="Consolidation de la visibilité"
+	image="/Images/diagrams/assets-discovery.svg"
+	caption="La visibilité sécurité repose sur la consolidation de plusieurs sources : CMDB, scanner, EDR, DHCP, cloud et discovery réseau."
+	source="marcmichon.co"
+/>
+
+<DecisionTable
+	title="Qualifier les écarts d'inventaire"
+	headers={[
+		"Situation",
+		"Risque",
+		"Priorité",
+		"Action"
+	]}
+	rows={[
+		[
+			"Actif vu uniquement par le DHCP",
+			"🔴 Élevé",
+			"Immédiate",
+			"Identifier et qualifier"
+		],
+		[
+			"Vu par le scanner mais absent de la CMDB",
+			"🟠 Moyen",
+			"Rapide",
+			"Créer ou corriger l'inventaire"
+		],
+		[
+			"Vu uniquement par l'EDR",
+			"🟡 À vérifier",
+			"Normale",
+			"Contrôler l'enrôlement"
+		],
+		[
+			"Présent dans toutes les sources",
+			"🟢 Maîtrisé",
+			"Standard",
+			"Superviser normalement"
+		]
+	]}
+/>
+
+
+				<h2 id="visibilite">Construire une visibilité fiable</h2>
+
+<p>
+	Aucun outil ne possède une vision complète du système d'information.
+	Un scanner de vulnérabilités découvre les systèmes qu'il peut atteindre.
+	Un EDR protège les machines sur lesquelles il est déployé.
+	Une CMDB décrit les actifs qui ont été déclarés.
+</p>
+
+<p>
+	Le DHCP observe les équipements qui se connectent au réseau.
+	Les plateformes cloud créent et suppriment des ressources parfois en quelques minutes.
+	Chaque source apporte une partie de la réalité.
+</p>
+
+<p>
+	La véritable valeur apparaît lorsque ces sources sont rapprochées.
+	C'est cette consolidation qui permet d'identifier les écarts,
+	de qualifier les actifs inconnus et d'améliorer progressivement
+	la qualité de l'inventaire.
+</p>
+
+<ArticleQuote>
+	La qualité d'un programme de cybersécurité dépend d'abord de la qualité de sa visibilité.
+</ArticleQuote>
+
+<h2 id="bonnes-pratiques">Bonnes pratiques</h2>
+
+<Callout type="best">
+	<p>
+		L'objectif n'est pas de construire un inventaire parfait.
+		L'objectif est de réduire progressivement les angles morts en consolidant
+		plusieurs sources d'information plutôt qu'en faisant confiance à un seul outil.
+	</p>
+</Callout>
+
+<Callout type="error">
+	<p>
+		L'erreur la plus fréquente consiste à considérer la CMDB ou le scanner
+		de vulnérabilités comme une source unique de vérité. Chaque référentiel
+		possède ses propres limites.
+	</p>
+</Callout>
+
+				<h2 id="checklist">Checklist opérationnelle</h2>
+
+<Checklist
+	title="Checklist de visibilité sécurité"
+	items={[
+		'Identifier les sources d’inventaire disponibles : CMDB, EDR, scanner, DHCP, cloud, MDM.',
+		'Comparer régulièrement les écarts entre les référentiels.',
+		'Qualifier les actifs présents dans une source mais absents des autres.',
+		'Identifier un propriétaire pour chaque actif découvert.',
+		'Distinguer les actifs temporaires, obsolètes, oubliés ou réellement inconnus.',
+		'Intégrer les actifs qualifiés dans les processus de scan, supervision et remédiation.',
+		'Mesurer régulièrement le taux de couverture de l’inventaire sécurité.',
+	]}
+/>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>
+	Une vulnérabilité détectée peut être analysée, priorisée et corrigée.
+	Un actif inconnu, lui, reste en dehors des processus de sécurité.
+</p>
+
+<p>
+	C’est pour cette raison que la visibilité doit être considérée comme une brique
+	fondamentale d’un programme de cybersécurité. Avant de vouloir réduire le risque,
+	il faut d’abord savoir ce qui existe réellement.
+</p>
+
+<p>
+	On ne protège pas ce que l’on ignore. On pilote uniquement ce que l’on voit.
+</p>
+
+<Callout type="field">
+	<p>
+		<strong>Question pour votre organisation :</strong>
+		si vous comparez aujourd’hui votre CMDB, votre scanner de vulnérabilités,
+		votre EDR, vos services cloud et vos données réseau, combien d’actifs
+		différents allez-vous réellement retrouver ?
+	</p>
+</Callout>
+
+<RelatedArticles
+	articles={[
+		{
+			href: '/articles/tagging-vulnerability-management',
+			category: 'VM FUNDAMENTALS',
+			title: 'Le tagging est le pilier oublié du Vulnerability Management',
+			description: 'Pourquoi un modèle de tagging transforme un inventaire technique en outil de pilotage opérationnel.',
+		},
+		{
+			href: '/articles/programmes-vm-echec-scan',
+			category: 'VM FUNDAMENTALS',
+			title: 'Pourquoi les programmes VM échouent rarement à cause du moteur de scan',
+			description: 'Le vrai problème se situe souvent ailleurs : gouvernance, processus et remédiation.',
+		},
+	]}
+/>
+			</ArticleLayout>
 		</main>
+
 		<Footer />
 	</body>
 </html>
 
 <style>
-	main { max-width: 820px; margin: 0 auto; padding: 5rem 1.5rem; }
-	.back { display: inline-block; margin-bottom: 2rem; color: #2563eb; font-weight: 700; text-decoration: none; }
-	.category { color: #2563eb; font-weight: 800; letter-spacing: .1em; font-size: .85rem; }
-	h1 { font-size: 3.5rem; line-height: 1.05; margin-bottom: 1rem; }
-	.meta { color: #64748b; margin-bottom: 2rem; }
-	.lead { font-size: 1.35rem; line-height: 1.7; color: #334155; margin-bottom: 3rem; }
-	h2 { font-size: 1.8rem; margin-top: 3rem; }
-	p { font-size: 1.1rem; line-height: 1.8; color: #334155; }
-	@media (max-width: 768px) { h1 { font-size: 2.6rem; } }
+	body {
+		background: #f8fafc;
+	}
+
+	main {
+		width: min(1320px, calc(100% - 4rem));
+		margin: 0 auto;
+		padding: 3rem 0 5rem;
+	}
+
+	@media (max-width: 640px) {
+		main {
+			width: min(100% - 2rem, 1320px);
+		}
+	}
 </style>

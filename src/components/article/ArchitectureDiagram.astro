@@ -1,0 +1,105 @@
+---
+interface Props {
+	title?: string;
+	image: string;
+	caption?: string;
+	source?: string;
+}
+
+const {
+	title = 'Schéma d’architecture',
+	image,
+	caption = '',
+	source = '',
+} = Astro.props;
+---
+
+<figure class="architecture-diagram">
+	<div class="diagram-header">
+		<p>{title}</p>
+	</div>
+
+	<div class="diagram-visual">
+		<img src={image} alt={caption || title} />
+	</div>
+
+	{(caption || source) && (
+		<figcaption>
+			{caption && <span>{caption}</span>}
+			{source && <small>{source}</small>}
+		</figcaption>
+	)}
+</figure>
+
+<style>
+	.architecture-diagram {
+		margin: 4rem 0;
+		border-radius: 28px;
+		background: white;
+		border: 1px solid #e5e7eb;
+		overflow: hidden;
+		box-shadow: 0 20px 45px rgba(15,23,42,.06);
+	}
+
+	.diagram-header {
+		padding: 1.3rem 1.8rem;
+		background:
+			radial-gradient(circle at 20% 0%, rgba(37,99,235,.18), transparent 35%),
+			linear-gradient(135deg, #020817 0%, #06142d 55%, #031b4d 100%);
+		color: white;
+	}
+
+	.diagram-header p {
+		margin: 0;
+		font-size: .82rem;
+		font-weight: 900;
+		letter-spacing: .14em;
+		text-transform: uppercase;
+		color: #dbeafe;
+	}
+
+	.diagram-visual {
+		padding: 2rem;
+		background: #f8fafc;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.diagram-visual img {
+		max-width: 100%;
+		height: auto;
+		display: block;
+		border-radius: 18px;
+	}
+
+	figcaption {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 1rem 1.8rem;
+		border-top: 1px solid #e5e7eb;
+		color: #475569;
+		font-size: .95rem;
+		line-height: 1.5;
+	}
+
+	figcaption span {
+		font-weight: 700;
+		color: #334155;
+	}
+
+	figcaption small {
+		color: #64748b;
+	}
+
+	@media (max-width: 640px) {
+		.diagram-visual {
+			padding: 1rem;
+		}
+
+		figcaption {
+			flex-direction: column;
+		}
+	}
+</style>
