@@ -1,3 +1,4 @@
+```astro
 ---
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
@@ -62,18 +63,37 @@ const principles = [
 		<Header />
 
 		<main>
-			<section class="hero">
-				<div class="hero-content">
-					<p class="eyebrow">À PROPOS</p>
-					<h1>Partager ce que le terrain m’a appris.</h1>
-					<span class="hero-line"></span>
-					<p>
-						Après plusieurs années à accompagner des organisations sur leurs programmes de
-						cybersécurité, j’ai créé marcmichon.co pour partager des méthodes, des retours
-						d’expérience et des principes qui dépassent les outils.
-					</p>
-				</div>
-			</section>
+		<section class="hero">
+	<div class="hero-content">
+		<p class="eyebrow">À PROPOS</p>
+
+		<h1>Partager ce que le terrain m’a appris.</h1>
+
+		<span class="hero-line"></span>
+
+		<p class="hero-company">
+	Je suis ingénieur réseaux et sécurité chez
+	<a
+		href="https://www.acknowledge.fr"
+		target="_blank"
+		rel="noopener noreferrer"
+		class="ack-logo"
+		aria-label="ACKnowledge"
+	>
+		<img src="/Images/ACKnowledge-logo-transparent.png" alt="ACKnowledge" />
+	</a>,
+	où j’accompagne des organisations dans la conception, le déploiement
+	et l’exploitation de solutions de cybersécurité.
+</p>
+	
+
+		<p>
+			J’ai créé <strong>marcmichon.co</strong> pour partager des méthodes,
+			des retours d’expérience et des principes issus du terrain,
+			qui dépassent les outils et restent utiles quelle que soit la technologie utilisée.
+		</p>
+	</div>
+</section>
 
 			<section class="two-columns">
 				<article class="plain-block">
@@ -110,7 +130,10 @@ const principles = [
 						reconstruire, d’une erreur à comprendre ou d’une décision à prendre avec peu
 						d’informations.
 					</p>
-					<p>Chaque Note publiée ici est inspirée de situations réelles.</p>
+					<p>
+						Chaque Note publiée ici est inspirée de situations réelles, sans jamais divulguer
+						d’informations confidentielles concernant les organisations accompagnées.
+					</p>
 				</article>
 			</section>
 
@@ -181,16 +204,31 @@ const principles = [
 
 				<article>
 					<div class="icon">▣</div>
-					<h2>Mon parcours</h2>
+					<h2>Ce que le terrain m’a appris</h2>
+
 					<p>
-						Je suis ingénieur cybersécurité. J’accompagne des organisations sur des sujets
-						tels que le Vulnerability Management, la détection, la protection des endpoints,
-						la segmentation réseau, la gestion des accès privilégiés et la gouvernance sécurité.
+						Au fil des missions menées chez
+						<a
+							href="https://www.acknowledge.fr"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							ACKnowledge
+						</a>,
+						j’ai travaillé sur des sujets tels que le Vulnerability Management,
+						l’Endpoint Protection, le PAM, la segmentation réseau,
+						la détection et la réponse aux incidents.
 					</p>
+
 					<p>
 						Au-delà des technologies, les mêmes questions reviennent régulièrement :
-						comment prioriser, comment gouverner, comment mesurer la réduction du risque et
-						comment construire un programme durable.
+						comment prioriser, comment gouverner, comment mesurer la réduction du risque
+						et comment construire un programme durable.
+					</p>
+
+					<p>
+						C’est cette expérience opérationnelle, anonymisée et reformulée sous forme
+						de principes, que j’essaie de partager dans les Notes de terrain.
 					</p>
 				</article>
 			</section>
@@ -251,14 +289,14 @@ const principles = [
 		align-items: center;
 		background:
 			linear-gradient(90deg, rgba(2,8,23,.94) 0%, rgba(2,8,23,.82) 42%, rgba(2,8,23,.18) 100%),
-			url('/Images/about-workspace-hero.png');
+			url('/Images/fond-apropos.png');
 		background-size: cover;
 		background-position: center right;
 		box-shadow: 0 25px 70px rgba(2,8,23,.22);
 	}
 
 	.hero-content {
-		max-width: 620px;
+		max-width: 700px;
 		padding: 4.5rem;
 		color: white;
 	}
@@ -289,11 +327,57 @@ const principles = [
 		margin: 2rem 0;
 	}
 
-	.hero p:last-child {
-		margin: 0;
+	.hero p {
+		margin: 0 0 1rem;
 		color: #dbeafe;
 		font-size: 1.25rem;
 		line-height: 1.75;
+	}
+
+	.hero p:last-child {
+		margin-bottom: 0;
+	}
+
+	.hero strong {
+		color: white;
+		font-weight: 900;
+	}
+
+	.hero-company-block {
+	margin: 0 0 1.4rem;
+}
+
+.hero-company {
+	margin: 0 0 1rem;
+	color: #dbeafe;
+	font-size: 1.25rem;
+	line-height: 1.75;
+}
+
+.ack-logo {
+	display: inline-flex;
+	align-items: center;
+	vertical-align: middle;
+	margin: 0 .2rem 0 .35rem;
+	text-decoration: none;
+}
+
+.ack-logo img {
+	width: 160px;
+	height: auto;
+	max-height: 180px;
+	object-fit: contain;
+	display: block;
+	transform: translateY(-1px);
+}
+
+.ack-logo-block:hover img {
+	transform: translateY(-2px);
+	opacity: .95;
+}
+	.ack-logo:hover img {
+		transform: translateY(-3px);
+		opacity: .95;
 	}
 
 	.two-columns,
@@ -364,6 +448,16 @@ const principles = [
 	strong {
 		color: #2563eb;
 		font-weight: 900;
+	}
+
+	a {
+		color: #2563eb;
+		font-weight: 900;
+		text-decoration: none;
+	}
+
+	a:hover {
+		text-decoration: underline;
 	}
 
 	blockquote {
@@ -563,6 +657,11 @@ const principles = [
 		white-space: nowrap;
 	}
 
+	.cta a:hover {
+		text-decoration: none;
+		background: rgba(255,255,255,.08);
+	}
+
 	@media (max-width: 980px) {
 		main {
 			width: min(100% - 2rem, 1320px);
@@ -571,7 +670,7 @@ const principles = [
 		.hero {
 			background:
 				linear-gradient(rgba(2,8,23,.86), rgba(2,8,23,.86)),
-				url('/Images/about-workspace-hero.png');
+				url('/Images/fond-apropos.png');
 			background-size: cover;
 			background-position: center;
 		}
@@ -583,6 +682,11 @@ const principles = [
 		.hero h1 {
 			font-size: 3.2rem;
 		}
+
+.ack-logo img {
+	width: 120px;
+	max-height: 36px;
+}
 
 		.two-columns,
 		.content-grid,
@@ -610,3 +714,4 @@ const principles = [
 		}
 	}
 </style>
+```
