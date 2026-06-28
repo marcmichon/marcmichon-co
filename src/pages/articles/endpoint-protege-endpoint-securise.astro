@@ -1,0 +1,358 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ArticleHero from '../../components/article/ArticleHero.astro';
+import ArticleLayout from '../../components/article/ArticleLayout.astro';
+import Callout from '../../components/article/Callout.astro';
+import Checklist from '../../components/article/Checklist.astro';
+import RelatedArticles from '../../components/article/RelatedArticles.astro';
+import ArticleQuote from '../../components/article/ArticleQuote.astro';
+import ExecutiveSummary from '../../components/article/ExecutiveSummary.astro';
+import TerrainNote from '../../components/article/TerrainNote.astro';
+import { SITE_TITLE } from '../../consts';
+
+const toc = [
+	{ id: 'contexte', label: 'Pourquoi cet article ?' },
+	{ id: 'confusion', label: 'La confusion fréquente' },
+	{ id: 'edr', label: 'Ce qu’un EDR apporte' },
+	{ id: 'terrain', label: 'Ce que le terrain montre' },
+	{ id: 'couches', label: 'Une sécurité par couches' },
+	{ id: 'checklist', label: 'Checklist' },
+	{ id: 'conclusion', label: 'Conclusion' },
+];
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`Pourquoi un endpoint protégé n'est pas forcément un endpoint sécurisé | ${SITE_TITLE}`}
+			description="Installer un EDR est une étape essentielle, mais ce n'est pas une garantie de sécurité. Une Note de terrain sur la différence entre endpoint protégé et endpoint sécurisé."
+		/>
+	</head>
+
+	<body>
+		<Header />
+
+		<main>
+			<ArticleHero
+				tag="ENDPOINT SECURITY"
+				title="Pourquoi un endpoint protégé n'est pas forcément un endpoint sécurisé"
+				subtitle="Installer un agent de protection est une étape essentielle. Mais la sécurité d’un endpoint ne se résume jamais à la présence d’un EDR."
+				image="/Images/secops.png"
+				readTime="3 min de lecture"
+				updated="Mis à jour : 28 juillet 2026"
+				technologies={[
+					'Endpoint Security',
+					'EDR',
+					'Posture de sécurité',
+					'Defense in Depth',
+					'Security Operations'
+				]}
+			/>
+
+			<ExecutiveSummary title="Executive Summary">
+				<ul>
+					<li>
+						Un endpoint protégé par un EDR n’est pas automatiquement un endpoint sécurisé.
+					</li>
+					<li>
+						La sécurité repose sur plusieurs couches : patching, configuration, identités,
+						privilèges, segmentation, supervision et réponse.
+					</li>
+					<li>
+						Une console au vert peut masquer des vulnérabilités, des exclusions ou des
+						politiques mal appliquées.
+					</li>
+					<li>
+						La bonne question n’est pas seulement “l’agent est-il présent ?”, mais
+						“contre quels risques cet endpoint est-il réellement protégé ?”.
+					</li>
+				</ul>
+			</ExecutiveSummary>
+
+			<ArticleLayout toc={toc}>
+	<h2 id="contexte">Pourquoi cet article ?</h2>
+
+	<p>
+		Aujourd'hui, la plupart des organisations disposent d'une solution EDR.
+
+C'est devenu un standard.
+
+Pourtant, une confusion revient régulièrement.
+
+La présence d'un agent est souvent assimilée à un niveau de sécurité.
+
+Sur le terrain, ce raccourci est rarement aussi simple.
+	</p>
+
+	<p>
+		Lorsqu’une organisation déploie un EDR, un indicateur revient presque
+		systématiquement dans les tableaux de bord : le taux de déploiement
+		des agents.
+	</p>
+
+	<ArticleQuote>
+		92%, 95 %, 98 %.  Ces chiffres sont rassurants.
+	</ArticleQuote>
+
+	<p>
+		Ils donnent le sentiment que le parc est désormais protégé.
+		Pourtant, au fil des missions, j’ai constaté que cet indicateur répond
+		surtout à une question simple : des agents sont-ils installés ?
+	</p>
+
+	<p>
+		Il ne répond pas toujours à la question qui intéresse réellement
+		une équipe sécurité : ces endpoints sont-ils effectivement sécurisés ?
+	</p>
+
+	<Callout type="field">
+		<p>
+			<strong>À retenir :</strong> la présence d’un agent EDR indique qu’une
+			couche de protection est en place. Elle ne suffit pas à qualifier
+			à elle seule le niveau de sécurité réel d’un endpoint.
+		</p>
+	</Callout>
+
+	<h2 id="confusion">La confusion fréquente</h2>
+
+	<p>
+		Dans beaucoup d’environnements, le raisonnement implicite ressemble à ceci :
+	</p>
+
+	<p>
+		<strong>Agent installé</strong> → <strong>endpoint protégé</strong> →
+		<strong>endpoint sécurisé</strong>.
+	</p>
+
+	<p>
+		Cette logique est compréhensible, mais elle est incomplète.
+	</p>
+
+	<p>
+		Un agent déployé signifie qu’une solution est présente sur le poste.
+		Il ne dit pas tout de la politique réellement appliquée, des exclusions
+		en place, des fonctionnalités activées, du niveau de patching ou de la
+		configuration globale de la machine.
+	</p>
+
+	<p>
+		C’est souvent là que naît le faux sentiment de maîtrise.
+	</p>
+
+	<h2 id="edr">Ce qu’un EDR apporte réellement</h2>
+
+	<p>
+		Les EDR modernes sont devenus des plateformes extrêmement puissantes.
+	</p>
+
+	<ul>
+		<li>Détection comportementale</li>
+		<li>Analyse des processus</li>
+		<li>Investigation des événements système</li>
+		<li>Isolement d’un poste compromis</li>
+		<li>Blocage ou remédiation de certains comportements malveillants</li>
+		<li>Support aux opérations SOC et aux investigations</li>
+	</ul>
+<p>
+		Pourtant...
+	</p>
+	<p>
+		Ces capacités sont essentielles dans une stratégie de défense moderne.
+		Mais elles ne remplacent pas les autres couches de sécurité.
+	</p>
+
+	<Callout type="warning">
+		<p>
+			Un EDR peut détecter ou bloquer certains comportements malveillants.
+			Il ne corrigera pas un système non maintenu, une application vulnérable,
+			des privilèges locaux excessifs ou une segmentation réseau insuffisante.
+		</p>
+	</Callout>
+
+	<h2 id="terrain">Ce que le terrain montre</h2>
+
+	<p>
+		À plusieurs reprises, je suis intervenu sur des environnements où la console
+		affichait un excellent niveau de couverture.
+	</p>
+
+	<p>
+		Les agents étaient présents. Les machines communiquaient correctement.
+		Les tableaux de bord étaient globalement au vert.
+	</p>
+
+	<p>
+		Sur le papier, tout semblait fonctionner.
+	</p>
+
+	<p>
+		Puis les premières analyses commençaient.
+	</p>
+
+	<TerrainNote context="Endpoint Security • Console au vert">
+		<p>
+			En creusant un peu, les premiers écarts apparaissaient rapidement :
+			exclusions créées plusieurs années auparavant, politiques différentes
+			entre groupes pourtant similaires, protections désactivées pour résoudre
+			un incident puis jamais réactivées, versions d’agents hétérogènes,
+			ou équipements oubliés dans des groupes de test.
+		</p>
+
+		<p>
+			L’EDR faisait exactement ce qu’on lui demandait.
+			Le problème venait surtout de tout ce qui s’était construit autour de lui.
+		</p>
+
+		<ul>
+			<li>Agent présent</li>
+			<li>Configuration hétérogène</li>
+			<li>Protection réelle difficile à qualifier</li>
+		</ul>
+	</TerrainNote>
+
+	<p>
+		Dans ce type de situation, le problème n’est pas nécessairement l’outil.
+		Le problème est de demander à une console EDR de répondre à une question
+		pour laquelle elle n’a jamais été conçue seule.
+	</p>
+
+	<ArticleQuote>
+		Un EDR indique qu’une couche de protection est en place.
+	
+        Il ne prouve pas que tout l’endpoint est sécurisé.
+	</ArticleQuote>
+
+	<h2 id="couches">Un endpoint sécurisé repose sur plusieurs couches</h2>
+
+	<p>
+		La sécurité d’un endpoint repose sur une superposition de contrôles.
+		La protection endpoint en fait partie, mais elle n’est qu’un élément
+		de l’ensemble.
+	</p>
+
+	<ul>
+		<li>Système d’exploitation maintenu à jour</li>
+		<li>Applications corrigées régulièrement</li>
+		<li>Privilèges locaux maîtrisés</li>
+		<li>Configuration durcie</li>
+		<li>Authentification protégée</li>
+		<li>Segmentation réseau adaptée</li>
+		<li>Supervision et capacité de réponse</li>
+		<li>Protection endpoint efficace et correctement configurée</li>
+	</ul>
+
+	<p>
+		Si l’une de ces couches est fragile, le niveau de sécurité réel de l’endpoint
+		peut rester insuffisant, même si l’agent de protection est présent.
+	</p>
+
+	<h2 id="checklist">Checklist opérationnelle</h2>
+
+	<p>
+		Aujourd’hui, lorsque je reprends une plateforme EDR, je regarde évidemment
+		le taux de déploiement.
+	</p>
+
+	<p>
+		Mais je passe finalement assez peu de temps sur cet indicateur.
+		Je préfère comprendre ce qui est réellement appliqué.
+	</p>
+
+	<Checklist
+		title="Ce que je vérifie au-delà du taux de déploiement"
+		items={[
+			'Les agents sont-ils installés, actifs et correctement connectés ?',
+			'Les bonnes politiques sont-elles appliquées aux bons groupes ?',
+			'Certaines protections sont-elles en mode audit ou détection uniquement ?',
+			'Les exclusions existantes sont-elles toujours justifiées ?',
+			'Les versions d’agents sont-elles homogènes et maintenues ?',
+			'Existe-t-il des groupes de test, d’exception ou d’héritage non maîtrisés ?',
+			'Les endpoints inactifs ou absents sont-ils identifiés ?',
+			'Les données EDR sont-elles croisées avec l’inventaire, la VM et l’IAM ?',
+		]}
+	/>
+
+	<h2 id="conclusion">Conclusion</h2>
+
+	<p>
+		Un EDR est une brique essentielle de la sécurité moderne.
+		Il améliore la visibilité, la détection et la capacité de réponse.
+	</p>
+
+	<p>
+		Mais il ne transforme pas automatiquement chaque endpoint en système sécurisé.
+	</p>
+
+	<p>
+		Comme souvent en cybersécurité, le véritable travail commence après
+		le déploiement de l’outil : maintenir les politiques, revoir les exclusions,
+		mesurer les écarts, documenter les exceptions et adapter la configuration
+		au contexte réel de l’organisation.
+	</p>
+
+	<Callout type="field">
+		<p>
+			<strong>Ce que le terrain m’a appris :</strong> je ne me demande plus seulement
+			combien d’agents sont installés. Finalement, la question n'est peut-être pas :
+
+Avons-nous un EDR ?
+
+<p>La question est plutôt :</p>
+
+<p>Si un attaquant compromettait un poste demain matin, suis-je réellement satisfait du niveau de protection qui lui est appliqué aujourd'hui ?</p>
+
+<p>C'est rarement la même réponse.</p>
+		</p>
+	</Callout>
+
+	<Callout type="warning">
+		<p>
+			Cette Note de terrain est inspirée de situations rencontrées au cours de
+			différentes missions. Les exemples présentés ont été volontairement anonymisés
+			et généralisés afin de préserver la confidentialité des organisations concernées.
+		</p>
+	</Callout>
+
+	<RelatedArticles
+		articles={[
+			{
+				href: '/articles/programmes-vm-echec-scan',
+				category: 'VM FUNDAMENTALS',
+				title: 'Pourquoi les programmes de Vulnerability Management échouent rarement à cause du moteur de scan',
+				description: 'Pourquoi les difficultés viennent souvent moins du moteur de scan que de la gouvernance, de l’ownership et de la remédiation.',
+			},
+			{
+				href: '/articles/remediation-maillon-faible-vulnerability-management',
+				category: 'VM FUNDAMENTALS',
+				title: 'Pourquoi la remédiation est souvent le maillon faible du Vulnerability Management',
+				description: 'Détecter une vulnérabilité est rarement le problème. La transformer en réduction effective du risque est le véritable défi.',
+			},
+		]}
+	/>
+</ArticleLayout>
+		</main>
+
+		<Footer />
+	</body>
+</html>
+
+<style>
+	body {
+		background: #f8fafc;
+	}
+
+	main {
+		width: min(1320px, calc(100% - 4rem));
+		margin: 0 auto;
+		padding: 3rem 0 5rem;
+	}
+
+	@media (max-width: 640px) {
+		main {
+			width: min(100% - 2rem, 1320px);
+		}
+	}
+</style>
