@@ -34,8 +34,6 @@ import { SITE_TITLE } from '../consts';
 							et environnements MSSP / RUN.
 						</p>
 					</div>
-
-					
 				</div>
 			</section>
 
@@ -49,19 +47,34 @@ import { SITE_TITLE } from '../consts';
 				</div>
 
 				<div class="articles-grid">
+					<a href="/articles/ce-que-votre-edr-ne-voit-pas" class="article-card">
+						<div class="article-image">
+							<img src="/Images/secops.png" alt="" />
+						</div>
+
+						<div class="article-content">
+							<p class="article-category">ENDPOINT SECURITY</p>
+							<h3>Votre EDR voit-il vraiment tout ?</h3>
+							<p>
+								Déployer un EDR est une étape essentielle. Encore faut-il identifier
+								les équipements qui échappent à sa visibilité et constituent de véritables angles morts.
+							</p>
+							<span>⏱ 3 min de lecture</span>
+						</div>
+					</a>
 
 					<a href="/articles/endpoint-protege-endpoint-securise" class="article-card">
-					<div class="article-image">
-						<img src="/Images/secops.png" alt="" />
-					</div>
+						<div class="article-image">
+							<img src="/Images/secops.png" alt="" />
+						</div>
 
-					<div class="article-content">
-						<p class="article-category">ENDPOINT SECURITY</p>
-						<h3>Pourquoi un endpoint protégé n'est pas forcément un endpoint sécurisé</h3>
-						<p>Un EDR protège un poste. Il ne garantit pas à lui seul qu'il soit sécurisé.</p>
-						<span>◴ 3 min de lecture</span>
-					</div>
-				</a>
+						<div class="article-content">
+							<p class="article-category">ENDPOINT SECURITY</p>
+							<h3>Pourquoi un endpoint protégé n'est pas forcément un endpoint sécurisé</h3>
+							<p>Un EDR protège un poste. Il ne garantit pas à lui seul qu'il soit sécurisé.</p>
+							<span>⏱ 3 min de lecture</span>
+						</div>
+					</a>
 
 					<a href="/articles/programmes-vm-echec-scan" class="article-card">
 						<div class="article-image">
@@ -90,42 +103,43 @@ import { SITE_TITLE } from '../consts';
 					</a>
 
 					<a href="/articles/tagging-vulnerability-management" class="article-card">
-	<div class="article-image">
-		<img src="/Images/tagging.png" alt="" />
-	</div>
+						<div class="article-image">
+							<img src="/Images/tagging.png" alt="" />
+						</div>
 
-	<div class="article-content">
-		<p class="article-category">VM FUNDAMENTALS</p>
-		<h3>Le tagging est le pilier oublié du Vulnerability Management</h3>
-		<p>
-			Sans contexte métier, ownership et structuration,
-			une plateforme VM produit des données mais peine à produire des décisions.
-		</p>
-		<span>⏱ 6 min de lecture</span>
-	</div>
-</a>
+						<div class="article-content">
+							<p class="article-category">VM FUNDAMENTALS</p>
+							<h3>Le tagging est le pilier oublié du Vulnerability Management</h3>
+							<p>
+								Sans contexte métier, ownership et structuration,
+								une plateforme VM produit des données mais peine à produire des décisions.
+							</p>
+							<span>⏱ 6 min de lecture</span>
+						</div>
+					</a>
 
-	<a href="/articles/remediation-maillon-faible-vulnerability-management" class="article-card">
-	<div class="article-image">
-		<img src="/Images/remediation-vm.png" alt="" />
-	</div>
+					<a href="/articles/remediation-maillon-faible-vulnerability-management" class="article-card">
+						<div class="article-image">
+							<img src="/Images/remediation-vm.png" alt="" />
+						</div>
 
-	<div class="article-content">
-		<p class="article-category">VM FUNDAMENTALS</p>
+						<div class="article-content">
+							<p class="article-category">VM FUNDAMENTALS</p>
 
-		<h3>
-			Pourquoi la remédiation est souvent le maillon faible du Vulnerability Management
-		</h3>
+							<h3>
+								Pourquoi la remédiation est souvent le maillon faible du Vulnerability Management
+							</h3>
 
-		<p>
-			Détecter une vulnérabilité est rarement le problème. La corriger,
-			la piloter et la suivre jusqu'à sa résolution représentent souvent
-			le véritable défi.
-		</p>
+							<p>
+								Détecter une vulnérabilité est rarement le problème. La corriger,
+								la piloter et la suivre jusqu'à sa résolution représentent souvent
+								le véritable défi.
+							</p>
 
-		<span>9 min de lecture</span>
-	</div>
-</a>
+							<span>⏱ 9 min de lecture</span>
+						</div>
+					</a>
+
 					<a href="/articles/vulnerabilite-critique-risque" class="article-card">
 						<div class="article-image">
 							<img src="/Images/vulncritique.png" alt="" />
@@ -157,34 +171,21 @@ import { SITE_TITLE } from '../consts';
 		padding: 0 0 5rem;
 	}
 
-	/* HERO */
-
-.page-hero {
-	margin-top: 2rem;
-	margin-bottom: 5rem;
-
-	padding: 5rem;
-
-	border-radius: 32px;
-
-	background:
-		linear-gradient(
-			rgba(2,8,23,.78),
-			rgba(2,8,23,.78)
-		),
-		url('/Images/fondsite.png');
-
-	background-size: cover;
-	background-position: center;
-	background-repeat: no-repeat;
-
-	color: white;
-
-	box-shadow:
-		0 25px 60px rgba(2,8,23,.20);
-
-	overflow: hidden;
-}
+	.page-hero {
+		margin-top: 2rem;
+		margin-bottom: 5rem;
+		padding: 5rem;
+		border-radius: 32px;
+		background:
+			linear-gradient(rgba(2,8,23,.78), rgba(2,8,23,.78)),
+			url('/Images/fondsite.png');
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		color: white;
+		box-shadow: 0 25px 60px rgba(2,8,23,.20);
+		overflow: hidden;
+	}
 
 	.hero-text {
 		min-width: 0;
@@ -214,16 +215,6 @@ import { SITE_TITLE } from '../consts';
 		color: #dbeafe;
 	}
 
-	.hero-image img {
-		width: 100%;
-		max-width: 520px;
-		display: block;
-		margin-left: auto;
-		filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.35));
-	}
-
-	/* HEADER ARTICLES */
-
 	.section-header {
 		display: flex;
 		justify-content: space-between;
@@ -245,8 +236,6 @@ import { SITE_TITLE } from '../consts';
 		line-height: 1.7;
 		margin: 0;
 	}
-
-	/* ARTICLES */
 
 	.articles-grid {
 		display: grid;
@@ -330,19 +319,9 @@ import { SITE_TITLE } from '../consts';
 		font-weight: 600;
 	}
 
-	/* RESPONSIVE */
-
 	@media (max-width: 1200px) {
 		.articles-grid {
 			grid-template-columns: repeat(2, 1fr);
-		}
-
-		.hero-content {
-			grid-template-columns: 1fr;
-		}
-
-		.hero-image {
-			display: none;
 		}
 	}
 

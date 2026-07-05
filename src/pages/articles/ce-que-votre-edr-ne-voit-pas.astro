@@ -1,0 +1,398 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ArticleHero from '../../components/article/ArticleHero.astro';
+import ArticleLayout from '../../components/article/ArticleLayout.astro';
+import Callout from '../../components/article/Callout.astro';
+import Checklist from '../../components/article/Checklist.astro';
+import RelatedArticles from '../../components/article/RelatedArticles.astro';
+import ArticleQuote from '../../components/article/ArticleQuote.astro';
+import ExecutiveSummary from '../../components/article/ExecutiveSummary.astro';
+import TerrainNote from '../../components/article/TerrainNote.astro';
+import { SITE_TITLE } from '../../consts';
+
+const toc = [
+	{ id: 'contexte', label: 'Pourquoi cet article ?' },
+	{ id: 'confusion', label: 'La confusion fréquente' },
+	{ id: 'terrain', label: 'Ce que le terrain montre' },
+	{ id: 'impact', label: 'Pourquoi c’est important' },
+	{ id: 'experience', label: 'Ce que cette mission m’a appris' },
+	{ id: 'checklist', label: 'Checklist' },
+	{ id: 'solutions', label: 'Les solutions existent' },
+	{ id: 'conclusion', label: 'Conclusion' },
+];
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`Votre EDR voit-il vraiment tout ? | ${SITE_TITLE}`}
+			description="Déployer un EDR est une étape essentielle, mais encore faut-il identifier les équipements qu’il ne voit pas. Une Note de terrain sur les angles morts de la protection endpoint."
+		/>
+	</head>
+
+	<body>
+		<Header />
+
+		<main>
+			<ArticleHero
+				tag="ENDPOINT SECURITY"
+				title="Votre EDR voit-il vraiment tout ?"
+				subtitle="Déployer un EDR est une étape essentielle. Encore faut-il connaître tous les équipements qu’il est censé protéger."
+				image="/Images/secops.png"
+				readTime="9 min de lecture"
+				level="Intermédiaire"
+				updated="Mis à jour : juillet 2026"
+				technologies={[
+					'EDR',
+					'Asset Discovery',
+					'Exposure Management',
+					'Attack Surface',
+					'Endpoint Security'
+				]}
+			/>
+
+			<ExecutiveSummary title="Executive Summary">
+				<ul>
+					<li>Un EDR protège uniquement les équipements qu’il connaît.</li>
+					<li>Une console EDR ne représente pas toujours l’ensemble du parc informatique.</li>
+					<li>Les équipements non protégés constituent souvent des angles morts de sécurité.</li>
+					<li>Découvrir ces équipements est une étape indispensable avant même de parler de protection.</li>
+				</ul>
+			</ExecutiveSummary>
+
+			<ArticleLayout toc={toc}>
+				<h2 id="contexte">Pourquoi cet article ?</h2>
+
+				<p>
+					Au cours de différentes missions, une affirmation revient régulièrement.
+				</p>
+
+				<ArticleQuote>
+					Nous avons déployé notre EDR sur l’ensemble du parc.
+				</ArticleQuote>
+
+				<p>
+					La phrase est rassurante.
+				</p>
+
+				<p>
+					Elle signifie souvent que le projet de déploiement a été mené sérieusement,
+					que les agents remontent correctement et que les politiques sont appliquées.
+				</p>
+
+				<p>
+					Mais elle soulève immédiatement une autre question.
+				</p>
+
+				<p>
+					<strong>Comment savons-nous que nous parlons réellement de l’ensemble du parc ?</strong>
+				</p>
+
+				<p>
+					Parce qu’avant de protéger un équipement, encore faut-il savoir qu’il existe.
+				</p>
+
+				<Callout type="field">
+					<p>
+						<strong>À retenir :</strong> un EDR ne protège que les équipements qu’il connaît.
+						Un équipement absent de la console peut toujours être présent sur le réseau.
+					</p>
+				</Callout>
+
+				<h2 id="confusion">La confusion fréquente</h2>
+
+				<p>
+					Lorsqu’une console EDR affiche plusieurs milliers d’agents actifs, il est naturel
+					d’avoir le sentiment que la couverture est complète.
+				</p>
+
+				<p>
+					Pourtant, cette console ne montre qu’une partie de la réalité.
+				</p>
+
+				<p>
+					Elle montre les équipements sur lesquels un agent est installé, actif et connu de la plateforme.
+				</p>
+
+				<p>
+					Elle ne montre pas ceux qui n’ont jamais été enrôlés.
+				</p>
+
+				<p>
+					Cette nuance paraît simple.
+				</p>
+
+				<p>
+					Sur le terrain, elle change pourtant complètement la manière d’évaluer un déploiement.
+				</p>
+
+				<ArticleQuote>
+					Un EDR ne protège que ce qu’il connaît.
+				</ArticleQuote>
+
+				<h2 id="terrain">Ce que le terrain montre</h2>
+
+				<p>
+					Je me souviens d’environnements où le déploiement EDR était considéré comme terminé.
+				</p>
+
+				<p>
+					Les tableaux de bord étaient propres.
+				</p>
+
+				<p>
+					Les agents communiquaient.
+				</p>
+
+				<p>
+					Les politiques étaient appliquées.
+				</p>
+
+				<p>
+					Sur le papier, le sujet semblait maîtrisé.
+				</p>
+
+				<TerrainNote context="Visibilité • Inventaire • Découverte">
+					<p>
+						Puis, en croisant les informations avec d’autres sources ou en observant simplement
+						ce qui communiquait réellement sur le réseau, plusieurs équipements apparaissaient.
+					</p>
+
+					<p>
+						Certains n’étaient présents dans aucune console EDR.
+					</p>
+
+					<ul>
+						<li>Un NAS installé plusieurs années auparavant</li>
+						<li>Une imprimante réseau multifonction</li>
+						<li>Une caméra IP</li>
+						<li>Une machine de laboratoire</li>
+						<li>Une VM créée pour un projet temporaire</li>
+						<li>Un poste jamais enrôlé</li>
+						<li>Un équipement appartenant à un prestataire</li>
+					</ul>
+
+					<p>
+						Ces équipements n’étaient pas nécessairement compromis.
+					</p>
+
+					<p>
+						Mais ils échappaient totalement aux capacités de visibilité, de détection et de réponse
+						apportées par l’EDR.
+					</p>
+				</TerrainNote>
+
+				<p>
+					Le problème n’était pas que l’EDR fonctionnait mal.
+				</p>
+
+				<p>
+					Le problème était qu’on lui demandait implicitement de représenter l’ensemble du parc,
+					alors qu’il ne pouvait représenter que les équipements qu’il connaissait.
+				</p>
+
+				<h2 id="impact">Pourquoi est-ce important ?</h2>
+
+				<p>
+					Lorsqu’un incident survient, les équipes sécurité se tournent souvent vers leur console EDR.
+				</p>
+
+				<p>
+					C’est logique.
+				</p>
+
+				<p>
+					Elle fournit de la télémétrie, des événements, des capacités d’investigation et parfois
+					des actions de réponse immédiates.
+				</p>
+
+				<p>
+					Mais un équipement absent de cette console ne produira aucun événement dans cette console.
+				</p>
+
+				<ul>
+					<li>Aucune télémétrie endpoint</li>
+					<li>Aucune détection comportementale</li>
+					<li>Aucune investigation depuis la plateforme</li>
+					<li>Aucune isolation possible depuis l’EDR</li>
+					<li>Aucune politique de protection appliquée</li>
+				</ul>
+
+				<Callout type="warning">
+					<p>
+						L’absence d’information ne signifie pas toujours l’absence de risque.
+						Elle peut simplement révéler une absence de visibilité.
+					</p>
+				</Callout>
+
+				<p>
+					C’est ce qui rend ces équipements sensibles.
+				</p>
+
+				<p>
+					Ils ne sont pas forcément critiques.
+				</p>
+
+				<p>
+					Ils ne sont pas forcément exposés.
+				</p>
+
+				<p>
+					Mais tant qu’ils ne sont pas identifiés, il est impossible de prendre une décision
+					claire à leur sujet.
+				</p>
+
+				<h2 id="experience">Ce que cette mission m’a appris</h2>
+
+				<p>
+					Pendant longtemps, j’associais la réussite d’un projet EDR au nombre d’agents installés.
+				</p>
+
+				<p>
+					C’est un indicateur utile.
+				</p>
+
+				<p>
+					Mais le terrain m’a progressivement appris qu’il ne suffisait pas.
+				</p>
+
+				<p>
+					Aujourd’hui, lorsque j’analyse un environnement, je ne regarde pas seulement
+					combien d’équipements sont protégés.
+				</p>
+
+				<p>
+					Je cherche aussi à comprendre lesquels ne le sont pas.
+				</p>
+
+				<ArticleQuote>
+					La vraie question n’est pas seulement : combien d’agents sont déployés ?
+					Mais aussi : quels équipements n’apparaissent dans aucune console ?
+				</ArticleQuote>
+
+				<p>
+					Ce sont souvent ces équipements qui méritent le plus d’attention.
+				</p>
+
+				<h2 id="checklist">Checklist opérationnelle</h2>
+
+				<p>
+					Lorsqu’un déploiement EDR est considéré comme terminé, je trouve utile de poser
+					quelques questions simples.
+				</p>
+
+				<Checklist
+					title="Vérifier les angles morts d’un déploiement EDR"
+					items={[
+						'Comparer la console EDR avec un inventaire indépendant.',
+						'Identifier les équipements qui communiquent sans agent.',
+						'Qualifier chaque équipement découvert.',
+						'Déterminer si son absence de protection est volontaire ou non.',
+						'Identifier le propriétaire de l’équipement.',
+						'Documenter les exceptions acceptées.',
+						'Contrôler régulièrement l’apparition de nouveaux équipements non protégés.',
+					]}
+				/>
+
+				<h2 id="solutions">Les solutions existent</h2>
+
+				<p>
+					Cette problématique est désormais prise en compte par plusieurs éditeurs.
+				</p>
+
+				<p>
+					Certaines plateformes EDR proposent des fonctionnalités de découverte des équipements
+					non protégés.
+				</p>
+
+				<p>
+					Chez SentinelOne, cette approche est disponible au travers
+					d’<strong>Unprotected Device Discovery</strong>.
+				</p>
+
+				<p>
+					L’objectif n’est pas de remplacer une CMDB, un scanner de vulnérabilités ou un outil
+					d’inventaire.
+				</p>
+
+				<p>
+					L’objectif est plus fondamental.
+				</p>
+
+				<ArticleQuote>
+					Identifier ce qui existe réellement sur le réseau avant de chercher à le protéger.
+				</ArticleQuote>
+
+				<h2 id="conclusion">Conclusion</h2>
+
+				<p>
+					Déployer un EDR constitue une étape essentielle dans une stratégie de protection moderne.
+				</p>
+
+				<p>
+					Mais la qualité d’un déploiement ne se mesure pas uniquement au nombre d’agents installés.
+				</p>
+
+				<p>
+					Elle se mesure aussi à la capacité d’identifier les équipements qui échappent encore
+					à cette protection.
+				</p>
+
+				<Callout type="field">
+					<p>
+						<strong>Ce que le terrain m’a appris :</strong> la première étape d’une stratégie
+						de protection consiste souvent à identifier ce que l’on ne voit pas encore.
+					</p>
+				</Callout>
+
+				<Callout type="warning">
+					<p>
+						Cette Note de terrain est inspirée de situations rencontrées au cours de différentes missions.
+						Les exemples présentés ont été volontairement anonymisés et généralisés afin de préserver
+						la confidentialité des organisations concernées.
+					</p>
+				</Callout>
+
+				<RelatedArticles
+					articles={[
+						{
+							href: '/articles/endpoint-protege-endpoint-securise',
+							category: 'ENDPOINT SECURITY',
+							title: 'Pourquoi un endpoint protégé n’est pas forcément un endpoint sécurisé',
+							description: 'Installer un EDR est une étape essentielle, mais la sécurité réelle d’un endpoint ne se résume jamais à la présence d’un agent.',
+						},
+						{
+							href: '/articles/assets-inconnus-visibilite',
+							category: 'VM FUNDAMENTALS',
+							title: 'Pourquoi les assets inconnus détruisent votre visibilité sécurité',
+							description: 'Difficile de protéger ce que l’on ne connaît pas. Retour terrain sur les angles morts de l’inventaire.',
+						},
+					]}
+				/>
+			</ArticleLayout>
+		</main>
+
+		<Footer />
+	</body>
+</html>
+
+<style>
+	body {
+		background: #f8fafc;
+	}
+
+	main {
+		width: min(1320px, calc(100% - 4rem));
+		margin: 0 auto;
+		padding: 3rem 0 5rem;
+	}
+
+	@media (max-width: 640px) {
+		main {
+			width: min(100% - 2rem, 1320px);
+		}
+	}
+</style>
