@@ -141,235 +141,27 @@ hr {
 }
 
 /* ==========================
-   RESPONSIVE V1
-   marcmichon.co
+   RESPONSIVE FOUNDATION
 ========================== */
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
 
 html {
 	-webkit-text-size-adjust: 100%;
 }
 
-img {
+body {
+	overflow-x: clip;
+}
+
+img,
+svg,
+video {
 	max-width: 100%;
 	height: auto;
 }
-
-/* Tablette */
-@media (max-width: 1024px) {
-	main {
-		width: min(100% - 2rem, 1320px) !important;
-	}
-
-	h1 {
-		font-size: clamp(3rem, 8vw, 4.5rem) !important;
-		line-height: 0.98 !important;
-	}
-
-	h2 {
-		font-size: clamp(2rem, 6vw, 3rem) !important;
-	}
-
-	.hero,
-	.page-hero,
-	.expertise-hero,
-	.note-hero {
-		padding: 3.5rem 2.5rem !important;
-		min-height: auto !important;
-	}
-
-	.hero-content {
-		max-width: 100% !important;
-		padding: 0 !important;
-	}
-
-	.articles-grid,
-	.expertise-grid,
-	.content-grid,
-	.three-cards,
-	.two-columns,
-	.principles-grid {
-		grid-template-columns: 1fr 1fr !important;
-	}
-
-	.article-card,
-	.expertise-card,
-	.expertise-card.wide {
-		grid-column: auto !important;
-	}
-
-	.article-layout,
-	.article-shell,
-	.article-grid {
-		grid-template-columns: 1fr !important;
-	}
-
-	.article-sidebar,
-	.toc,
-	aside {
-		position: static !important;
-		width: 100% !important;
-		margin-bottom: 2rem !important;
-	}
-}
-
-/* Smartphone */
-@media (max-width: 768px) {
-	main {
-		width: min(100% - 1.25rem, 1320px) !important;
-		padding-top: 1.25rem !important;
-	}
-
-	h1 {
-		font-size: clamp(2.5rem, 12vw, 3.4rem) !important;
-		line-height: 0.98 !important;
-		letter-spacing: -0.055em !important;
-	}
-
-	h2 {
-		font-size: clamp(1.9rem, 8vw, 2.5rem) !important;
-		line-height: 1.05 !important;
-	}
-
-	p {
-		font-size: 1rem !important;
-		line-height: 1.75 !important;
-	}
-
-	.hero,
-	.page-hero,
-	.expertise-hero,
-	.note-hero {
-		border-radius: 24px !important;
-		padding: 2.5rem 1.5rem !important;
-		margin-bottom: 2.5rem !important;
-		background-position: center !important;
-	}
-
-	.hero p,
-	.intro {
-		font-size: 1.05rem !important;
-		line-height: 1.75 !important;
-	}
-
-	.hero-line {
-		margin: 1.4rem 0 !important;
-	}
-
-	.articles-grid,
-	.expertise-grid,
-	.content-grid,
-	.three-cards,
-	.two-columns,
-	.principles-grid,
-	.timeline-line {
-		grid-template-columns: 1fr !important;
-		gap: 1.25rem !important;
-	}
-
-	.article-card,
-	.expertise-card,
-	.plain-block,
-	.glass-block,
-	.list-card,
-	.three-cards article {
-		border-radius: 22px !important;
-	}
-
-	.article-image {
-		height: 190px !important;
-	}
-
-	.article-content {
-		padding: 1.5rem !important;
-	}
-
-	.article-card h3 {
-		font-size: 1.3rem !important;
-		line-height: 1.28 !important;
-	}
-
-	.expertise-card {
-		display: block !important;
-	}
-
-	.expertise-card img {
-		height: 210px !important;
-		min-height: auto !important;
-	}
-
-	.expertise-card div {
-		padding: 1.5rem !important;
-	}
-
-	.cta {
-		grid-template-columns: 1fr !important;
-		text-align: left !important;
-		padding: 2rem !important;
-	}
-
-	.cta a {
-		width: 100% !important;
-		text-align: center !important;
-	}
-
-	.quote-band {
-		padding: 2rem 1.5rem !important;
-		gap: 1rem !important;
-	}
-
-	.quote-band p {
-		font-size: 1.6rem !important;
-	}
-
-	.methodology {
-		padding: 2.5rem 1.5rem !important;
-		border-radius: 24px !important;
-	}
-}
-
-/* Petit smartphone */
-@media (max-width: 480px) {
-	main {
-		width: min(100% - 1rem, 1320px) !important;
-	}
-
-	h1 {
-		font-size: 2.65rem !important;
-	}
-
-	.hero,
-	.page-hero,
-	.expertise-hero,
-	.note-hero {
-		padding: 2rem 1.25rem !important;
-		border-radius: 22px !important;
-	}
-
-	.article-image {
-		height: 170px !important;
-	}
-
-	.article-content {
-		padding: 1.25rem !important;
-	}
-
-	.article-category {
-		font-size: 0.7rem !important;
-	}
-
-	.article-content span {
-		font-size: 0.85rem !important;
-	}
-
-	.tags span,
-	.technologies span {
-		font-size: 0.78rem !important;
-	}
-
-	.cta-icon {
-		width: 56px !important;
-		height: 56px !important;
-	}
-}
-
 
