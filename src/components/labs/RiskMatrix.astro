@@ -1,0 +1,267 @@
+<section class="risk-tool">
+	<div class="risk-panel">
+		<div class="field">
+			<label for="scenario">Scénario</label>
+			<input id="scenario" type="text" value="Serveur exposé avec vulnérabilité critique" />
+		</div>
+
+		<div class="field">
+			<label for="asset">Asset concerné</label>
+			<input id="asset" type="text" value="Application web publique" />
+		</div>
+
+		<div class="sliders">
+			<div class="field">
+				<label for="likelihood">Probabilité <span id="likelihood-value">3</span>/5</label>
+				<input id="likelihood" type="range" min="1" max="5" value="3" />
+			</div>
+
+			<div class="field">
+				<label for="impact">Impact <span id="impact-value">4</span>/5</label>
+				<input id="impact" type="range" min="1" max="5" value="4" />
+			</div>
+		</div>
+
+		<div class="field">
+			<label for="controls">Contrôles existants</label>
+			<textarea id="controls">EDR, WAF, supervision SOC, sauvegardes</textarea>
+		</div>
+	</div>
+
+	<div class="result-card" id="result-card">
+		<p class="result-label">Niveau de risque</p>
+		<h2 id="risk-level">Élevé</h2>
+
+		<div class="score">
+			<span>Score</span>
+			<strong id="risk-score">12</strong>
+		</div>
+
+		<p id="risk-summary">
+			Le scénario présente un risque élevé. La priorité doit porter sur la réduction de la probabilité ou la limitation de l’impact.
+		</p>
+
+		<button id="copy-result" type="button">Copier le résultat</button>
+	</div>
+</section>
+
+<script is:inline>
+	const likelihood = document.querySelector('#likelihood');
+	const impact = document.querySelector('#impact');
+	const likelihoodValue = document.querySelector('#likelihood-value');
+	const impactValue = document.querySelector('#impact-value');
+	const riskScore = document.querySelector('#risk-score');
+	const riskLevel = document.querySelector('#risk-level');
+	const riskSummary = document.querySelector('#risk-summary');
+	const resultCard = document.querySelector('#result-card');
+	const scenario = document.querySelector('#scenario');
+	const asset = document.querySelector('#asset');
+	const controls = document.querySelector('#controls');
+	const copyButton = document.querySelector('#copy-result');
+
+	function getRisk(score) {
+		if (score <= 4) {
+			return {
+				level: 'Faible',
+				className: 'low',
+				text: 'Le scénario présente un risque faible. Le risque peut être suivi, mais ne nécessite pas forcément une action prioritaire.'
+			};
+		}
+
+		if (score <= 9) {
+			return {
+				level: 'Modéré',
+				className: 'medium',
+				text: 'Le scénario présente un risque modéré. Il doit être suivi et traité selon les priorités opérationnelles.'
+			};
+		}
+
+		if (score <= 14) {
+			return {
+				level: 'Élevé',
+				className: 'high',
+				text: 'Le scénario présente un risque élevé. La priorité doit porter sur la réduction de la probabilité ou la limitation de l’impact.'
+			};
+		}
+
+		return {
+			level: 'Critique',
+			className: 'critical',
+			text: 'Le scénario présente un risque critique. Une action rapide est recommandée afin de réduire l’exposition ou l’impact potentiel.'
+		};
+	}
+
+	function updateRisk() {
+		const l = Number(likelihood.value);
+		const i = Number(impact.value);
+		const score = l * i;
+		const risk = getRisk(score);
+
+		likelihoodValue.textContent = l;
+		impactValue.textContent = i;
+		riskScore.textContent = score;
+		riskLevel.textContent = risk.level;
+		riskSummary.textContent = risk.text;
+
+		resultCard.className = `result-card ${risk.className}`;
+	}
+
+	function copyResult() {
+		const text = `Scénario : ${scenario.value}
+Asset : ${asset.value}
+Probabilité : ${likelihood.value}/5
+Impact : ${impact.value}/5
+Score : ${riskScore.textContent}
+Niveau : ${riskLevel.textContent}
+Contrôles existants : ${controls.value}
+Analyse : ${riskSummary.textContent}`;
+
+		navigator.clipboard.writeText(text);
+		copyButton.textContent = 'Résultat copié';
+		setTimeout(() => {
+			copyButton.textContent = 'Copier le résultat';
+		}, 1800);
+	}
+
+	likelihood.addEventListener('input', updateRisk);
+	impact.addEventListener('input', updateRisk);
+	copyButton.addEventListener('click', copyResult);
+
+	updateRisk();
+</script>
+
+<style>
+	.risk-tool {
+		display: grid;
+		grid-template-columns: 1.2fr .8fr;
+		gap: 2rem;
+		align-items: start;
+	}
+
+	.risk-panel,
+	.result-card {
+		background: white;
+		border: 1px solid #e5e7eb;
+		border-radius: 28px;
+		padding: 2rem;
+		box-shadow: 0 18px 45px rgba(15,23,42,.06);
+	}
+
+	.field {
+		display: grid;
+		gap: .6rem;
+		margin-bottom: 1.4rem;
+	}
+
+	label {
+		color: #0f172a;
+		font-weight: 900;
+	}
+
+	input,
+	textarea {
+		width: 100%;
+		border: 1px solid #cbd5e1;
+		border-radius: 14px;
+		padding: .9rem 1rem;
+		font: inherit;
+		color: #0f172a;
+		background: #f8fafc;
+	}
+
+	textarea {
+		min-height: 120px;
+		resize: vertical;
+	}
+
+	input[type="range"] {
+		padding: 0;
+	}
+
+	.sliders {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1.2rem;
+	}
+
+	.result-card {
+		position: sticky;
+		top: 110px;
+		color: white;
+		background:
+			radial-gradient(circle at 80% 0%, rgba(96,165,250,.22), transparent 35%),
+			linear-gradient(135deg, #020817 0%, #06142d 55%, #031b4d 100%);
+		border-color: rgba(96,165,250,.25);
+	}
+
+	.result-label {
+		margin: 0 0 .5rem;
+		color: #93c5fd;
+		font-size: .8rem;
+		font-weight: 900;
+		letter-spacing: .12em;
+		text-transform: uppercase;
+	}
+
+	.result-card h2 {
+		color: white;
+		font-size: 3rem;
+		margin: 0 0 1.5rem;
+	}
+
+	.score {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1rem;
+		border-radius: 18px;
+		background: rgba(255,255,255,.08);
+		margin-bottom: 1.5rem;
+	}
+
+	.score span {
+		color: #bfdbfe;
+		font-weight: 800;
+	}
+
+	.score strong {
+		color: white;
+		font-size: 2.4rem;
+	}
+
+	.result-card p {
+		color: #dbeafe;
+		line-height: 1.7;
+	}
+
+	button {
+		width: 100%;
+		margin-top: 1rem;
+		border: 0;
+		border-radius: 14px;
+		padding: 1rem 1.2rem;
+		background: #2563eb;
+		color: white;
+		font-weight: 900;
+		cursor: pointer;
+	}
+
+	.low h2 { color: #86efac; }
+	.medium h2 { color: #fde68a; }
+	.high h2 { color: #fdba74; }
+	.critical h2 { color: #fca5a5; }
+
+	@media (max-width: 900px) {
+		.risk-tool {
+			grid-template-columns: 1fr;
+		}
+
+		.result-card {
+			position: static;
+		}
+
+		.sliders {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

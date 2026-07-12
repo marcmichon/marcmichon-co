@@ -1,0 +1,541 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE } from '../../consts';
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`Risk Matrix interactive | ${SITE_TITLE}`}
+			description="Un outil interactif pour évaluer rapidement un scénario de risque cybersécurité selon son impact, sa probabilité et son score CVSS."
+		/>
+	</head>
+
+	<body>
+		<Header />
+
+		<main>
+			<section class="lab-hero">
+				<p class="lab-tag">LABS</p>
+
+				<h1>Risk Matrix interactive</h1>
+
+				<p class="lab-intro">
+					Un outil simple pour évaluer un scénario de risque selon trois dimensions :
+					la probabilité, l’impact et la sévérité technique.
+				</p>
+			</section>
+
+			<section class="risk-tool">
+				<form class="risk-panel" id="risk-form">
+					<div class="field">
+						<label for="scenario">Scénario</label>
+
+						<input
+							id="scenario"
+							name="scenario"
+							type="text"
+							value="Serveur Apache exposé sur Internet"
+						/>
+					</div>
+
+					<div class="field">
+						<div class="field-heading">
+							<label for="probability">Probabilité</label>
+
+							<strong>
+								<span id="probability-value">3</span>/5
+							</strong>
+						</div>
+
+						<input
+							id="probability"
+							name="probability"
+							type="range"
+							min="1"
+							max="5"
+							step="1"
+							value="3"
+						/>
+					</div>
+
+					<div class="field">
+						<div class="field-heading">
+							<label for="impact">Impact</label>
+
+							<strong>
+								<span id="impact-value">4</span>/5
+							</strong>
+						</div>
+
+						<input
+							id="impact"
+							name="impact"
+							type="range"
+							min="1"
+							max="5"
+							step="1"
+							value="4"
+						/>
+					</div>
+
+					<div class="field">
+						<div class="field-heading">
+							<label for="cvss">CVSS</label>
+
+							<strong>
+								<span id="cvss-value">9.8</span>/10
+							</strong>
+						</div>
+
+						<input
+							id="cvss"
+							name="cvss"
+							type="range"
+							min="0"
+							max="10"
+							step="0.1"
+							value="9.8"
+						/>
+					</div>
+				</form>
+
+				<aside class="result-card" id="result-card" aria-live="polite">
+					<p class="result-label">MM Risk Score</p>
+
+					<h2 id="risk-level">Critique</h2>
+
+					<div class="score-block">
+						<span>Score calculé</span>
+						<strong id="risk-score">19</strong>
+					</div>
+
+					<p id="risk-summary">
+						Le scénario présente un risque critique. Une action rapide est recommandée.
+					</p>
+
+					<button id="copy-result" type="button">
+						Copier le résultat
+					</button>
+				</aside>
+			</section>
+		</main>
+
+		<Footer />
+
+		<script is:inline>
+			const probability = document.querySelector('#probability');
+			const impact = document.querySelector('#impact');
+			const cvss = document.querySelector('#cvss');
+			const scenario = document.querySelector('#scenario');
+
+			const probabilityValue = document.querySelector('#probability-value');
+			const impactValue = document.querySelector('#impact-value');
+			const cvssValue = document.querySelector('#cvss-value');
+
+			const resultCard = document.querySelector('#result-card');
+			const riskScore = document.querySelector('#risk-score');
+			const riskLevel = document.querySelector('#risk-level');
+			const riskSummary = document.querySelector('#risk-summary');
+			const copyButton = document.querySelector('#copy-result');
+
+			function getRiskLevel(score) {
+				if (score >= 18) {
+					return {
+						level: 'Critique',
+						className: 'critical',
+						summary:
+							'Le scénario présente un risque critique. Une action rapide est recommandée afin de réduire l’exposition ou l’impact potentiel.'
+					};
+				}
+
+				if (score >= 14) {
+					return {
+						level: 'Élevé',
+						className: 'high',
+						summary:
+							'Le scénario présente un risque élevé. La priorité doit porter sur la réduction de la probabilité ou de l’impact.'
+					};
+				}
+
+				if (score >= 9) {
+					return {
+						level: 'Modéré',
+						className: 'moderate',
+						summary:
+							'Le scénario présente un risque modéré. Il doit être suivi et traité selon les priorités opérationnelles.'
+					};
+				}
+
+				return {
+					level: 'Faible',
+					className: 'low',
+					summary:
+						'Le scénario présente un risque faible. Il peut être surveillé dans le cadre du traitement courant.'
+				};
+			}
+
+			function calculateRisk() {
+				const probabilityScore = Number(probability.value);
+				const impactScore = Number(impact.value);
+				const cvssScore = Number(cvss.value);
+
+				return Math.round(
+					(probabilityScore * 2) +
+					(impactScore * 2) +
+					(cvssScore / 2)
+				);
+			}
+
+			function updateRisk() {
+				const score = calculateRisk();
+				const risk = getRiskLevel(score);
+
+				probabilityValue.textContent = probability.value;
+				impactValue.textContent = impact.value;
+				cvssValue.textContent = Number(cvss.value).toFixed(1);
+
+				riskScore.textContent = String(score);
+				riskLevel.textContent = risk.level;
+				riskSummary.textContent = risk.summary;
+
+				resultCard.className = `result-card ${risk.className}`;
+			}
+
+			async function copyResult() {
+				const content = `MM Risk Score
+
+Scénario : ${scenario.value}
+Probabilité : ${probability.value}/5
+Impact : ${impact.value}/5
+CVSS : ${Number(cvss.value).toFixed(1)}/10
+
+Score : ${riskScore.textContent}
+Niveau : ${riskLevel.textContent}
+
+Analyse :
+${riskSummary.textContent}`;
+
+				try {
+					await navigator.clipboard.writeText(content);
+
+					copyButton.textContent = 'Résultat copié';
+
+					window.setTimeout(() => {
+						copyButton.textContent = 'Copier le résultat';
+					}, 1800);
+				} catch {
+					copyButton.textContent = 'Copie impossible';
+				}
+			}
+
+			probability.addEventListener('input', updateRisk);
+			impact.addEventListener('input', updateRisk);
+			cvss.addEventListener('input', updateRisk);
+			copyButton.addEventListener('click', copyResult);
+
+			updateRisk();
+		</script>
+	</body>
+</html>
+
+<style>
+	body {
+		background: #f8fafc;
+	}
+
+	main {
+		width: min(1320px, calc(100% - 4rem));
+		margin: 0 auto;
+		padding: 3rem 0 5rem;
+	}
+
+	/* ==========================
+	   HERO
+	========================== */
+
+	.lab-hero {
+		margin-bottom: 3rem;
+		padding: 4rem;
+		overflow: hidden;
+		border: 1px solid rgba(96, 165, 250, 0.15);
+		border-radius: 34px;
+		color: white;
+		background:
+			radial-gradient(
+				circle at 82% 0%,
+				rgba(37, 99, 235, 0.3),
+				transparent 38%
+			),
+			linear-gradient(
+				135deg,
+				#020817 0%,
+				#06142d 55%,
+				#08255c 100%
+			);
+		box-shadow: 0 25px 70px rgba(2, 8, 23, 0.22);
+	}
+
+	.lab-tag {
+		margin: 0;
+		color: #60a5fa;
+		font-size: 0.8rem;
+		font-weight: 900;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+	}
+
+	.lab-hero h1 {
+		max-width: 1000px;
+		margin: 1rem 0 1.5rem;
+		color: white;
+		font-size: clamp(3rem, 6vw, 4.5rem);
+		line-height: 0.95;
+		letter-spacing: -0.06em;
+	}
+
+	.lab-intro {
+		max-width: 800px;
+		margin: 0;
+		color: #dbeafe;
+		font-size: 1.2rem;
+		line-height: 1.75;
+	}
+
+	/* ==========================
+	   TOOL
+	========================== */
+
+	.risk-tool {
+		display: grid;
+		grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+		gap: 2rem;
+		align-items: start;
+	}
+
+	.risk-panel,
+	.result-card {
+		border-radius: 28px;
+		box-shadow: 0 18px 45px rgba(15, 23, 42, 0.07);
+	}
+
+	.risk-panel {
+		display: grid;
+		gap: 1.75rem;
+		padding: 2rem;
+		background: white;
+		border: 1px solid #e5e7eb;
+	}
+
+	.field {
+		display: grid;
+		gap: 0.8rem;
+		min-width: 0;
+	}
+
+	.field-heading {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	label {
+		color: #0f172a;
+		font-size: 1rem;
+		font-weight: 900;
+	}
+
+	.field-heading strong {
+		flex-shrink: 0;
+		color: #2563eb;
+		font-size: 0.95rem;
+	}
+
+	input[type='text'] {
+		width: 100%;
+		min-width: 0;
+		padding: 1rem;
+		border: 1px solid #cbd5e1;
+		border-radius: 14px;
+		background: #f8fafc;
+		color: #0f172a;
+		font: inherit;
+		font-size: 1rem;
+		box-sizing: border-box;
+	}
+
+	input[type='text']:focus-visible {
+		outline: 3px solid rgba(37, 99, 235, 0.2);
+		border-color: #2563eb;
+	}
+
+	input[type='range'] {
+		width: 100%;
+		margin: 0;
+		accent-color: #2563eb;
+		cursor: pointer;
+	}
+
+	/* ==========================
+	   RESULT
+	========================== */
+
+	.result-card {
+		position: sticky;
+		top: 110px;
+		padding: 2rem;
+		color: white;
+		border: 1px solid rgba(96, 165, 250, 0.22);
+		background:
+			radial-gradient(
+				circle at 80% 0%,
+				rgba(96, 165, 250, 0.22),
+				transparent 35%
+			),
+			linear-gradient(
+				135deg,
+				#020817 0%,
+				#06142d 55%,
+				#031b4d 100%
+			);
+	}
+
+	.result-label {
+		margin: 0 0 0.5rem;
+		color: #93c5fd;
+		font-size: 0.75rem;
+		font-weight: 900;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+	}
+
+	.result-card h2 {
+		margin: 0 0 1.5rem;
+		color: #fdba74;
+		font-size: 3rem;
+		line-height: 1;
+		letter-spacing: -0.04em;
+	}
+
+	.score-block {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+		padding: 1rem 1.2rem;
+		border-radius: 18px;
+		background: rgba(255, 255, 255, 0.08);
+	}
+
+	.score-block span {
+		color: #bfdbfe;
+		font-weight: 800;
+	}
+
+	.score-block strong {
+		color: white;
+		font-size: 2.5rem;
+		line-height: 1;
+	}
+
+	.result-card > p:not(.result-label) {
+		margin: 0;
+		color: #dbeafe;
+		line-height: 1.7;
+	}
+
+	.result-card button {
+		width: 100%;
+		margin-top: 1.5rem;
+		padding: 1rem 1.2rem;
+		border: 0;
+		border-radius: 14px;
+		background: #2563eb;
+		color: white;
+		font: inherit;
+		font-weight: 900;
+		cursor: pointer;
+		transition:
+			transform 0.2s ease,
+			background 0.2s ease;
+	}
+
+	.result-card button:hover {
+		background: #1d4ed8;
+		transform: translateY(-1px);
+	}
+
+	.result-card.low h2 {
+		color: #86efac;
+	}
+
+	.result-card.moderate h2 {
+		color: #fde68a;
+	}
+
+	.result-card.high h2 {
+		color: #fdba74;
+	}
+
+	.result-card.critical h2 {
+		color: #fca5a5;
+	}
+
+	/* ==========================
+	   RESPONSIVE
+	========================== */
+
+	@media (max-width: 900px) {
+		main {
+			width: min(100% - 2rem, 1320px);
+			padding: 2rem 0 4rem;
+		}
+
+		.lab-hero {
+			padding: 2.75rem 2rem;
+			border-radius: 26px;
+		}
+
+		.risk-tool {
+			grid-template-columns: 1fr;
+		}
+
+		.result-card {
+			position: static;
+		}
+	}
+
+	@media (max-width: 520px) {
+		main {
+			width: min(100% - 1.25rem, 1320px);
+		}
+
+		.lab-hero {
+			padding: 2.25rem 1.35rem;
+			border-radius: 22px;
+		}
+
+		.lab-hero h1 {
+			font-size: 2.65rem;
+		}
+
+		.lab-intro {
+			font-size: 1rem;
+		}
+
+		.risk-panel,
+		.result-card {
+			padding: 1.35rem;
+			border-radius: 22px;
+		}
+
+		.result-card h2 {
+			font-size: 2.5rem;
+		}
+	}
+</style>

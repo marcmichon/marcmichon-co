@@ -1,0 +1,385 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ArticleHero from '../../components/article/ArticleHero.astro';
+import ArticleLayout from '../../components/article/ArticleLayout.astro';
+import Callout from '../../components/article/Callout.astro';
+import Checklist from '../../components/article/Checklist.astro';
+import RelatedArticles from '../../components/article/RelatedArticles.astro';
+import ArticleQuote from '../../components/article/ArticleQuote.astro';
+import ExecutiveSummary from '../../components/article/ExecutiveSummary.astro';
+import TerrainNote from '../../components/article/TerrainNote.astro';
+import { SITE_TITLE } from '../../consts';
+
+const toc = [
+	{ id: 'contexte', label: 'Pourquoi cet article ?' },
+	{ id: 'existence', label: 'Pourquoi les exclusions existent' },
+	{ id: 'probleme', label: 'Le problème n’est pas l’exclusion' },
+	{ id: 'terrain', label: 'Ce que je retrouve sur le terrain' },
+	{ id: 'vieillissement', label: 'Pourquoi les exclusions vieillissent mal' },
+	{ id: 'verification', label: 'Ce que je vérifie systématiquement' },
+	{ id: 'checklist', label: 'Checklist opérationnelle' },
+	{ id: 'conclusion', label: 'Conclusion' },
+];
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`Les exclusions : le risque silencieux des plateformes EDR | ${SITE_TITLE}`}
+			description="Les exclusions sont nécessaires au fonctionnement d’une plateforme EDR, mais elles peuvent devenir un angle mort lorsqu’elles s’accumulent sans documentation ni revue périodique."
+		/>
+	</head>
+
+	<body>
+		<Header />
+
+		<main>
+			<ArticleHero
+				tag="ENDPOINT SECURITY"
+				title="Les exclusions : le risque silencieux des plateformes EDR"
+				subtitle="Indispensables au fonctionnement de certaines applications, les exclusions peuvent devenir un angle mort lorsqu’elles s’accumulent sans gouvernance."
+				image="/Images/edr-exclusions.png"
+				readTime="4 min de lecture"
+				level="Intermédiaire"
+				updated="Mis à jour : juillet 2026"
+				technologies={[
+					'Endpoint Security',
+					'EDR',
+					'Exclusions',
+					'Security Operations',
+					'Gouvernance'
+				]}
+			/>
+
+			<ExecutiveSummary title="Executive Summary">
+				<ul>
+					<li>Les exclusions sont parfois indispensables au bon fonctionnement d’une plateforme EDR.</li>
+					<li>Une exception créée pour résoudre un incident peut devenir permanente sans justification actuelle.</li>
+					<li>Une application peut disparaître tandis que son exclusion reste active pendant plusieurs années.</li>
+					<li>Le risque ne vient pas nécessairement de l’exclusion, mais de la perte progressive de son contexte.</li>
+				</ul>
+			</ExecutiveSummary>
+
+			<ArticleLayout toc={toc}>
+				<h2 id="contexte">Pourquoi cet article ?</h2>
+
+				<p>
+					Lorsque je reprends une plateforme EDR existante, il y a un élément que
+					je consulte presque systématiquement avant même les tableaux de bord
+					ou les détections.
+				</p>
+
+				<ArticleQuote>
+					Les exclusions.
+				</ArticleQuote>
+
+				<p>
+					Pourtant, c’est rarement le premier sujet évoqué lorsqu’on parle
+					d’Endpoint Detection &amp; Response.
+				</p>
+
+				<p>
+					Les discussions portent plus souvent sur les menaces détectées,
+					les politiques de protection ou les performances de la solution.
+				</p>
+
+				<p>
+					Les exclusions, elles, restent discrètes.
+				</p>
+
+				<p>
+					Et c’est précisément ce qui les rend intéressantes.
+				</p>
+
+				<Callout type="field">
+					<p>
+						<strong>À retenir :</strong> une exclusion est souvent créée pour
+						résoudre un problème légitime. Le risque apparaît lorsqu’elle continue
+						d’exister plusieurs années après la disparition du problème initial.
+					</p>
+				</Callout>
+
+				<h2 id="existence">Pourquoi les exclusions existent</h2>
+
+				<p>
+					Toutes les exclusions ne sont pas mauvaises.
+				</p>
+
+				<p>
+					Au contraire.
+				</p>
+
+				<p>
+					Dans certaines situations, elles sont parfaitement justifiées.
+				</p>
+
+				<ul>
+					<li>Une application métier provoquant un faux positif</li>
+					<li>Un pilote matériel spécifique</li>
+					<li>Un logiciel de sauvegarde</li>
+					<li>Un moteur de base de données</li>
+					<li>Un outil d’administration</li>
+					<li>Une application industrielle</li>
+				</ul>
+
+				<p>
+					L’objectif est simple : permettre au système de fonctionner correctement
+					tout en limitant les impacts opérationnels.
+				</p>
+
+				<p>
+					Créer une exclusion n’est donc pas une erreur.
+				</p>
+
+				<p>
+					C’est une décision technique qui répond à un besoin précis.
+				</p>
+
+				<h2 id="probleme">Le problème n’est pas l’exclusion</h2>
+
+				<p>
+					Le véritable problème apparaît avec le temps.
+				</p>
+
+				<p>
+					Une exclusion est souvent créée dans un contexte précis.
+				</p>
+
+				<p>
+					Puis ce contexte évolue.
+				</p>
+
+				<ul>
+					<li>L’application est mise à jour</li>
+					<li>Le faux positif est corrigé par l’éditeur</li>
+					<li>Le serveur est remplacé</li>
+					<li>Le logiciel est supprimé</li>
+				</ul>
+
+				<p>
+					Mais l’exclusion, elle, reste présente.
+				</p>
+
+				<p>
+					Parfois pendant plusieurs années.
+				</p>
+
+				<ArticleQuote>
+					Le problème n’est pas forcément qu’une exclusion existe. Le problème
+					est de ne plus savoir pourquoi elle existe encore.
+				</ArticleQuote>
+
+				<h2 id="terrain">Ce que je retrouve régulièrement sur le terrain</h2>
+
+				<TerrainNote context="Endpoint Security • Exclusions • Héritage">
+					<p>
+						Lors de plusieurs reprises de plateformes EDR, j’ai retrouvé des
+						exclusions dont personne ne connaissait encore l’origine.
+					</p>
+
+					<p>
+						Certaines avaient été créées plusieurs années auparavant.
+					</p>
+
+					<p>
+						D’autres étaient documentées comme temporaires.
+					</p>
+
+					<p>
+						Certaines concernaient des applications qui n’existaient plus.
+					</p>
+
+					<p>
+						Toutes avaient un point commun : personne n’était capable
+						d’expliquer pourquoi elles étaient toujours actives.
+					</p>
+				</TerrainNote>
+
+				<p>
+					Ce type de situation n’indique pas nécessairement qu’une plateforme
+					est mal administrée.
+				</p>
+
+				<p>
+					Il montre surtout qu’une décision ponctuelle peut devenir un objet
+					permanent lorsqu’aucun processus n’est prévu pour la réexaminer.
+				</p>
+
+				<h2 id="vieillissement">Pourquoi les exclusions vieillissent mal</h2>
+
+				<p>
+					Contrairement aux politiques de protection, les exclusions font rarement
+					l’objet d’une revue régulière.
+				</p>
+
+				<p>
+					Elles sont souvent créées rapidement pour résoudre un incident de production.
+				</p>
+
+				<p>
+					Puis elles disparaissent progressivement du radar.
+				</p>
+
+				<ul>
+					<li>Le temps passe</li>
+					<li>Les équipes changent</li>
+					<li>Les projets évoluent</li>
+					<li>La documentation n’est plus à jour</li>
+				</ul>
+
+				<p>
+					Et les exclusions deviennent un héritage technique.
+				</p>
+
+				<p>
+					Le danger n’est pas forcément leur nombre.
+				</p>
+
+				<p>
+					Le danger est de ne plus connaître leur justification.
+				</p>
+
+				<Callout type="warning">
+					<p>
+						Une exclusion ne constitue pas automatiquement une faiblesse de sécurité.
+						En revanche, une exclusion dont personne ne connaît l’origine mérite
+						probablement d’être revue.
+					</p>
+				</Callout>
+
+				<h2 id="verification">Ce que je vérifie systématiquement</h2>
+
+				<p>
+					Lorsque je reprends une plateforme EDR, je me pose toujours les mêmes questions.
+				</p>
+
+				<ul>
+					<li>Les exclusions sont-elles documentées ?</li>
+					<li>Existe-t-il un propriétaire identifié ?</li>
+					<li>Une justification métier est-elle disponible ?</li>
+					<li>Une date de création est-elle connue ?</li>
+					<li>Le périmètre est-il le plus restreint possible ?</li>
+					<li>Cette exclusion est-elle toujours nécessaire aujourd’hui ?</li>
+					<li>Une revue périodique est-elle organisée ?</li>
+				</ul>
+
+				<ArticleQuote>
+					Une exclusion ancienne n’est pas nécessairement dangereuse. Une exclusion
+					ancienne, non documentée et sans propriétaire est en revanche impossible
+					à qualifier correctement.
+				</ArticleQuote>
+
+				<h2 id="checklist">Checklist opérationnelle</h2>
+
+				<p>
+					Avant de conserver une exclusion existante, je trouve utile de vérifier
+					quelques éléments simples.
+				</p>
+
+				<Checklist
+					title="Revoir une exclusion EDR existante"
+					items={[
+						'Confirmer que le besoin initial est toujours présent.',
+						'Vérifier que l’application concernée existe encore.',
+						'Tester la dernière version de l’application sans l’exclusion.',
+						'Limiter le périmètre de l’exclusion au strict nécessaire.',
+						'Documenter précisément sa justification.',
+						'Identifier un propriétaire technique ou métier.',
+						'Définir une date de prochaine revue.',
+					]}
+				/>
+
+				<h2 id="conclusion">Conclusion</h2>
+
+				<p>
+					Les exclusions font partie du fonctionnement normal d’une plateforme EDR.
+				</p>
+
+				<p>
+					Chercher à les supprimer toutes n’aurait aucun sens.
+				</p>
+
+				<p>
+					En revanche, les considérer comme définitives constitue souvent une erreur.
+				</p>
+
+				<p>
+					Comme beaucoup d’éléments de sécurité, une exclusion doit vivre avec
+					le reste de la plateforme.
+				</p>
+
+				<p>
+					Elle mérite d’être revue, documentée et remise en question régulièrement.
+				</p>
+
+				<ArticleQuote>
+					Parce qu’au final, le risque n’est pas l’exclusion. Le risque est
+					d’oublier pourquoi elle existe.
+				</ArticleQuote>
+
+				<Callout type="field">
+					<p>
+						<strong>Ce que le terrain m’a appris :</strong> lorsqu’une exclusion
+						est ancienne et que personne n’est capable d’expliquer pourquoi elle
+						existe encore, je considère qu’elle mérite d’être réévaluée.
+					</p>
+
+					<p>
+						Non pas parce qu’elle est forcément dangereuse, mais parce qu’en
+						cybersécurité, une décision dont on a perdu le contexte mérite toujours
+						d’être revisitée.
+					</p>
+				</Callout>
+
+				<Callout type="warning">
+					<p>
+						Cette Note de terrain est inspirée de situations rencontrées au cours
+						de différentes missions. Les exemples présentés ont été volontairement
+						anonymisés et généralisés afin de préserver la confidentialité des
+						organisations concernées.
+					</p>
+				</Callout>
+
+				<RelatedArticles
+					articles={[
+						{
+							href: '/articles/endpoint-protege-endpoint-securise',
+							category: 'ENDPOINT SECURITY',
+							title: 'Pourquoi un endpoint protégé n’est pas forcément un endpoint sécurisé',
+							description: 'Installer un EDR est une étape essentielle, mais la sécurité réelle d’un endpoint ne se résume jamais à la présence d’un agent.',
+						},
+						{
+							href: '/articles/ce-que-votre-edr-ne-voit-pas',
+							category: 'ENDPOINT SECURITY',
+							title: 'Votre EDR voit-il vraiment tout ?',
+							description: 'Un EDR protège uniquement les équipements qu’il connaît. Les autres constituent souvent des angles morts.',
+						},
+					]}
+				/>
+			</ArticleLayout>
+		</main>
+
+		<Footer />
+	</body>
+</html>
+
+<style>
+	body {
+		background: #f8fafc;
+	}
+
+	main {
+		width: min(1320px, calc(100% - 4rem));
+		margin: 0 auto;
+		padding: 3rem 0 5rem;
+	}
+
+	@media (max-width: 640px) {
+		main {
+			width: min(100% - 2rem, 1320px);
+		}
+	}
+</style>
