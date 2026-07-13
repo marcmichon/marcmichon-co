@@ -15,259 +15,450 @@ import { SITE_TITLE } from '../../consts';
 	</head>
 
 <script>
-	import { calculateRisk } from '../../lib/riskEngine';
+	import {
+		calculateRisk,
+		type RiskInput,
+		type RiskResult,
+	} from '../../lib/riskEngine';
 
 	const form = document.querySelector<HTMLFormElement>('#risk-form');
 	const calculateButton =
 		document.querySelector<HTMLButtonElement>('#calculate-risk');
 	const resultSection =
 		document.querySelector<HTMLElement>('#risk-result');
-
-	if (!form || !calculateButton || !resultSection) {
-		throw new Error('Impossible d’initialiser le MM Risk Score.');
-	}
-
-	const getChecked = (name: string): boolean => {
-		const input =
-			form.querySelector<HTMLInputElement>(`input[name="${name}"]`);
-
-		return Boolean(input?.checked);
-	};
-
-	const getRadioValue = (name: string): string => {
-		const input =
-			form.querySelector<HTMLInputElement>(
-				`input[name="${name}"]:checked`
-			);
-
-		return input?.value ?? '';
-	};
-
-	const setList = (
-		selector: string,
-		items: string[],
-		emptyMessage: string
-	): void => {
-		const list = document.querySelector<HTMLUListElement>(selector);
-
-		if (!list) return;
-
-		list.innerHTML = '';
-
-		const values = items.length > 0 ? items : [emptyMessage];
-
-		values.forEach((item) => {
-			const element = document.createElement('li');
-			element.textContent = item;
-			list.appendChild(element);
-		});
-	};
-
-	const setOrderedList = (
-		selector: string,
-		items: string[]
-	): void => {
-		const list = document.querySelector<HTMLOListElement>(selector);
-
-		if (!list) return;
-
-		list.innerHTML = '';
-
-		const values =
-			items.length > 0
-				? items
-				: ['Documenter le scénario et organiser une revue du risque.'];
-
-		values.forEach((item) => {
-			const element = document.createElement('li');
-			element.textContent = item;
-			list.appendChild(element);
-		});
-	};
-
-	calculateButton.addEventListener('click', () => {
-		const scenario =
-			form.querySelector<HTMLTextAreaElement>('#scenario')?.value.trim() ?? '';
-
-		const assetType =
-			form.querySelector<HTMLSelectElement>('#asset-type')?.value ?? '';
-
-		const exposure =
-			form.querySelector<HTMLSelectElement>('#exposure')?.value ?? '';
-
-		const criticality = Number(getRadioValue('criticality'));
-
-		const cvss = Number(
-			form.querySelector<HTMLInputElement>('#cvss')?.value ?? 0
-		);
-
-		const epss = Number(
-			form.querySelector<HTMLInputElement>('#epss')?.value ?? 0
-		);
-
-		const publicExploit =
-			getRadioValue('publicExploit') === 'yes';
-
-		const authenticationRequired =
-			getRadioValue('authenticationRequired') === 'yes';
-
-		if (
-			!scenario ||
-			!assetType ||
-			!exposure ||
-			!criticality ||
-			!getRadioValue('publicExploit') ||
-			!getRadioValue('authenticationRequired')
-		) {
-			alert(
-				'Complète le scénario, le type d’actif, l’exposition, la criticité métier et les deux questions d’exploitabilité.'
-			);
-
-			return;
-		}
-
-		if (
-			Number.isNaN(cvss) ||
-			cvss < 0 ||
-			cvss > 10 ||
-			Number.isNaN(epss) ||
-			epss < 0 ||
-			epss > 100
-		) {
-			alert(
-				'Le CVSS doit être compris entre 0 et 10 et l’EPSS entre 0 et 100 %.'
-			);
-
-			return;
-		}
-
-		const input = {
-			scenario,
-			assetType,
-			exposure,
-			criticality,
-			cvss,
-			epss,
-			publicExploit,
-			authenticationRequired,
-			sensitiveData: getChecked('sensitiveData'),
-			businessInterruption: getChecked('businessInterruption'),
-			privilegedAccess: getChecked('privilegedAccess'),
-			lateralMovement: getChecked('lateralMovement'),
-			controls: {
-				edr: getChecked('edr'),
-				waf: getChecked('waf'),
-				mfa: getChecked('mfa'),
-				segmentation: getChecked('segmentation'),
-				backups: getChecked('backups'),
-				soc: getChecked('soc'),
-			},
-		};
-
-		const result = calculateRisk(input);
-
-		document.querySelector('#result-score')!.textContent =
-			String(result.score);
-
-		document.querySelector('#result-level')!.textContent =
-			result.level;
-
-		document.querySelector('#result-priority')!.textContent =
-			result.priority;
-
-		document.querySelector('#result-deadline')!.textContent =
-			result.deadline;
-
-		document.querySelector('#result-probability')!.textContent =
-			String(result.probability);
-
-		document.querySelector('#result-impact')!.textContent =
-			String(result.impact);
-
-		document.querySelector('#result-reduction')!.textContent =
-			String(result.controlReduction);
-
-		document.querySelector('#result-summary')!.textContent =
-			result.summary;
-
-		const progressBar =
-			document.querySelector<HTMLElement>('#score-progress-bar');
-
-		if (progressBar) {
-			progressBar.style.width = `${result.score}%`;
-		}
-
-		resultSection.dataset.level =
-			result.level.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-
-		setList(
-			'#risk-factors-list',
-			result.riskFactors,
-			'Aucun facteur aggravant majeur identifié.'
-		);
-
-		setList(
-			'#protective-factors-list',
-			result.protectiveFactors,
-			'Aucun contrôle compensatoire déclaré.'
-		);
-
-		setOrderedList(
-			'#recommendations-list',
-			result.recommendations
-		);
-
-		resultSection.hidden = false;
-
-		requestAnimationFrame(() => {
-			resultSection.classList.add('is-visible');
-		});
-
-		resultSection.scrollIntoView({
-			behavior: 'smooth',
-			block: 'start',
-		});
-	});
-
 	const copyButton =
 		document.querySelector<HTMLButtonElement>('#copy-analysis');
 
-	copyButton?.addEventListener('click', async () => {
-		const score =
-			document.querySelector('#result-score')?.textContent ?? '';
+	let lastInput: RiskInput | null = null;
+	let lastResult: RiskResult | null = null;
 
-		const level =
-			document.querySelector('#result-level')?.textContent ?? '';
+	if (!form || !calculateButton || !resultSection) {
+		console.error(
+			'MM Risk Score : certains éléments nécessaires sont absents de la page.'
+		);
+	} else {
+		const getChecked = (name: string): boolean => {
+			const input =
+				form.querySelector<HTMLInputElement>(`input[name="${name}"]`);
 
-		const priority =
-			document.querySelector('#result-priority')?.textContent ?? '';
+			return Boolean(input?.checked);
+		};
 
-		const deadline =
-			document.querySelector('#result-deadline')?.textContent ?? '';
+		const getRadioValue = (name: string): string => {
+			const input =
+				form.querySelector<HTMLInputElement>(
+					`input[name="${name}"]:checked`
+				);
 
-		const summary =
-			document.querySelector('#result-summary')?.textContent ?? '';
+			return input?.value ?? '';
+		};
 
-		const content = `MM Risk Score
+		const setText = (selector: string, value: string): void => {
+			const element = document.querySelector<HTMLElement>(selector);
 
-Score : ${score}/100
-Niveau : ${level}
-Priorité : ${priority}
-Délai conseillé : ${deadline}
+			if (element) {
+				element.textContent = value;
+			}
+		};
 
-${summary}`;
+		const setUnorderedList = (
+			selector: string,
+			items: string[],
+			emptyMessage: string
+		): void => {
+			const list = document.querySelector<HTMLUListElement>(selector);
 
-		try {
-			await navigator.clipboard.writeText(content);
-			copyButton.textContent = 'Analyse copiée';
+			if (!list) return;
+
+			list.innerHTML = '';
+
+			const values = items.length > 0 ? items : [emptyMessage];
+
+			values.forEach((item) => {
+				const listItem = document.createElement('li');
+				listItem.textContent = item;
+				list.appendChild(listItem);
+			});
+		};
+
+		const setOrderedList = (
+			selector: string,
+			items: string[],
+			emptyMessage: string
+		): void => {
+			const list = document.querySelector<HTMLOListElement>(selector);
+
+			if (!list) return;
+
+			list.innerHTML = '';
+
+			const values = items.length > 0 ? items : [emptyMessage];
+
+			values.forEach((item) => {
+				const listItem = document.createElement('li');
+				listItem.textContent = item;
+				list.appendChild(listItem);
+			});
+		};
+
+		const normalizeLevel = (level: string): string =>
+			level
+				.toLowerCase()
+				.normalize('NFD')
+				.replace(/[\u0300-\u036f]/g, '');
+
+		const getAssetLabel = (value: string): string => {
+			const labels: Record<string, string> = {
+				workstation: 'Poste utilisateur',
+				server: 'Serveur',
+				'web-application': 'Application web',
+				api: 'API',
+				database: 'Base de données',
+				'active-directory': 'Active Directory',
+				cloud: 'Ressource Cloud',
+				ot: 'Équipement OT',
+			};
+
+			return labels[value] ?? value;
+		};
+
+		const getExposureLabel = (value: string): string => {
+			const labels: Record<string, string> = {
+				internet: 'Internet',
+				partner: 'Partenaire / Extranet',
+				vpn: 'VPN',
+				internal: 'Réseau interne',
+				isolated: 'Isolé / Segmenté',
+			};
+
+			return labels[value] ?? value;
+		};
+
+		const getCriticalityLabel = (value: number): string => {
+			const labels: Record<number, string> = {
+				1: 'Faible',
+				2: 'Modérée',
+				3: 'Importante',
+				4: 'Critique',
+			};
+
+			return labels[value] ?? `${value}/4`;
+		};
+
+		const yesNo = (value: boolean): string =>
+			value ? 'Oui' : 'Non';
+
+		const readForm = (): RiskInput | null => {
+			const scenario =
+				form.querySelector<HTMLTextAreaElement>('#scenario')
+					?.value.trim() ?? '';
+
+			const assetType =
+				form.querySelector<HTMLSelectElement>('#asset-type')
+					?.value ?? '';
+
+			const exposure =
+				form.querySelector<HTMLSelectElement>('#exposure')
+					?.value ?? '';
+
+			const criticalityValue = getRadioValue('criticality');
+			const publicExploitValue = getRadioValue('publicExploit');
+			const authenticationValue =
+				getRadioValue('authenticationRequired');
+
+			const cvssRaw =
+				form.querySelector<HTMLInputElement>('#cvss')?.value ?? '';
+
+			const epssRaw =
+				form.querySelector<HTMLInputElement>('#epss')?.value ?? '';
+
+			const cvss = Number(cvssRaw);
+			const epss = Number(epssRaw);
+			const criticality = Number(criticalityValue);
+
+			if (
+				!scenario ||
+				!assetType ||
+				!exposure ||
+				!criticalityValue ||
+				!publicExploitValue ||
+				!authenticationValue ||
+				cvssRaw === '' ||
+				epssRaw === ''
+			) {
+				window.alert(
+					'Complète tous les champs obligatoires du contexte et de l’exploitabilité.'
+				);
+
+				return null;
+			}
+
+			if (
+				!Number.isFinite(cvss) ||
+				cvss < 0 ||
+				cvss > 10
+			) {
+				window.alert(
+					'Le score CVSS doit être compris entre 0 et 10.'
+				);
+
+				return null;
+			}
+
+			if (
+				!Number.isFinite(epss) ||
+				epss < 0 ||
+				epss > 100
+			) {
+				window.alert(
+					'Le score EPSS doit être compris entre 0 et 100 %.'
+				);
+
+				return null;
+			}
+
+			return {
+				scenario,
+				assetType,
+				exposure,
+				criticality,
+				cvss,
+				epss,
+				publicExploit: publicExploitValue === 'yes',
+				authenticationRequired: authenticationValue === 'yes',
+				sensitiveData: getChecked('sensitiveData'),
+				businessInterruption: getChecked('businessInterruption'),
+				privilegedAccess: getChecked('privilegedAccess'),
+				lateralMovement: getChecked('lateralMovement'),
+				controls: {
+					edr: getChecked('edr'),
+					waf: getChecked('waf'),
+					mfa: getChecked('mfa'),
+					segmentation: getChecked('segmentation'),
+					backups: getChecked('backups'),
+					soc: getChecked('soc'),
+				},
+			};
+		};
+
+		const renderResult = (
+			input: RiskInput,
+			result: RiskResult
+		): void => {
+			setText('#result-score', String(result.score));
+			setText('#result-level', result.level);
+			setText('#result-priority', result.priority);
+			setText('#result-deadline', result.deadline);
+			setText(
+				'#result-probability',
+				String(result.probability)
+			);
+			setText('#result-impact', String(result.impact));
+			setText(
+				'#result-reduction',
+				String(result.controlReduction)
+			);
+			setText('#result-summary', result.summary);
+
+			const progressBar =
+				document.querySelector<HTMLElement>(
+					'#score-progress-bar'
+				);
+
+			if (progressBar) {
+				progressBar.style.width = '0%';
+
+				requestAnimationFrame(() => {
+					progressBar.style.width = `${result.score}%`;
+				});
+			}
+
+			resultSection.dataset.level =
+				normalizeLevel(result.level);
+
+			setUnorderedList(
+				'#risk-factors-list',
+				result.riskFactors,
+				'Aucun facteur aggravant majeur identifié.'
+			);
+
+			setUnorderedList(
+				'#protective-factors-list',
+				result.protectiveFactors,
+				'Aucun contrôle compensatoire déclaré.'
+			);
+
+			setOrderedList(
+				'#recommendations-list',
+				result.recommendations,
+				'Documenter le scénario et organiser une revue du risque.'
+			);
+
+			resultSection.hidden = false;
+
+			requestAnimationFrame(() => {
+				resultSection.classList.add('is-visible');
+			});
 
 			window.setTimeout(() => {
-				copyButton.textContent = 'Copier l’analyse';
-			}, 1800);
-		} catch {
-			copyButton.textContent = 'Copie impossible';
-		}
-	});
+				resultSection.scrollIntoView({
+					behavior: 'smooth',
+					block: 'start',
+				});
+			}, 100);
+		};
+
+		const buildCompleteReport = (
+			input: RiskInput,
+			result: RiskResult
+		): string => {
+			const riskFactors =
+				result.riskFactors.length > 0
+					? result.riskFactors
+							.map((item) => `- ${item}`)
+							.join('\n')
+					: '- Aucun facteur aggravant majeur identifié.';
+
+			const protectiveFactors =
+				result.protectiveFactors.length > 0
+					? result.protectiveFactors
+							.map((item) => `- ${item}`)
+							.join('\n')
+					: '- Aucun contrôle compensatoire déclaré.';
+
+			const recommendations =
+				result.recommendations.length > 0
+					? result.recommendations
+							.map(
+								(item, index) =>
+									`${index + 1}. ${item}`
+							)
+							.join('\n')
+					: '1. Documenter le scénario et organiser une revue du risque.';
+
+			return `MM Risk Score
+===============
+
+SCÉNARIO
+--------
+${input.scenario}
+
+CONTEXTE
+--------
+Type d’actif : ${getAssetLabel(input.assetType)}
+Exposition : ${getExposureLabel(input.exposure)}
+Criticité métier : ${getCriticalityLabel(input.criticality)}
+
+EXPLOITABILITÉ
+--------------
+CVSS : ${input.cvss.toFixed(1)}/10
+EPSS : ${input.epss.toFixed(1)} %
+Exploit public disponible : ${yesNo(input.publicExploit)}
+Authentification nécessaire : ${yesNo(input.authenticationRequired)}
+
+IMPACT POTENTIEL
+----------------
+Données sensibles : ${yesNo(input.sensitiveData)}
+Interruption métier importante : ${yesNo(input.businessInterruption)}
+Privilèges élevés : ${yesNo(input.privilegedAccess)}
+Mouvement latéral possible : ${yesNo(input.lateralMovement)}
+
+CONTRÔLES COMPENSATOIRES
+------------------------
+EDR : ${yesNo(input.controls.edr)}
+WAF : ${yesNo(input.controls.waf)}
+MFA : ${yesNo(input.controls.mfa)}
+Segmentation : ${yesNo(input.controls.segmentation)}
+Sauvegardes : ${yesNo(input.controls.backups)}
+Supervision SOC : ${yesNo(input.controls.soc)}
+
+RÉSULTAT
+--------
+MM Risk Score : ${result.score}/100
+Niveau : ${result.level}
+Priorité : ${result.priority}
+Délai conseillé : ${result.deadline}
+
+Probabilité calculée : ${result.probability}/5
+Impact calculé : ${result.impact}/5
+Réduction apportée par les contrôles : -${result.controlReduction} point${result.controlReduction > 1 ? 's' : ''}
+
+ANALYSE AUTOMATIQUE
+-------------------
+${result.summary}
+
+FACTEURS AUGMENTANT LE RISQUE
+-----------------------------
+${riskFactors}
+
+CONTRÔLES PROTECTEURS
+---------------------
+${protectiveFactors}
+
+PRIORITÉS RECOMMANDÉES
+----------------------
+${recommendations}
+
+AVERTISSEMENT
+-------------
+Le MM Risk Score est une méthode d’aide à la décision. Il fournit une estimation contextualisée à partir des informations renseignées, mais ne remplace pas une analyse de risque complète et ne constitue pas un standard officiel.`;
+		};
+
+		calculateButton.addEventListener('click', () => {
+			const input = readForm();
+
+			if (!input) return;
+
+			const result = calculateRisk(input);
+
+			lastInput = input;
+			lastResult = result;
+
+			renderResult(input, result);
+		});
+
+		copyButton?.addEventListener('click', async () => {
+			if (!lastInput || !lastResult) {
+				copyButton.textContent =
+					'Aucune analyse disponible';
+
+				window.setTimeout(() => {
+					copyButton.textContent = 'Copier l’analyse';
+				}, 1800);
+
+				return;
+			}
+
+			const completeReport =
+				buildCompleteReport(lastInput, lastResult);
+
+			try {
+				await navigator.clipboard.writeText(
+					completeReport
+				);
+
+				copyButton.textContent =
+					'Analyse complète copiée';
+
+				window.setTimeout(() => {
+					copyButton.textContent =
+						'Copier l’analyse';
+				}, 1800);
+			} catch (error) {
+				console.error(
+					'Impossible de copier l’analyse.',
+					error
+				);
+
+				copyButton.textContent = 'Copie impossible';
+
+				window.setTimeout(() => {
+					copyButton.textContent =
+						'Copier l’analyse';
+				}, 1800);
+			}
+		});
+	}
 </script>
 
 	<body>
@@ -275,14 +466,26 @@ ${summary}`;
 
 		<main>
 			<section class="hero">
-				<p class="tag">LABS</p>
-				<h1>MM Risk Score</h1>
-				<p>
-					Un formulaire guidé pour évaluer un scénario de risque à partir
-					d’éléments factuels, sans demander à l’utilisateur de choisir lui-même
-					la probabilité ou l’impact.
-				</p>
-			</section>
+	<p class="tag">LABS</p>
+
+	<h1>MM Risk Score</h1>
+
+	<p class="hero-intro">
+		Un formulaire guidé pour évaluer un scénario de risque à partir
+		d’éléments factuels, sans demander à l’utilisateur de choisir lui-même
+		la probabilité ou l’impact.
+	</p>
+
+	<div class="method-disclaimer">
+		<strong>Méthode d’aide à la décision</strong>
+
+		<p>
+			Le MM Risk Score fournit une estimation contextualisée à partir des
+			informations renseignées. Il ne remplace pas une analyse de risque
+			complète et ne constitue pas un standard officiel.
+		</p>
+	</div>
+</section>
 
 			<form class="risk-form" id="risk-form">
 				<section class="form-section">
@@ -626,6 +829,8 @@ ${summary}`;
 	</div>
 </section>
 
+
+
 		</main>
 
 		<Footer />
@@ -653,6 +858,34 @@ ${summary}`;
 			linear-gradient(135deg, #020817 0%, #06142d 55%, #031b4d 100%);
 		box-shadow: 0 25px 70px rgba(2, 8, 23, 0.2);
 	}
+
+	.method-disclaimer {
+	max-width: 850px;
+	margin-top: 1.75rem;
+	padding: 1rem 1.2rem;
+	border: 1px solid rgba(147, 197, 253, 0.28);
+	border-left: 4px solid #60a5fa;
+	border-radius: 14px;
+	background: rgba(255, 255, 255, 0.07);
+	backdrop-filter: blur(10px);
+}
+
+.method-disclaimer strong {
+	display: block;
+	margin-bottom: 0.3rem;
+	color: #93c5fd;
+	font-size: 0.82rem;
+	font-weight: 900;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.method-disclaimer p {
+	margin: 0;
+	color: #dbeafe;
+	font-size: 0.9rem;
+	line-height: 1.6;
+}
 
 	.tag {
 		margin: 0;
