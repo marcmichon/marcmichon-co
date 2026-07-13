@@ -9,236 +9,626 @@ import { SITE_TITLE } from '../../consts';
 <html lang="fr">
 	<head>
 		<BaseHead
-			title={`Risk Matrix interactive | ${SITE_TITLE}`}
-			description="Un outil interactif pour évaluer rapidement un scénario de risque cybersécurité selon son impact, sa probabilité et son score CVSS."
+			title={`MM Risk Score | ${SITE_TITLE}`}
+			description="Un formulaire guidé pour analyser un scénario de risque cybersécurité à partir du contexte, de l’exploitabilité, de l’impact potentiel et des contrôles compensatoires."
 		/>
 	</head>
+
+<script>
+	import { calculateRisk } from '../../lib/riskEngine';
+
+	const form = document.querySelector<HTMLFormElement>('#risk-form');
+	const calculateButton =
+		document.querySelector<HTMLButtonElement>('#calculate-risk');
+	const resultSection =
+		document.querySelector<HTMLElement>('#risk-result');
+
+	if (!form || !calculateButton || !resultSection) {
+		throw new Error('Impossible d’initialiser le MM Risk Score.');
+	}
+
+	const getChecked = (name: string): boolean => {
+		const input =
+			form.querySelector<HTMLInputElement>(`input[name="${name}"]`);
+
+		return Boolean(input?.checked);
+	};
+
+	const getRadioValue = (name: string): string => {
+		const input =
+			form.querySelector<HTMLInputElement>(
+				`input[name="${name}"]:checked`
+			);
+
+		return input?.value ?? '';
+	};
+
+	const setList = (
+		selector: string,
+		items: string[],
+		emptyMessage: string
+	): void => {
+		const list = document.querySelector<HTMLUListElement>(selector);
+
+		if (!list) return;
+
+		list.innerHTML = '';
+
+		const values = items.length > 0 ? items : [emptyMessage];
+
+		values.forEach((item) => {
+			const element = document.createElement('li');
+			element.textContent = item;
+			list.appendChild(element);
+		});
+	};
+
+	const setOrderedList = (
+		selector: string,
+		items: string[]
+	): void => {
+		const list = document.querySelector<HTMLOListElement>(selector);
+
+		if (!list) return;
+
+		list.innerHTML = '';
+
+		const values =
+			items.length > 0
+				? items
+				: ['Documenter le scénario et organiser une revue du risque.'];
+
+		values.forEach((item) => {
+			const element = document.createElement('li');
+			element.textContent = item;
+			list.appendChild(element);
+		});
+	};
+
+	calculateButton.addEventListener('click', () => {
+		const scenario =
+			form.querySelector<HTMLTextAreaElement>('#scenario')?.value.trim() ?? '';
+
+		const assetType =
+			form.querySelector<HTMLSelectElement>('#asset-type')?.value ?? '';
+
+		const exposure =
+			form.querySelector<HTMLSelectElement>('#exposure')?.value ?? '';
+
+		const criticality = Number(getRadioValue('criticality'));
+
+		const cvss = Number(
+			form.querySelector<HTMLInputElement>('#cvss')?.value ?? 0
+		);
+
+		const epss = Number(
+			form.querySelector<HTMLInputElement>('#epss')?.value ?? 0
+		);
+
+		const publicExploit =
+			getRadioValue('publicExploit') === 'yes';
+
+		const authenticationRequired =
+			getRadioValue('authenticationRequired') === 'yes';
+
+		if (
+			!scenario ||
+			!assetType ||
+			!exposure ||
+			!criticality ||
+			!getRadioValue('publicExploit') ||
+			!getRadioValue('authenticationRequired')
+		) {
+			alert(
+				'Complète le scénario, le type d’actif, l’exposition, la criticité métier et les deux questions d’exploitabilité.'
+			);
+
+			return;
+		}
+
+		if (
+			Number.isNaN(cvss) ||
+			cvss < 0 ||
+			cvss > 10 ||
+			Number.isNaN(epss) ||
+			epss < 0 ||
+			epss > 100
+		) {
+			alert(
+				'Le CVSS doit être compris entre 0 et 10 et l’EPSS entre 0 et 100 %.'
+			);
+
+			return;
+		}
+
+		const input = {
+			scenario,
+			assetType,
+			exposure,
+			criticality,
+			cvss,
+			epss,
+			publicExploit,
+			authenticationRequired,
+			sensitiveData: getChecked('sensitiveData'),
+			businessInterruption: getChecked('businessInterruption'),
+			privilegedAccess: getChecked('privilegedAccess'),
+			lateralMovement: getChecked('lateralMovement'),
+			controls: {
+				edr: getChecked('edr'),
+				waf: getChecked('waf'),
+				mfa: getChecked('mfa'),
+				segmentation: getChecked('segmentation'),
+				backups: getChecked('backups'),
+				soc: getChecked('soc'),
+			},
+		};
+
+		const result = calculateRisk(input);
+
+		document.querySelector('#result-score')!.textContent =
+			String(result.score);
+
+		document.querySelector('#result-level')!.textContent =
+			result.level;
+
+		document.querySelector('#result-priority')!.textContent =
+			result.priority;
+
+		document.querySelector('#result-deadline')!.textContent =
+			result.deadline;
+
+		document.querySelector('#result-probability')!.textContent =
+			String(result.probability);
+
+		document.querySelector('#result-impact')!.textContent =
+			String(result.impact);
+
+		document.querySelector('#result-reduction')!.textContent =
+			String(result.controlReduction);
+
+		document.querySelector('#result-summary')!.textContent =
+			result.summary;
+
+		const progressBar =
+			document.querySelector<HTMLElement>('#score-progress-bar');
+
+		if (progressBar) {
+			progressBar.style.width = `${result.score}%`;
+		}
+
+		resultSection.dataset.level =
+			result.level.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+		setList(
+			'#risk-factors-list',
+			result.riskFactors,
+			'Aucun facteur aggravant majeur identifié.'
+		);
+
+		setList(
+			'#protective-factors-list',
+			result.protectiveFactors,
+			'Aucun contrôle compensatoire déclaré.'
+		);
+
+		setOrderedList(
+			'#recommendations-list',
+			result.recommendations
+		);
+
+		resultSection.hidden = false;
+
+		requestAnimationFrame(() => {
+			resultSection.classList.add('is-visible');
+		});
+
+		resultSection.scrollIntoView({
+			behavior: 'smooth',
+			block: 'start',
+		});
+	});
+
+	const copyButton =
+		document.querySelector<HTMLButtonElement>('#copy-analysis');
+
+	copyButton?.addEventListener('click', async () => {
+		const score =
+			document.querySelector('#result-score')?.textContent ?? '';
+
+		const level =
+			document.querySelector('#result-level')?.textContent ?? '';
+
+		const priority =
+			document.querySelector('#result-priority')?.textContent ?? '';
+
+		const deadline =
+			document.querySelector('#result-deadline')?.textContent ?? '';
+
+		const summary =
+			document.querySelector('#result-summary')?.textContent ?? '';
+
+		const content = `MM Risk Score
+
+Score : ${score}/100
+Niveau : ${level}
+Priorité : ${priority}
+Délai conseillé : ${deadline}
+
+${summary}`;
+
+		try {
+			await navigator.clipboard.writeText(content);
+			copyButton.textContent = 'Analyse copiée';
+
+			window.setTimeout(() => {
+				copyButton.textContent = 'Copier l’analyse';
+			}, 1800);
+		} catch {
+			copyButton.textContent = 'Copie impossible';
+		}
+	});
+</script>
 
 	<body>
 		<Header />
 
 		<main>
-			<section class="lab-hero">
-				<p class="lab-tag">LABS</p>
-
-				<h1>Risk Matrix interactive</h1>
-
-				<p class="lab-intro">
-					Un outil simple pour évaluer un scénario de risque selon trois dimensions :
-					la probabilité, l’impact et la sévérité technique.
+			<section class="hero">
+				<p class="tag">LABS</p>
+				<h1>MM Risk Score</h1>
+				<p>
+					Un formulaire guidé pour évaluer un scénario de risque à partir
+					d’éléments factuels, sans demander à l’utilisateur de choisir lui-même
+					la probabilité ou l’impact.
 				</p>
 			</section>
 
-			<section class="risk-tool">
-				<form class="risk-panel" id="risk-form">
-					<div class="field">
-						<label for="scenario">Scénario</label>
+			<form class="risk-form" id="risk-form">
+				<section class="form-section">
+					<div class="section-number">1</div>
 
-						<input
-							id="scenario"
-							name="scenario"
-							type="text"
-							value="Serveur Apache exposé sur Internet"
-						/>
-					</div>
-
-					<div class="field">
-						<div class="field-heading">
-							<label for="probability">Probabilité</label>
-
-							<strong>
-								<span id="probability-value">3</span>/5
-							</strong>
+					<div class="section-content">
+						<div class="section-heading">
+							<p>Contexte</p>
+							<h2>Décrire le scénario</h2>
 						</div>
 
-						<input
-							id="probability"
-							name="probability"
-							type="range"
-							min="1"
-							max="5"
-							step="1"
-							value="3"
-						/>
+						<div class="fields-grid">
+							<div class="field field-wide">
+								<label for="scenario">Scénario</label>
+								<textarea
+									id="scenario"
+									name="scenario"
+									placeholder="Exemple : serveur web exposé sur Internet avec une vulnérabilité critique"
+								></textarea>
+							</div>
+
+							<div class="field">
+								<label for="asset-type">Type d’actif</label>
+								<select id="asset-type" name="assetType">
+									<option value="">Sélectionner</option>
+									<option value="workstation">Poste utilisateur</option>
+									<option value="server">Serveur</option>
+									<option value="web-application">Application web</option>
+									<option value="api">API</option>
+									<option value="database">Base de données</option>
+									<option value="active-directory">Active Directory</option>
+									<option value="cloud">Ressource Cloud</option>
+									<option value="ot">Équipement OT</option>
+								</select>
+							</div>
+
+							<div class="field">
+								<label for="exposure">Exposition</label>
+								<select id="exposure" name="exposure">
+									<option value="">Sélectionner</option>
+									<option value="internet">Internet</option>
+									<option value="partner">Partenaire / Extranet</option>
+									<option value="vpn">VPN</option>
+									<option value="internal">Réseau interne</option>
+									<option value="isolated">Isolé / Segmenté</option>
+								</select>
+							</div>
+
+							<div class="field field-wide">
+								<label>Criticité métier</label>
+
+								<div class="choice-grid four">
+									<label class="choice-card">
+										<input type="radio" name="criticality" value="1" />
+										<span>
+											<strong>Faible</strong>
+											<small>Impact limité</small>
+										</span>
+									</label>
+
+									<label class="choice-card">
+										<input type="radio" name="criticality" value="2" />
+										<span>
+											<strong>Modérée</strong>
+											<small>Service non critique</small>
+										</span>
+									</label>
+
+									<label class="choice-card">
+										<input type="radio" name="criticality" value="3" />
+										<span>
+											<strong>Importante</strong>
+											<small>Impact métier notable</small>
+										</span>
+									</label>
+
+									<label class="choice-card">
+										<input type="radio" name="criticality" value="4" />
+										<span>
+											<strong>Critique</strong>
+											<small>Service essentiel</small>
+										</span>
+									</label>
+								</div>
+							</div>
+						</div>
 					</div>
+				</section>
 
-					<div class="field">
-						<div class="field-heading">
-							<label for="impact">Impact</label>
+				<section class="form-section">
+					<div class="section-number">2</div>
 
-							<strong>
-								<span id="impact-value">4</span>/5
-							</strong>
+					<div class="section-content">
+						<div class="section-heading">
+							<p>Exploitabilité</p>
+							<h2>Évaluer la facilité d’exploitation</h2>
 						</div>
 
-						<input
-							id="impact"
-							name="impact"
-							type="range"
-							min="1"
-							max="5"
-							step="1"
-							value="4"
-						/>
+						<div class="fields-grid">
+							<div class="field">
+								<label for="cvss">Score CVSS</label>
+								<input
+									id="cvss"
+									name="cvss"
+									type="number"
+									min="0"
+									max="10"
+									step="0.1"
+									placeholder="9.8"
+								/>
+							</div>
+
+							<div class="field">
+								<label for="epss">Score EPSS</label>
+								<div class="input-suffix">
+									<input
+										id="epss"
+										name="epss"
+										type="number"
+										min="0"
+										max="100"
+										step="0.1"
+										placeholder="82"
+									/>
+									<span>%</span>
+								</div>
+							</div>
+
+							<div class="field">
+								<label>Exploit public disponible ?</label>
+
+								<div class="binary-choice">
+									<label>
+										<input type="radio" name="publicExploit" value="yes" />
+										<span>Oui</span>
+									</label>
+
+									<label>
+										<input type="radio" name="publicExploit" value="no" />
+										<span>Non</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="field">
+								<label>Authentification nécessaire ?</label>
+
+								<div class="binary-choice">
+									<label>
+										<input type="radio" name="authenticationRequired" value="yes" />
+										<span>Oui</span>
+									</label>
+
+									<label>
+										<input type="radio" name="authenticationRequired" value="no" />
+										<span>Non</span>
+									</label>
+								</div>
+							</div>
+						</div>
 					</div>
+				</section>
 
-					<div class="field">
-						<div class="field-heading">
-							<label for="cvss">CVSS</label>
+				<section class="form-section">
+					<div class="section-number">3</div>
 
-							<strong>
-								<span id="cvss-value">9.8</span>/10
-							</strong>
+					<div class="section-content">
+						<div class="section-heading">
+							<p>Impact potentiel</p>
+							<h2>Qualifier les conséquences possibles</h2>
 						</div>
 
-						<input
-							id="cvss"
-							name="cvss"
-							type="range"
-							min="0"
-							max="10"
-							step="0.1"
-							value="9.8"
-						/>
+						<div class="choice-grid two">
+							<label class="toggle-card">
+								<input type="checkbox" name="sensitiveData" />
+								<span>
+									<strong>Données sensibles</strong>
+									<small>Données personnelles, financières ou confidentielles</small>
+								</span>
+							</label>
+
+							<label class="toggle-card">
+								<input type="checkbox" name="businessInterruption" />
+								<span>
+									<strong>Interruption métier importante</strong>
+									<small>Indisponibilité d’un service essentiel</small>
+								</span>
+							</label>
+
+							<label class="toggle-card">
+								<input type="checkbox" name="privilegedAccess" />
+								<span>
+									<strong>Privilèges élevés</strong>
+									<small>Accès administrateur ou système</small>
+								</span>
+							</label>
+
+							<label class="toggle-card">
+								<input type="checkbox" name="lateralMovement" />
+								<span>
+									<strong>Mouvement latéral possible</strong>
+									<small>Accès possible à d’autres actifs</small>
+								</span>
+							</label>
+						</div>
 					</div>
-				</form>
+				</section>
 
-				<aside class="result-card" id="result-card" aria-live="polite">
-					<p class="result-label">MM Risk Score</p>
+				<section class="form-section">
+					<div class="section-number">4</div>
 
-					<h2 id="risk-level">Critique</h2>
+					<div class="section-content">
+						<div class="section-heading">
+							<p>Contrôles compensatoires</p>
+							<h2>Identifier les protections déjà présentes</h2>
+						</div>
 
-					<div class="score-block">
-						<span>Score calculé</span>
-						<strong id="risk-score">19</strong>
+						<div class="choice-grid three">
+							<label class="toggle-card compact">
+								<input type="checkbox" name="edr" />
+								<span><strong>EDR</strong></span>
+							</label>
+
+							<label class="toggle-card compact">
+								<input type="checkbox" name="waf" />
+								<span><strong>WAF</strong></span>
+							</label>
+
+							<label class="toggle-card compact">
+								<input type="checkbox" name="mfa" />
+								<span><strong>MFA</strong></span>
+							</label>
+
+							<label class="toggle-card compact">
+								<input type="checkbox" name="segmentation" />
+								<span><strong>Segmentation</strong></span>
+							</label>
+
+							<label class="toggle-card compact">
+								<input type="checkbox" name="backups" />
+								<span><strong>Sauvegardes</strong></span>
+							</label>
+
+							<label class="toggle-card compact">
+								<input type="checkbox" name="soc" />
+								<span><strong>Supervision SOC</strong></span>
+							</label>
+						</div>
 					</div>
+				</section>
 
-					<p id="risk-summary">
-						Le scénario présente un risque critique. Une action rapide est recommandée.
-					</p>
+			<div class="form-actions">
+	<button id="calculate-risk" type="button">
+		Calculer le MM Risk Score
+	</button>
 
-					<button id="copy-result" type="button">
-						Copier le résultat
-					</button>
-				</aside>
-			</section>
+	<p>
+		Le résultat est calculé à partir des informations renseignées.
+	</p>
+</div>
+			</form>
+
+			<section class="risk-result" id="risk-result" hidden>
+	<div class="result-header">
+		<div>
+			<p class="result-eyebrow">ANALYSE DU SCÉNARIO</p>
+			<h2>MM Risk Score</h2>
+		</div>
+
+		<div class="result-level" id="result-level">
+			Élevé
+		</div>
+	</div>
+
+	<div class="score-layout">
+		<div class="main-score">
+			<div class="score-circle">
+				<strong id="result-score">0</strong>
+				<span>/ 100</span>
+			</div>
+
+			<div class="score-progress">
+				<div id="score-progress-bar"></div>
+			</div>
+		</div>
+
+		<div class="result-metrics">
+			<div class="metric">
+				<span>Priorité</span>
+				<strong id="result-priority">—</strong>
+			</div>
+
+			<div class="metric">
+				<span>Délai conseillé</span>
+				<strong id="result-deadline">—</strong>
+			</div>
+
+			<div class="metric">
+				<span>Probabilité calculée</span>
+				<strong><span id="result-probability">—</span>/5</strong>
+			</div>
+
+			<div class="metric">
+				<span>Impact calculé</span>
+				<strong><span id="result-impact">—</span>/5</strong>
+			</div>
+
+			<div class="metric">
+				<span>Réduction des contrôles</span>
+				<strong>-<span id="result-reduction">0</span> pts</strong>
+			</div>
+		</div>
+	</div>
+
+	<div class="automatic-analysis">
+		<h3>Analyse automatique</h3>
+		<p id="result-summary"></p>
+	</div>
+
+	<div class="analysis-columns">
+		<div class="analysis-card risk-factors">
+			<h3>Facteurs augmentant le risque</h3>
+			<ul id="risk-factors-list"></ul>
+		</div>
+
+		<div class="analysis-card protective-factors">
+			<h3>Contrôles protecteurs</h3>
+			<ul id="protective-factors-list"></ul>
+		</div>
+	</div>
+
+	<div class="recommendations">
+		<h3>Priorités recommandées</h3>
+		<ol id="recommendations-list"></ol>
+	</div>
+
+	<div class="result-actions">
+		<button id="copy-analysis" type="button">
+			Copier l’analyse
+		</button>
+	</div>
+</section>
+
 		</main>
 
 		<Footer />
-
-		<script is:inline>
-			const probability = document.querySelector('#probability');
-			const impact = document.querySelector('#impact');
-			const cvss = document.querySelector('#cvss');
-			const scenario = document.querySelector('#scenario');
-
-			const probabilityValue = document.querySelector('#probability-value');
-			const impactValue = document.querySelector('#impact-value');
-			const cvssValue = document.querySelector('#cvss-value');
-
-			const resultCard = document.querySelector('#result-card');
-			const riskScore = document.querySelector('#risk-score');
-			const riskLevel = document.querySelector('#risk-level');
-			const riskSummary = document.querySelector('#risk-summary');
-			const copyButton = document.querySelector('#copy-result');
-
-			function getRiskLevel(score) {
-				if (score >= 18) {
-					return {
-						level: 'Critique',
-						className: 'critical',
-						summary:
-							'Le scénario présente un risque critique. Une action rapide est recommandée afin de réduire l’exposition ou l’impact potentiel.'
-					};
-				}
-
-				if (score >= 14) {
-					return {
-						level: 'Élevé',
-						className: 'high',
-						summary:
-							'Le scénario présente un risque élevé. La priorité doit porter sur la réduction de la probabilité ou de l’impact.'
-					};
-				}
-
-				if (score >= 9) {
-					return {
-						level: 'Modéré',
-						className: 'moderate',
-						summary:
-							'Le scénario présente un risque modéré. Il doit être suivi et traité selon les priorités opérationnelles.'
-					};
-				}
-
-				return {
-					level: 'Faible',
-					className: 'low',
-					summary:
-						'Le scénario présente un risque faible. Il peut être surveillé dans le cadre du traitement courant.'
-				};
-			}
-
-			function calculateRisk() {
-				const probabilityScore = Number(probability.value);
-				const impactScore = Number(impact.value);
-				const cvssScore = Number(cvss.value);
-
-				return Math.round(
-					(probabilityScore * 2) +
-					(impactScore * 2) +
-					(cvssScore / 2)
-				);
-			}
-
-			function updateRisk() {
-				const score = calculateRisk();
-				const risk = getRiskLevel(score);
-
-				probabilityValue.textContent = probability.value;
-				impactValue.textContent = impact.value;
-				cvssValue.textContent = Number(cvss.value).toFixed(1);
-
-				riskScore.textContent = String(score);
-				riskLevel.textContent = risk.level;
-				riskSummary.textContent = risk.summary;
-
-				resultCard.className = `result-card ${risk.className}`;
-			}
-
-			async function copyResult() {
-				const content = `MM Risk Score
-
-Scénario : ${scenario.value}
-Probabilité : ${probability.value}/5
-Impact : ${impact.value}/5
-CVSS : ${Number(cvss.value).toFixed(1)}/10
-
-Score : ${riskScore.textContent}
-Niveau : ${riskLevel.textContent}
-
-Analyse :
-${riskSummary.textContent}`;
-
-				try {
-					await navigator.clipboard.writeText(content);
-
-					copyButton.textContent = 'Résultat copié';
-
-					window.setTimeout(() => {
-						copyButton.textContent = 'Copier le résultat';
-					}, 1800);
-				} catch {
-					copyButton.textContent = 'Copie impossible';
-				}
-			}
-
-			probability.addEventListener('input', updateRisk);
-			impact.addEventListener('input', updateRisk);
-			cvss.addEventListener('input', updateRisk);
-			copyButton.addEventListener('click', copyResult);
-
-			updateRisk();
-		</script>
 	</body>
 </html>
 
@@ -248,38 +638,23 @@ ${riskSummary.textContent}`;
 	}
 
 	main {
-		width: min(1320px, calc(100% - 4rem));
+		width: min(1180px, calc(100% - 4rem));
 		margin: 0 auto;
 		padding: 3rem 0 5rem;
 	}
 
-	/* ==========================
-	   HERO
-	========================== */
-
-	.lab-hero {
-		margin-bottom: 3rem;
+	.hero {
+		margin-bottom: 2.5rem;
 		padding: 4rem;
-		overflow: hidden;
-		border: 1px solid rgba(96, 165, 250, 0.15);
 		border-radius: 34px;
 		color: white;
 		background:
-			radial-gradient(
-				circle at 82% 0%,
-				rgba(37, 99, 235, 0.3),
-				transparent 38%
-			),
-			linear-gradient(
-				135deg,
-				#020817 0%,
-				#06142d 55%,
-				#08255c 100%
-			);
-		box-shadow: 0 25px 70px rgba(2, 8, 23, 0.22);
+			radial-gradient(circle at 80% 0%, rgba(37, 99, 235, 0.28), transparent 35%),
+			linear-gradient(135deg, #020817 0%, #06142d 55%, #031b4d 100%);
+		box-shadow: 0 25px 70px rgba(2, 8, 23, 0.2);
 	}
 
-	.lab-tag {
+	.tag {
 		margin: 0;
 		color: #60a5fa;
 		font-size: 0.8rem;
@@ -288,254 +663,575 @@ ${riskSummary.textContent}`;
 		text-transform: uppercase;
 	}
 
-	.lab-hero h1 {
-		max-width: 1000px;
+	.hero h1 {
 		margin: 1rem 0 1.5rem;
 		color: white;
-		font-size: clamp(3rem, 6vw, 4.5rem);
+		font-size: clamp(3.2rem, 6vw, 5rem);
 		line-height: 0.95;
 		letter-spacing: -0.06em;
 	}
 
-	.lab-intro {
-		max-width: 800px;
+	.hero p:last-child {
+		max-width: 780px;
 		margin: 0;
 		color: #dbeafe;
-		font-size: 1.2rem;
+		font-size: 1.15rem;
 		line-height: 1.75;
 	}
 
-	/* ==========================
-	   TOOL
-	========================== */
-
-	.risk-tool {
+	.risk-form {
 		display: grid;
-		grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
-		gap: 2rem;
-		align-items: start;
+		gap: 1.5rem;
 	}
 
-	.risk-panel,
-	.result-card {
-		border-radius: 28px;
-		box-shadow: 0 18px 45px rgba(15, 23, 42, 0.07);
-	}
-
-	.risk-panel {
+	.form-section {
 		display: grid;
-		gap: 1.75rem;
+		grid-template-columns: 64px 1fr;
+		gap: 1.5rem;
 		padding: 2rem;
-		background: white;
 		border: 1px solid #e5e7eb;
+		border-radius: 26px;
+		background: white;
+		box-shadow: 0 14px 40px rgba(15, 23, 42, 0.05);
+	}
+
+	.section-number {
+		display: grid;
+		place-items: center;
+		width: 52px;
+		height: 52px;
+		border-radius: 16px;
+		background: #eff6ff;
+		color: #2563eb;
+		font-size: 1.2rem;
+		font-weight: 900;
+	}
+
+	.section-content {
+		min-width: 0;
+	}
+
+	.section-heading {
+		margin-bottom: 1.75rem;
+	}
+
+	.section-heading p {
+		margin: 0 0 0.3rem;
+		color: #2563eb;
+		font-size: 0.75rem;
+		font-weight: 900;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.section-heading h2 {
+		margin: 0;
+		font-size: 1.8rem;
+		letter-spacing: -0.04em;
+	}
+
+	.fields-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1.25rem;
 	}
 
 	.field {
 		display: grid;
-		gap: 0.8rem;
+		gap: 0.65rem;
 		min-width: 0;
 	}
 
-	.field-heading {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 1rem;
+	.field-wide {
+		grid-column: 1 / -1;
 	}
 
 	label {
 		color: #0f172a;
-		font-size: 1rem;
-		font-weight: 900;
-	}
-
-	.field-heading strong {
-		flex-shrink: 0;
-		color: #2563eb;
 		font-size: 0.95rem;
-	}
-
-	input[type='text'] {
-		width: 100%;
-		min-width: 0;
-		padding: 1rem;
-		border: 1px solid #cbd5e1;
-		border-radius: 14px;
-		background: #f8fafc;
-		color: #0f172a;
-		font: inherit;
-		font-size: 1rem;
-		box-sizing: border-box;
-	}
-
-	input[type='text']:focus-visible {
-		outline: 3px solid rgba(37, 99, 235, 0.2);
-		border-color: #2563eb;
-	}
-
-	input[type='range'] {
-		width: 100%;
-		margin: 0;
-		accent-color: #2563eb;
-		cursor: pointer;
-	}
-
-	/* ==========================
-	   RESULT
-	========================== */
-
-	.result-card {
-		position: sticky;
-		top: 110px;
-		padding: 2rem;
-		color: white;
-		border: 1px solid rgba(96, 165, 250, 0.22);
-		background:
-			radial-gradient(
-				circle at 80% 0%,
-				rgba(96, 165, 250, 0.22),
-				transparent 35%
-			),
-			linear-gradient(
-				135deg,
-				#020817 0%,
-				#06142d 55%,
-				#031b4d 100%
-			);
-	}
-
-	.result-label {
-		margin: 0 0 0.5rem;
-		color: #93c5fd;
-		font-size: 0.75rem;
-		font-weight: 900;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-	}
-
-	.result-card h2 {
-		margin: 0 0 1.5rem;
-		color: #fdba74;
-		font-size: 3rem;
-		line-height: 1;
-		letter-spacing: -0.04em;
-	}
-
-	.score-block {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 1rem;
-		margin-bottom: 1.5rem;
-		padding: 1rem 1.2rem;
-		border-radius: 18px;
-		background: rgba(255, 255, 255, 0.08);
-	}
-
-	.score-block span {
-		color: #bfdbfe;
 		font-weight: 800;
 	}
 
-	.score-block strong {
-		color: white;
-		font-size: 2.5rem;
-		line-height: 1;
-	}
-
-	.result-card > p:not(.result-label) {
-		margin: 0;
-		color: #dbeafe;
-		line-height: 1.7;
-	}
-
-	.result-card button {
+	input,
+	select,
+	textarea {
 		width: 100%;
-		margin-top: 1.5rem;
-		padding: 1rem 1.2rem;
+		box-sizing: border-box;
+		border: 1px solid #cbd5e1;
+		border-radius: 14px;
+		padding: 0.95rem 1rem;
+		background: #f8fafc;
+		color: #0f172a;
+		font: inherit;
+	}
+
+	textarea {
+		min-height: 110px;
+		resize: vertical;
+	}
+
+	input:focus-visible,
+	select:focus-visible,
+	textarea:focus-visible {
+		outline: 3px solid rgba(37, 99, 235, 0.16);
+		border-color: #2563eb;
+	}
+
+	.input-suffix {
+		position: relative;
+	}
+
+	.input-suffix input {
+		padding-right: 3rem;
+	}
+
+	.input-suffix span {
+		position: absolute;
+		top: 50%;
+		right: 1rem;
+		transform: translateY(-50%);
+		color: #64748b;
+		font-weight: 800;
+	}
+
+	.choice-grid {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.choice-grid.four {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+
+	.choice-grid.three {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.choice-grid.two {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.choice-card,
+	.toggle-card {
+		position: relative;
+		display: flex;
+		gap: 0.8rem;
+		align-items: flex-start;
+		padding: 1rem;
+		border: 1px solid #dbe3ef;
+		border-radius: 16px;
+		background: #f8fafc;
+		cursor: pointer;
+		transition:
+			border-color 0.2s ease,
+			background 0.2s ease,
+			transform 0.2s ease;
+	}
+
+	.choice-card:hover,
+	.toggle-card:hover {
+		transform: translateY(-1px);
+		border-color: #93c5fd;
+		background: #eff6ff;
+	}
+
+	.choice-card input,
+	.toggle-card input {
+		width: auto;
+		margin-top: 0.25rem;
+		accent-color: #2563eb;
+	}
+
+	.choice-card span,
+	.toggle-card span {
+		display: grid;
+		gap: 0.2rem;
+	}
+
+	.choice-card strong,
+	.toggle-card strong {
+		color: #0f172a;
+	}
+
+	.choice-card small,
+	.toggle-card small {
+		color: #64748b;
+		font-size: 0.82rem;
+		line-height: 1.4;
+	}
+
+	.toggle-card.compact {
+		align-items: center;
+		min-height: 68px;
+	}
+
+	.binary-choice {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 0.75rem;
+	}
+
+	.binary-choice label {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		padding: 0.9rem;
+		border: 1px solid #dbe3ef;
+		border-radius: 14px;
+		background: #f8fafc;
+		cursor: pointer;
+	}
+
+	.binary-choice input {
+		width: auto;
+		accent-color: #2563eb;
+	}
+
+	.form-actions {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		padding: 1.5rem 2rem;
+		border-radius: 22px;
+		background: #020817;
+	}
+
+	.form-actions button {
 		border: 0;
 		border-radius: 14px;
+		padding: 1rem 1.4rem;
 		background: #2563eb;
 		color: white;
 		font: inherit;
 		font-weight: 900;
 		cursor: pointer;
-		transition:
-			transform 0.2s ease,
-			background 0.2s ease;
 	}
 
-	.result-card button:hover {
-		background: #1d4ed8;
-		transform: translateY(-1px);
-	}
-
-	.result-card.low h2 {
-		color: #86efac;
-	}
-
-	.result-card.moderate h2 {
-		color: #fde68a;
-	}
-
-	.result-card.high h2 {
-		color: #fdba74;
-	}
-
-	.result-card.critical h2 {
-		color: #fca5a5;
+	.form-actions p {
+		margin: 0;
+		color: #bfdbfe;
+		font-size: 0.9rem;
 	}
 
 	/* ==========================
-	   RESPONSIVE
-	========================== */
+   RESULTAT
+========================== */
+
+.risk-result[hidden] {
+	display: none;
+}
+
+.risk-result {
+	margin-top: 2rem;
+	padding: 2.5rem;
+	border: 1px solid rgba(96, 165, 250, 0.22);
+	border-radius: 30px;
+	color: white;
+	background:
+		radial-gradient(
+			circle at 85% 0%,
+			rgba(37, 99, 235, 0.28),
+			transparent 36%
+		),
+		linear-gradient(
+			135deg,
+			#020817 0%,
+			#06142d 55%,
+			#031b4d 100%
+		);
+	box-shadow: 0 28px 70px rgba(2, 8, 23, 0.22);
+	opacity: 0;
+	transform: translateY(22px);
+	transition:
+		opacity 0.45s ease,
+		transform 0.45s ease;
+}
+
+.risk-result.is-visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.result-header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 2rem;
+	margin-bottom: 2rem;
+}
+
+.result-eyebrow {
+	margin: 0 0 0.4rem;
+	color: #60a5fa;
+	font-size: 0.75rem;
+	font-weight: 900;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.result-header h2 {
+	margin: 0;
+	color: white;
+	font-size: 2.4rem;
+}
+
+.result-level {
+	padding: 0.75rem 1.1rem;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.1);
+	color: #fdba74;
+	font-size: 1.1rem;
+	font-weight: 900;
+}
+
+.score-layout {
+	display: grid;
+	grid-template-columns: 0.75fr 1.25fr;
+	gap: 2rem;
+	margin-bottom: 2rem;
+}
+
+.main-score {
+	padding: 1.75rem;
+	border-radius: 22px;
+	background: rgba(255, 255, 255, 0.07);
+}
+
+.score-circle {
+	display: flex;
+	align-items: flex-end;
+	gap: 0.5rem;
+	margin-bottom: 1.5rem;
+}
+
+.score-circle strong {
+	color: white;
+	font-size: 5rem;
+	line-height: 0.85;
+	letter-spacing: -0.07em;
+}
+
+.score-circle span {
+	color: #bfdbfe;
+	font-weight: 800;
+}
+
+.score-progress {
+	height: 12px;
+	overflow: hidden;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.1);
+}
+
+.score-progress div {
+	width: 0;
+	height: 100%;
+	border-radius: inherit;
+	background: linear-gradient(90deg, #2563eb, #60a5fa);
+	transition: width 0.8s ease;
+}
+
+.result-metrics {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1rem;
+}
+
+.metric {
+	display: grid;
+	gap: 0.35rem;
+	padding: 1.1rem;
+	border-radius: 18px;
+	background: rgba(255, 255, 255, 0.07);
+}
+
+.metric span {
+	color: #bfdbfe;
+	font-size: 0.82rem;
+	font-weight: 700;
+}
+
+.metric strong {
+	color: white;
+	font-size: 1.2rem;
+}
+
+.automatic-analysis,
+.analysis-card,
+.recommendations {
+	padding: 1.5rem;
+	border-radius: 22px;
+	background: rgba(255, 255, 255, 0.06);
+}
+
+.automatic-analysis {
+	margin-bottom: 1.25rem;
+}
+
+.automatic-analysis h3,
+.analysis-card h3,
+.recommendations h3 {
+	margin: 0 0 1rem;
+	color: white;
+	font-size: 1.25rem;
+}
+
+.automatic-analysis p {
+	margin: 0;
+	color: #dbeafe;
+	line-height: 1.75;
+}
+
+.analysis-columns {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1.25rem;
+	margin-bottom: 1.25rem;
+}
+
+.analysis-card ul,
+.recommendations ol {
+	margin: 0;
+	padding-left: 1.3rem;
+	color: #dbeafe;
+}
+
+.analysis-card li,
+.recommendations li {
+	margin-bottom: 0.75rem;
+	line-height: 1.55;
+}
+
+.risk-factors li::marker {
+	color: #f87171;
+}
+
+.protective-factors li::marker {
+	color: #4ade80;
+}
+
+.recommendations li::marker {
+	color: #60a5fa;
+	font-weight: 900;
+}
+
+.result-actions {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 1.5rem;
+}
+
+.result-actions button {
+	border: 0;
+	border-radius: 14px;
+	padding: 1rem 1.3rem;
+	background: #2563eb;
+	color: white;
+	font: inherit;
+	font-weight: 900;
+	cursor: pointer;
+}
+
+.risk-result[data-level='faible'] .result-level {
+	color: #86efac;
+}
+
+.risk-result[data-level='modere'] .result-level {
+	color: #fde68a;
+}
+
+.risk-result[data-level='eleve'] .result-level {
+	color: #fdba74;
+}
+
+.risk-result[data-level='critique'] .result-level {
+	color: #fca5a5;
+}
+
+@media (max-width: 760px) {
+	.risk-result {
+		padding: 1.35rem;
+		border-radius: 22px;
+	}
+
+	.result-header {
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.score-layout,
+	.analysis-columns {
+		grid-template-columns: 1fr;
+	}
+
+	.result-metrics {
+		grid-template-columns: 1fr;
+	}
+
+	.score-circle strong {
+		font-size: 4rem;
+	}
+
+	.result-actions button {
+		width: 100%;
+	}
+}
 
 	@media (max-width: 900px) {
 		main {
-			width: min(100% - 2rem, 1320px);
-			padding: 2rem 0 4rem;
+			width: min(100% - 2rem, 1180px);
 		}
 
-		.lab-hero {
+		.hero {
 			padding: 2.75rem 2rem;
 			border-radius: 26px;
 		}
 
-		.risk-tool {
-			grid-template-columns: 1fr;
-		}
-
-		.result-card {
-			position: static;
+		.choice-grid.four,
+		.choice-grid.three {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
 	}
 
-	@media (max-width: 520px) {
+	@media (max-width: 640px) {
 		main {
-			width: min(100% - 1.25rem, 1320px);
+			width: min(100% - 1.25rem, 1180px);
+			padding-top: 1.5rem;
 		}
 
-		.lab-hero {
+		.hero {
 			padding: 2.25rem 1.35rem;
 			border-radius: 22px;
 		}
 
-		.lab-hero h1 {
-			font-size: 2.65rem;
-		}
-
-		.lab-intro {
-			font-size: 1rem;
-		}
-
-		.risk-panel,
-		.result-card {
+		.form-section {
+			grid-template-columns: 1fr;
 			padding: 1.35rem;
 			border-radius: 22px;
 		}
 
-		.result-card h2 {
-			font-size: 2.5rem;
+		.section-number {
+			width: 44px;
+			height: 44px;
+		}
+
+		.fields-grid,
+		.choice-grid.four,
+		.choice-grid.three,
+		.choice-grid.two {
+			grid-template-columns: 1fr;
+		}
+
+		.form-actions {
+			flex-direction: column;
+			align-items: stretch;
+			padding: 1.35rem;
+		}
+
+		.form-actions button {
+			width: 100%;
 		}
 	}
 </style>
