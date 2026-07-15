@@ -212,6 +212,7 @@ function buildRecommendations(input: RiskInput): string[] {
 		);
 	}
 
+    
 	if (input.exposure === 'internet') {
 		recommendations.push(
 			'Vérifier si l’exposition Internet est indispensable et la réduire lorsque cela est possible.'
