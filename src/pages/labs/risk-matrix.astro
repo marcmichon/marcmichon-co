@@ -14,23 +14,41 @@ import { SITE_TITLE } from '../../consts';
 		/>
 	</head>
 
-<script>
+<<script>
 	import {
 		calculateRisk,
 		type RiskInput,
 		type RiskResult,
 	} from '../../lib/riskEngine';
 
-	const form = document.querySelector<HTMLFormElement>('#risk-form');
+	import { exportRiskPdf } from '../../lib/riskPdf';
+
+	const STORAGE_KEY = 'mm-risk-score-draft-v2';
+
+	const form =
+		document.querySelector<HTMLFormElement>('#risk-form');
+
 	const calculateButton =
 		document.querySelector<HTMLButtonElement>('#calculate-risk');
+
+	const clearDraftButton =
+		document.querySelector<HTMLButtonElement>('#clear-risk-draft');
+
 	const resultSection =
 		document.querySelector<HTMLElement>('#risk-result');
+
 	const copyButton =
 		document.querySelector<HTMLButtonElement>('#copy-analysis');
 
+	const exportPdfButton =
+		document.querySelector<HTMLButtonElement>('#export-risk-pdf');
+
+	const draftStatus =
+		document.querySelector<HTMLElement>('#draft-status');
+
 	let lastInput: RiskInput | null = null;
 	let lastResult: RiskResult | null = null;
+	let saveTimer: number | undefined;
 
 	if (!form || !calculateButton || !resultSection) {
 		console.error(
@@ -39,7 +57,9 @@ import { SITE_TITLE } from '../../consts';
 	} else {
 		const getChecked = (name: string): boolean => {
 			const input =
-				form.querySelector<HTMLInputElement>(`input[name="${name}"]`);
+				form.querySelector<HTMLInputElement>(
+					`input[name="${name}"]`
+				);
 
 			return Boolean(input?.checked);
 		};
@@ -53,29 +73,43 @@ import { SITE_TITLE } from '../../consts';
 			return input?.value ?? '';
 		};
 
-		const setText = (selector: string, value: string): void => {
-			const element = document.querySelector<HTMLElement>(selector);
+		const setText = (
+			selector: string,
+			value: string
+		): void => {
+			const element =
+				document.querySelector<HTMLElement>(selector);
 
 			if (element) {
 				element.textContent = value;
 			}
 		};
 
+		const normalizeLevel = (level: string): string =>
+			level
+				.toLowerCase()
+				.normalize('NFD')
+				.replace(/[\u0300-\u036f]/g, '');
+
 		const setUnorderedList = (
 			selector: string,
 			items: string[],
 			emptyMessage: string
 		): void => {
-			const list = document.querySelector<HTMLUListElement>(selector);
+			const list =
+				document.querySelector<HTMLUListElement>(selector);
 
 			if (!list) return;
 
-			list.innerHTML = '';
+			list.replaceChildren();
 
-			const values = items.length > 0 ? items : [emptyMessage];
+			const values =
+				items.length > 0 ? items : [emptyMessage];
 
 			values.forEach((item) => {
-				const listItem = document.createElement('li');
+				const listItem =
+					document.createElement('li');
+
 				listItem.textContent = item;
 				list.appendChild(listItem);
 			});
@@ -86,26 +120,24 @@ import { SITE_TITLE } from '../../consts';
 			items: string[],
 			emptyMessage: string
 		): void => {
-			const list = document.querySelector<HTMLOListElement>(selector);
+			const list =
+				document.querySelector<HTMLOListElement>(selector);
 
 			if (!list) return;
 
-			list.innerHTML = '';
+			list.replaceChildren();
 
-			const values = items.length > 0 ? items : [emptyMessage];
+			const values =
+				items.length > 0 ? items : [emptyMessage];
 
 			values.forEach((item) => {
-				const listItem = document.createElement('li');
+				const listItem =
+					document.createElement('li');
+
 				listItem.textContent = item;
 				list.appendChild(listItem);
 			});
 		};
-
-		const normalizeLevel = (level: string): string =>
-			level
-				.toLowerCase()
-				.normalize('NFD')
-				.replace(/[\u0300-\u036f]/g, '');
 
 		const getAssetLabel = (value: string): string => {
 			const labels: Record<string, string> = {
@@ -134,7 +166,9 @@ import { SITE_TITLE } from '../../consts';
 			return labels[value] ?? value;
 		};
 
-		const getCriticalityLabel = (value: number): string => {
+		const getCriticalityLabel = (
+			value: number
+		): string => {
 			const labels: Record<number, string> = {
 				1: 'Faible',
 				2: 'Modérée',
@@ -148,43 +182,88 @@ import { SITE_TITLE } from '../../consts';
 		const yesNo = (value: boolean): string =>
 			value ? 'Oui' : 'Non';
 
-		const readForm = (): RiskInput | null => {
+		const showDraftStatus = (
+			message: string,
+			timeout = 1800
+		): void => {
+			if (!draftStatus) return;
+
+			draftStatus.textContent = message;
+
+			if (timeout > 0) {
+				window.setTimeout(() => {
+					draftStatus.textContent =
+						'Le brouillon est sauvegardé automatiquement sur cet appareil.';
+				}, timeout);
+			}
+		};
+
+		const readForm = (
+			validate = true
+		): RiskInput | null => {
 			const scenario =
-				form.querySelector<HTMLTextAreaElement>('#scenario')
+				form
+					.querySelector<HTMLTextAreaElement>(
+						'#scenario'
+					)
 					?.value.trim() ?? '';
 
 			const assetType =
-				form.querySelector<HTMLSelectElement>('#asset-type')
+				form
+					.querySelector<HTMLSelectElement>(
+						'#asset-type'
+					)
 					?.value ?? '';
 
 			const exposure =
-				form.querySelector<HTMLSelectElement>('#exposure')
+				form
+					.querySelector<HTMLSelectElement>(
+						'#exposure'
+					)
 					?.value ?? '';
 
-			const criticalityValue = getRadioValue('criticality');
-			const publicExploitValue = getRadioValue('publicExploit');
+			const criticalityValue =
+				getRadioValue('criticality');
+
+			const publicExploitValue =
+				getRadioValue('publicExploit');
+
 			const authenticationValue =
-				getRadioValue('authenticationRequired');
+				getRadioValue(
+					'authenticationRequired'
+				);
 
 			const cvssRaw =
-				form.querySelector<HTMLInputElement>('#cvss')?.value ?? '';
+				form
+					.querySelector<HTMLInputElement>(
+						'#cvss'
+					)
+					?.value ?? '';
 
 			const epssRaw =
-				form.querySelector<HTMLInputElement>('#epss')?.value ?? '';
+				form
+					.querySelector<HTMLInputElement>(
+						'#epss'
+					)
+					?.value ?? '';
 
-			const cvss = Number(cvssRaw);
-			const epss = Number(epssRaw);
-			const criticality = Number(criticalityValue);
+			const cvss = Number(cvssRaw || 0);
+			const epss = Number(epssRaw || 0);
+			const criticality =
+				Number(criticalityValue || 0);
 
 			if (
-				!scenario ||
-				!assetType ||
-				!exposure ||
-				!criticalityValue ||
-				!publicExploitValue ||
-				!authenticationValue ||
-				cvssRaw === '' ||
-				epssRaw === ''
+				validate &&
+				(
+					!scenario ||
+					!assetType ||
+					!exposure ||
+					!criticalityValue ||
+					!publicExploitValue ||
+					!authenticationValue ||
+					cvssRaw === '' ||
+					epssRaw === ''
+				)
 			) {
 				window.alert(
 					'Complète tous les champs obligatoires du contexte et de l’exploitabilité.'
@@ -194,9 +273,12 @@ import { SITE_TITLE } from '../../consts';
 			}
 
 			if (
-				!Number.isFinite(cvss) ||
-				cvss < 0 ||
-				cvss > 10
+				validate &&
+				(
+					!Number.isFinite(cvss) ||
+					cvss < 0 ||
+					cvss > 10
+				)
 			) {
 				window.alert(
 					'Le score CVSS doit être compris entre 0 et 10.'
@@ -206,9 +288,12 @@ import { SITE_TITLE } from '../../consts';
 			}
 
 			if (
-				!Number.isFinite(epss) ||
-				epss < 0 ||
-				epss > 100
+				validate &&
+				(
+					!Number.isFinite(epss) ||
+					epss < 0 ||
+					epss > 100
+				)
 			) {
 				window.alert(
 					'Le score EPSS doit être compris entre 0 et 100 %.'
@@ -224,41 +309,325 @@ import { SITE_TITLE } from '../../consts';
 				criticality,
 				cvss,
 				epss,
-				publicExploit: publicExploitValue === 'yes',
-				authenticationRequired: authenticationValue === 'yes',
-				sensitiveData: getChecked('sensitiveData'),
-				businessInterruption: getChecked('businessInterruption'),
-				privilegedAccess: getChecked('privilegedAccess'),
-				lateralMovement: getChecked('lateralMovement'),
+
+				publicExploit:
+					publicExploitValue === 'yes',
+
+				authenticationRequired:
+					authenticationValue === 'yes',
+
+				sensitiveData:
+					getChecked('sensitiveData'),
+
+				businessInterruption:
+					getChecked(
+						'businessInterruption'
+					),
+
+				privilegedAccess:
+					getChecked('privilegedAccess'),
+
+				lateralMovement:
+					getChecked('lateralMovement'),
+
 				controls: {
 					edr: getChecked('edr'),
 					waf: getChecked('waf'),
 					mfa: getChecked('mfa'),
-					segmentation: getChecked('segmentation'),
-					backups: getChecked('backups'),
+
+					segmentation:
+						getChecked('segmentation'),
+
+					backups:
+						getChecked('backups'),
+
 					soc: getChecked('soc'),
 				},
 			};
 		};
 
+		const applyRadioValue = (
+			name: string,
+			value: string
+		): void => {
+			const inputs =
+				form.querySelectorAll<HTMLInputElement>(
+					`input[name="${name}"]`
+				);
+
+			inputs.forEach((input) => {
+				input.checked =
+					input.value === value;
+			});
+		};
+
+		const applyCheckboxValue = (
+			name: string,
+			value: boolean
+		): void => {
+			const input =
+				form.querySelector<HTMLInputElement>(
+					`input[name="${name}"]`
+				);
+
+			if (input) {
+				input.checked = value;
+			}
+		};
+
+		const saveDraft = (): void => {
+			const input = readForm(false);
+
+			if (!input) return;
+
+			try {
+				localStorage.setItem(
+					STORAGE_KEY,
+					JSON.stringify(input)
+				);
+
+				showDraftStatus(
+					'Brouillon sauvegardé.',
+					1200
+				);
+			} catch (error) {
+				console.error(
+					'Impossible de sauvegarder le brouillon.',
+					error
+				);
+
+				showDraftStatus(
+					'Sauvegarde locale impossible.'
+				);
+			}
+		};
+
+		const scheduleDraftSave = (): void => {
+			window.clearTimeout(saveTimer);
+
+			saveTimer = window.setTimeout(
+				saveDraft,
+				350
+			);
+		};
+
+		const restoreDraft = (): void => {
+			const serialized =
+				localStorage.getItem(STORAGE_KEY);
+
+			if (!serialized) return;
+
+			try {
+				const draft =
+					JSON.parse(serialized) as RiskInput;
+
+				const scenario =
+					form.querySelector<HTMLTextAreaElement>(
+						'#scenario'
+					);
+
+				const assetType =
+					form.querySelector<HTMLSelectElement>(
+						'#asset-type'
+					);
+
+				const exposure =
+					form.querySelector<HTMLSelectElement>(
+						'#exposure'
+					);
+
+				const cvss =
+					form.querySelector<HTMLInputElement>(
+						'#cvss'
+					);
+
+				const epss =
+					form.querySelector<HTMLInputElement>(
+						'#epss'
+					);
+
+				if (scenario) {
+					scenario.value =
+						draft.scenario ?? '';
+				}
+
+				if (assetType) {
+					assetType.value =
+						draft.assetType ?? '';
+				}
+
+				if (exposure) {
+					exposure.value =
+						draft.exposure ?? '';
+				}
+
+				if (cvss) {
+					cvss.value =
+						String(draft.cvss ?? '');
+				}
+
+				if (epss) {
+					epss.value =
+						String(draft.epss ?? '');
+				}
+
+				applyRadioValue(
+					'criticality',
+					String(draft.criticality ?? '')
+				);
+
+				applyRadioValue(
+					'publicExploit',
+					draft.publicExploit
+						? 'yes'
+						: 'no'
+				);
+
+				applyRadioValue(
+					'authenticationRequired',
+					draft.authenticationRequired
+						? 'yes'
+						: 'no'
+				);
+
+				applyCheckboxValue(
+					'sensitiveData',
+					Boolean(draft.sensitiveData)
+				);
+
+				applyCheckboxValue(
+					'businessInterruption',
+					Boolean(
+						draft.businessInterruption
+					)
+				);
+
+				applyCheckboxValue(
+					'privilegedAccess',
+					Boolean(draft.privilegedAccess)
+				);
+
+				applyCheckboxValue(
+					'lateralMovement',
+					Boolean(draft.lateralMovement)
+				);
+
+				applyCheckboxValue(
+					'edr',
+					Boolean(draft.controls?.edr)
+				);
+
+				applyCheckboxValue(
+					'waf',
+					Boolean(draft.controls?.waf)
+				);
+
+				applyCheckboxValue(
+					'mfa',
+					Boolean(draft.controls?.mfa)
+				);
+
+				applyCheckboxValue(
+					'segmentation',
+					Boolean(
+						draft.controls?.segmentation
+					)
+				);
+
+				applyCheckboxValue(
+					'backups',
+					Boolean(
+						draft.controls?.backups
+					)
+				);
+
+				applyCheckboxValue(
+					'soc',
+					Boolean(draft.controls?.soc)
+				);
+
+				showDraftStatus(
+					'Brouillon restauré.',
+					1800
+				);
+			} catch (error) {
+				console.error(
+					'Impossible de restaurer le brouillon.',
+					error
+				);
+
+				localStorage.removeItem(
+					STORAGE_KEY
+				);
+			}
+		};
+
+		const clearDraft = (): void => {
+			localStorage.removeItem(STORAGE_KEY);
+
+			form.reset();
+
+			lastInput = null;
+			lastResult = null;
+
+			resultSection.hidden = true;
+			resultSection.classList.remove(
+				'is-visible'
+			);
+
+			showDraftStatus(
+				'Brouillon effacé.',
+				1800
+			);
+
+			window.scrollTo({
+				top: form.offsetTop - 100,
+				behavior: 'smooth',
+			});
+		};
+
 		const renderResult = (
-			input: RiskInput,
 			result: RiskResult
 		): void => {
-			setText('#result-score', String(result.score));
-			setText('#result-level', result.level);
-			setText('#result-priority', result.priority);
-			setText('#result-deadline', result.deadline);
+			setText(
+				'#result-score',
+				String(result.score)
+			);
+
+			setText(
+				'#result-level',
+				result.level
+			);
+
+			setText(
+				'#result-priority',
+				result.priority
+			);
+
+			setText(
+				'#result-deadline',
+				result.deadline
+			);
+
 			setText(
 				'#result-probability',
 				String(result.probability)
 			);
-			setText('#result-impact', String(result.impact));
+
+			setText(
+				'#result-impact',
+				String(result.impact)
+			);
+
 			setText(
 				'#result-reduction',
 				String(result.controlReduction)
 			);
-			setText('#result-summary', result.summary);
+
+			setText(
+				'#result-summary',
+				result.summary
+			);
 
 			const progressBar =
 				document.querySelector<HTMLElement>(
@@ -269,7 +638,8 @@ import { SITE_TITLE } from '../../consts';
 				progressBar.style.width = '0%';
 
 				requestAnimationFrame(() => {
-					progressBar.style.width = `${result.score}%`;
+					progressBar.style.width =
+						`${result.score}%`;
 				});
 			}
 
@@ -297,7 +667,9 @@ import { SITE_TITLE } from '../../consts';
 			resultSection.hidden = false;
 
 			requestAnimationFrame(() => {
-				resultSection.classList.add('is-visible');
+				resultSection.classList.add(
+					'is-visible'
+				);
 			});
 
 			window.setTimeout(() => {
@@ -315,14 +687,18 @@ import { SITE_TITLE } from '../../consts';
 			const riskFactors =
 				result.riskFactors.length > 0
 					? result.riskFactors
-							.map((item) => `- ${item}`)
+							.map(
+								(item) => `- ${item}`
+							)
 							.join('\n')
 					: '- Aucun facteur aggravant majeur identifié.';
 
 			const protectiveFactors =
 				result.protectiveFactors.length > 0
 					? result.protectiveFactors
-							.map((item) => `- ${item}`)
+							.map(
+								(item) => `- ${item}`
+							)
 							.join('\n')
 					: '- Aucun contrôle compensatoire déclaré.';
 
@@ -404,60 +780,130 @@ AVERTISSEMENT
 Le MM Risk Score est une méthode d’aide à la décision. Il fournit une estimation contextualisée à partir des informations renseignées, mais ne remplace pas une analyse de risque complète et ne constitue pas un standard officiel.`;
 		};
 
-		calculateButton.addEventListener('click', () => {
-			const input = readForm();
+		calculateButton.addEventListener(
+			'click',
+			() => {
+				const input = readForm(true);
 
-			if (!input) return;
+				if (!input) return;
 
-			const result = calculateRisk(input);
+				const result =
+					calculateRisk(input);
 
-			lastInput = input;
-			lastResult = result;
+				lastInput = input;
+				lastResult = result;
 
-			renderResult(input, result);
-		});
-
-		copyButton?.addEventListener('click', async () => {
-			if (!lastInput || !lastResult) {
-				copyButton.textContent =
-					'Aucune analyse disponible';
-
-				window.setTimeout(() => {
-					copyButton.textContent = 'Copier l’analyse';
-				}, 1800);
-
-				return;
+				saveDraft();
+				renderResult(result);
 			}
+		);
 
-			const completeReport =
-				buildCompleteReport(lastInput, lastResult);
+		copyButton?.addEventListener(
+			'click',
+			async () => {
+				if (!lastInput || !lastResult) {
+					copyButton.textContent =
+						'Aucune analyse disponible';
 
-			try {
-				await navigator.clipboard.writeText(
-					completeReport
-				);
+					window.setTimeout(() => {
+						copyButton.textContent =
+							'Copier l’analyse';
+					}, 1800);
 
-				copyButton.textContent =
-					'Analyse complète copiée';
+					return;
+				}
+
+				const report =
+					buildCompleteReport(
+						lastInput,
+						lastResult
+					);
+
+				try {
+					await navigator.clipboard.writeText(
+						report
+					);
+
+					copyButton.textContent =
+						'Analyse complète copiée';
+				} catch (error) {
+					console.error(
+						'Impossible de copier l’analyse.',
+						error
+					);
+
+					copyButton.textContent =
+						'Copie impossible';
+				}
 
 				window.setTimeout(() => {
 					copyButton.textContent =
 						'Copier l’analyse';
 				}, 1800);
-			} catch (error) {
-				console.error(
-					'Impossible de copier l’analyse.',
-					error
-				);
-
-				copyButton.textContent = 'Copie impossible';
-
-				window.setTimeout(() => {
-					copyButton.textContent =
-						'Copier l’analyse';
-				}, 1800);
 			}
-		});
+		);
+
+		exportPdfButton?.addEventListener(
+			'click',
+			() => {
+				if (!lastInput || !lastResult) {
+					exportPdfButton.textContent =
+						'Calcule d’abord le score';
+
+					window.setTimeout(() => {
+						exportPdfButton.textContent =
+							'Exporter en PDF';
+					}, 1800);
+
+					return;
+				}
+
+				try {
+					exportPdfButton.disabled = true;
+					exportPdfButton.textContent =
+						'Génération du PDF...';
+
+					exportRiskPdf(
+						lastInput,
+						lastResult
+					);
+
+					exportPdfButton.textContent =
+						'PDF téléchargé';
+				} catch (error) {
+					console.error(
+						'Impossible de générer le PDF.',
+						error
+					);
+
+					exportPdfButton.textContent =
+						'Export impossible';
+				} finally {
+					window.setTimeout(() => {
+						exportPdfButton.disabled = false;
+						exportPdfButton.textContent =
+							'Exporter en PDF';
+					}, 1800);
+				}
+			}
+		);
+
+		clearDraftButton?.addEventListener(
+			'click',
+			clearDraft
+		);
+
+		form.addEventListener(
+			'input',
+			scheduleDraftSave
+		);
+
+		form.addEventListener(
+			'change',
+			scheduleDraftSave
+		);
+
+		restoreDraft();
 	}
 </script>
 
@@ -736,14 +1182,19 @@ Le MM Risk Score est une méthode d’aide à la décision. Il fournit une estim
 						</div>
 					</div>
 				</section>
+<div class="form-actions">
+	<div class="form-buttons">
+		<button id="calculate-risk" type="button">
+			Calculer le MM Risk Score
+		</button>
 
-			<div class="form-actions">
-	<button id="calculate-risk" type="button">
-		Calculer le MM Risk Score
-	</button>
+		<button id="clear-risk-draft" class="clear-button" type="button">
+			Effacer le brouillon
+		</button>
+	</div>
 
-	<p>
-		Le résultat est calculé à partir des informations renseignées.
+	<p id="draft-status">
+		Le brouillon est sauvegardé automatiquement sur cet appareil.
 	</p>
 </div>
 			</form>
@@ -823,10 +1274,14 @@ Le MM Risk Score est une méthode d’aide à la décision. Il fournit une estim
 	</div>
 
 	<div class="result-actions">
-		<button id="copy-analysis" type="button">
-			Copier l’analyse
-		</button>
-	</div>
+	<button id="copy-analysis" type="button">
+		Copier l’analyse
+	</button>
+
+	<button id="export-risk-pdf" class="pdf-button" type="button">
+		Exporter en PDF
+	</button>
+</div>
 </section>
 
 
@@ -1467,4 +1922,73 @@ Le MM Risk Score est une méthode d’aide à la décision. Il fournit une estim
 			width: 100%;
 		}
 	}
+
+	.form-buttons {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	flex-wrap: wrap;
+}
+
+.clear-button {
+	border: 1px solid rgba(255, 255, 255, 0.25);
+	background: transparent;
+	color: #dbeafe;
+}
+
+.clear-button:hover {
+	background: rgba(255, 255, 255, 0.08);
+	border-color: rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 640px) {
+	.form-buttons {
+		display: grid;
+		grid-template-columns: 1fr;
+		width: 100%;
+	}
+
+	.form-buttons button {
+		width: 100%;
+	}
+}
+
+.result-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 1rem;
+	flex-wrap: wrap;
+	margin-top: 1.5rem;
+}
+
+.result-actions button {
+	width: auto;
+	min-width: 190px;
+}
+
+.pdf-button {
+	background: white;
+	color: #0f172a;
+}
+
+.pdf-button:hover {
+	background: #dbeafe;
+}
+
+.result-actions button:disabled {
+	cursor: wait;
+	opacity: 0.75;
+}
+
+@media (max-width: 640px) {
+	.result-actions {
+		display: grid;
+		grid-template-columns: 1fr;
+	}
+
+	.result-actions button {
+		width: 100%;
+		min-width: 0;
+	}
+}
 </style>
