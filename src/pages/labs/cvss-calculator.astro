@@ -1,0 +1,1416 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE } from '../../consts';
+---
+
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`CVSS Calculator | ${SITE_TITLE}`}
+			description="Un calculateur pédagogique CVSS v4.0 pour construire, comprendre et expliquer un vecteur de sévérité."
+		/>
+	</head>
+
+	<body>
+		<Header />
+
+		<main>
+			<section class="hero">
+				<p class="tag">VULNERABILITY MANAGEMENT</p>
+
+				<h1>CVSS Calculator</h1>
+
+				<p class="hero-intro">
+					Construisez un vecteur CVSS v4.0 et comprenez immédiatement
+					les éléments qui influencent la sévérité technique d’une vulnérabilité.
+				</p>
+
+			<div class="method-disclaimer">
+	<strong>Implémentation CVSS v4.0 officielle</strong>
+
+	<p>
+		Le score est calculé à partir de l’implémentation de référence
+		publiée par FIRST sous licence BSD-2-Clause. CVSS est détenu et
+		maintenu par FIRST.Org, Inc. Le score et son vecteur sont toujours
+		affichés ensemble conformément aux recommandations de la
+		spécification CVSS v4.0.
+	</p>
+</div>
+			</section>
+
+			<div class="calculator-layout">
+				<form class="cvss-form" id="cvss-form">
+					<section class="metric-section">
+						<div class="section-number">1</div>
+
+						<div class="section-content">
+							<div class="section-heading">
+								<p>Exploitabilité</p>
+								<h2>Comment l’attaque peut-elle être réalisée ?</h2>
+							</div>
+
+							<div class="metrics-grid">
+								<fieldset class="metric-card">
+									<legend>Vecteur d’attaque</legend>
+									<p class="metric-code">AV</p>
+
+									<div class="choices">
+										<label>
+											<input
+												type="radio"
+												name="AV"
+												value="N"
+												data-label="Réseau"
+												checked
+											/>
+											<span>
+												<strong>Réseau</strong>
+												<small>Exploitation distante</small>
+											</span>
+										</label>
+
+										<label>
+											<input
+												type="radio"
+												name="AV"
+												value="A"
+												data-label="Adjacent"
+											/>
+											<span>
+												<strong>Adjacent</strong>
+												<small>Réseau local ou proximité logique</small>
+											</span>
+										</label>
+
+										<label>
+											<input
+												type="radio"
+												name="AV"
+												value="L"
+												data-label="Local"
+											/>
+											<span>
+												<strong>Local</strong>
+												<small>Accès local nécessaire</small>
+											</span>
+										</label>
+
+										<label>
+											<input
+												type="radio"
+												name="AV"
+												value="P"
+												data-label="Physique"
+											/>
+											<span>
+												<strong>Physique</strong>
+												<small>Manipulation directe</small>
+											</span>
+										</label>
+									</div>
+								</fieldset>
+
+								<fieldset class="metric-card">
+									<legend>Complexité de l’attaque</legend>
+									<p class="metric-code">AC</p>
+
+									<div class="choices two">
+										<label>
+											<input
+												type="radio"
+												name="AC"
+												value="L"
+												data-label="Faible"
+												checked
+											/>
+											<span>
+												<strong>Faible</strong>
+												<small>Peu de contraintes techniques</small>
+											</span>
+										</label>
+
+										<label>
+											<input
+												type="radio"
+												name="AC"
+												value="H"
+												data-label="Élevée"
+											/>
+											<span>
+												<strong>Élevée</strong>
+												<small>Conditions complexes</small>
+											</span>
+										</label>
+									</div>
+								</fieldset>
+
+								<fieldset class="metric-card">
+									<legend>Conditions d’attaque</legend>
+									<p class="metric-code">AT</p>
+
+									<div class="choices two">
+										<label>
+											<input
+												type="radio"
+												name="AT"
+												value="N"
+												data-label="Aucune"
+												checked
+											/>
+											<span>
+												<strong>Aucune</strong>
+												<small>Pas de condition particulière</small>
+											</span>
+										</label>
+
+										<label>
+											<input
+												type="radio"
+												name="AT"
+												value="P"
+												data-label="Présentes"
+											/>
+											<span>
+												<strong>Présentes</strong>
+												<small>État spécifique requis</small>
+											</span>
+										</label>
+									</div>
+								</fieldset>
+
+								<fieldset class="metric-card">
+									<legend>Privilèges requis</legend>
+									<p class="metric-code">PR</p>
+
+									<div class="choices three">
+										<label>
+											<input
+												type="radio"
+												name="PR"
+												value="N"
+												data-label="Aucun"
+												checked
+											/>
+											<span>
+												<strong>Aucun</strong>
+											</span>
+										</label>
+
+										<label>
+											<input
+												type="radio"
+												name="PR"
+												value="L"
+												data-label="Faibles"
+											/>
+											<span>
+												<strong>Faibles</strong>
+											</span>
+										</label>
+
+										<label>
+											<input
+												type="radio"
+												name="PR"
+												value="H"
+												data-label="Élevés"
+											/>
+											<span>
+												<strong>Élevés</strong>
+											</span>
+										</label>
+									</div>
+								</fieldset>
+
+								<fieldset class="metric-card full">
+									<legend>Interaction utilisateur</legend>
+									<p class="metric-code">UI</p>
+
+									<div class="choices three">
+										<label>
+											<input
+												type="radio"
+												name="UI"
+												value="N"
+												data-label="Aucune"
+												checked
+											/>
+											<span>
+												<strong>Aucune</strong>
+												<small>Exploitation autonome</small>
+											</span>
+										</label>
+
+										<label>
+											<input
+												type="radio"
+												name="UI"
+												value="P"
+												data-label="Passive"
+											/>
+											<span>
+												<strong>Passive</strong>
+												<small>Action indirecte de la victime</small>
+											</span>
+										</label>
+
+										<label>
+											<input
+												type="radio"
+												name="UI"
+												value="A"
+												data-label="Active"
+											/>
+											<span>
+												<strong>Active</strong>
+												<small>Action volontaire nécessaire</small>
+											</span>
+										</label>
+									</div>
+								</fieldset>
+							</div>
+						</div>
+					</section>
+
+					<section class="metric-section">
+						<div class="section-number">2</div>
+
+						<div class="section-content">
+							<div class="section-heading">
+								<p>Système vulnérable</p>
+								<h2>Quel est l’impact direct sur la cible ?</h2>
+							</div>
+
+							<div class="impact-grid">
+								<fieldset class="impact-card">
+									<legend>Confidentialité</legend>
+									<p class="metric-code">VC</p>
+
+									<div class="impact-choices">
+										<label>
+											<input type="radio" name="VC" value="N" data-label="Aucun" />
+											<span>Aucun</span>
+										</label>
+
+										<label>
+											<input type="radio" name="VC" value="L" data-label="Faible" />
+											<span>Faible</span>
+										</label>
+
+										<label>
+											<input
+												type="radio"
+												name="VC"
+												value="H"
+												data-label="Élevé"
+												checked
+											/>
+											<span>Élevé</span>
+										</label>
+									</div>
+								</fieldset>
+
+								<fieldset class="impact-card">
+									<legend>Intégrité</legend>
+									<p class="metric-code">VI</p>
+
+									<div class="impact-choices">
+										<label>
+											<input type="radio" name="VI" value="N" data-label="Aucun" />
+											<span>Aucun</span>
+										</label>
+
+										<label>
+											<input type="radio" name="VI" value="L" data-label="Faible" />
+											<span>Faible</span>
+										</label>
+
+										<label>
+											<input
+												type="radio"
+												name="VI"
+												value="H"
+												data-label="Élevé"
+												checked
+											/>
+											<span>Élevé</span>
+										</label>
+									</div>
+								</fieldset>
+
+								<fieldset class="impact-card">
+									<legend>Disponibilité</legend>
+									<p class="metric-code">VA</p>
+
+									<div class="impact-choices">
+										<label>
+											<input type="radio" name="VA" value="N" data-label="Aucun" />
+											<span>Aucun</span>
+										</label>
+
+										<label>
+											<input type="radio" name="VA" value="L" data-label="Faible" />
+											<span>Faible</span>
+										</label>
+
+										<label>
+											<input
+												type="radio"
+												name="VA"
+												value="H"
+												data-label="Élevé"
+												checked
+											/>
+											<span>Élevé</span>
+										</label>
+									</div>
+								</fieldset>
+							</div>
+						</div>
+					</section>
+
+					<section class="metric-section">
+						<div class="section-number">3</div>
+
+						<div class="section-content">
+							<div class="section-heading">
+								<p>Systèmes suivants</p>
+								<h2>L’exploitation affecte-t-elle d’autres composants ?</h2>
+							</div>
+
+							<div class="impact-grid">
+								<fieldset class="impact-card">
+									<legend>Confidentialité</legend>
+									<p class="metric-code">SC</p>
+
+									<div class="impact-choices">
+										<label>
+											<input
+												type="radio"
+												name="SC"
+												value="N"
+												data-label="Aucun"
+												checked
+											/>
+											<span>Aucun</span>
+										</label>
+
+										<label>
+											<input type="radio" name="SC" value="L" data-label="Faible" />
+											<span>Faible</span>
+										</label>
+
+										<label>
+											<input type="radio" name="SC" value="H" data-label="Élevé" />
+											<span>Élevé</span>
+										</label>
+									</div>
+								</fieldset>
+
+								<fieldset class="impact-card">
+									<legend>Intégrité</legend>
+									<p class="metric-code">SI</p>
+
+									<div class="impact-choices">
+										<label>
+											<input
+												type="radio"
+												name="SI"
+												value="N"
+												data-label="Aucun"
+												checked
+											/>
+											<span>Aucun</span>
+										</label>
+
+										<label>
+											<input type="radio" name="SI" value="L" data-label="Faible" />
+											<span>Faible</span>
+										</label>
+
+										<label>
+											<input type="radio" name="SI" value="H" data-label="Élevé" />
+											<span>Élevé</span>
+										</label>
+									</div>
+								</fieldset>
+
+								<fieldset class="impact-card">
+									<legend>Disponibilité</legend>
+									<p class="metric-code">SA</p>
+
+									<div class="impact-choices">
+										<label>
+											<input
+												type="radio"
+												name="SA"
+												value="N"
+												data-label="Aucun"
+												checked
+											/>
+											<span>Aucun</span>
+										</label>
+
+										<label>
+											<input type="radio" name="SA" value="L" data-label="Faible" />
+											<span>Faible</span>
+										</label>
+
+										<label>
+											<input type="radio" name="SA" value="H" data-label="Élevé" />
+											<span>Élevé</span>
+										</label>
+									</div>
+								</fieldset>
+							</div>
+						</div>
+					</section>
+				</form>
+
+				<aside class="result-card">
+					<div class="result-top">
+						<div>
+							<p class="result-label">CVSS v4.0</p>
+							<h2>Vecteur construit</h2>
+						</div>
+
+						<span class="status-badge">Interactif</span>
+					</div>
+
+					<div class="vector-box">
+						<code id="cvss-vector">
+							CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N
+						</code>
+
+						<button id="copy-vector" type="button">
+							Copier le vecteur
+						</button>
+					</div>
+
+					<div class="score-preview" id="score-preview">
+	<div class="score-heading">
+		<p>Score CVSS-B v4.0</p>
+		<span id="severity-badge">—</span>
+	</div>
+
+	<strong id="cvss-score">—</strong>
+
+	<span id="score-description">
+		Score calculé à partir de l’implémentation de référence publiée par FIRST - <a href="https://www.first.org/" target="_blank" rel="noopener noreferrer">https://www.first.org/</a>.
+	</span>
+</div>
+
+					<div class="explanation">
+						<h3>Lecture du vecteur</h3>
+						<ul id="vector-explanation"></ul>
+					</div>
+
+					<div class="important-note">
+						<strong>Sévérité ≠ priorité</strong>
+
+						<p>
+							Le score CVSS mesure une sévérité technique.
+							L’exposition, l’EPSS, la disponibilité d’un exploit et le
+							contexte métier restent nécessaires pour définir une priorité.
+						</p>
+					</div>
+
+					<p class="cvss-attribution">
+	CVSS® est une marque et un standard maintenus par FIRST.Org, Inc.
+	Ce calculateur MM Labs utilise l’implémentation de référence CVSS v4.0
+	publiée par FIRST. MM Labs n’est ni affilié à FIRST ni approuvé par FIRST.
+</p>
+				</aside>
+			</div>
+		</main>
+
+		<Footer />
+
+<script is:inline src="/vendor/cvss4/cvss_config.js"></script>
+<script is:inline src="/vendor/cvss4/cvss_details.js"></script>
+<script is:inline src="/vendor/cvss4/cvss_lookup.js"></script>
+<script is:inline src="/vendor/cvss4/cvss_score.js"></script>
+<script is:inline src="/vendor/cvss4/max_composed.js"></script>
+<script is:inline src="/vendor/cvss4/max_severity.js"></script>
+<script is:inline src="/vendor/cvss4/metrics.js"></script>
+
+
+
+		<script>
+	const form =
+		document.querySelector<HTMLFormElement>('#cvss-form');
+
+	const vectorElement =
+		document.querySelector<HTMLElement>('#cvss-vector');
+
+	const explanationList =
+		document.querySelector<HTMLUListElement>(
+			'#vector-explanation'
+		);
+
+	const copyButton =
+		document.querySelector<HTMLButtonElement>(
+			'#copy-vector'
+		);
+
+	const scoreElement =
+		document.querySelector<HTMLElement>('#cvss-score');
+
+	const severityBadge =
+		document.querySelector<HTMLElement>(
+			'#severity-badge'
+		);
+
+	const scorePreview =
+		document.querySelector<HTMLElement>(
+			'#score-preview'
+		);
+
+	const scoreDescription =
+		document.querySelector<HTMLElement>(
+			'#score-description'
+		);
+
+	const metricOrder = [
+		'AV',
+		'AC',
+		'AT',
+		'PR',
+		'UI',
+		'VC',
+		'VI',
+		'VA',
+		'SC',
+		'SI',
+		'SA',
+	];
+
+	const metricNames: Record<string, string> = {
+		AV: 'Vecteur d’attaque',
+		AC: 'Complexité de l’attaque',
+		AT: 'Conditions d’attaque',
+		PR: 'Privilèges requis',
+		UI: 'Interaction utilisateur',
+		VC: 'Confidentialité du système vulnérable',
+		VI: 'Intégrité du système vulnérable',
+		VA: 'Disponibilité du système vulnérable',
+		SC: 'Confidentialité des systèmes suivants',
+		SI: 'Intégrité des systèmes suivants',
+		SA: 'Disponibilité des systèmes suivants',
+	};
+
+	interface FirstCvssGlobals extends Window {
+		cvss_score?: (
+			metrics: Record<string, string>,
+			lookup: Record<string, number>,
+			maxSeverity: unknown,
+			macroVector: string
+		) => number;
+
+		cvssLookup_global?: Record<string, number>;
+		maxSeverity?: unknown;
+
+		macroVector?: (
+			metrics: Record<string, string>
+		) => string;
+	}
+
+	const firstWindow =
+		window as unknown as FirstCvssGlobals;
+
+	const getSelectedInput = (
+		metric: string
+	): HTMLInputElement | null =>
+		form?.querySelector<HTMLInputElement>(
+			`input[name="${metric}"]:checked`
+		) ?? null;
+
+	const getBaseMetrics = (): Record<string, string> => {
+		const selected: Record<string, string> = {};
+
+		metricOrder.forEach((metric) => {
+			selected[metric] =
+				getSelectedInput(metric)?.value ?? 'X';
+		});
+
+		/*
+		 * Valeurs par défaut officielles pour les groupes
+		 * Threat, Environmental et Supplemental.
+		 *
+		 * X signifie Not Defined.
+		 */
+		Object.assign(selected, {
+			E: 'X',
+
+			CR: 'X',
+			IR: 'X',
+			AR: 'X',
+
+			MAV: 'X',
+			MAC: 'X',
+			MAT: 'X',
+			MPR: 'X',
+			MUI: 'X',
+
+			MVC: 'X',
+			MVI: 'X',
+			MVA: 'X',
+			MSC: 'X',
+			MSI: 'X',
+			MSA: 'X',
+
+			S: 'X',
+			AU: 'X',
+			R: 'X',
+			V: 'X',
+			RE: 'X',
+			U: 'X',
+		});
+
+		return selected;
+	};
+
+	const buildVector = (): string => {
+		const metrics = metricOrder.map((metric) => {
+			const input = getSelectedInput(metric);
+
+			return `${metric}:${input?.value ?? 'X'}`;
+		});
+
+		return `CVSS:4.0/${metrics.join('/')}`;
+	};
+
+	const getSeverity = (
+		score: number
+	): {
+		label: string;
+		className: string;
+		description: string;
+	} => {
+		if (score === 0) {
+			return {
+				label: 'Aucune',
+				className: 'none',
+				description:
+					'Aucun impact mesurable selon les métriques sélectionnées.',
+			};
+		}
+
+		if (score < 4) {
+			return {
+				label: 'Faible',
+				className: 'low',
+				description:
+					'Sévérité technique faible selon CVSS v4.0.',
+			};
+		}
+
+		if (score < 7) {
+			return {
+				label: 'Modérée',
+				className: 'medium',
+				description:
+					'Sévérité technique modérée selon CVSS v4.0.',
+			};
+		}
+
+		if (score < 9) {
+			return {
+				label: 'Élevée',
+				className: 'high',
+				description:
+					'Sévérité technique élevée selon CVSS v4.0.',
+			};
+		}
+
+		return {
+			label: 'Critique',
+			className: 'critical',
+			description:
+				'Sévérité technique critique selon CVSS v4.0.',
+		};
+	};
+
+	const calculateOfficialScore = (): number | null => {
+		const {
+			cvss_score,
+			cvssLookup_global,
+			maxSeverity,
+			macroVector,
+		} = firstWindow;
+
+		if (
+			typeof cvss_score !== 'function' ||
+			typeof macroVector !== 'function' ||
+			!cvssLookup_global ||
+			!maxSeverity
+		) {
+			console.error(
+				'Le moteur officiel CVSS v4.0 de FIRST n’est pas disponible.'
+			);
+
+			return null;
+		}
+
+		const metrics = getBaseMetrics();
+		const macro = macroVector(metrics);
+
+		const score = cvss_score(
+			metrics,
+			cvssLookup_global,
+			maxSeverity,
+			macro
+		);
+
+		return Number.isFinite(score)
+			? Number(score)
+			: null;
+	};
+
+	const updateExplanation = (): void => {
+		if (!explanationList) return;
+
+		explanationList.replaceChildren();
+
+		metricOrder.forEach((metric) => {
+			const input = getSelectedInput(metric);
+			const item = document.createElement('li');
+
+			const title =
+				document.createElement('strong');
+
+			title.textContent = metricNames[metric];
+
+			const value =
+				document.createElement('span');
+
+			value.textContent =
+				input?.dataset.label ?? 'Non défini';
+
+			item.append(title, value);
+			explanationList.appendChild(item);
+		});
+	};
+
+	const updateOfficialScore = (): void => {
+		if (
+			!scoreElement ||
+			!severityBadge ||
+			!scorePreview ||
+			!scoreDescription
+		) {
+			return;
+		}
+
+		const score = calculateOfficialScore();
+
+		scorePreview.classList.remove(
+			'none',
+			'low',
+			'medium',
+			'high',
+			'critical',
+			'error'
+		);
+
+		if (score === null) {
+			scoreElement.textContent = '—';
+			severityBadge.textContent = 'Erreur';
+			scorePreview.classList.add('error');
+
+			scoreDescription.textContent =
+				'Le moteur de calcul CVSS v4.0 n’a pas pu être chargé.';
+
+			return;
+		}
+
+		const severity = getSeverity(score);
+
+		scoreElement.textContent = score.toFixed(1);
+		severityBadge.textContent = severity.label;
+
+		scoreDescription.textContent =
+			`${severity.description} Score calculé avec l’implémentation de référence publiée par FIRST.`;
+
+		scorePreview.classList.add(
+			severity.className
+		);
+	};
+
+	const updateCalculator = (): void => {
+		const vector = buildVector();
+
+		if (vectorElement) {
+			vectorElement.textContent = vector;
+		}
+
+		updateExplanation();
+		updateOfficialScore();
+	};
+
+	form?.addEventListener(
+		'change',
+		updateCalculator
+	);
+
+	copyButton?.addEventListener(
+		'click',
+		async () => {
+			if (!vectorElement) return;
+
+			const score =
+				scoreElement?.textContent ?? '—';
+
+			const severity =
+				severityBadge?.textContent ?? '—';
+
+			const content =
+				`${vectorElement.textContent}\n` +
+				`CVSS-B v4.0 : ${score} — ${severity}`;
+
+			try {
+				await navigator.clipboard.writeText(
+					content
+				);
+
+				copyButton.textContent =
+					'Score et vecteur copiés';
+
+				window.setTimeout(() => {
+					copyButton.textContent =
+						'Copier le vecteur';
+				}, 1800);
+			} catch (error) {
+				console.error(
+					'Impossible de copier le résultat.',
+					error
+				);
+
+				copyButton.textContent =
+					'Copie impossible';
+			}
+		}
+	);
+
+	updateCalculator();
+</script>
+	</body>
+</html>
+
+<style>
+	body {
+		background: #f8fafc;
+	}
+
+	main {
+		width: min(1320px, calc(100% - 4rem));
+		margin: 0 auto;
+		padding: 3rem 0 5rem;
+	}
+
+	.hero {
+		margin-bottom: 2.5rem;
+		padding: 4rem;
+		border-radius: 34px;
+		color: white;
+		background:
+			radial-gradient(
+				circle at 80% 0%,
+				rgba(37, 99, 235, 0.28),
+				transparent 35%
+			),
+			linear-gradient(
+				135deg,
+				#020817 0%,
+				#06142d 55%,
+				#031b4d 100%
+			);
+		box-shadow: 0 25px 70px rgba(2, 8, 23, 0.2);
+	}
+
+	.tag {
+		margin: 0;
+		color: #60a5fa;
+		font-size: 0.8rem;
+		font-weight: 900;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+	}
+
+	.hero h1 {
+		margin: 1rem 0 1.5rem;
+		color: white;
+		font-size: clamp(3.2rem, 7vw, 5.5rem);
+		line-height: 0.95;
+		letter-spacing: -0.065em;
+	}
+
+	.hero-intro {
+		max-width: 850px;
+		margin: 0;
+		color: #dbeafe;
+		font-size: 1.15rem;
+		line-height: 1.75;
+	}
+
+	.method-disclaimer {
+		max-width: 850px;
+		margin-top: 1.75rem;
+		padding: 1rem 1.2rem;
+		border: 1px solid rgba(147, 197, 253, 0.28);
+		border-left: 4px solid #60a5fa;
+		border-radius: 14px;
+		background: rgba(255, 255, 255, 0.07);
+	}
+
+	.method-disclaimer strong {
+		display: block;
+		margin-bottom: 0.3rem;
+		color: #93c5fd;
+		font-size: 0.82rem;
+		font-weight: 900;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.method-disclaimer p {
+		margin: 0;
+		color: #dbeafe;
+		font-size: 0.9rem;
+		line-height: 1.6;
+	}
+
+	.calculator-layout {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 390px;
+		gap: 2rem;
+		align-items: start;
+	}
+
+	.cvss-form {
+		display: grid;
+		gap: 1.5rem;
+	}
+
+	.metric-section {
+		display: grid;
+		grid-template-columns: 64px minmax(0, 1fr);
+		gap: 1.5rem;
+		padding: 2rem;
+		border: 1px solid #e5e7eb;
+		border-radius: 26px;
+		background: white;
+		box-shadow: 0 14px 40px rgba(15, 23, 42, 0.05);
+	}
+
+	.section-number {
+		display: grid;
+		place-items: center;
+		width: 52px;
+		height: 52px;
+		border-radius: 16px;
+		background: #eff6ff;
+		color: #2563eb;
+		font-size: 1.2rem;
+		font-weight: 900;
+	}
+
+	.section-content {
+		min-width: 0;
+	}
+
+	.section-heading {
+		margin-bottom: 1.75rem;
+	}
+
+	.section-heading p {
+		margin: 0 0 0.3rem;
+		color: #2563eb;
+		font-size: 0.75rem;
+		font-weight: 900;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.section-heading h2 {
+		margin: 0;
+		font-size: 1.8rem;
+		letter-spacing: -0.04em;
+	}
+
+	.metrics-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	fieldset {
+		min-width: 0;
+		margin: 0;
+		border: 0;
+	}
+
+	.metric-card,
+	.impact-card {
+		position: relative;
+		padding: 1.25rem;
+		border: 1px solid #dbe3ef;
+		border-radius: 20px;
+		background: #f8fafc;
+	}
+
+	.metric-card.full {
+		grid-column: 1 / -1;
+	}
+
+	.metric-card legend,
+	.impact-card legend {
+		padding: 0;
+		color: #0f172a;
+		font-size: 1rem;
+		font-weight: 900;
+	}
+
+	.metric-code {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		margin: 0;
+		color: #2563eb;
+		font-size: 0.75rem;
+		font-weight: 900;
+		letter-spacing: 0.08em;
+	}
+
+	.choices {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.65rem;
+		margin-top: 1rem;
+	}
+
+	.choices.three {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.choices label {
+		display: flex;
+		gap: 0.65rem;
+		align-items: flex-start;
+		padding: 0.85rem;
+		border: 1px solid #dbe3ef;
+		border-radius: 14px;
+		background: white;
+		cursor: pointer;
+	}
+
+	.choices input,
+	.impact-choices input {
+		width: auto;
+		margin-top: 0.2rem;
+		accent-color: #2563eb;
+	}
+
+	.choices span {
+		display: grid;
+		gap: 0.15rem;
+	}
+
+	.choices strong {
+		color: #0f172a;
+	}
+
+	.choices small {
+		color: #64748b;
+		font-size: 0.75rem;
+		line-height: 1.35;
+	}
+
+	.impact-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.impact-choices {
+		display: grid;
+		gap: 0.5rem;
+		margin-top: 1rem;
+	}
+
+	.impact-choices label {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		padding: 0.7rem;
+		border: 1px solid #dbe3ef;
+		border-radius: 12px;
+		background: white;
+		color: #0f172a;
+		font-weight: 700;
+		cursor: pointer;
+	}
+
+	.result-card {
+		position: sticky;
+		top: 105px;
+		padding: 1.75rem;
+		border: 1px solid rgba(96, 165, 250, 0.25);
+		border-radius: 28px;
+		color: white;
+		background:
+			radial-gradient(
+				circle at 85% 0%,
+				rgba(37, 99, 235, 0.3),
+				transparent 36%
+			),
+			linear-gradient(
+				135deg,
+				#020817 0%,
+				#06142d 55%,
+				#031b4d 100%
+			);
+		box-shadow: 0 25px 60px rgba(2, 8, 23, 0.2);
+	}
+
+	.result-top {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	.result-label {
+		margin: 0 0 0.35rem;
+		color: #60a5fa;
+		font-size: 0.75rem;
+		font-weight: 900;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.result-card h2 {
+		margin: 0;
+		color: white;
+		font-size: 1.8rem;
+	}
+
+	.status-badge {
+		padding: 0.45rem 0.7rem;
+		border-radius: 999px;
+		background: rgba(255, 255, 255, 0.1);
+		color: #bfdbfe;
+		font-size: 0.75rem;
+		font-weight: 800;
+	}
+
+	.vector-box {
+		display: grid;
+		gap: 1rem;
+		margin-top: 1.5rem;
+		padding: 1rem;
+		border-radius: 18px;
+		background: rgba(255, 255, 255, 0.08);
+	}
+
+	.vector-box code {
+		overflow-wrap: anywhere;
+		padding: 0;
+		background: transparent;
+		color: #dbeafe;
+		font-size: 0.82rem;
+		line-height: 1.6;
+	}
+
+	.vector-box button {
+		border: 0;
+		border-radius: 12px;
+		padding: 0.85rem 1rem;
+		background: #2563eb;
+		color: white;
+		font: inherit;
+		font-weight: 900;
+		cursor: pointer;
+	}
+
+	.score-preview {
+		display: grid;
+		gap: 0.35rem;
+		margin-top: 1rem;
+		padding: 1.1rem;
+		border-radius: 18px;
+		background: rgba(255, 255, 255, 0.07);
+	}
+
+	.score-preview p {
+		margin: 0;
+		color: #bfdbfe;
+		font-size: 0.8rem;
+		font-weight: 800;
+	}
+
+	.score-preview strong {
+		color: white;
+		font-size: 3.5rem;
+		line-height: 1;
+	}
+
+	.score-preview span {
+		color: #93a8c8;
+		font-size: 0.78rem;
+		line-height: 1.5;
+	}
+
+	.explanation {
+		margin-top: 1.5rem;
+	}
+
+	.explanation h3 {
+		margin-bottom: 1rem;
+		color: white;
+		font-size: 1.1rem;
+	}
+
+	.explanation ul {
+		display: grid;
+		gap: 0.65rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.explanation li {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		padding-bottom: 0.65rem;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.explanation li strong {
+		color: #bfdbfe;
+		font-size: 0.78rem;
+	}
+
+	.explanation li span {
+		color: white;
+		font-size: 0.78rem;
+		font-weight: 800;
+		text-align: right;
+	}
+
+	.important-note {
+		margin-top: 1.5rem;
+		padding: 1rem;
+		border-left: 3px solid #60a5fa;
+		border-radius: 12px;
+		background: rgba(96, 165, 250, 0.08);
+	}
+
+	.important-note strong {
+		color: #93c5fd;
+	}
+
+	.important-note p {
+		margin: 0.5rem 0 0;
+		color: #dbeafe;
+		font-size: 0.82rem;
+		line-height: 1.6;
+	}
+
+	@media (max-width: 1100px) {
+		.calculator-layout {
+			grid-template-columns: 1fr;
+		}
+
+		.result-card {
+			position: static;
+		}
+	}
+
+	@media (max-width: 760px) {
+		main {
+			width: min(100% - 1.25rem, 1320px);
+			padding-top: 1.5rem;
+		}
+
+		.hero {
+			padding: 2.3rem 1.35rem;
+			border-radius: 23px;
+		}
+
+		.metric-section {
+			grid-template-columns: 1fr;
+			padding: 1.3rem;
+			border-radius: 22px;
+		}
+
+		.metrics-grid,
+		.impact-grid,
+		.choices,
+		.choices.three {
+			grid-template-columns: 1fr;
+		}
+
+		.metric-card.full {
+			grid-column: auto;
+		}
+	}
+
+	.score-heading {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+#severity-badge {
+	padding: 0.4rem 0.65rem;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.1);
+	color: white;
+	font-size: 0.72rem;
+	font-weight: 900;
+}
+
+.score-preview.none strong,
+.score-preview.none #severity-badge {
+	color: #cbd5e1;
+}
+
+.score-preview.low strong,
+.score-preview.low #severity-badge {
+	color: #86efac;
+}
+
+.score-preview.medium strong,
+.score-preview.medium #severity-badge {
+	color: #fde68a;
+}
+
+.score-preview.high strong,
+.score-preview.high #severity-badge {
+	color: #fdba74;
+}
+
+.score-preview.critical strong,
+.score-preview.critical #severity-badge {
+	color: #fca5a5;
+}
+
+.score-preview.error strong,
+.score-preview.error #severity-badge {
+	color: #fca5a5;
+}
+
+.cvss-attribution {
+	margin: 1.25rem 0 0;
+	color: #93a8c8;
+	font-size: 0.7rem;
+	line-height: 1.55;
+}
+</style>

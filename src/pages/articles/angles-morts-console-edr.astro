@@ -1,0 +1,348 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ArticleHero from '../../components/article/ArticleHero.astro';
+import ArticleLayout from '../../components/article/ArticleLayout.astro';
+import Callout from '../../components/article/Callout.astro';
+import Checklist from '../../components/article/Checklist.astro';
+import RelatedArticles from '../../components/article/RelatedArticles.astro';
+import ArticleQuote from '../../components/article/ArticleQuote.astro';
+import ExecutiveSummary from '../../components/article/ExecutiveSummary.astro';
+import TerrainNote from '../../components/article/TerrainNote.astro';
+import { SITE_TITLE } from '../../consts';
+
+const toc = [
+	{ id: 'contexte', label: 'Pourquoi cette note ?' },
+	{ id: 'visibilite', label: 'Une console ne voit que ce qu’elle connaît' },
+	{ id: 'angles-morts', label: 'Les angles morts les plus fréquents' },
+	{ id: 'plateforme-vivante', label: 'Une plateforme EDR est un produit vivant' },
+	{ id: 'verification', label: 'Ce que je vérifie systématiquement' },
+	{ id: 'checklist', label: 'Checklist opérationnelle' },
+	{ id: 'conclusion', label: 'Conclusion' },
+];
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`Les angles morts d’une console EDR | ${SITE_TITLE}`}
+			description="Une console EDR au vert ne garantit pas que tout est correctement protégé. Cette Note de terrain présente les angles morts les plus fréquents et les contrôles à mener lors d’une revue de plateforme."
+		/>
+	</head>
+
+	<body>
+		<Header />
+
+		<main>
+			<ArticleHero
+				tag="ENDPOINT SECURITY"
+				title="Les angles morts d’une console EDR"
+				subtitle="Pourquoi une console au vert ne garantit pas que votre niveau de sécurité est réellement bon."
+				image="/Images/edr-console-angles-morts.png"
+				readTime="7 min de lecture"
+				level="Intermédiaire"
+				updated="Mis à jour : juillet 2026"
+				technologies={[
+					'Endpoint Security',
+					'EDR',
+					'Audit',
+					'Security Operations',
+					'Gouvernance',
+				]}
+			/>
+
+			<ExecutiveSummary title="En 30 secondes">
+				<ul>
+					<li>Une console EDR au vert ne signifie pas que tout est correctement protégé.</li>
+					<li>Un EDR ne peut surveiller que les équipements et les fonctionnalités qu’il connaît réellement.</li>
+					<li>Les pertes de visibilité sont souvent progressives, silencieuses et difficiles à détecter.</li>
+					<li>Une revue régulière de la plateforme reste indispensable, même lorsque tous les indicateurs semblent rassurants.</li>
+				</ul>
+			</ExecutiveSummary>
+
+			<ArticleLayout toc={toc}>
+				<h2 id="contexte">Pourquoi cette note ?</h2>
+
+				<p>
+					Lorsqu’on ouvre une console EDR, le premier réflexe est souvent de regarder les indicateurs.
+				</p>
+
+				<ul>
+					<li>Tous les agents sont connectés.</li>
+					<li>Aucune alerte critique.</li>
+					<li>Aucun incident en cours.</li>
+				</ul>
+
+				<p>
+					Tout semble sous contrôle.
+				</p>
+
+				<p>
+					Pourtant, lors de certaines revues de plateformes, quelques vérifications suffisent à mettre en évidence plusieurs problèmes qui n’apparaissent nulle part dans les tableaux de bord.
+				</p>
+
+				<p>
+					Aucun incident. Aucune alerte. Simplement plusieurs angles morts.
+				</p>
+
+				<ArticleQuote>
+					Une console au vert signifie uniquement qu’elle ne détecte aucun problème sur ce qu’elle voit.
+				</ArticleQuote>
+
+				<Callout type="field">
+					<p>
+						<strong>À retenir :</strong> la couleur d’une console ne permet pas, à elle seule, de mesurer la qualité réelle de la couverture de sécurité.
+					</p>
+				</Callout>
+
+				<h2 id="visibilite">Une console ne voit que ce qu’elle connaît</h2>
+
+				<p>
+					Un EDR est conçu pour détecter des comportements malveillants sur les équipements qu’il supervise correctement.
+				</p>
+
+				<p>
+					En revanche, il ne pourra jamais vous alerter sur un poste qu’il ne connaît pas, sur un serveur qui ne remonte plus depuis plusieurs jours ou sur une fonctionnalité de protection qui n’a jamais été activée.
+				</p>
+
+				<p>
+					Il ne vous dira pas non plus qu’une ancienne exclusion réduit désormais la visibilité sur une application sensible, ni qu’un groupe d’agents applique une politique héritée d’un ancien projet.
+				</p>
+
+				<p>
+					Ces situations ne déclenchent pas forcément d’alerte.
+				</p>
+
+				<p>
+					Elles réduisent simplement la visibilité.
+				</p>
+
+				<TerrainNote context="Endpoint Security • Couverture • Visibilité">
+					<p>
+						Lors des revues de plateformes EDR, les problèmes les plus importants que je rencontre ne proviennent pas toujours des alertes générées.
+					</p>
+
+					<p>
+						Ils proviennent souvent d’une perte progressive de visibilité : équipements absents, agents silencieux, modules désactivés, exclusions anciennes ou politiques incohérentes.
+					</p>
+
+					<p>
+						Cette perte est généralement silencieuse. C’est précisément ce qui la rend dangereuse.
+					</p>
+				</TerrainNote>
+
+				<h2 id="angles-morts">Les angles morts que je rencontre le plus souvent</h2>
+
+				<h3>Des équipements absents de la plateforme</h3>
+
+				<p>
+					De nouveaux serveurs sont déployés, des postes sont remplacés et des environnements évoluent.
+				</p>
+
+				<p>
+					Pour différentes raisons, certains équipements ne sont jamais intégrés à l’EDR.
+				</p>
+
+				<p>
+					La console ne les affichera pas comme non protégés. Elle ignore simplement leur existence.
+				</p>
+
+				<h3>Des exclusions oubliées</h3>
+
+				<p>
+					Une exclusion est créée pour résoudre un incident de production. Le problème disparaît. L’exclusion reste.
+				</p>
+
+				<p>
+					Quelques années plus tard, plus personne ne connaît sa justification, alors que son impact sur la visibilité existe toujours.
+				</p>
+
+				<h3>Des politiques appliquées de manière inégale</h3>
+
+				<p>
+					Au fil des projets, plusieurs politiques coexistent. Certaines machines bénéficient de toutes les protections attendues. D’autres héritent d’une configuration plus ancienne jamais remise en question.
+				</p>
+
+				<p>
+					La plateforme peut pourtant rester entièrement au vert.
+				</p>
+
+				<h3>Des agents présents, mais incomplets</h3>
+
+				<p>
+					L’agent apparaît bien connecté. Pourtant, certaines fonctionnalités ne sont pas actives, la télémétrie est partielle ou certains modules ne fonctionnent plus correctement.
+				</p>
+
+				<p>
+					À première vue, tout semble normal. Dans les faits, la couverture est incomplète.
+				</p>
+
+				<h3>Des machines devenues silencieuses</h3>
+
+				<p>
+					Certaines machines critiques ne remontent plus d’événements depuis plusieurs jours.
+				</p>
+
+				<p>
+					L’information existe parfois dans la plateforme, mais sans processus de revue, cette absence de communication peut facilement passer inaperçue.
+				</p>
+
+				<Callout type="warning">
+					<p>
+						Aucun de ces points ne fait nécessairement passer une console au rouge. Pourtant, chacun d’eux peut créer un angle mort durable.
+					</p>
+				</Callout>
+
+				<h2 id="plateforme-vivante">Une plateforme EDR est un produit vivant</h2>
+
+				<p>
+					Une plateforme EDR n’est pas un équipement que l’on installe une fois pour toutes.
+				</p>
+
+				<p>
+					L’environnement évolue en permanence.
+				</p>
+
+				<ul>
+					<li>De nouveaux serveurs apparaissent.</li>
+					<li>Des applications sont déployées.</li>
+					<li>Des exclusions sont ajoutées.</li>
+					<li>Des politiques sont adaptées.</li>
+					<li>Les équipes et les responsabilités changent.</li>
+				</ul>
+
+				<p>
+					Au fil du temps, la configuration dérive naturellement.
+				</p>
+
+				<p>
+					Cette dérive est normale. Ce qui ne l’est pas, c’est de ne jamais la mesurer.
+				</p>
+
+				<ArticleQuote>
+					Une plateforme EDR saine n’est pas seulement une plateforme sans alerte. C’est une plateforme dont la couverture, les politiques et la télémétrie sont régulièrement vérifiées.
+				</ArticleQuote>
+
+				<h2 id="verification">Ce que je vérifie systématiquement</h2>
+
+				<p>
+					Lorsque je reprends une plateforme EDR, je commence rarement par les alertes.
+				</p>
+
+				<p>
+					Je préfère vérifier quelques points simples.
+				</p>
+
+				<ul>
+					<li>Tous les équipements attendus sont-ils réellement présents ?</li>
+					<li>Les politiques sont-elles cohérentes entre les différents groupes ?</li>
+					<li>Les exclusions encore présentes sont-elles toujours justifiées ?</li>
+					<li>Toutes les fonctionnalités de protection sont-elles activées ?</li>
+					<li>Existe-t-il des agents silencieux depuis plusieurs jours ?</li>
+					<li>Les indicateurs affichés correspondent-ils réellement au niveau de protection attendu ?</li>
+				</ul>
+
+				<p>
+					Très souvent, ces vérifications révèlent davantage de points d’amélioration que l’analyse des incidents elle-même.
+				</p>
+
+				<h2 id="checklist">Checklist opérationnelle</h2>
+
+				<p>
+					Avant de considérer qu’une plateforme EDR est correctement supervisée, je trouve utile de vérifier les éléments suivants.
+				</p>
+
+				<Checklist
+					title="Vérifier la couverture réelle d’une plateforme EDR"
+					items={[
+						'Comparer l’inventaire EDR avec une source d’inventaire indépendante.',
+						'Identifier les agents inactifs, silencieux ou jamais connectés.',
+						'Contrôler les équipements critiques récemment ajoutés.',
+						'Revoir les exclusions anciennes et leur justification.',
+						'Comparer les politiques appliquées entre les différents groupes.',
+						'Vérifier l’activation effective de chaque fonctionnalité de protection.',
+						'Contrôler la qualité et la fraîcheur de la télémétrie remontée.',
+						'Planifier une revue régulière de la plateforme.',
+					]}
+				/>
+
+				<h2 id="conclusion">Conclusion</h2>
+
+				<p>
+					Une console EDR au vert est une bonne nouvelle.
+				</p>
+
+				<p>
+					Mais elle ne constitue jamais, à elle seule, une preuve que l’environnement est correctement protégé.
+				</p>
+
+				<p>
+					Elle indique simplement que, selon les informations dont elle dispose, aucun problème majeur n’a été détecté.
+				</p>
+
+				<p>
+					Toute la difficulté consiste donc à vérifier que cette visibilité est réellement complète.
+				</p>
+
+				<ArticleQuote>
+					Une console EDR ne protège pas ce qu’elle ne voit pas.
+				</ArticleQuote>
+
+				<Callout type="field">
+					<p>
+						<strong>Ce que le terrain m’a appris :</strong> avant même d’analyser les alertes, il faut s’assurer que la plateforme voit réellement tout ce qu’elle devrait voir.
+					</p>
+
+					<p>
+						La maturité d’un EDR ne se mesure pas uniquement au nombre d’incidents détectés. Elle se mesure aussi à la qualité de sa couverture.
+					</p>
+				</Callout>
+
+				<Callout type="warning">
+					<p>
+						Cette Note de terrain est inspirée de situations rencontrées au cours de différentes missions. Les exemples présentés ont été volontairement anonymisés et généralisés afin de préserver la confidentialité des organisations concernées.
+					</p>
+				</Callout>
+
+				<RelatedArticles
+					articles={[
+						{
+							href: '/articles/exclusions-edr-risque-silencieux',
+							category: 'ENDPOINT SECURITY',
+							title: 'Les exclusions : le risque silencieux des plateformes EDR',
+							description: 'Les exclusions sont parfois nécessaires, mais elles deviennent un angle mort lorsqu’elles s’accumulent sans documentation ni revue périodique.',
+						},
+						{
+							href: '/articles/endpoint-protege-endpoint-securise',
+							category: 'ENDPOINT SECURITY',
+							title: 'Pourquoi un endpoint protégé n’est pas forcément un endpoint sécurisé',
+							description: 'Installer un EDR est une étape essentielle, mais la sécurité réelle d’un endpoint ne se résume jamais à la présence d’un agent.',
+						},
+					]}
+				/>
+			</ArticleLayout>
+		</main>
+
+		<Footer />
+	</body>
+</html>
+
+<style>
+	body {
+		background: #f8fafc;
+	}
+
+	main {
+		width: min(1320px, calc(100% - 4rem));
+		margin: 0 auto;
+		padding: 3rem 0 5rem;
+	}
+
+	@media (max-width: 640px) {
+		main {
+			width: min(100% - 2rem, 1320px);
+		}
+	}
+</style>
