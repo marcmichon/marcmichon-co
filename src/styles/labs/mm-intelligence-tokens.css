@@ -1,0 +1,27 @@
+:root {
+  --mm-space-1: .5rem;
+  --mm-space-2: .75rem;
+  --mm-space-3: 1rem;
+  --mm-space-4: 1.25rem;
+  --mm-space-5: 1.5rem;
+  --mm-space-6: 2rem;
+  --mm-radius-sm: .75rem;
+  --mm-radius-md: 1rem;
+  --mm-radius-lg: 1.35rem;
+  --mm-radius-xl: 1.55rem;
+  --mm-border: rgba(111, 148, 199, .17);
+  --mm-border-strong: rgba(111, 148, 199, .25);
+  --mm-surface: rgba(5, 15, 31, .92);
+  --mm-surface-soft: rgba(8, 22, 42, .78);
+  --mm-text: #f5f9ff;
+  --mm-text-soft: #c9d8eb;
+  --mm-muted: #8da2bd;
+  --mm-blue: #60a5fa;
+  --mm-critical: #fb7185;
+  --mm-high: #fb923c;
+  --mm-medium: #facc15;
+  --mm-low: #34d399;
+  --mm-shadow-card: 0 12px 36px rgba(0, 0, 0, .18);
+  --mm-shadow-panel: 0 24px 68px rgba(0, 0, 0, .25);
+  --mm-transition: 180ms cubic-bezier(.2, .7, .2, 1);
+}

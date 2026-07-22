@@ -1,3 +1,14 @@
+## [Unreleased]
+
+### Added
+- Added a lightweight `src/locales` translation layer with French and English dictionaries.
+- Prepared the Vulnerability Explorer interface and PDF export for future bilingual routing.
+
+### Changed
+- Translated the Vulnerability Explorer interface, operational intelligence, response plan and PDF report into French.
+- Localized dates, percentages, severity labels, confidence labels and export feedback for French users.
+- Renamed the public product presentation to **Explorateur de vulnérabilités** while preserving technical source names and standards.
+
 # Changelog
 
 Toutes les évolutions importantes du site sont documentées dans ce fichier.
