@@ -144,6 +144,89 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				</div>
 			</section>
 
+
+			
+
+			<section class="tools-section">
+				<div class="tools-shell">
+					<div class="tools-sidebar">
+						<p class="tools-kicker">Boîte à outils cybersécurité</p>
+						<h2>MM Security Intelligence</h2>
+
+						<p class="tools-intro">
+							Des outils développés à partir de problématiques rencontrées sur le terrain
+							pour aider les équipes sécurité à analyser, prioriser et prendre de meilleures décisions.
+						</p>
+					</div>
+
+					<div class="tools-list">
+						<a href="/labs/risk-matrix" class="tool-row">
+							<div class="tool-banner-wrap">
+								<img
+									src="/Images/tools/home/risk-score-home.png"
+									class="tool-banner"
+									alt=""
+									loading="lazy"
+									decoding="async"
+								/>
+							</div>
+
+							<div class="tool-body">
+								<p class="tool-category">Risk Management</p>
+								<h3>MM Risk Score</h3>
+								<p>Le risque métier, pas uniquement le risque technique.</p>
+							</div>
+
+							<span class="tool-arrow" aria-hidden="true">↗</span>
+						</a>
+
+						<a href="/labs/cvss-calculator" class="tool-row">
+							<div class="tool-banner-wrap">
+								<img
+									src="/Images/tools/home/cvss-calculator-home.png"
+									class="tool-banner"
+									alt=""
+									loading="lazy"
+									decoding="async"
+								/>
+							</div>
+
+							<div class="tool-body">
+								<p class="tool-category">Vulnerability Management</p>
+								<h3>CVSS Calculator</h3>
+								<p>Calcul CVSS v4 conforme au standard FIRST.</p>
+							</div>
+
+							<span class="tool-arrow" aria-hidden="true">↗</span>
+						</a>
+
+						<a href="/labs/vulnerability-explorer" class="tool-row">
+							<div class="tool-banner-wrap">
+								<img
+									src="/Images/tools/home/vulnerability-explorer-home.png"
+									class="tool-banner"
+									alt=""
+									loading="lazy"
+									decoding="async"
+								/>
+							</div>
+
+							<div class="tool-body">
+								<p class="tool-category">Vulnerability Intelligence</p>
+								<h3>Vulnerability Explorer</h3>
+								<p>Corrélation CVE • KEV • EPSS • CISA et bien plus.</p>
+							</div>
+
+							<span class="tool-arrow" aria-hidden="true">↗</span>
+						</a>
+
+						<div class="tools-footer">
+							<a href="/labs" class="tools-button">Explorer tous les outils →</a>
+						</div>
+					</div>
+				</div>
+			</section>
+
 			<section class="certifications-section">
 				<h2>Certifications</h2>
 
@@ -180,263 +263,536 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	</body>
 </html>
 
+
 <style>
-main {
-	width: min(1320px, calc(100% - 4rem));
-	margin: 0 auto;
-	padding: 2rem 0;
-}
-
-h1 {
-	font-size: 5rem;
-}
-
-.hero-grid {
-	grid-template-columns: 1.35fr 0.75fr 0.65fr;
-}
-
-.stats-bar {
-	margin: -3rem auto 1.5rem;
-}
-
-section {
-	margin-bottom: 4rem;
-}
-
-section:last-child {
-	margin-bottom: 1rem;
-}
-
-h2 {
-	font-size: 2.5rem;
-	font-weight: 900;
-	margin-bottom: 2rem;
-}
-
-.cards {
-	display: grid;
-	grid-template-columns: repeat(5, 1fr);
-	gap: 1.5rem;
-	width: 100%;
-}
-
-.card {
-	padding: 0;
-	overflow: hidden;
-	border: 1px solid #e5e7eb;
-	border-radius: 20px;
-	background: white;
-	min-height: 360px;
-	transition: all .25s ease;
-	box-shadow: 0 10px 30px rgba(15,23,42,.04);
-}
-
-.card:hover {
-	transform: translateY(-4px);
-	box-shadow: 0 20px 50px rgba(15,23,42,.10);
-}
-
-.card-image {
-	width: 100%;
-	height: 160px;
-	object-fit: cover;
-	display: block;
-}
-
-.card h3 {
-	margin: 0;
-	padding: 1.25rem 1.25rem 0;
-	font-size: 1rem;
-	font-weight: 800;
-	line-height: 1.35;
-	color: #0f172a;
-}
-
-.card p {
-	margin: 0;
-	padding: .85rem 1.25rem 1.5rem;
-	font-size: .95rem;
-	line-height: 1.6;
-	color: #475569;
-}
-
-.articles-section {
-	margin-top: 5rem;
-}
-
-.section-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-end;
-	gap: 2rem;
-	margin-bottom: 2rem;
-}
-
-.see-all {
-	color: #2563eb;
-	font-weight: 700;
-	text-decoration: none;
-}
-
-.articles-grid {
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	gap: 1.75rem;
-}
-
-.article-card {
-	display: flex;
-	flex-direction: column;
-	background: white;
-	border: 1px solid #e5e7eb;
-	border-radius: 24px;
-	text-decoration: none;
-	color: inherit;
-	overflow: hidden;
-	min-height: 520px;
-	transition: all .25s ease;
-	box-shadow: 0 10px 30px rgba(15,23,42,.04);
-}
-
-.article-card:hover {
-	transform: translateY(-4px);
-	box-shadow: 0 20px 50px rgba(15,23,42,.10);
-}
-
-.article-image {
-	width: 100%;
-	height: 180px;
-	flex-shrink: 0;
-	overflow: hidden;
-}
-
-.article-image img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	display: block;
-	transition: transform .35s ease;
-}
-
-.article-card:hover .article-image img {
-	transform: scale(1.04);
-}
-
-.article-content {
-	display: flex;
-	flex-direction: column;
-	flex: 1;
-	padding: 1.75rem;
-}
-
-.article-category {
-	font-size: .75rem;
-	font-weight: 800;
-	color: #2563eb;
-	letter-spacing: .1em;
-	text-transform: uppercase;
-	margin: 0 0 .8rem;
-}
-
-.article-card h3 {
-	font-size: 1.25rem;
-	line-height: 1.4;
-	margin: 0 0 1rem;
-	color: #0f172a;
-}
-
-.article-content p:not(.article-category) {
-	color: #475569;
-	line-height: 1.7;
-	margin: 0 0 1.5rem;
-	flex-grow: 1;
-}
-
-.article-content span {
-	margin-top: auto;
-	font-size: .9rem;
-	font-weight: 600;
-	color: #64748b;
-}
-
-.certifications-grid {
-	display: grid;
-	grid-template-columns: repeat(5, 1fr);
-	gap: 1.5rem;
-	margin-top: 2rem;
-}
-
-.cert-card {
-	background: white;
-	border: 1px solid #e5e7eb;
-	border-radius: 16px;
-	padding: 1.5rem;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	text-align: center;
-	min-height: 220px;
-	transition: all .25s ease;
-}
-
-.cert-card:hover {
-	transform: translateY(-4px);
-	box-shadow: 0 10px 30px rgba(0,0,0,.08);
-}
-
-.cert-card img {
-	max-width: 120px;
-	max-height: 80px;
-	width: auto;
-	height: auto;
-	object-fit: contain;
-	margin-bottom: 1rem;
-}
-
-.cert-card h3 {
-	margin: 0;
-	font-size: 1rem;
-	font-weight: 700;
-	line-height: 1.4;
-}
-
-@media (max-width: 1200px) {
-	.cards {
-		grid-template-columns: repeat(3, 1fr);
+	:global(body) {
+		margin: 0;
+		background: #ffffff;
 	}
 
-	.articles-grid {
-		grid-template-columns: repeat(2, 1fr);
-	}
-
-	.certifications-grid {
-		grid-template-columns: repeat(3, 1fr);
-	}
-}
-
-@media (max-width: 768px) {
 	main {
-		width: min(100% - 2rem, 1320px);
-		padding: 1.5rem 0 3rem;
+		width: min(1320px, calc(100% - 4rem));
+		margin: 0 auto;
+		padding: 2rem 0 3rem;
 	}
 
-	.cards,
-	.articles-grid {
-		grid-template-columns: 1fr;
+	section {
+		margin-bottom: 3rem;
 	}
 
-	.section-header {
-		display: block;
+	section:last-child {
+		margin-bottom: 1rem;
+	}
+
+	h1 {
+		font-size: 5rem;
 	}
 
 	h2 {
-		font-size: 2rem;
+		margin: 0 0 1.5rem;
+		font-size: 2.5rem;
+		font-weight: 900;
 		line-height: 1.1;
 	}
 
-	.certifications-section {
-		display: none;
+	.hero-grid {
+		grid-template-columns: 1.35fr 0.75fr 0.65fr;
 	}
-}
+
+	.stats-bar {
+		margin: -3rem auto 1.5rem;
+	}
+
+	/* Domaines d'intervention */
+
+	.cards {
+		display: grid;
+		grid-template-columns: repeat(5, minmax(0, 1fr));
+		gap: 1rem;
+		width: 100%;
+	}
+
+	.card {
+		min-width: 0;
+		min-height: 305px;
+		overflow: hidden;
+		background: white;
+		border: 1px solid #e5e7eb;
+		border-radius: 20px;
+		box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+		transition:
+			transform 0.25s ease,
+			box-shadow 0.25s ease;
+	}
+
+	.card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 20px 50px rgba(15, 23, 42, 0.1);
+	}
+
+	.card-image {
+		display: block;
+		width: 100%;
+		height: 160px;
+		object-fit: cover;
+	}
+
+	.card h3 {
+		margin: 0;
+		padding: 1.25rem 1.25rem 0;
+		color: #0f172a;
+		font-size: 1rem;
+		font-weight: 800;
+		line-height: 1.35;
+	}
+
+	.card p {
+		margin: 0;
+		padding: 0.85rem 1.25rem 1.5rem;
+		color: #475569;
+		font-size: 0.86rem;
+		line-height: 1.5;
+	}
+
+	/* Retours d'expérience */
+
+	.articles-section {
+		margin-top: 3.5rem;
+	}
+
+	.section-header {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 1.15rem;
+	}
+
+	.section-header h2 {
+		margin-bottom: 0;
+	}
+
+	.section-tag {
+		margin: 0;
+	}
+
+	.see-all {
+		color: #2563eb;
+		font-weight: 700;
+		text-decoration: none;
+		white-space: nowrap;
+	}
+
+	.articles-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 1.25rem;
+	}
+
+	.article-card {
+		display: flex;
+		min-width: 0;
+		min-height: 305px;
+		flex-direction: column;
+		overflow: hidden;
+		color: inherit;
+		text-decoration: none;
+		background: white;
+		border: 1px solid #e5e7eb;
+		border-radius: 24px;
+		box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+		transition:
+			transform 0.25s ease,
+			box-shadow 0.25s ease;
+	}
+
+	.article-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 20px 50px rgba(15, 23, 42, 0.1);
+	}
+
+	.article-image {
+		width: 100%;
+		height: 112px;
+		flex: 0 0 112px;
+		overflow: hidden;
+	}
+
+	.article-image img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.35s ease;
+	}
+
+	.article-card:hover .article-image img {
+		transform: scale(1.035);
+	}
+
+	.article-content {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		padding: 1rem;
+	}
+
+	.article-category {
+		margin: 0 0 0.55rem;
+		color: #2563eb;
+		font-size: 0.62rem;
+		font-weight: 800;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+	}
+
+	.article-card h3 {
+		margin: 0 0 0.7rem;
+		color: #0f172a;
+		font-size: 0.98rem;
+		line-height: 1.35;
+	}
+
+	.article-content p:not(.article-category) {
+		flex: 1;
+		margin: 0 0 0.65rem;
+		color: #475569;
+		font-size: 0.82rem;
+		line-height: 1.45;
+	}
+
+	.article-content span {
+		margin-top: auto;
+		color: #64748b;
+		font-size: 0.72rem;
+		font-weight: 600;
+	}
+
+	/* MM Security Intelligence */
+
+	.tools-section {
+		margin-top: 3.5rem;
+	}
+
+	.tools-shell {
+		display: grid;
+		grid-template-columns: 280px minmax(0, 1fr);
+		gap: 2rem;
+		padding: 1.75rem;
+		overflow: hidden;
+		background:
+			radial-gradient(
+				circle at 88% 8%,
+				rgba(37, 99, 235, 0.18),
+				transparent 24rem
+			),
+			linear-gradient(135deg, #020817 0%, #06142d 58%, #031b4d 100%);
+		border-radius: 22px;
+		box-shadow: 0 20px 50px rgba(2, 8, 23, 0.17);
+	}
+
+	.tools-sidebar {
+		min-width: 0;
+	}
+
+	.tools-kicker {
+		margin: 0 0 0.45rem;
+		color: #60a5fa;
+		font-size: 0.68rem;
+		font-weight: 900;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+	}
+
+	.tools-sidebar h2 {
+		margin: 0 0 0.9rem;
+		color: white;
+		font-size: 1.9rem;
+		line-height: 1.05;
+	}
+
+	.tools-intro {
+		margin: 0;
+		color: #cbd5e1;
+		font-size: 0.84rem;
+		line-height: 1.65;
+	}
+
+	.tools-list {
+		display: flex;
+		min-width: 0;
+		flex-direction: column;
+	}
+
+	.tool-row {
+		display: grid;
+		grid-template-columns: 270px minmax(0, 1fr) 28px;
+		align-items: center;
+		gap: 1.15rem;
+		min-width: 0;
+		padding: 0.8rem 0;
+		color: inherit;
+		text-decoration: none;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+		transition: transform 0.2s ease;
+	}
+
+	.tool-row:first-child {
+		padding-top: 0;
+	}
+
+	.tool-row:last-of-type {
+		border-bottom: 0;
+	}
+
+	.tool-row:hover {
+		transform: translateX(4px);
+	}
+
+	.tool-banner-wrap {
+		width: 270px;
+		height: 90px;
+		overflow: hidden;
+		background: #020817;
+		border-radius: 12px;
+	}
+
+	.tool-banner {
+		display: block;
+		width: 270px;
+		height: 90px;
+		object-fit: cover;
+		object-position: center;
+		transform: none;
+		filter: none;
+	}
+
+	.tool-body {
+		min-width: 0;
+	}
+
+	.tool-category {
+		margin: 0 0 0.22rem;
+		color: #60a5fa;
+		font-size: 0.62rem;
+		font-weight: 900;
+		letter-spacing: 0.1em;
+		line-height: 1.3;
+		text-transform: uppercase;
+	}
+
+	.tool-body h3 {
+		margin: 0 0 0.28rem;
+		color: white;
+		font-size: 1.05rem;
+		line-height: 1.15;
+		letter-spacing: -0.025em;
+	}
+
+	.tool-body > p:not(.tool-category) {
+		margin: 0;
+		color: #cbd5e1;
+		font-size: 0.78rem;
+		line-height: 1.45;
+	}
+
+	.tool-arrow {
+		color: #60a5fa;
+		font-size: 1.05rem;
+		font-weight: 800;
+		transition: transform 0.2s ease;
+	}
+
+	.tool-row:hover .tool-arrow {
+		transform: translate(2px, -2px);
+	}
+
+	.tools-footer {
+		display: flex;
+		justify-content: flex-start;
+		margin-top: 1rem;
+	}
+
+	.tools-button {
+		display: inline-flex;
+		min-height: 36px;
+		align-items: center;
+		justify-content: center;
+		padding: 0.5rem 0.9rem;
+		color: white;
+		font-size: 0.78rem;
+		font-weight: 850;
+		text-decoration: none;
+		background: #2563eb;
+		border-radius: 999px;
+		box-shadow: 0 10px 22px rgba(37, 99, 235, 0.22);
+		transition:
+			transform 0.2s ease,
+			background 0.2s ease;
+	}
+
+	.tools-button:hover {
+		transform: translateY(-2px);
+		background: #1d4ed8;
+	}
+
+	/* Certifications */
+
+	.certifications-grid {
+		display: grid;
+		grid-template-columns: repeat(5, minmax(0, 1fr));
+		gap: 1rem;
+		margin-top: 1.5rem;
+	}
+
+	.cert-card {
+		display: flex;
+		min-height: 220px;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 1.2rem;
+		text-align: center;
+		background: white;
+		border: 1px solid #e5e7eb;
+		border-radius: 16px;
+		transition:
+			transform 0.25s ease,
+			box-shadow 0.25s ease;
+	}
+
+	.cert-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+	}
+
+	.cert-card img {
+		width: auto;
+		height: auto;
+		max-width: 120px;
+		max-height: 80px;
+		margin-bottom: 1rem;
+		object-fit: contain;
+	}
+
+	.cert-card h3 {
+		margin: 0;
+		font-size: 1rem;
+		font-weight: 700;
+		line-height: 1.4;
+	}
+
+	@media (max-width: 1200px) {
+		.cards {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+
+		.articles-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		.tools-shell {
+			grid-template-columns: 1fr;
+		}
+
+		.tool-row {
+			grid-template-columns: 270px minmax(0, 1fr) 28px;
+		}
+
+		.certifications-grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+
+	@media (max-width: 768px) {
+		main {
+			width: min(100% - 2rem, 1320px);
+			padding: 1.5rem 0 3rem;
+		}
+
+		.cards,
+		.articles-grid,
+		.certifications-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.section-header {
+			display: block;
+		}
+
+		.see-all {
+			display: inline-block;
+			margin-top: 0.75rem;
+		}
+
+		h2 {
+			font-size: 2rem;
+		}
+
+		.tools-shell {
+			grid-template-columns: 1fr;
+			gap: 1.25rem;
+			padding: 1.2rem;
+			border-radius: 18px;
+		}
+
+		.tools-sidebar h2 {
+			font-size: 1.6rem;
+		}
+
+		.tool-row {
+			grid-template-columns: minmax(0, 1fr) 24px;
+			gap: 0.75rem;
+			padding: 0.85rem 0;
+		}
+
+		.tool-banner-wrap {
+			grid-column: 1 / -1;
+			width: 100%;
+			height: auto;
+			aspect-ratio: 3 / 1;
+		}
+
+		.tool-banner {
+			width: 100%;
+			height: 100%;
+		}
+
+		.tool-body {
+			grid-column: 1;
+		}
+
+		.tool-arrow {
+			grid-column: 2;
+			grid-row: 2;
+		}
+
+		.certifications-section {
+			display: none;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.card,
+		.article-card,
+		.article-image img,
+		.tool-row,
+		.tool-arrow,
+		.tools-button,
+		.cert-card {
+			transition: none;
+		}
+
+		.card:hover,
+		.article-card:hover,
+		.tool-row:hover,
+		.tools-button:hover,
+		.cert-card:hover {
+			transform: none;
+		}
+
+		.article-card:hover .article-image img {
+			transform: none;
+		}
+	}
 </style>

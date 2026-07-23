@@ -1,0 +1,142 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE } from '../../consts';
+---
+
+<!doctype html>
+<html lang="fr">
+<head>
+  <BaseHead title={`MM IOC Analyzer | ${SITE_TITLE}`} description="Analysez, normalisez, dédupliquez et exportez automatiquement vos indicateurs de compromission." />
+</head>
+<body>
+  <Header />
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">MM Security Intelligence Suite</p>
+        <h1><span>MM</span> IOC Analyzer</h1>
+        <p class="hero-lead">Transformez une information brute en indicateurs de compromission structurés.</p>
+        <p class="hero-copy">Collez un rapport CERT, une alerte EDR, un ticket SOC, un email ou une liste d’IOC. L’analyse, la normalisation et la déduplication sont réalisées directement dans votre navigateur.</p>
+      </div>
+      <div class="hero-badge"><span>V1</span><strong>Zero configuration</strong><small>Analyse locale • Aucun envoi serveur</small></div>
+    </section>
+
+    <section class="workspace">
+      <div class="input-panel">
+        <div class="panel-heading">
+          <div><p class="section-kicker">Incident Paste</p><h2>Collez n’importe quel contenu.</h2></div>
+          <button type="button" class="ghost-button" id="load-example">Charger un exemple</button>
+        </div>
+        <textarea id="ioc-input" spellcheck="false" placeholder="Collez ici un rapport d’incident, une alerte EDR, un email, des logs ou une liste d’IOC…"></textarea>
+        <div class="input-actions">
+          <div class="privacy-note"><span></span>Traitement 100 % local dans le navigateur</div>
+          <div class="button-group"><button type="button" class="secondary-button" id="clear-input">Effacer</button><button type="button" class="primary-button" id="analyze-button">Analyser les IOC →</button></div>
+        </div>
+      </div>
+      <aside class="analysis-panel">
+        <p class="section-kicker">Analysis</p><h2>Contrôles appliqués</h2>
+        <ul class="analysis-list">
+          <li><span>✓</span> Détection automatique des types</li>
+          <li><span>✓</span> Refang des IOC obfusqués</li>
+          <li><span>✓</span> Validation syntaxique</li>
+          <li><span>✓</span> Déduplication</li>
+          <li><span>✓</span> Identification des IP privées</li>
+          <li><span>✓</span> Extraction des domaines depuis les URL</li>
+        </ul>
+        <div class="supported-types"><p>Types pris en charge</p><div><span>IPv4</span><span>IPv6</span><span>Domain</span><span>URL</span><span>Email</span><span>MD5</span><span>SHA-1</span><span>SHA-256</span><span>SHA-512</span></div></div>
+      </aside>
+    </section>
+
+    <section class="results-section" id="results-section" hidden>
+      <div class="results-heading">
+        <div><p class="section-kicker">IOC Summary</p><h2>Résultats de l’analyse</h2></div>
+        <div class="results-actions"><button type="button" class="ghost-button" id="copy-all">Copier tout</button><button type="button" class="ghost-button" id="export-json">JSON</button><button type="button" class="ghost-button" id="export-csv">CSV</button><button type="button" class="ghost-button" id="export-txt">TXT</button></div>
+      </div>
+      <div class="summary-grid">
+        <article><strong id="total-detected">0</strong><span>IOC détectés</span></article>
+        <article><strong id="total-unique">0</strong><span>IOC uniques</span></article>
+        <article><strong id="total-duplicates">0</strong><span>Doublons supprimés</span></article>
+        <article><strong id="total-invalid">0</strong><span>Valeurs ignorées</span></article>
+      </div>
+      <div class="results-layout">
+        <div class="ioc-groups" id="ioc-groups"></div>
+        <aside class="statistics-panel">
+          <p class="section-kicker">IOC Statistics</p><h3>Répartition</h3><div id="statistics-list" class="statistics-list"></div>
+          <div class="processing-summary"><h4>Nettoyage appliqué</h4><p id="normalization-count">0 IOC normalisés</p><p id="private-count">0 IP privées détectées</p><p id="domain-extraction-count">0 domaines extraits des URL</p></div>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <Footer />
+
+  <script is:inline>
+    const TYPES=['IPv4','IPv6','Domain','URL','Email','MD5','SHA-1','SHA-256','SHA-512'];
+    const state={items:[],rawDetected:0,duplicates:0,ignored:0,normalized:0,privateIps:0,extractedDomains:0};
+    const input=document.querySelector('#ioc-input');
+    const results=document.querySelector('#results-section');
+    const groups=document.querySelector('#ioc-groups');
+    const stats=document.querySelector('#statistics-list');
+    const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+    const refang=s=>s.replace(/\[\.\]|\(\.\)|\{\.\}/g,'.').replace(/hxxps/gi,'https').replace(/hxxp/gi,'http').replace(/\[:\]/g,':').replace(/\[@\]/g,'@');
+    const defang=s=>s.replace(/^https:/i,'hxxps:').replace(/^http:/i,'hxxp:').replace(/\./g,'[.]').replace(/@/g,'[@]');
+    const private4=ip=>{const p=ip.split('.').map(Number);return p[0]===10||p[0]===127||(p[0]===169&&p[1]===254)||(p[0]===172&&p[1]>=16&&p[1]<=31)||(p[0]===192&&p[1]===168)};
+    function classify(v){
+      if(/^[a-f0-9]{32}$/i.test(v))return'MD5'; if(/^[a-f0-9]{40}$/i.test(v))return'SHA-1'; if(/^[a-f0-9]{64}$/i.test(v))return'SHA-256'; if(/^[a-f0-9]{128}$/i.test(v))return'SHA-512';
+      if(/^(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)$/.test(v))return'IPv4';
+      if(/^(?:(?:[a-f0-9]{1,4}:){2,7}[a-f0-9]{0,4}|::1)$/i.test(v))return'IPv6';
+      if(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(v))return'Email';
+      try{const u=new URL(v);if(['http:','https:'].includes(u.protocol)&&u.hostname)return'URL'}catch{}
+      if(/^(?=.{1,253}$)(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,63}$/i.test(v))return'Domain';
+      return null;
+    }
+    function candidates(raw){
+      const p=/(?:https?:\/\/[^\s<>"']+)|(?:[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})|(?:\b(?:[A-F0-9]{32}|[A-F0-9]{40}|[A-F0-9]{64}|[A-F0-9]{128})\b)|(?:\b(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)\b)|(?:\b(?:[A-F0-9]{1,4}:){2,7}[A-F0-9]{0,4}\b)|(?:\b(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,63}\b)/gi;
+      return refang(raw).match(p)||[];
+    }
+    function analyze(raw){
+      const found=candidates(raw),seen=new Set(),items=[];let duplicates=0,ignored=0,normalized=0,privateIps=0,extractedDomains=0;
+      for(const rawValue of found){
+        const original=rawValue.replace(/[>\])}'"`;,]+$/,'');const value=refang(original);if(value!==original)normalized++;
+        const type=classify(value);if(!type){ignored++;continue}const clean=['Domain','Email','URL'].includes(type)?value.toLowerCase():value;const key=`${type}:${clean}`;
+        if(seen.has(key)){duplicates++;continue}seen.add(key);const meta={};
+        if(type==='IPv4'&&private4(clean)){meta.private=true;privateIps++}
+        if(type==='URL'){try{meta.hostname=new URL(clean).hostname.toLowerCase()}catch{}}
+        items.push({type,value:clean,meta});
+      }
+      const domains=new Set(items.filter(i=>i.type==='Domain').map(i=>i.value));
+      for(const i of [...items])if(i.type==='URL'&&i.meta.hostname&&!domains.has(i.meta.hostname)){items.push({type:'Domain',value:i.meta.hostname,meta:{extracted:true}});domains.add(i.meta.hostname);extractedDomains++}
+      return{items,rawDetected:found.length,duplicates,ignored,normalized,privateIps,extractedDomains};
+    }
+    const grouped=()=>TYPES.reduce((g,t)=>(g[t]=state.items.filter(i=>i.type===t),g),{});
+    function render(){
+      const g=grouped();document.querySelector('#total-detected').textContent=state.rawDetected;document.querySelector('#total-unique').textContent=state.items.length;document.querySelector('#total-duplicates').textContent=state.duplicates;document.querySelector('#total-invalid').textContent=state.ignored;
+      document.querySelector('#normalization-count').textContent=`${state.normalized} IOC normalisé${state.normalized>1?'s':''}`;
+      document.querySelector('#private-count').textContent=`${state.privateIps} IP privée${state.privateIps>1?'s':''} détectée${state.privateIps>1?'s':''}`;
+      document.querySelector('#domain-extraction-count').textContent=`${state.extractedDomains} domaine${state.extractedDomains>1?'s':''} extrait${state.extractedDomains>1?'s':''} des URL`;
+      groups.innerHTML=TYPES.filter(t=>g[t].length).map(t=>`<article class="ioc-group"><div class="group-heading"><div><h3>${t}</h3><span>${g[t].length} indicateur${g[t].length>1?'s':''}</span></div><button class="copy-group" data-copy-type="${t}">Copier le groupe</button></div><div class="ioc-list">${g[t].map((i,n)=>`<div class="ioc-row" data-type="${t}" data-index="${n}"><div><code>${esc(i.value)}</code><div class="item-tags">${i.meta.private?'<span class="item-tag muted">Private</span>':''}${i.meta.extracted?'<span class="item-tag">Extracted</span>':''}${i.meta.hostname?`<span class="item-tag">${esc(i.meta.hostname)}</span>`:''}</div></div><div class="row-actions"><button data-action="copy">Copier</button><button data-action="defang">Defang</button><button data-action="delete">Supprimer</button></div></div>`).join('')}</div></article>`).join('');
+      const max=Math.max(...TYPES.map(t=>g[t].length),1);stats.innerHTML=TYPES.filter(t=>g[t].length).map(t=>`<div class="stat-row"><div><span>${t}</span><strong>${g[t].length}</strong></div><div class="stat-bar"><i style="width:${g[t].length/max*100}%"></i></div></div>`).join('');
+      results.hidden=false;results.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+    function serialize(fmt){const g=grouped();if(fmt==='json')return JSON.stringify({summary:{detected:state.rawDetected,unique:state.items.length,duplicatesRemoved:state.duplicates,ignored:state.ignored},indicators:g},null,2);if(fmt==='csv')return['type,value,private,extracted',...state.items.map(i=>[i.type,`"${i.value.replace(/"/g,'""')}"`,!!i.meta.private,!!i.meta.extracted].join(','))].join('\n');return TYPES.filter(t=>g[t].length).map(t=>`# ${t}\n${g[t].map(i=>i.value).join('\n')}`).join('\n\n')}
+    function download(data,name,type){const b=new Blob([data],{type}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();URL.revokeObjectURL(u)}
+    document.querySelector('#analyze-button').onclick=()=>{const raw=input.value.trim();if(!raw)return input.focus();Object.assign(state,analyze(raw));render()};
+    document.querySelector('#load-example').onclick=()=>input.value=`Incident report — Suspicious activity detected\n\nSource IP: 185.220.101.44\nInternal pivot: 192.168.10.25\nC2 domain: malicious-example[.]com\nObserved URL: hxxps://malicious-example[.]com/payload.exe\nContact: operator[@]malicious-example[.]com\n\nMD5: 44d88612fea8a8f36de82e1278abb02f\nSHA1: 3395856ce81f2b7382dee72602f798b642f14140\nSHA256: 275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f\n\nDuplicate indicators:\n185.220.101.44\nmalicious-example[.]com`;
+    document.querySelector('#clear-input').onclick=()=>{input.value='';results.hidden=true;input.focus()};
+    groups.onclick=async e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.copyType){await navigator.clipboard.writeText(state.items.filter(i=>i.type===b.dataset.copyType).map(i=>i.value).join('\n'));return}const r=b.closest('.ioc-row');if(!r)return;const item=grouped()[r.dataset.type][+r.dataset.index];if(b.dataset.action==='copy')await navigator.clipboard.writeText(item.value);if(b.dataset.action==='defang')await navigator.clipboard.writeText(defang(item.value));if(b.dataset.action==='delete'){state.items.splice(state.items.indexOf(item),1);render()}};
+    document.querySelector('#copy-all').onclick=()=>navigator.clipboard.writeText(serialize('txt'));
+    document.querySelector('#export-json').onclick=()=>download(serialize('json'),'mm-ioc-analyzer.json','application/json');
+    document.querySelector('#export-csv').onclick=()=>download(serialize('csv'),'mm-ioc-analyzer.csv','text/csv;charset=utf-8');
+    document.querySelector('#export-txt').onclick=()=>download(serialize('txt'),'mm-ioc-analyzer.txt','text/plain;charset=utf-8');
+  </script>
+</body>
+</html>
+
+<style>
+:global(body){margin:0;background:#f8fafc}main{width:min(1320px,calc(100% - 4rem));margin:0 auto;padding:3rem 0 5rem}.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:3rem;margin-bottom:2rem;padding:3rem;color:white;background:radial-gradient(circle at 88% 10%,rgba(37,99,235,.26),transparent 22rem),linear-gradient(135deg,#020817,#06142d 60%,#031b4d);border-radius:30px;box-shadow:0 24px 65px rgba(2,8,23,.2)}.eyebrow,.section-kicker{margin:0 0 .65rem;color:#60a5fa;font-size:.72rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}h1{margin:0;font-size:clamp(3rem,6vw,5rem);color: #ffffff;line-height:.95;letter-spacing:-.06em}h1 span{color:#3b82f6}.hero-lead{margin:1.4rem 0 0;font-size:1.2rem;font-weight:800}.hero-copy{max-width:820px;margin:.75rem 0 0;color:#cbd5e1;line-height:1.7}.hero-badge{display:grid;min-width:220px;gap:.35rem;padding:1.2rem;background:rgba(255,255,255,.05);border:1px solid rgba(147,197,253,.18);border-radius:18px}.hero-badge span{color:#60a5fa;font-size:.72rem;font-weight:900;letter-spacing:.12em}.hero-badge small{color:#94a3b8}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:1.25rem;margin-bottom:2rem}.input-panel,.analysis-panel,.results-section{background:#fff;border:1px solid #e2e8f0;border-radius:24px;box-shadow:0 16px 42px rgba(15,23,42,.05)}.input-panel{padding:1.75rem}.analysis-panel{padding:1.5rem}.panel-heading,.results-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1rem}.panel-heading h2,.results-heading h2,.analysis-panel h2{margin:0;color:#0f172a;font-size:1.65rem;line-height:1.1}textarea{width:100%;min-height:340px;resize:vertical;padding:1.2rem;color:#dbeafe;font:500 .92rem/1.65 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;background:radial-gradient(circle at 90% 0%,rgba(37,99,235,.15),transparent 18rem),#020817;border:1px solid #1e3a5f;border-radius:18px;box-sizing:border-box;outline:none}textarea:focus{border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.12)}textarea::placeholder{color:#64748b}.input-actions,.results-actions{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:1rem}.button-group,.results-actions{display:flex;flex-wrap:wrap;gap:.55rem}button{font:inherit;cursor:pointer}.primary-button,.secondary-button,.ghost-button{min-height:40px;padding:.55rem .85rem;font-size:.82rem;font-weight:800;border-radius:999px}.primary-button{color:#fff;background:#2563eb;border:1px solid #2563eb}.secondary-button,.ghost-button{color:#334155;background:#fff;border:1px solid #dbe3ee}.privacy-note{display:flex;align-items:center;gap:.55rem;color:#64748b;font-size:.78rem;font-weight:700}.privacy-note span{width:8px;height:8px;background:#22c55e;border-radius:50%;box-shadow:0 0 10px rgba(34,197,94,.35)}
+.analysis-list{display:grid;gap:.75rem;margin:1.25rem 0;padding:0;list-style:none}.analysis-list li{display:flex;align-items:center;gap:.65rem;color:#475569;font-size:.86rem}.analysis-list span{display:grid;width:24px;height:24px;flex:0 0 24px;place-items:center;color:#2563eb;background:#eff6ff;border-radius:8px}.supported-types{padding-top:1rem;border-top:1px solid #e2e8f0}.supported-types p{margin:0 0 .75rem;color:#0f172a;font-size:.8rem;font-weight:850}.supported-types div{display:flex;flex-wrap:wrap;gap:.45rem}.supported-types span,.item-tag{padding:.28rem .48rem;color:#2563eb;font-size:.66rem;font-weight:850;background:#eff6ff;border-radius:999px}
+.results-section{padding:1.75rem;scroll-margin-top:2rem}.summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.8rem;margin-bottom:1.25rem}.summary-grid article{padding:1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px}.summary-grid strong{display:block;color:#0f172a;font-size:1.55rem}.summary-grid span{color:#64748b;font-size:.75rem;font-weight:750}.results-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;align-items:start;gap:1rem}.ioc-groups{display:grid;gap:1rem}.ioc-group,.statistics-panel{overflow:hidden;background:#f8fafc;border:1px solid #e2e8f0;border-radius:18px}.group-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem;background:#fff;border-bottom:1px solid #e2e8f0}.group-heading h3{margin:0;color:#0f172a}.group-heading span{color:#64748b;font-size:.7rem}.copy-group,.row-actions button{padding:.35rem .55rem;color:#2563eb;font-size:.7rem;font-weight:800;background:#fff;border:1px solid #dbe3ee;border-radius:999px}.ioc-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:1rem;padding:.85rem 1rem;border-bottom:1px solid #e2e8f0}.ioc-row:last-child{border:0}code{color:#0f172a;font-size:.78rem;overflow-wrap:anywhere}.item-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.35rem}.item-tag.muted{color:#64748b;background:#e2e8f0}.row-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:.35rem}.statistics-panel{position:sticky;top:1rem;padding:1rem}.statistics-panel h3{margin:0 0 1rem}.statistics-list{display:grid;gap:.8rem}.stat-row>div:first-child{display:flex;justify-content:space-between;color:#475569;font-size:.75rem}.stat-bar{height:7px;margin-top:.4rem;overflow:hidden;background:#e2e8f0;border-radius:999px}.stat-bar i{display:block;height:100%;background:linear-gradient(90deg,#2563eb,#38bdf8)}.processing-summary{margin-top:1.2rem;padding-top:1rem;border-top:1px solid #e2e8f0}.processing-summary h4{margin:0 0 .65rem}.processing-summary p{margin:.35rem 0;color:#64748b;font-size:.74rem}[hidden]{display:none!important}
+@media(max-width:980px){.hero,.workspace,.results-layout{grid-template-columns:1fr}.hero-badge{min-width:0}.statistics-panel{position:static}}@media(max-width:700px){main{width:min(100% - 2rem,1320px);padding-top:1.5rem}.hero{padding:2rem 1.25rem;border-radius:22px}.panel-heading,.results-heading,.input-actions{align-items:stretch;flex-direction:column}.summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ioc-row{grid-template-columns:1fr}.row-actions{justify-content:flex-start}}
+</style>

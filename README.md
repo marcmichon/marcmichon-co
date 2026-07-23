@@ -1,63 +1,42 @@
-# Astro Starter Kit: Blog
+# marcmichon.co
 
-```sh
-npm create astro@latest -- --template blog
-```
+Site personnel de Marc Michon consacré à la cybersécurité opérationnelle.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Le projet est né d’un besoin simple : centraliser, structurer et partager des
+notes de terrain issues de situations réelles rencontrées en exploitation,
+en audit, en investigation et en accompagnement client.
 
-Features:
+Le site rassemble aujourd’hui deux grands ensembles :
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+- des notes de terrain et articles techniques ;
+- la MM Security Intelligence Suite, une collection d’outils cybersécurité
+  orientés analyse, compréhension et aide à la décision.
 
-## 🚀 Project Structure
+  ## La genèse du projet
 
-Inside of your Astro project, you'll see the following folders and files:
+À l’origine, marcmichon.co est un carnet de terrain.
 
-```text
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
-```
+Les contenus proviennent de problématiques concrètes rencontrées autour de :
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+- la gestion des vulnérabilités ;
+- la détection et la réponse à incident ;
+- les architectures réseau et sécurité ;
+- les plateformes EDR, SIEM, SOAR et SSE ;
+- les audits techniques ;
+- les investigations et analyses opérationnelles ;
+- les retours d’expérience issus de missions réelles.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+L’objectif n’est pas de publier de la théorie générique, mais de conserver
+des méthodes, des explications et des solutions directement exploitables.
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+## MM Security Intelligence Suite
 
-Any static assets, like images, can be placed in the `public/` directory.
+La MM Security Intelligence Suite prolonge cette démarche avec des outils
+interactifs conçus pour transformer des données techniques en informations
+plus faciles à comprendre et à exploiter.
 
-## 🧞 Commands
+### Modules disponibles
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+- MM Vulnerability Explorer
+- MM CVSS Calculator
+- MM Risk Score
