@@ -1,0 +1,638 @@
+ ---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+import ArticleHero from '../../components/article/ArticleHero.astro';
+import ArticleLayout from '../../components/article/ArticleLayout.astro';
+import Callout from '../../components/article/Callout.astro';
+import RelatedArticles from '../../components/article/RelatedArticles.astro';
+import ArticleQuote from '../../components/article/ArticleQuote.astro';
+import TerrainNote from '../../components/article/TerrainNote.astro';
+
+import { SITE_TITLE } from '../../consts';
+
+const toc = [
+	{
+		id: 'pourquoi-cette-note',
+		label: 'Pourquoi cette note ?',
+	},
+	{
+		id: 'regarder-autrement',
+		label: 'Le jour où j’ai commencé à regarder autrement',
+	},
+	{
+		id: 'le-declic',
+		label: 'Le déclic',
+	},
+	{
+		id: 'vieillissement-silencieux',
+		label: 'Les plateformes vieillissent rarement d’un seul coup',
+	},
+	{
+		id: 'nouveau-regard',
+		label: 'Ce qui a changé dans ma manière de travailler',
+	},
+	{
+		id: 'question',
+		label: 'La question que je me pose désormais',
+	},
+	{
+		id: 'conclusion',
+		label: 'Conclusion',
+	},
+];
+---
+
+<!doctype html>
+
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`Pourquoi une plateforme peut être parfaitement à jour... tout en étant techniquement en retard | ${SITE_TITLE}`}
+			description="Une plateforme maintenue n’est pas forcément une plateforme mature. Cette Note de terrain explore la manière dont les plateformes de cybersécurité vieillissent lorsque leur exploitation cesse d’évoluer."
+		/>
+	</head>
+
+	<body>
+		<Header />
+
+		<main>
+			<ArticleHero
+				tag="SECURITY PLATFORM ENGINEERING"
+				title="Pourquoi une plateforme peut être parfaitement à jour... tout en étant techniquement en retard"
+				subtitle="Une plateforme maintenue n’est pas forcément une plateforme qui continue d’évoluer. Retour d’expérience sur une confusion que je rencontre régulièrement lors des revues techniques."
+				image="/Images/security-platform-engineering-plateforme-a-jour.png"
+				readTime="7 min de lecture"
+				level="Intermédiaire"
+				updated="Mis à jour : juillet 2026"
+				technologies={[
+					'Security Platform Engineering',
+					'Platform Review',
+					'Architecture',
+					'Gouvernance',
+					'Technical Debt',
+				]}
+			/>
+
+			<aside
+				class="series-intro"
+				aria-label="Présentation de la série Security Platform Engineering"
+			>
+				<span class="series-intro__eyebrow">
+					NOUVELLE SÉRIE
+				</span>
+
+				<p>
+					<strong>Security Platform Engineering</strong> explore la
+					conception, l’évolution et l’optimisation des plateformes de
+					cybersécurité dans le temps.
+				</p>
+			</aside>
+
+			<ArticleLayout toc={toc}>
+				<h2 id="pourquoi-cette-note">
+					Pourquoi cette note ?
+				</h2>
+
+				<p>
+					J’aime bien reprendre des plateformes que je ne connais pas.
+				</p>
+
+				<p>
+					Il y a toujours un petit moment de curiosité.
+				</p>
+
+				<p>
+					On ouvre la console. On regarde rapidement les indicateurs
+					principaux. Les agents sont connectés, les composants sont à
+					jour et aucune alerte particulière ne vient immédiatement
+					attirer l’attention.
+				</p>
+
+				<p>
+					En quelques minutes, on pourrait presque conclure que tout va
+					bien.
+				</p>
+
+				<p>
+					Et pourtant…
+				</p>
+
+				<p>
+					C’est souvent à cet instant que mon travail commence
+					réellement.
+				</p>
+
+				<p>
+					Pendant longtemps, je me serais probablement arrêté là. Je
+					regardais surtout les versions, les composants et les alertes.
+					J’avais l’impression qu’une plateforme bien maintenue était
+					forcément une plateforme mature.
+				</p>
+
+				<p>
+					Avec le recul, je crois que j’avais une vision un peu trop
+					simple.
+				</p>
+
+				<p>
+					Le terrain m’a appris que les choses étaient beaucoup plus
+					nuancées.
+				</p>
+
+				<ArticleQuote>
+					Le numéro de version indique l’âge du logiciel. Il ne dit rien
+					de l’âge de la manière dont on l’utilise.
+				</ArticleQuote>
+
+				<h2 id="regarder-autrement">
+					Le jour où j’ai commencé à regarder autrement
+				</h2>
+
+				<p>
+					Aujourd’hui, lorsque je regarde le numéro de version d’une
+					plateforme, j’ai surtout l’impression qu’il répond à une
+					question assez simple.
+				</p>
+
+				<p>
+					<strong>Quel âge a le logiciel ?</strong>
+				</p>
+
+				<p>
+					Alors que celle qui m’intéresse vraiment est beaucoup plus
+					difficile à mesurer.
+				</p>
+
+				<p>
+					<strong>Quel âge a la manière de l’utiliser ?</strong>
+				</p>
+
+				<p>
+					Je crois que c’est à partir de cette question que j’ai
+					commencé à regarder les plateformes autrement.
+				</p>
+
+				<p>
+					Deux entreprises peuvent utiliser exactement le même produit,
+					la même version et les mêmes licences. Elles disposent, sur
+					le papier, des mêmes fonctionnalités.
+				</p>
+
+				<p>
+					Pourtant, au bout de quelques années, leurs plateformes
+					peuvent ne plus avoir grand-chose en commun.
+				</p>
+
+				<p>
+					L’une continue d’évoluer.
+				</p>
+
+				<p>
+					L’autre donne parfois l’impression que le projet s’est arrêté
+					le jour de sa mise en production.
+				</p>
+
+				<p>
+					Ce n’est pas une question de compétence.
+				</p>
+
+				<p>
+					Encore moins d’implication.
+				</p>
+
+				<p>
+					C’est souvent la conséquence naturelle de la vie d’une
+					organisation. Les priorités changent. Les équipes évoluent.
+					Les projets s’enchaînent.
+				</p>
+
+				<p>
+					Pendant ce temps, la plateforme continue de fonctionner.
+				</p>
+
+				<p>
+					Alors on la laisse vivre.
+				</p>
+
+				<TerrainNote
+					context="Security Platform Engineering • Maturité • Exploitation"
+				>
+					<p>
+						Deux plateformes identiques au moment de leur déploiement
+						peuvent devenir très différentes quelques années plus
+						tard.
+					</p>
+
+					<p>
+						Le produit évolue de la même manière pour tout le monde.
+						Ce sont les décisions prises autour de lui qui finissent
+						par raconter une autre histoire.
+					</p>
+				</TerrainNote>
+
+				<h2 id="le-declic">
+					Le déclic
+				</h2>
+
+				<p>
+					Je me souviens d’une revue de plateforme où tout semblait
+					irréprochable.
+				</p>
+
+				<p>
+					Les versions étaient récentes. Les composants étaient en
+					bonne santé. Les tableaux de bord étaient rassurants.
+				</p>
+
+				<p>
+					Honnêtement, je m’attendais à une mission assez rapide.
+				</p>
+
+				<p>
+					Puis, en discutant avec les équipes, je leur ai posé une
+					question toute simple.
+				</p>
+
+				<ArticleQuote>
+					Pourquoi cette fonctionnalité n’est-elle pas utilisée ?
+				</ArticleQuote>
+
+				<p>
+					La réponse m’a marqué.
+				</p>
+
+				<p>
+					<strong>
+						« Parce qu’elle n’existait pas quand on a déployé la
+						plateforme. »
+					</strong>
+				</p>
+
+				<p>
+					Cette phrase paraît anodine.
+				</p>
+
+				<p>
+					Pourtant, elle résume exactement le sujet.
+				</p>
+
+				<p>
+					Personne n’avait décidé de ne pas utiliser cette
+					fonctionnalité.
+				</p>
+
+				<p>
+					Personne n’y était opposé.
+				</p>
+
+				<p>
+					Elle était simplement arrivée après le projet.
+				</p>
+
+				<p>
+					Et depuis, plus personne ne s’était réellement reposé la
+					question.
+				</p>
+
+				<p>
+					Je retrouve cette situation beaucoup plus souvent qu’on
+					pourrait le croire.
+				</p>
+
+				<h2 id="vieillissement-silencieux">
+					Les plateformes vieillissent rarement d’un seul coup
+				</h2>
+
+				<p>
+					C’est probablement ce qui rend le phénomène si difficile à
+					percevoir.
+				</p>
+
+				<p>
+					Une plateforme ne devient pas ancienne du jour au lendemain.
+				</p>
+
+				<p>
+					Elle cesse d’évoluer presque silencieusement.
+				</p>
+
+				<p>
+					Une optimisation est repoussée. Une revue attendra le prochain
+					projet. Une nouvelle capacité sera étudiée plus tard.
+				</p>
+
+				<p>
+					Une méthode de travail reste en place simplement parce qu’elle
+					fonctionne encore.
+				</p>
+
+				<p>
+					Rien de tout cela n’est préoccupant pris séparément.
+				</p>
+
+				<p>
+					Mais, mises bout à bout, ces décisions finissent par dessiner
+					une plateforme qui fonctionne toujours parfaitement avec une
+					vision du produit qui appartient parfois à plusieurs années
+					en arrière.
+				</p>
+
+				<p>
+					Pendant ce temps, l’éditeur continue d’avancer.
+				</p>
+
+				<p>
+					De nouvelles capacités apparaissent. Certains moteurs
+					progressent. Des limites historiques disparaissent. Des
+					processus autrefois complexes deviennent plus simples.
+				</p>
+
+				<p>
+					Le produit grandit.
+				</p>
+
+				<p>
+					Mais il arrive que notre manière de l’exploiter reste fidèle
+					au premier chapitre.
+				</p>
+
+				<Callout type="field">
+					<p>
+						<strong>Ce que le terrain m’a appris :</strong> une
+						plateforme ne vieillit pas uniquement lorsque son logiciel
+						devient ancien. Elle vieillit aussi lorsque son
+						exploitation cesse d’évoluer.
+					</p>
+				</Callout>
+
+				<h2 id="nouveau-regard">
+					Ce qui a changé dans ma manière de travailler
+				</h2>
+
+				<p>
+					Il y a quelques années, une revue de plateforme consistait
+					surtout, pour moi, à vérifier si tout était correctement
+					configuré.
+				</p>
+
+				<p>
+					Aujourd’hui, je crois que je passe davantage de temps à
+					comprendre <strong>pourquoi</strong> la plateforme est
+					configurée ainsi.
+				</p>
+
+				<p>
+					Je cherche moins les erreurs.
+				</p>
+
+				<p>
+					J’essaie surtout de comprendre les décisions.
+				</p>
+
+				<p>
+					Parce qu’une décision qui était excellente il y a cinq ans
+					n’est pas forcément celle que je prendrais aujourd’hui.
+				</p>
+
+				<p>
+					Et c’est parfaitement normal.
+				</p>
+
+				<p>
+					Le produit a évolué. Les usages aussi. L’organisation n’est
+					plus exactement la même.
+				</p>
+
+				<p>
+					Il serait presque étonnant que la plateforme n’ait rien à
+					apprendre de ces changements.
+				</p>
+
+				<ArticleQuote>
+					Une plateforme n’est jamais uniquement la photographie d’un
+					produit. Elle est aussi la photographie des décisions prises
+					autour de ce produit.
+				</ArticleQuote>
+
+				<h2 id="question">
+					La question que je me pose désormais
+				</h2>
+
+				<p>
+					À la fin, il ne me reste presque toujours qu’une seule
+					question.
+				</p>
+
+				<ArticleQuote>
+					Si nous devions reconstruire cette plateforme aujourd’hui,
+					est-ce que nous referions les mêmes choix ?
+				</ArticleQuote>
+
+				<p>
+					Je trouve cette question beaucoup plus intéressante que :
+					<em>« Sommes-nous sur la dernière version ? »</em>
+				</p>
+
+				<p>
+					Parce qu’elle ne cherche pas à juger les décisions passées.
+				</p>
+
+				<p>
+					Elle cherche simplement à savoir si elles seraient toujours
+					les mêmes aujourd’hui.
+				</p>
+
+				<p>
+					Et la réponse est très souvent non.
+				</p>
+
+				<p>
+					Non pas parce que les équipes se sont trompées, mais parce que
+					le produit a évolué.
+				</p>
+
+				<p>
+					Les besoins ont évolué.
+				</p>
+
+				<p>
+					L’organisation a évolué.
+				</p>
+
+				<p>
+					Cette question ne parle finalement plus seulement du
+					logiciel.
+				</p>
+
+				<p>
+					Elle parle de notre capacité à continuer d’apprendre.
+				</p>
+
+				<h2 id="conclusion">
+					Conclusion
+				</h2>
+
+				<p>
+					Je continue à regarder le numéro de version lorsque j’ouvre
+					une plateforme.
+				</p>
+
+				<p>
+					Mais je le fais presque par habitude.
+				</p>
+
+				<p>
+					Ce qui m’intéresse réellement commence quelques minutes plus
+					tard.
+				</p>
+
+				<p>
+					Lorsque j’essaie de comprendre comment cette plateforme a
+					grandi, comment elle s’est adaptée et quels choix ont été
+					faits autour d’elle.
+				</p>
+
+				<p>
+					Et surtout, depuis combien de temps certains de ces choix
+					n’ont plus été remis en question.
+				</p>
+
+				<p>
+					Au fond, une plateforme ne reflète pas seulement le travail de
+					son éditeur.
+				</p>
+
+				<p>
+					Elle reflète aussi la manière dont une organisation apprend,
+					évolue ou, parfois, cesse progressivement de se remettre en
+					question.
+				</p>
+
+				<p>
+					C’est précisément ce regard que j’avais envie de partager en
+					ouvrant cette nouvelle série de Notes de terrain consacrée au
+					<strong>Security Platform Engineering</strong>.
+				</p>
+
+				<ArticleQuote>
+					Installer une plateforme est un projet. La maintenir est une
+					nécessité. Continuer à la faire évoluer est probablement l’un
+					des plus beaux métiers d’un ingénieur.
+				</ArticleQuote>
+
+				<Callout type="warning">
+					<p>
+						Cette Note de terrain est inspirée de situations
+						rencontrées au cours de différentes missions. Les exemples
+						présentés ont été volontairement anonymisés et généralisés
+						afin de préserver la confidentialité des organisations
+						concernées.
+					</p>
+				</Callout>
+
+				<RelatedArticles
+					articles={[
+						{
+							href: '/articles/angles-morts-console-edr',
+							category: 'ENDPOINT SECURITY',
+							title: 'Les angles morts d’une console EDR',
+							description:
+								'Une console au vert ne garantit pas que la couverture de sécurité est réellement complète.',
+						},
+						{
+							href: '/articles/tagging-vulnerability-management',
+							category: 'VM FUNDAMENTALS',
+							title: 'Le tagging en Vulnerability Management',
+							description:
+								'Pourquoi une stratégie de tags bien pensée devient rapidement indispensable pour exploiter une plateforme de Vulnerability Management.',
+						},
+					]}
+				/>
+			</ArticleLayout>
+		</main>
+
+		<Footer />
+	</body>
+</html>
+
+<style>
+	body {
+		background: #f8fafc;
+	}
+
+	main {
+		width: min(1320px, calc(100% - 4rem));
+		margin: 0 auto;
+		padding: 3rem 0 5rem;
+	}
+
+	.series-intro {
+		position: relative;
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+
+		margin: 1.5rem 0 2rem;
+		padding: 1rem 1.25rem;
+
+		border: 1px solid rgba(124, 58, 237, 0.2);
+		border-radius: 1rem;
+
+		background:
+			linear-gradient(
+				135deg,
+				rgba(124, 58, 237, 0.09),
+				rgba(37, 99, 235, 0.04)
+			),
+			#ffffff;
+
+		box-shadow: 0 14px 35px rgba(76, 29, 149, 0.07);
+	}
+
+	.series-intro::before {
+		content: '';
+
+		position: absolute;
+		inset: 0 auto 0 0;
+
+		width: 4px;
+
+		background: linear-gradient(
+			180deg,
+			#7c3aed,
+			#4f46e5
+		);
+	}
+
+	.series-intro__eyebrow {
+		flex: 0 0 auto;
+
+		font-size: 0.72rem;
+		font-weight: 800;
+		letter-spacing: 0.12em;
+
+		color: #6d28d9;
+	}
+
+	.series-intro p {
+		margin: 0;
+
+		color: #334155;
+		line-height: 1.65;
+	}
+
+	@media (max-width: 640px) {
+		main {
+			width: min(100% - 2rem, 1320px);
+		}
+
+		.series-intro {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 0.45rem;
+		}
+	}
+</style>       
