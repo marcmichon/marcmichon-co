@@ -1,0 +1,113 @@
+---
+interface Props {
+  mode: string;
+  tone?: 'blue' | 'green' | 'amber' | 'violet';
+}
+
+const {
+  mode,
+  tone = 'blue',
+} = Astro.props;
+---
+
+<div class={`suite-identity tone-${tone}`}>
+  <span class="suite-mark" aria-hidden="true">MM</span>
+
+  <span class="suite-name">
+    Security Intelligence Suite
+  </span>
+
+  <i aria-hidden="true"></i>
+
+  <span class="suite-mode">
+    {mode}
+  </span>
+</div>
+
+<style>
+  .suite-identity {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem;
+    color: #90a4c2;
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.095em;
+    text-transform: uppercase;
+  }
+
+  .suite-mark {
+    display: grid;
+    width: 30px;
+    height: 24px;
+    place-items: center;
+    color: #fff;
+    font-size: 0.64rem;
+    letter-spacing: -0.02em;
+    background:
+      linear-gradient(
+        145deg,
+        var(--suite-accent),
+        var(--suite-accent-dark)
+      );
+    border: 1px solid var(--suite-border);
+    border-radius: 7px;
+    box-shadow:
+      0 8px 20px var(--suite-shadow);
+  }
+
+  .suite-name {
+    color: #90a4c2;
+  }
+
+  .suite-identity > i {
+    width: 3px;
+    height: 3px;
+    background: #42526b;
+    border-radius: 50%;
+  }
+
+  .suite-mode {
+    color: var(--suite-accent-soft);
+  }
+
+  .tone-blue {
+    --suite-accent: #3171ff;
+    --suite-accent-dark: #1d4ed8;
+    --suite-accent-soft: #60a5fa;
+    --suite-border: rgba(147, 197, 253, 0.42);
+    --suite-shadow: rgba(37, 99, 235, 0.25);
+  }
+
+  .tone-green {
+    --suite-accent: #22c55e;
+    --suite-accent-dark: #15803d;
+    --suite-accent-soft: #4ade80;
+    --suite-border: rgba(134, 239, 172, 0.35);
+    --suite-shadow: rgba(34, 197, 94, 0.2);
+  }
+
+  .tone-amber {
+    --suite-accent: #f59e0b;
+    --suite-accent-dark: #b45309;
+    --suite-accent-soft: #fbbf24;
+    --suite-border: rgba(253, 230, 138, 0.35);
+    --suite-shadow: rgba(245, 158, 11, 0.2);
+  }
+
+  .tone-violet {
+    --suite-accent: #8b5cf6;
+    --suite-accent-dark: #6d28d9;
+    --suite-accent-soft: #a78bfa;
+    --suite-border: rgba(196, 181, 253, 0.35);
+    --suite-shadow: rgba(139, 92, 246, 0.2);
+  }
+
+  @media (max-width: 620px) {
+    .suite-identity > i,
+    .suite-mode {
+      display: none;
+    }
+  }
+</style>

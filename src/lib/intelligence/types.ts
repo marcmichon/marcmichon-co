@@ -88,6 +88,21 @@ export interface ActionItem {
   description: string;
 
   /**
+   * Operational objective of the action.
+   */
+  objective?: string;
+
+  /**
+   * Ordered engineering checks to perform.
+   */
+  checklist?: string[];
+
+  /**
+   * Evidence sources that can support or validate the action.
+   */
+  evidenceSources?: string[];
+
+  /**
    * Operational priority.
    */
   priority: ActionPriority;

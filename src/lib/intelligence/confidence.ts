@@ -97,8 +97,18 @@ function calculateConfidenceScore(
     score += CONFIDENCE_WEIGHTS.MULTIPLE_SOURCES;
   }
 
+  let maximum = MAXIMUM_CONFIDENCE;
+
+  // A missing core source must cap confidence. The remaining sources can still
+  // support a useful assessment, but not a fully corroborated one.
+  if (!isValidCvssScore(signals.cvssScore)) maximum = Math.min(maximum, 55);
+  if (!signals.hasCvssVector) maximum = Math.min(maximum, 75);
+  if (!isValidEpssProbability(signals.epssProbability)) maximum = Math.min(maximum, 85);
+  if (typeof signals.isKnownExploited !== "boolean") maximum = Math.min(maximum, 85);
+  if ((signals.sourceCount ?? 0) < 2) maximum = Math.min(maximum, 65);
+
   return clamp(
-    Math.round(score),
+    Math.min(Math.round(score), maximum),
     MINIMUM_CONFIDENCE,
     MAXIMUM_CONFIDENCE,
   );
@@ -125,46 +135,41 @@ function buildConfidenceSummary(
   score: number,
 ): string {
   const sourceCount = signals.sourceCount ?? 0;
+  const missing: string[] = [];
+
+  if (!isValidCvssScore(signals.cvssScore)) missing.push("le score CVSS");
+  if (!signals.hasCvssVector) missing.push("le vecteur CVSS");
+  if (!isValidEpssProbability(signals.epssProbability)) missing.push("le score EPSS");
+  if (typeof signals.isKnownExploited !== "boolean") missing.push("le statut CISA KEV");
+
+  if (missing.length > 0) {
+    const details = missing.length === 1
+      ? missing[0]
+      : `${missing.slice(0, -1).join(", ")} et ${missing.at(-1)}`;
+    return `Le niveau de confiance est limité par l’indisponibilité de ${details}. L’évaluation reste exploitable, mais doit être consolidée avant une décision à fort impact.`;
+  }
 
   if (score >= 90 && signals.isKnownExploited === true) {
-    return (
-      "Évaluation étayée par plusieurs signaux de renseignement, " +
-      "including confirmed active exploitation."
-    );
+    return "Évaluation très fortement étayée par plusieurs sources cohérentes, dont une exploitation active confirmée par CISA KEV.";
   }
 
   if (score >= 90) {
-    return (
-      "Évaluation étayée par des renseignements complets et indépendamment " +
-      "corroborated vulnerability intelligence."
-    );
+    return "Évaluation très fortement étayée par des renseignements complets et corroborés par plusieurs sources indépendantes.";
   }
 
   if (score >= 75 && sourceCount >= 2) {
-    return (
-      "Évaluation étayée par plusieurs sources de renseignement fiables " +
-      "with only limited information gaps."
-    );
+    return "Évaluation étayée par plusieurs sources fiables, avec seulement quelques limites d’information résiduelles.";
   }
 
   if (score >= 75) {
-    return (
-      "Évaluation étayée par des preuves techniques solides, bien que " +
-      "additional independent corroboration would improve confidence."
-    );
+    return "Évaluation fondée sur des éléments techniques solides. Une source indépendante supplémentaire renforcerait néanmoins la conclusion.";
   }
 
   if (score >= 55) {
-    return (
-      "Évaluation fondée sur des renseignements partiels. Validez les informations manquantes " +
-      "technical or threat information before making a high-impact decision."
-    );
+    return "Évaluation fondée sur des renseignements partiels. Les éléments techniques ou de menace manquants doivent être validés avant une décision à fort impact.";
   }
 
-  return (
-    "Le niveau de confiance est limité, car des renseignements importants " +
-    "signals are unavailable or incomplete."
-  );
+  return "Le niveau de confiance est faible, car plusieurs signaux importants sont indisponibles ou incomplets.";
 }
 
 function isValidCvssScore(

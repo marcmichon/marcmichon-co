@@ -3,6 +3,15 @@ import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { SITE_TITLE } from '../../consts';
+
+import SuiteIdentity from '../../components/labs/SuiteIdentity.astro';
+
+interface Props {
+	initialCve?: string;
+}
+
+const { initialCve = '' } = Astro.props;
+
 ---
 
 <!doctype html>
@@ -912,7 +921,10 @@ Le MM Risk Score est une méthode d’aide à la décision. Il fournit une estim
 
 		<main>
 			<section class="hero">
-	<p class="tag">MM Security Intelligence Suite</p>
+				<SuiteIdentity
+					mode="Utility"
+					tone="blue"
+				/>
 
 <h1>
     <span class="mm">MM </span>

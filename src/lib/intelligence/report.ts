@@ -19,6 +19,16 @@ export interface ReportAction {
 	title: string;
 	description: string;
 	priority: string;
+	objective?: string;
+	checklist?: string[];
+	evidenceSources?: string[];
+}
+
+export interface ReportRemediationReference {
+	url: string;
+	title: string;
+	host: string;
+	kind: 'advisory' | 'patch' | 'workaround' | 'release-notes' | 'knowledge-base' | 'reference';
 }
 
 export interface ReportReasoning {
@@ -52,6 +62,7 @@ export interface NormalizedIntelligenceReport {
 	actions: ReportAction[];
 	analystNotes: string;
 	reasoning: ReportReasoning[];
+	remediationReferences: ReportRemediationReference[];
 	generatedAt: Date;
 }
 
@@ -154,6 +165,7 @@ export function normalizeIntelligenceReport(
 		epssProbability,
 		isKnownExploited,
 	);
+	const remediationReferences = normalizeRemediationReferences(vulnerability.references);
 
 	return {
 		cveId,
@@ -182,6 +194,7 @@ export function normalizeIntelligenceReport(
 		actions,
 		analystNotes,
 		reasoning,
+		remediationReferences,
 		generatedAt: new Date(),
 	};
 }
@@ -295,14 +308,74 @@ function normalizeActions(value: unknown, urgency: ReportUrgency): ReportAction[
 				title,
 				description:
 					readString(action.description) ||
-					'Execute this action according to the affected scope and operational constraints.',
+					'Exécuter cette action selon le périmètre affecté et les contraintes opérationnelles.',
 				priority: formatLabel(readString(action.priority) || fallbackPriority),
+				objective: readString(action.objective) || undefined,
+				checklist: normalizeStringArray(action.checklist),
+				evidenceSources: normalizeStringArray(action.evidenceSources),
 			};
 		})
 		.filter((item): item is ReportAction => item !== null)
 		.slice(0, 5);
 
 	return normalized.length > 0 ? normalized : defaultActions(urgency);
+}
+
+function normalizeRemediationReferences(value: unknown): ReportRemediationReference[] {
+	const urls = normalizeStringArray(value).filter((url) => /^https?:\/\//i.test(url));
+	const signals = [
+		'patch', 'update', 'upgrade', 'fixed', 'fix', 'advisory', 'security',
+		'bulletin', 'support', 'kb', 'release', 'workaround', 'hotfix',
+		'vmware', 'broadcom', 'microsoft', 'oracle', 'cisco', 'fortinet',
+		'checkpoint', 'check-point', 'jetbrains',
+	];
+
+	return urls
+		.map((url) => {
+			const normalized = url.toLowerCase();
+			const score = signals.reduce((total, signal) => total + (normalized.includes(signal) ? 1 : 0), 0);
+			return { url, score };
+		})
+		.filter((item) => item.score > 0)
+		.sort((a, b) => b.score - a.score)
+		.slice(0, 6)
+		.map(({ url }) => buildRemediationReference(url));
+}
+
+function buildRemediationReference(url: string): ReportRemediationReference {
+	let host = url;
+	try {
+		host = new URL(url).hostname.replace(/^www\./, '');
+	} catch {
+		// Preserve the raw URL when parsing fails.
+	}
+
+	const normalized = url.toLowerCase();
+	const vendor =
+		/broadcom|vmware/.test(normalized) ? 'Broadcom / VMware' :
+		/checkpoint|check-point/.test(normalized) ? 'Check Point' :
+		/microsoft/.test(normalized) ? 'Microsoft' :
+		/cisco/.test(normalized) ? 'Cisco' :
+		/oracle/.test(normalized) ? 'Oracle' :
+		/fortinet/.test(normalized) ? 'Fortinet' :
+		/jetbrains/.test(normalized) ? 'JetBrains' : 'Éditeur';
+
+	if (/workaround|mitigation|temporary/.test(normalized)) {
+		return { url, host, title: `${vendor} - Contournement`, kind: 'workaround' };
+	}
+	if (/patch|hotfix|download|fixed|update|upgrade/.test(normalized)) {
+		return { url, host, title: `${vendor} - Correctif ou mise à jour`, kind: 'patch' };
+	}
+	if (/release|releasenote/.test(normalized)) {
+		return { url, host, title: `${vendor} - Notes de version`, kind: 'release-notes' };
+	}
+	if (/\bkb\b|knowledge/.test(normalized)) {
+		return { url, host, title: `${vendor} - Base de connaissances`, kind: 'knowledge-base' };
+	}
+	if (/advisory|security|bulletin/.test(normalized)) {
+		return { url, host, title: `${vendor} - Avis de sécurité`, kind: 'advisory' };
+	}
+	return { url, host, title: `${vendor} - Référence éditeur`, kind: 'reference' };
 }
 
 function normalizeReasoning(
@@ -482,8 +555,9 @@ function defaultConsequences(
 }
 
 function setText(root: ParentNode, selector: string, value: string): void {
-	const element = root.querySelector<HTMLElement>(selector);
-	if (element) element.textContent = value;
+	for (const element of root.querySelectorAll<HTMLElement>(selector)) {
+		element.textContent = value;
+	}
 }
 
 function setProgress(root: ParentNode, selector: string, value: number): void {

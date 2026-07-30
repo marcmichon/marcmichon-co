@@ -1,98 +1,224 @@
+---
+import SuiteIdentity from '../SuiteIdentity.astro';
+---
+
 <section class="hero" aria-labelledby="ioc-title">
   <div class="hero-grid" aria-hidden="true"></div>
-  <div class="hero-orb" aria-hidden="true"></div>
+  <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+  <div class="hero-glow hero-glow-secondary" aria-hidden="true"></div>
 
   <div class="hero-main">
-    <div class="eyebrow">MM Security Intelligence Suite</div>
-    <h1 id="ioc-title"><span>MM</span> IOC Analyzer</h1>
-    <p class="intro">
-      Collez un rapport CERT, une alerte EDR, un ticket SOC ou une liste brute d’IOC.
-      L’outil extrait, normalise, valide, déduplique et structure les indicateurs afin
-      de les transformer en décisions opérationnelles.
-    </p>
+    <SuiteIdentity
+  mode="Local analysis"
+  tone="blue"
+/>
 
-    <form class="input-zone" data-ioc-form novalidate>
+    <div class="hero-heading">
+      <h1 id="ioc-title"><span>IOC</span> Analyzer</h1>
+      <p class="intro">
+        Transformez un rapport CERT, une alerte EDR, un ticket SOC ou une liste brute
+        en indicateurs structurés, normalisés et directement exploitables pour l’investigation.
+      </p>
+    </div>
+
+    <div class="capabilities" aria-label="Fonctionnalités principales">
+      <span>9 types d’IOC</span>
+      <span>Refang &amp; normalisation</span>
+      <span>Déduplication</span>
+      <span>Exports analyst-ready</span>
+    </div>
+
+    <form class="analyzer" data-ioc-form novalidate>
       <div class="editor-shell">
-        <div class="line-numbers" aria-hidden="true">1<br />2<br />3<br />4<br />5<br />6</div>
-        <span class="editor-label">EXEMPLE</span>
-        <textarea
-          id="ioc-input"
-          data-ioc-input
-          aria-label="Contenu à analyser"
-          spellcheck="false"
-          placeholder="Collez ici un rapport d’incident, une alerte EDR, des logs ou une liste d’IOC…"
-        ></textarea>
-        <span class="line-count" data-line-count>LIGNE 0</span>
-      </div>
+        <div class="editor-toolbar">
+          <div class="editor-title">
+            <span class="status-dot" aria-hidden="true"></span>
+            <strong>Source intelligence</strong>
+            <span>Texte libre · logs · rapport · observables</span>
+          </div>
+          <div class="editor-meta">
+            <span data-line-count>0 ligne</span>
+            <span data-character-count>0 caractère</span>
+          </div>
+        </div>
 
-      <button class="analyze-button" type="submit">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8" />
-          <path d="m16 16 4 4M8.5 11h5M11 8.5v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-        </svg>
-        <span>Analyser</span>
-        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </button>
+        <div class="editor-body">
+          <div class="line-numbers" data-line-numbers aria-hidden="true">1</div>
+          <textarea
+            id="ioc-input"
+            data-ioc-input
+            aria-label="Contenu à analyser"
+            spellcheck="false"
+            placeholder="Collez ici un rapport d’incident, une alerte EDR, des logs ou une liste d’IOC…"
+          ></textarea>
+        </div>
+
+        <div class="editor-footer">
+          <div class="footer-security">
+    <div class="privacy">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path
+          d="M12 3 5 6v5c0 4.3 2.9 8.15 7 9.2 4.1-1.05 7-4.9 7-9.2V6l-7-3Z"
+          stroke="currentColor"
+          stroke-width="1.6"
+        />
+        <path
+          d="m9 12 2 2 4-4"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+
+      <span>
+        <strong>Traitement local</strong>
+        <span class="privacy-detail">— aucune donnée transmise</span>
+      </span>
+    </div>
+
+    <span class="engine-label">MM IOC Engine v1.0</span>
+          </div>
+
+          <button class="analyze-button" type="submit">
+    <span class="button-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none">
+        <circle
+          cx="10.5"
+          cy="10.5"
+          r="6.5"
+          stroke="currentColor"
+          stroke-width="1.8"
+        />
+        <path
+          d="m15.5 15.5 4 4M8 10.5h5M10.5 8v5"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+        />
+      </svg>
+    </span>
+
+    <span class="button-copy">
+      <small>Local intelligence</small>
+      <span>Analyser les indicateurs</span>
+    </span>
+
+    <svg
+      class="button-arrow"
+      viewBox="0 0 20 20"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M4 10h12M11 5l5 5-5 5"
+        stroke="currentColor"
+        stroke-width="1.7"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </button>
+</div>
+ </div>    
     </form>
 
     <p class="error" data-ioc-error hidden>Collez au moins un contenu à analyser.</p>
 
-    <div class="examples">
-      <span>Ou essayez un exemple :</span>
-      <button type="button" data-example="incident">Rapport d’incident</button>
-      <button type="button" data-example="phishing">Alerte phishing</button>
-      <button type="button" data-example="raw">Liste d’IOC</button>
-    </div>
-
-    <div class="privacy">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M12 3 5 6v5c0 4.3 2.9 8.15 7 9.2 4.1-1.05 7-4.9 7-9.2V6l-7-3Z" fill="currentColor" opacity=".18" />
-        <path d="M9 12.2 11 14l4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
-      Analyse 100 % locale dans votre navigateur. Aucun IOC n’est envoyé à un serveur.
+    <div class="example-bar">
+      <div class="example-label">
+        <span>Jeux de démonstration</span>
+        <small>Données réservées à la documentation</small>
+      </div>
+      <div class="examples">
+        <button type="button" data-example="incident">
+          <span aria-hidden="true">01</span>
+          Rapport d’incident
+        </button>
+        <button type="button" data-example="phishing">
+          <span aria-hidden="true">02</span>
+          Alerte phishing
+        </button>
+        <button type="button" data-example="raw">
+          <span aria-hidden="true">03</span>
+          Liste d’IOC
+        </button>
+      </div>
     </div>
   </div>
 
   <aside class="pipeline" aria-label="Moteur de traitement IOC">
-    <header>
+    <header class="pipeline-header">
       <div>
-        <span>Local intelligence</span>
-        <strong>IOC processing</strong>
+        <span class="pipeline-kicker">Processing pipeline</span>
+        <h2>Local intelligence engine</h2>
       </div>
-      <em><i></i> Actif</em>
+      <span class="engine-status"><i aria-hidden="true"></i> Ready</span>
     </header>
+
+    <div class="pipeline-flow" aria-hidden="true"></div>
 
     <ol>
       <li>
         <div class="step">01</div>
-        <div><strong>Extraction</strong><span>Détection automatique des IOC</span></div>
-        <b>OK</b>
+        <div class="step-copy">
+          <strong>Extraction</strong>
+          <span>Détection typée des observables</span>
+        </div>
+        <span class="step-state">Ready</span>
       </li>
       <li>
         <div class="step">02</div>
-        <div><strong>Normalisation</strong><span>Refang, validation et standardisation</span></div>
-        <b>OK</b>
+        <div class="step-copy">
+          <strong>Normalisation</strong>
+          <span>Refang, nettoyage et validation</span>
+        </div>
+        <span class="step-state">Ready</span>
       </li>
       <li>
         <div class="step">03</div>
-        <div><strong>Déduplication</strong><span>Suppression des doublons</span></div>
-        <b>OK</b>
+        <div class="step-copy">
+          <strong>Déduplication</strong>
+          <span>Consolidation des indicateurs</span>
+        </div>
+        <span class="step-state">Ready</span>
       </li>
       <li>
         <div class="step">04</div>
-        <div><strong>Contextualisation</strong><span>IP privées, domaines extraits, contexte</span></div>
-        <b>OK</b>
+        <div class="step-copy">
+          <strong>Contextualisation</strong>
+          <span>Statuts réseau et domaines dérivés</span>
+        </div>
+        <span class="step-state">Ready</span>
+      </li>
+      <li>
+        <div class="step">05</div>
+        <div class="step-copy">
+          <strong>Investigation guidance</strong>
+          <span>Évaluation et plan d’action</span>
+        </div>
+        <span class="step-state">Ready</span>
       </li>
     </ol>
 
-    <div class="output">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M12 3 5 6v5c0 4.3 2.9 8.15 7 9.2 4.1-1.05 7-4.9 7-9.2V6l-7-3Z" stroke="currentColor" stroke-width="1.6" />
-        <path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
-      <div><span>Analyst-ready output</span><strong>Structured investigation</strong></div>
+    <div class="pipeline-output">
+      <div class="output-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M7 3h7l4 4v14H7V3Z" stroke="currentColor" stroke-width="1.6" />
+          <path d="M14 3v5h5M10 12h5M10 16h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        </svg>
+      </div>
+      <div>
+        <span>Analyst-ready output</span>
+        <strong>Structured investigation report</strong>
+        <small>JSON · CSV · TXT · PDF</small>
+      </div>
+    </div>
+
+    <div class="trust-strip">
+      <span><i aria-hidden="true"></i> Browser only</span>
+      <span><i aria-hidden="true"></i> Zero upload</span>
+      <span><i aria-hidden="true"></i> No tracking</span>
     </div>
   </aside>
 </section>
@@ -101,80 +227,921 @@
   .hero {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1.58fr) minmax(330px, .62fr);
-    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1.55fr) minmax(340px, .65fr);
+    gap: 1.35rem;
     overflow: hidden;
-    padding: 2rem;
-    background: linear-gradient(145deg, rgba(8, 18, 39, .98), rgba(3, 10, 25, .99));
+    padding: clamp(1.35rem, 2.5vw, 2.4rem);
+    background:
+      linear-gradient(145deg, rgba(8, 18, 39, .98), rgba(3, 9, 23, .995));
+    border: 1px solid rgba(96, 165, 250, .2);
+    border-radius: 24px;
+    box-shadow:
+      0 32px 90px rgba(0, 0, 0, .34),
+      inset 0 1px 0 rgba(255, 255, 255, .025);
+    isolation: isolate;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+    opacity: .56;
+    background-image:
+      linear-gradient(rgba(96, 165, 250, .04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(96, 165, 250, .04) 1px, transparent 1px);
+    background-size: 38px 38px;
+    mask-image: linear-gradient(115deg, black 0%, rgba(0,0,0,.75) 48%, transparent 90%);
+  }
+
+  .hero-glow {
+    position: absolute;
+    z-index: -2;
+    border-radius: 999px;
+    pointer-events: none;
+    filter: blur(80px);
+  }
+
+  .hero-glow-primary {
+    top: -14rem;
+    left: -10rem;
+    width: 33rem;
+    height: 33rem;
+    background: rgba(37, 99, 235, .18);
+  }
+
+  .hero-glow-secondary {
+    right: 4rem;
+    bottom: -17rem;
+    width: 30rem;
+    height: 30rem;
+    background: rgba(14, 165, 233, .11);
+  }
+
+  .hero-main,
+  .pipeline {
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+  }
+
+  .suite-label {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .55rem;
+    color: #90a4c2;
+    font-size: .66rem;
+    font-weight: 800;
+    letter-spacing: .095em;
+    text-transform: uppercase;
+  }
+
+  .suite-mark {
+    display: grid;
+    width: 30px;
+    height: 24px;
+    place-items: center;
+    color: #fff;
+    font-size: .64rem;
+    letter-spacing: -.02em;
+    background: linear-gradient(145deg, #3171ff, #1d4ed8);
+    border: 1px solid rgba(147, 197, 253, .42);
+    border-radius: 7px;
+    box-shadow: 0 8px 20px rgba(37, 99, 235, .25);
+  }
+
+  .suite-label > i {
+    width: 3px;
+    height: 3px;
+    background: #42526b;
+    border-radius: 50%;
+  }
+
+  .local-label {
+    color: #60a5fa;
+  }
+
+  .hero-heading {
+    max-width: 890px;
+    margin-top: 1.35rem;
+  }
+
+  h1 {
+    margin: 0;
+    color: #f8fafc;
+    font-size: clamp(3.35rem, 6vw, 6rem);
+    line-height: .88;
+    letter-spacing: -.075em;
+  }
+
+  h1 span {
+    color: transparent;
+    background: linear-gradient(135deg, #60a5fa 0%, #2563eb 58%, #22d3ee 120%);
+    background-clip: text;
+    -webkit-background-clip: text;
+  }
+
+  .intro {
+    max-width: 820px;
+    margin: 1.35rem 0 0;
+    color: #aab9ce;
+    font-size: clamp(.9rem, 1.25vw, 1.02rem);
+    line-height: 1.72;
+  }
+
+  .capabilities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-top: 1.15rem;
+  }
+
+  .capabilities span {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .38rem .58rem;
+    color: #91a4bf;
+    font-size: .63rem;
+    font-weight: 750;
+    background: rgba(15, 23, 42, .54);
+    border: 1px solid rgba(71, 85, 105, .38);
+    border-radius: 999px;
+  }
+
+  .capabilities span::before {
+    width: 5px;
+    height: 5px;
+    content: '';
+    background: #3b82f6;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(59, 130, 246, .55);
+  }
+
+.analyzer {
+    display: block;
+    margin-top: 1.55rem;
+  }
+
+  .editor-shell {
+    min-width: 0;
+    overflow: hidden;
+    background: rgba(2, 7, 20, .83);
+    border: 1px solid rgba(71, 85, 105, .72);
+    border-radius: 16px;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.025),
+      0 18px 40px rgba(0,0,0,.15);
+    transition: border-color .2s, box-shadow .2s;
+  }
+
+  .editor-shell:focus-within {
+    border-color: rgba(59, 130, 246, .78);
+    box-shadow:
+      0 0 0 4px rgba(37, 99, 235, .12),
+      0 22px 48px rgba(0,0,0,.2);
+  }
+
+  .editor-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .editor-toolbar {
+    min-height: 44px;
+    padding: 0 .9rem;
+    background: rgba(15, 23, 42, .68);
+    border-bottom: 1px solid rgba(71, 85, 105, .42);
+  }
+
+  .editor-title {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: .55rem;
+  }
+
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    flex: 0 0 7px;
+    background: #22c55e;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(34, 197, 94, .7);
+  }
+
+  .editor-title strong {
+    color: #dbeafe;
+    font-size: .65rem;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+
+  .editor-title > span:last-child {
+    overflow: hidden;
+    color: #66758c;
+    font-size: .6rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .editor-meta {
+    display: flex;
+    flex: 0 0 auto;
+    gap: .8rem;
+    color: #60708a;
+    font-size: .57rem;
+    font-weight: 750;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+
+  .editor-body {
+    position: relative;
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr);
+    min-height: 196px;
+  }
+
+  .line-numbers {
+    overflow: hidden;
+    padding: 1rem .7rem;
+    color: #40506a;
+    font: 500 .76rem/1.62 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    text-align: right;
+    user-select: none;
+    background: rgba(15, 23, 42, .28);
+    border-right: 1px solid rgba(71, 85, 105, .28);
+  }
+
+  textarea {
+    display: block;
+    width: 100%;
+    min-height: 196px;
+    padding: 1rem 1.1rem;
+    resize: vertical;
+    box-sizing: border-box;
+    color: #e2e8f0;
+    caret-color: #60a5fa;
+    font: 500 .84rem/1.62 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    background: transparent;
+    border: 0;
+    outline: 0;
+  }
+
+  textarea::placeholder {
+    color: #52627a;
+  }
+
+  .editor-footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: stretch;
+    min-height: 60px;
+    background: rgba(3, 9, 23, 0.88);
+    border-top: 1px solid rgba(71, 85, 105, 0.35);
+  }
+
+  .footer-security {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.7rem 0.9rem;
+  }
+
+  .privacy {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 0.45rem;
+    color: #718198;
+    font-size: 0.61rem;
+  }
+
+  .privacy > span {
+    min-width: 0;
+  }
+
+  .privacy strong {
+    color: #86efac;
+  }
+
+  .privacy svg {
+    width: 15px;
+    height: 15px;
+    flex: 0 0 15px;
+    color: #34d399;
+  }
+
+  .engine-label {
+    flex: 0 0 auto;
+    color: #52627a;
+    font-size: 0.55rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .analyze-button {
+    position: relative;
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr) 16px;
+    gap: 0.65rem;
+    align-items: center;
+    width: 238px;
+    min-height: 60px;
+    padding: 0.58rem 0.8rem;
+    color: #fff;
+    text-align: left;
+    background:
+      linear-gradient(
+        135deg,
+        rgba(37, 99, 235, 0.96),
+        rgba(29, 78, 216, 0.96)
+      );
+    border: 0;
+    border-left: 1px solid rgba(96, 165, 250, 0.55);
+    border-radius: 0;
+    cursor: pointer;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.11),
+      inset 1px 0 0 rgba(255, 255, 255, 0.04);
+    transition:
+      background 0.18s ease,
+      box-shadow 0.18s ease;
+  }
+
+  .analyze-button:hover {
+    background:
+      linear-gradient(
+        135deg,
+        rgba(47, 111, 246, 1),
+        rgba(30, 88, 226, 1)
+      );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.16),
+      -10px 0 28px rgba(37, 99, 235, 0.12);
+  }
+
+  .analyze-button:focus-visible {
+    z-index: 2;
+    outline: 3px solid rgba(96, 165, 250, 0.4);
+    outline-offset: -3px;
+  }
+
+  .button-icon {
+    display: grid;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    color: #dbeafe;
+    background: rgba(255, 255, 255, 0.11);
+    border: 1px solid rgba(255, 255, 255, 0.17);
+    border-radius: 9px;
+  }
+
+  .button-icon svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .button-copy {
+    display: block;
+    min-width: 0;
+  }
+
+  .button-copy small {
+    display: block;
+    margin-bottom: 0.16rem;
+    color: #bfdbfe;
+    font-size: 0.46rem;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .button-copy > span {
+    display: block;
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 850;
+    line-height: 1.18;
+  }
+
+  .button-arrow {
+    width: 16px;
+    height: 16px;
+    color: #dbeafe;
+    transition: transform 0.18s ease;
+  }
+
+  .analyze-button:hover .button-arrow {
+    transform: translateX(3px);
+  }
+
+  .error {
+    margin: .7rem 0 0;
+    color: #fca5a5;
+    font-size: .76rem;
+  }
+
+  .example-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: .9rem;
+    padding: .72rem .8rem;
+    background: rgba(15, 23, 42, .4);
+    border: 1px solid rgba(71, 85, 105, .34);
+    border-radius: 12px;
+  }
+
+  .example-label span,
+  .example-label small {
+    display: block;
+  }
+
+  .example-label span {
+    color: #a9b7ca;
+    font-size: .65rem;
+    font-weight: 800;
+  }
+
+  .example-label small {
+    margin-top: .14rem;
+    color: #53637a;
+    font-size: .56rem;
+  }
+
+  .examples {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: .45rem;
+  }
+
+  .examples button {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    min-height: 32px;
+    padding: .4rem .65rem;
+    color: #b9c6d8;
+    font: 750 .62rem inherit;
+    background: rgba(2, 8, 23, .68);
+    border: 1px solid rgba(71, 85, 105, .5);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: color .16s, border-color .16s, background .16s, transform .16s;
+  }
+
+  .examples button span {
+    color: #60a5fa;
+    font-size: .53rem;
+    font-weight: 900;
+  }
+
+  .examples button:hover {
+    color: #eff6ff;
+    background: rgba(37, 99, 235, .11);
+    border-color: rgba(96, 165, 250, .48);
+    transform: translateY(-1px);
+  }
+
+  .pipeline {
+    align-self: stretch;
+    padding: 1.15rem;
+    background:
+      linear-gradient(180deg, rgba(3, 10, 25, .78), rgba(2, 7, 18, .9));
     border: 1px solid rgba(96, 165, 250, .18);
     border-radius: 18px;
-    box-shadow: 0 28px 80px rgba(0, 0, 0, .28);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.02);
   }
-  .hero-grid { position: absolute; inset: 0; opacity: .4; background-image: linear-gradient(rgba(96,165,250,.045) 1px, transparent 1px), linear-gradient(90deg,rgba(96,165,250,.045) 1px,transparent 1px); background-size: 32px 32px; mask-image: linear-gradient(to right, black, transparent 78%); }
-  .hero-orb { position: absolute; right: 17%; bottom: -16rem; width: 28rem; height: 28rem; background: rgba(37,99,235,.16); border-radius: 999px; filter: blur(55px); }
-  .hero-main,.pipeline { position: relative; z-index: 1; }
-  .eyebrow { display: inline-flex; padding: .45rem .72rem; color: #60a5fa; font-size: .66rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; background: rgba(37,99,235,.1); border: 1px solid rgba(96,165,250,.17); border-radius: 999px; }
-  h1 { margin: 1rem 0 0; color: #f8fafc; font-size: clamp(3rem, 5.7vw, 5.15rem); line-height: .92; letter-spacing: -.06em; }
-  h1 span { color: #2563eb; }
-  .intro { max-width: 830px; margin: 1.25rem 0 0; color: #b7c3d6; font-size: .98rem; line-height: 1.72; }
-  .input-zone { display: grid; grid-template-columns: minmax(0, 1fr) 156px; gap: .85rem; margin-top: 1.6rem; }
-  .editor-shell { position: relative; min-width: 0; }
-  textarea { display: block; width: 100%; min-height: 178px; padding: 2.45rem 4.5rem 1rem 3.4rem; resize: vertical; box-sizing: border-box; color: #e2e8f0; font: 500 .88rem/1.58 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; background: rgba(2,8,23,.76); border: 1px solid rgba(71,85,105,.78); border-radius: 14px; outline: none; transition: border-color .2s, box-shadow .2s; }
-  textarea:focus { border-color: #2563eb; box-shadow: 0 0 0 4px rgba(37,99,235,.14); }
-  textarea::placeholder { color: #64748b; }
-  .line-numbers { position: absolute; z-index: 2; top: 2.55rem; left: 1rem; color: #475569; font: 500 .78rem/1.58 ui-monospace,SFMono-Regular,Menlo,monospace; text-align: right; }
-  .editor-label { position: absolute; z-index: 2; top: .85rem; left: 3.35rem; padding: .22rem .38rem; color: #93c5fd; font-size: .58rem; font-weight: 900; letter-spacing: .08em; background: rgba(37,99,235,.16); border-radius: 4px; }
-  .line-count { position: absolute; z-index: 2; top: 1rem; right: 1rem; color: #5f75a0; font-size: .58rem; font-weight: 800; letter-spacing: .08em; }
-  .analyze-button { display: flex; align-items: center; justify-content: center; gap: .65rem; min-height: 178px; padding: 1rem; color: #fff; font: 800 .9rem inherit; background: linear-gradient(145deg,#2864f0,#1f4ed8); border: 1px solid #4c7cff; border-radius: 14px; cursor: pointer; box-shadow: 0 16px 34px rgba(37,99,235,.28); transition: transform .18s, box-shadow .18s; }
-  .analyze-button:hover { transform: translateY(-2px); box-shadow: 0 20px 42px rgba(37,99,235,.34); }
-  .analyze-button svg { width: 21px; height: 21px; }
-  .examples { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem; margin-top: .9rem; color: #8a99b0; font-size: .72rem; }
-  .examples button { padding: .4rem .68rem; color: #cbd5e1; font: 700 .68rem inherit; background: rgba(15,23,42,.72); border: 1px solid rgba(71,85,105,.5); border-radius: 999px; cursor: pointer; }
-  .privacy { display: flex; align-items: center; gap: .5rem; margin-top: 1rem; color: #8a99b0; font-size: .72rem; }
-  .privacy svg { width: 17px; height: 17px; color: #34d399; }
-  .error { margin: .65rem 0 0; color: #fca5a5; font-size: .78rem; }
 
-  .pipeline { padding: 1.1rem; background: rgba(2,8,23,.54); border: 1px solid rgba(96,165,250,.16); border-radius: 16px; }
-  .pipeline header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: .15rem .1rem .9rem; }
-  .pipeline header span { display: block; color: #60a5fa; font-size: .57rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
-  .pipeline header strong { display: block; margin-top: .2rem; color: #f8fafc; font-size: .82rem; text-transform: uppercase; letter-spacing: .06em; }
-  .pipeline header em { display: flex; align-items: center; gap: .4rem; color: #4ade80; font-size: .6rem; font-weight: 900; font-style: normal; text-transform: uppercase; }
-  .pipeline header i { width: 6px; height: 6px; background: #4ade80; border-radius: 50%; box-shadow: 0 0 10px rgba(74,222,128,.7); }
-  .pipeline ol { display: grid; gap: .65rem; margin: 0; padding: 0; list-style: none; }
-  .pipeline li { display: grid; grid-template-columns: 38px minmax(0,1fr) auto; gap: .75rem; align-items: center; padding: .85rem; background: rgba(15,23,42,.72); border: 1px solid rgba(71,85,105,.5); border-radius: 12px; }
-  .step { display: grid; width: 34px; height: 34px; place-items: center; color: #60a5fa; font-size: .68rem; font-weight: 900; background: rgba(37,99,235,.14); border-radius: 10px; }
-  .pipeline li strong { display: block; color: #e5edf9; font-size: .78rem; }
-  .pipeline li span { display: block; margin-top: .2rem; color: #7f8ca2; font-size: .62rem; line-height: 1.35; }
-  .pipeline li b { color: #4ade80; font-size: .58rem; }
-  .output { display: flex; align-items: center; gap: .7rem; margin-top: .7rem; padding: .75rem; color: #60a5fa; background: linear-gradient(135deg,rgba(37,99,235,.13),rgba(14,165,233,.05)); border: 1px solid rgba(96,165,250,.15); border-radius: 12px; }
-  .output svg { width: 24px; height: 24px; }
-  .output span { display: block; color: #7f8ca2; font-size: .54rem; letter-spacing: .08em; text-transform: uppercase; }
-  .output strong { display: block; margin-top: .15rem; color: #dbeafe; font-size: .7rem; }
+  .pipeline-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .2rem .15rem 1rem;
+  }
 
-  @media (max-width: 1040px) { .hero { grid-template-columns: 1fr; } .pipeline { max-width: none; } }
-  @media (max-width: 700px) { .hero { padding: 1.25rem; border-radius: 16px; } .input-zone { grid-template-columns: 1fr; } .analyze-button { min-height: 54px; } h1 { font-size: 3.2rem; } }
+  .pipeline-kicker {
+    display: block;
+    color: #60a5fa;
+    font-size: .56rem;
+    font-weight: 900;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  .pipeline h2 {
+    margin: .3rem 0 0;
+    color: #eff6ff;
+    font-size: .9rem;
+    letter-spacing: -.015em;
+  }
+
+  .engine-status {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .35rem .5rem;
+    color: #86efac;
+    font-size: .55rem;
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    background: rgba(22, 163, 74, .08);
+    border: 1px solid rgba(74, 222, 128, .16);
+    border-radius: 999px;
+  }
+
+  .engine-status i {
+    width: 6px;
+    height: 6px;
+    background: #4ade80;
+    border-radius: 50%;
+    box-shadow: 0 0 9px rgba(74, 222, 128, .8);
+  }
+
+  .pipeline {
+    counter-reset: pipeline;
+  }
+
+  .pipeline ol {
+    position: relative;
+    display: grid;
+    gap: .58rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .pipeline-flow {
+    position: absolute;
+    top: 78px;
+    bottom: 104px;
+    left: 33px;
+    width: 1px;
+    background: linear-gradient(to bottom, rgba(59,130,246,.55), rgba(59,130,246,.04));
+  }
+
+  .pipeline li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr) auto;
+    gap: .72rem;
+    align-items: center;
+    min-height: 58px;
+    padding: .72rem;
+    background: rgba(15, 23, 42, .58);
+    border: 1px solid rgba(71, 85, 105, .42);
+    border-radius: 12px;
+    transition: border-color .16s, background .16s, transform .16s;
+  }
+
+  .pipeline li:hover {
+    transform: translateX(2px);
+    background: rgba(18, 31, 55, .78);
+    border-color: rgba(96, 165, 250, .34);
+  }
+
+  .step {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    color: #7db1ff;
+    font-size: .63rem;
+    font-weight: 900;
+    background: #081a38;
+    border: 1px solid rgba(96, 165, 250, .25);
+    border-radius: 10px;
+    box-shadow: 0 0 0 4px #050d1e;
+  }
+
+  .step-copy strong {
+    display: block;
+    color: #dce8f7;
+    font-size: .71rem;
+  }
+
+  .step-copy span {
+    display: block;
+    margin-top: .19rem;
+    color: #718198;
+    font-size: .59rem;
+    line-height: 1.35;
+  }
+
+  .step-state {
+    color: #4ade80;
+    font-size: .52rem;
+    font-weight: 900;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+
+  .pipeline-output {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin-top: .72rem;
+    padding: .82rem;
+    color: #60a5fa;
+    background: linear-gradient(135deg, rgba(37, 99, 235, .14), rgba(14, 165, 233, .045));
+    border: 1px solid rgba(96, 165, 250, .2);
+    border-radius: 12px;
+  }
+
+  .output-icon {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    place-items: center;
+    background: rgba(37, 99, 235, .13);
+    border: 1px solid rgba(96, 165, 250, .18);
+    border-radius: 11px;
+  }
+
+  .output-icon svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .pipeline-output span,
+  .pipeline-output strong,
+  .pipeline-output small {
+    display: block;
+  }
+
+  .pipeline-output span {
+    color: #718198;
+    font-size: .52rem;
+    font-weight: 850;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .pipeline-output strong {
+    margin-top: .16rem;
+    color: #dbeafe;
+    font-size: .68rem;
+  }
+
+  .pipeline-output small {
+    margin-top: .18rem;
+    color: #5e708a;
+    font-size: .55rem;
+  }
+
+  .trust-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .65rem 1rem;
+    margin-top: .72rem;
+    padding: .7rem .15rem .05rem;
+    color: #53637a;
+    font-size: .54rem;
+    font-weight: 750;
+    text-transform: uppercase;
+  }
+
+  .trust-strip span {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+  }
+
+  .trust-strip i {
+    width: 4px;
+    height: 4px;
+    background: #22c55e;
+    border-radius: 50%;
+  }
+
+  @media (max-width: 1120px) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+
+    .pipeline {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem 1rem;
+    }
+
+    .pipeline-header,
+    .pipeline-output,
+    .trust-strip {
+      grid-column: 1 / -1;
+    }
+
+    .pipeline ol {
+      grid-column: 1 / -1;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .pipeline-flow {
+      display: none;
+    }
+
+    .pipeline li {
+      grid-template-columns: 1fr;
+      align-content: start;
+    }
+
+    .step-state {
+      position: absolute;
+      top: .75rem;
+      right: .75rem;
+    }
+  }
+
+  @media (max-width: 860px) {
+.pipeline ol {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .example-bar {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .examples {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .hero {
+      padding: 1rem;
+      border-radius: 18px;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 18vw, 4.2rem);
+    }
+
+    .suite-label > i,
+    .local-label,
+    .editor-title > span:last-child,
+    .engine-label {
+      display: none;
+    }
+
+    .capabilities {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .editor-toolbar {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: .25rem;
+      padding-top: .65rem;
+      padding-bottom: .65rem;
+    }
+
+    .editor-meta {
+      gap: .55rem;
+    }
+
+    .editor-body {
+      grid-template-columns: 30px minmax(0, 1fr);
+    }
+
+    .line-numbers {
+      padding-right: .45rem;
+      padding-left: .35rem;
+    }
+
+    textarea {
+      min-height: 220px;
+      padding: .85rem;
+      font-size: .77rem;
+    }
+
+    .editor-footer {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-security {
+      min-height: 48px;
+    }
+
+    .analyze-button {
+      width: 100%;
+      min-height: 58px;
+      border-top: 1px solid rgba(96, 165, 250, 0.34);
+      border-left: 0;
+    }
+
+    .privacy-detail,
+    .engine-label {
+      display: none;
+    }
+
+    .pipeline {
+      display: block;
+    }
+
+    .pipeline ol {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .pipeline li {
+      grid-template-columns: 38px minmax(0, 1fr) auto;
+    }
+
+    .example-bar {
+      padding: .75rem;
+    }
+
+    .examples {
+      display: grid;
+      width: 100%;
+      grid-template-columns: 1fr;
+    }
+
+    .examples button {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .analyze-button,
+    .analyze-button::before,
+    .examples button,
+    .pipeline li {
+      transition: none;
+    }
+  }
 </style>
 
 <script>
   const input = document.querySelector('[data-ioc-input]');
   const lineCount = document.querySelector('[data-line-count]');
+  const characterCount = document.querySelector('[data-character-count]');
+  const lineNumbers = document.querySelector('[data-line-numbers]');
+
   const examples = {
-    incident: `Incident report — Suspicious activity detected\nSource IP: 185.220.101.44\nInternal pivot: 192.168.10.25\nC2 domain: malicious-example[.]com\nObserved URL: hxxps://malicious-example[.]com/payload.exe\nSHA256: 275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f`,
-    phishing: `Phishing alert\nSender: security-update[@]example-login[.]com\nLink: hxxps://example-login[.]com/auth/session\nMalicious IP: 45.67.89.101\nDomain: example-login[.]com\nSHA256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4`,
-    raw: `8.8.8.8\n192.168.1.25\nmalicious-example[.]com\nhxxps://malicious-example[.]com/dropper.js\n44d88612fea8a8f36de82e1278abb02f`,
+    incident: `Incident report — Suspicious activity detected\nSource IP: 198.51.100.44\nInternal pivot: 192.168.10.25\nC2 domain: incident.example[.]com\nObserved URL: hxxps://incident.example[.]com/payload.bin\nSHA256: 7a6f4c2e8d1b3095f4a6c8e2d7b1f0953c8a4e6d2f1b7095c3e8a6d4b2f10795`,
+    phishing: `Phishing alert\nSender: security-update[@]example[.]org\nLink: hxxps://login.example[.]org/auth/session\nObserved IP: 203.0.113.101\nDomain: login.example[.]org\nSHA1: 7c4a8d09ca3762af61e59520943dc26494f8941b`,
+    raw: `192.0.2.10\n192.168.1.25\nportal.example[.]net\nhxxps://portal.example[.]net/dropper.js\n0123456789abcdef0123456789abcdef`,
   };
-  const updateLines = () => {
-    if (!(input instanceof HTMLTextAreaElement) || !lineCount) return;
-    const count = input.value ? input.value.split(/\r?\n/).length : 0;
-    lineCount.textContent = `LIGNE ${count}`;
+
+  const pluralize = (value, singular, plural = `${singular}s`) =>
+    value > 1 ? plural : singular;
+
+  const updateEditorMetadata = () => {
+    if (!(input instanceof HTMLTextAreaElement)) return;
+
+    const lines = input.value ? input.value.split(/\r?\n/) : [];
+    const totalLines = lines.length;
+    const totalCharacters = input.value.length;
+
+    if (lineCount) {
+      lineCount.textContent = `${totalLines} ${pluralize(totalLines, 'ligne')}`;
+    }
+
+    if (characterCount) {
+      characterCount.textContent = `${totalCharacters} ${pluralize(totalCharacters, 'caractère')}`;
+    }
+
+    if (lineNumbers) {
+      lineNumbers.textContent = totalLines
+        ? Array.from({ length: totalLines }, (_, index) => index + 1).join('\n')
+        : '1';
+    }
   };
-  input?.addEventListener('input', updateLines);
+
+  input?.addEventListener('input', updateEditorMetadata);
+
   document.querySelectorAll('[data-example]').forEach((button) => {
     button.addEventListener('click', () => {
       if (!(input instanceof HTMLTextAreaElement)) return;
-      input.value = examples[button.dataset.example] ?? '';
-      updateLines();
+
+      const exampleKey = button.getAttribute('data-example');
+      input.value = exampleKey && exampleKey in examples
+        ? examples[exampleKey]
+        : '';
+
+      updateEditorMetadata();
       input.focus();
     });
   });
+
+  updateEditorMetadata();
 </script>

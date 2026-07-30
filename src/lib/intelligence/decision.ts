@@ -12,11 +12,12 @@ import type {
 } from "./types";
 
 /**
- * Builds the high-level remediation decision.
+ * Construit la décision de remédiation de haut niveau.
  *
- * The score comes exclusively from reasoning.ts so the displayed
- * explanation and the final decision always share the same source
- * of truth.
+ * Le score provient exclusivement de reasoning.ts afin que les facteurs
+ * affichés et la décision finale restent cohérents. Des garde-fous métier
+ * empêchent toutefois qu'un signal dominant (KEV, CVSS critique ou EPSS
+ * très élevé) soit dilué par le score agrégé.
  */
 export function buildDecision<T>(
   context: IntelligenceContext<T>,
@@ -42,24 +43,55 @@ export function buildDecision<T>(
 }
 
 /**
- * Resolves the final decision.
+ * Résout la décision opérationnelle finale.
  *
- * Confirmed exploitation is treated as a dominant signal.
- * A known-exploited vulnerability must not be downgraded solely
- * because EPSS remains low.
+ * Ordre de priorité :
+ * 1. Exploitation connue (CISA KEV).
+ * 2. Sévérité critique associée à une probabilité d'exploitation élevée.
+ * 3. Sévérité critique seule : qualification immédiate et remédiation prioritaire.
+ * 4. EPSS très élevé ou combinaison CVSS élevé + EPSS significatif.
+ * 5. Score agrégé du moteur.
  */
 function resolveExecutiveDecision(
   signals: VulnerabilitySignals,
   score: number,
 ): ExecutiveDecision {
+  const cvss = signals.cvssScore;
+  const epss = signals.epssProbability;
+
+  // Une inscription KEV confirme une exploitation dans la nature :
+  // elle ne doit jamais être minorée par un EPSS faible ou un CVSS incomplet.
+  if (signals.isKnownExploited === true) {
+    return "REMEDIATE_IMMEDIATELY";
+  }
+
+  // Une vulnérabilité critique assortie d'un signal d'exploitation élevé
+  // constitue une urgence opérationnelle.
   if (
-    signals.isKnownExploited === true &&
-    (
-      !isValidCvssScore(signals.cvssScore) ||
-      signals.cvssScore >= 7
-    )
+    isCriticalCvss(cvss) &&
+    isHighEpss(epss)
   ) {
     return "REMEDIATE_IMMEDIATELY";
+  }
+
+  // Un CVSS critique ne doit jamais retomber dans un cycle de remédiation normal.
+  // L'exposition réelle reste à qualifier, mais le traitement doit être prioritaire.
+  if (isCriticalCvss(cvss)) {
+    return "PRIORITIZE";
+  }
+
+  // Un EPSS très élevé justifie une priorisation même lorsque le CVSS est inférieur à 9.
+  if (isVeryHighEpss(epss)) {
+    return "PRIORITIZE";
+  }
+
+  // La combinaison d'une sévérité élevée et d'un signal EPSS significatif
+  // doit également sortir du cycle standard.
+  if (
+    isHighCvss(cvss) &&
+    isModerateEpss(epss)
+  ) {
+    return "PRIORITIZE";
   }
 
   if (score >= 70) {
@@ -122,27 +154,41 @@ function buildDecisionSummary(
     signals.isKnownExploited === true
   ) {
     return (
-      "Une exploitation confirmée crée une urgence opérationnelle immédiate. " +
-      "Validez l’exposition et engagez la remédiation sans attendre " +
-      "exploit probability alone to increase."
+      "Cette vulnérabilité est associée à une exploitation confirmée dans la nature. " +
+      "Identifiez sans délai les actifs concernés, qualifiez leur exposition et engagez " +
+      "la remédiation ou les mesures compensatoires disponibles."
     );
   }
 
   if (
     decision === "REMEDIATE_IMMEDIATELY" &&
     isCriticalCvss(signals.cvssScore) &&
-    isVeryHighEpss(signals.epssProbability)
+    isHighEpss(signals.epssProbability)
   ) {
     return (
-      "Sévérité technique critique combined with a very high probability " +
-      "of exploitation requires immediate remediation."
+      "La combinaison d'une sévérité technique critique et d'une probabilité " +
+      "d'exploitation élevée impose une qualification immédiate des actifs concernés " +
+      "et un traitement en urgence."
     );
   }
 
   if (decision === "REMEDIATE_IMMEDIATELY") {
     return (
-      "Les signaux combinés de la vulnérabilité indiquent une priorité critique " +
-      "operational priority requiring immediate action."
+      "Les signaux techniques et de menace disponibles indiquent une priorité " +
+      "opérationnelle critique. Validez immédiatement l'exposition et engagez les " +
+      "actions de remédiation adaptées."
+    );
+  }
+
+  if (
+    decision === "PRIORITIZE" &&
+    isCriticalCvss(signals.cvssScore)
+  ) {
+    return (
+      `Le score CVSS de ${signals.cvssScore!.toFixed(1)} place cette vulnérabilité dans ` +
+      "la catégorie critique. Les actifs concernés doivent être identifiés et leur " +
+      "exposition qualifiée immédiatement, puis la remédiation doit être intégrée au " +
+      "prochain créneau prioritaire."
     );
   }
 
@@ -151,40 +197,59 @@ function buildDecisionSummary(
     isHighEpss(signals.epssProbability)
   ) {
     return (
-      "La probabilité d’exploitation augmente significativement la priorité " +
-      "operational priority. Remediation should be accelerated."
+      "La probabilité d'exploitation augmente significativement la priorité " +
+      "opérationnelle. Accélérez la qualification du périmètre affecté et la mise en " +
+      "œuvre du correctif ou des mesures compensatoires."
     );
   }
 
   if (decision === "PRIORITIZE") {
     return (
-      "Les signaux techniques et de menace disponibles justifient de placer " +
-      "this vulnerability in the next priority remediation cycle."
+      "Les signaux techniques et de menace disponibles justifient une remédiation " +
+      "prioritaire. Confirmez les actifs affectés, leur exposition et les contraintes " +
+      "de déploiement avant intervention."
     );
   }
 
   if (decision === "PLAN_PATCHING") {
     return (
-      "La vulnérabilité doit être traitée dans le cadre du processus normal " +
-      "patching process while exposure and threat signals are monitored."
+      "La vulnérabilité doit être intégrée au processus normal de remédiation. " +
+      "Maintenez une surveillance de l'exposition, de l'EPSS et d'une éventuelle " +
+      "apparition dans le catalogue CISA KEV."
     );
   }
 
   return (
-    "Les renseignements actuels n’indiquent pas qu’une remédiation immédiate " +
-    "urgency. Continue monitoring for changes in exploitation activity."
+    "Les renseignements actuellement disponibles ne justifient pas une remédiation " +
+    "urgente. Conservez la vulnérabilité sous surveillance et réévaluez la décision " +
+    "si les signaux d'exploitation ou le contexte d'exposition évoluent."
   );
 }
 
 function isCriticalCvss(
   value: number | undefined,
-): boolean {
+): value is number {
   return isValidCvssScore(value) && value >= 9;
+}
+
+function isHighCvss(
+  value: number | undefined,
+): value is number {
+  return isValidCvssScore(value) && value >= 7;
+}
+
+function isModerateEpss(
+  value: number | undefined,
+): value is number {
+  return (
+    isValidEpssProbability(value) &&
+    value >= 0.1
+  );
 }
 
 function isHighEpss(
   value: number | undefined,
-): boolean {
+): value is number {
   return (
     isValidEpssProbability(value) &&
     value >= 0.3
@@ -193,7 +258,7 @@ function isHighEpss(
 
 function isVeryHighEpss(
   value: number | undefined,
-): boolean {
+): value is number {
   return (
     isValidEpssProbability(value) &&
     value >= 0.7

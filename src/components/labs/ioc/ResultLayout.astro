@@ -27,60 +27,93 @@
       </div>
     </section>
 
-    <div class="dashboard-grid">
-      <div class="main-column">
-        <section class="panel summary-panel">
-          <header>
-            <div><span class="kicker">Executive Summary</span><h3>Ce que raconte l’analyse</h3></div>
-            <span class="assessment" data-assessment>Investigation recommandée</span>
-          </header>
-          <div class="narrative" data-summary></div>
-          <div class="decision-box">
-            <div><span>Lecture rapide</span><strong data-decision>IOC exploitables</strong></div>
-            <p data-rationale></p>
+    <div class="report-flow">
+      <section class="panel assessment-panel">
+        <header>
+          <div>
+            <span class="phase-label">01 · Understand</span>
+            <span class="kicker">Executive Assessment</span>
+            <h3>Que dois-je retenir ?</h3>
+            <p class="section-intent">Distinguer les faits observés, leur interprétation technique et la décision proposée.</p>
           </div>
-        </section>
+          <span class="assessment" data-assessment>Investigation recommandée</span>
+        </header>
 
-        <section class="panel investigation-panel">
-          <header>
-            <div><span class="kicker">Recommended Next Steps</span><h3>Plan d’investigation</h3></div>
-            <div class="generated"><span>Généré</span><strong data-generated></strong></div>
-          </header>
-          <div class="recommendations" data-recommendations></div>
-          <footer><span class="pulse"></span><div><strong>Analyst recommendations</strong><p>Les actions proposées restent à qualifier selon votre contexte, votre télémétrie et la criticité des systèmes.</p></div></footer>
-        </section>
+        <div class="assessment-metrics">
+          <article><span>IOC observés</span><div><strong data-metric="unique">0</strong><b>indicateurs uniques</b></div><small data-metric-caption="unique"></small></article>
+          <article><span>Couverture</span><div><strong data-metric="types">0</strong><b>familles d’IOC</b></div><small data-metric-caption="types"></small></article>
+          <article><span>Contexte interne</span><div><strong data-metric="private">0</strong><b>IP privées</b></div><small data-private-caption>Aucune IP interne détectée</small></article>
+          <article><span>Réduction du bruit</span><div><strong data-metric="duplicates">0</strong><b>doublons retirés</b></div><small>Normalisation appliquée avant investigation</small></article>
+        </div>
 
-        <section class="panel details-panel">
-          <header>
-            <div><span class="kicker">IOC Details</span><h3>Détail des indicateurs détectés</h3></div>
-            <div class="table-tools">
-              <label><span aria-hidden="true">⌕</span><input type="search" data-filter placeholder="Rechercher un IOC…" /></label>
-              <select data-type-filter aria-label="Filtrer par type"><option value="">Tous les types</option></select>
+        <div class="assessment-body">
+          <section class="analysis-layer observation-block">
+            <span class="story-step">Observation</span>
+            <h4>Ce qui est présent dans les données</h4>
+            <ul class="observation-list" data-observations></ul>
+          </section>
+
+          <section class="analysis-layer interpretation-block">
+            <span class="story-step">Interprétation</span>
+            <h4>Ce que ces éléments permettent de vérifier</h4>
+            <div class="narrative" data-summary></div>
+          </section>
+
+          <section class="decision-box">
+            <div>
+              <span>Conclusion</span>
+              <strong data-decision>IOC exploitables</strong>
             </div>
-          </header>
-          <div class="ioc-table" role="table">
-            <div class="table-head" role="row"><span>Type</span><span>Indicateur</span><span>Contexte</span><span>Statut</span><span>Actions</span></div>
-            <div data-ioc-rows></div>
-          </div>
-          <div class="table-footer"><span data-result-count></span><span>Analyse locale · aucune transmission</span></div>
-        </section>
-      </div>
+            <div>
+              <span>Raisonnement</span>
+              <p data-rationale></p>
+            </div>
+          </section>
+        </div>
 
-      <aside class="side-column">
-        <section class="panel metrics-panel">
-          <span class="kicker">IOC Overview</span>
-          <h3>Signaux clés</h3>
-          <div class="metrics">
-            <article><span>IOC uniques</span><strong data-metric="unique">0</strong><small data-metric-caption="unique"></small></article>
-            <article><span>Types détectés</span><strong data-metric="types">0</strong><small data-metric-caption="types"></small></article>
-            <article><span>IP privées</span><strong data-metric="private">0</strong><small>Aucune IP interne détectée</small></article>
-            <article><span>Doublons supprimés</span><strong data-metric="duplicates">0</strong><small>Éliminés de l’analyse</small></article>
-          </div>
-          <p class="processing" data-processing></p>
-        </section>
+        <p class="processing" data-processing></p>
+      </section>
 
+      <section class="panel investigation-panel">
+        <header>
+          <div>
+            <span class="phase-label">02 · Investigate</span>
+            <span class="kicker">Investigation Playbook</span>
+            <h3>Par quoi commencer ?</h3>
+            <p class="section-intent">Chaque étape précise son objectif, les sources à interroger et le résultat attendu.</p>
+          </div>
+          <div class="generated"><span>Généré</span><strong data-generated></strong></div>
+        </header>
+        <div class="recommendations" data-recommendations></div>
+        <footer><span class="pulse"></span><div><strong>Engineering guidance</strong><p>Les actions proposées doivent être adaptées à votre télémétrie, à votre périmètre et à la criticité des systèmes concernés.</p></div></footer>
+      </section>
+
+      <section class="panel details-panel">
+        <header>
+          <div>
+            <span class="phase-label">03 · Evidence</span>
+            <span class="kicker">Technical Evidence</span>
+            <h3>Sur quoi repose cette analyse ?</h3>
+            <p class="section-intent">Examiner, filtrer et exploiter les observables normalisés ayant servi à construire le rapport.</p>
+          </div>
+          <div class="table-tools">
+            <label><span aria-hidden="true">⌕</span><input type="search" data-filter placeholder="Rechercher un IOC…" /></label>
+            <select data-type-filter aria-label="Filtrer par type"><option value="">Tous les types</option></select>
+          </div>
+        </header>
+        <div class="ioc-table" role="table">
+          <div class="table-head" role="row"><span>Type</span><span>Indicateur</span><span>Contexte</span><span>Statut</span><span>Actions</span></div>
+          <div data-ioc-rows></div>
+        </div>
+        <div class="table-footer"><span data-result-count></span><span>Analyse locale · aucune transmission</span></div>
+      </section>
+
+      <section class="report-closing-grid">
         <section class="panel action-panel">
-          <span class="kicker">Plan d’investigation</span>
+          <span class="phase-label">04 · Act</span>
+          <span class="kicker">Continue Investigation</span>
+          <h3>Que puis-je faire maintenant ?</h3>
+          <p class="section-intent">Prolonger l’investigation dans les outils qui détiennent la télémétrie et le contexte.</p>
           <div class="quick-actions">
             <article><span class="action-icon blue">⌕</span><div><strong>Rechercher dans le SIEM</strong><p>Corréler les IOC dans les logs DNS, proxy et firewall.</p></div><b>›</b></article>
             <article><span class="action-icon green">◇</span><div><strong>Vérifier dans l’EDR</strong><p>Rechercher les IOC dans les activités et processus.</p></div><b>›</b></article>
@@ -90,173 +123,672 @@
         </section>
 
         <section class="panel metadata-panel">
-          <span class="kicker">Métadonnées du rapport</span>
+          <span class="phase-label">05 · Report</span>
+          <span class="kicker">Report Traceability</span>
+          <h3>Comment partager ou archiver ?</h3>
+          <p class="section-intent">Conserver les éléments nécessaires à l’archivage, au partage et à la reproductibilité.</p>
           <dl>
             <div><dt>Généré le</dt><dd data-meta-date></dd></div>
-            <div><dt>Outil</dt><dd>MM IOC Analyzer v2.0</dd></div>
+            <div><dt>Outil</dt><dd data-tool-version>MM IOC Analyzer</dd></div>
             <div><dt>Hash du rapport</dt><dd><code data-report-hash></code></dd></div>
             <div><dt>Mode</dt><dd>Analyse locale (aucun envoi)</dd></div>
           </dl>
           <div class="confidential">▣ Rapport confidentiel – Usage interne uniquement</div>
         </section>
-      </aside>
+      </section>
     </div>
   </div>
 </section>
 
 <script>
-import { exportIocPdf } from '../../../lib/ioc/iocPdf';
+import type {
+  IocAnalysisResult,
+  IocItem,
+  IocStatus,
+  IocType,
+  IocTypeCounts,
+} from '../../../types/ioc';
 
-const TYPES = ['IPv4','IPv6','Domain','URL','Email','MD5','SHA-1','SHA-256','SHA-512'];
-const root = document.querySelector('[data-ioc-results]');
-const form = document.querySelector('[data-ioc-form]');
-const input = document.querySelector('[data-ioc-input]');
-const error = document.querySelector('[data-ioc-error]');
-const state = { items: [], rawDetected: 0, duplicates: 0, ignored: 0, normalized: 0, privateIps: 0, extractedDomains: 0, reportHash: '' };
+import { analyzeIocText } from '../../../lib/ioc/analyzer';
+import { downloadIocPdf } from '../../../lib/ioc/iocPdf';
+import {
+  downloadIocReport,
+  serializeIocReportToText,
+} from '../../../lib/ioc/serialize';
 
-const esc = (s) => s.replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-const refang = (s) => s.replace(/\[\.\]|\(\.\)|\{\.\}/g,'.').replace(/hxxps/gi,'https').replace(/hxxp/gi,'http').replace(/\[:\]/g,':').replace(/\[@\]/g,'@');
-const defang = (s) => s.replace(/^https:/i,'hxxps:').replace(/^http:/i,'hxxp:').replace(/\./g,'[.]').replace(/@/g,'[@]');
-const private4 = (ip) => { const p=ip.split('.').map(Number); return p[0]===10||p[0]===127||(p[0]===169&&p[1]===254)||(p[0]===172&&p[1]>=16&&p[1]<=31)||(p[0]===192&&p[1]===168); };
-const plural = (n, one, many=`${one}s`) => n > 1 ? many : one;
+const TYPES: readonly IocType[] = [
+  'IPv4',
+  'IPv6',
+  'Domain',
+  'URL',
+  'Email',
+  'MD5',
+  'SHA-1',
+  'SHA-256',
+  'SHA-512',
+];
 
-function classify(v){
-  if(/^[a-f0-9]{32}$/i.test(v))return'MD5';
-  if(/^[a-f0-9]{40}$/i.test(v))return'SHA-1';
-  if(/^[a-f0-9]{64}$/i.test(v))return'SHA-256';
-  if(/^[a-f0-9]{128}$/i.test(v))return'SHA-512';
-  if(/^(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)$/.test(v))return'IPv4';
-  if(/^(?:(?:[a-f0-9]{1,4}:){2,7}[a-f0-9]{0,4}|::1)$/i.test(v))return'IPv6';
-  if(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(v))return'Email';
-  try{const u=new URL(v);if(['http:','https:'].includes(u.protocol)&&u.hostname)return'URL'}catch{}
-  if(/^(?=.{1,253}$)(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,63}$/i.test(v))return'Domain';
-  return null;
-}
-function candidates(raw){
-  const pattern=/(?:https?:\/\/[^\s<>"']+)|(?:[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})|(?:\b(?:[A-F0-9]{32}|[A-F0-9]{40}|[A-F0-9]{64}|[A-F0-9]{128})\b)|(?:\b(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)\b)|(?:\b(?:[A-F0-9]{1,4}:){2,7}[A-F0-9]{0,4}\b)|(?:\b(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,63}\b)/gi;
-  return refang(raw).match(pattern)||[];
-}
-function analyze(raw){
-  const found=candidates(raw),seen=new Set(),items=[];
-  let duplicates=0,ignored=0,normalized=0,privateIps=0,extractedDomains=0;
-  for(const rawValue of found){
-    const original=rawValue.replace(/[>\])}'"`;,]+$/,'');
-    const value=refang(original); if(value!==original)normalized++;
-    const type=classify(value); if(!type){ignored++;continue;}
-    const clean=['Domain','Email','URL'].includes(type)?value.toLowerCase():value;
-    const key=`${type}:${clean}`; if(seen.has(key)){duplicates++;continue;} seen.add(key);
-    const meta={};
-    if(type==='IPv4'&&private4(clean)){meta.private=true;privateIps++;}
-    if(type==='URL'){try{const u=new URL(clean);meta.hostname=u.hostname.toLowerCase();meta.path=u.pathname;meta.extension=u.pathname.includes('.')?u.pathname.split('.').pop().toLowerCase():null;}catch{}}
-    items.push({type,value:clean,meta});
+function queryElement<T extends Element>(
+  selector: string,
+  parent: ParentNode = document,
+): T {
+  const element = parent.querySelector<T>(selector);
+
+  if (!element) {
+    throw new Error(`Élément IOC introuvable : ${selector}`);
   }
-  const domains=new Set(items.filter(i=>i.type==='Domain').map(i=>i.value));
-  for(const i of [...items]) if(i.type==='URL'&&i.meta.hostname&&!domains.has(i.meta.hostname)){items.push({type:'Domain',value:i.meta.hostname,meta:{extracted:true}});domains.add(i.meta.hostname);extractedDomains++;}
-  return {items,rawDetected:found.length,duplicates,ignored,normalized,privateIps,extractedDomains};
-}
-const grouped=()=>TYPES.reduce((g,t)=>(g[t]=state.items.filter(i=>i.type===t),g),{});
-function assessment(g){
-  const typeCount=TYPES.filter(t=>g[t].length).length;
-  const hasNetwork=g.IPv4.length||g.IPv6.length||g.Domain.length||g.URL.length;
-  const hasHashes=g.MD5.length||g['SHA-1'].length||g['SHA-256'].length||g['SHA-512'].length;
-  const hasUrl=g.URL.length>0;
-  const publicIpv4=g.IPv4.filter(i=>!i.meta.private).length;
-  let level='À qualifier',priority='Priorité normale',decision='Analyse complémentaire recommandée',rationale='Les IOC ont été structurés, mais leur caractère malveillant ne peut pas être établi sans corrélation externe.';
-  if(hasUrl&&hasHashes&&publicIpv4){level='Investigation recommandée';priority='Haute priorité';decision='IOC exploitables';rationale='Plusieurs familles d’indicateurs peuvent être corrélées immédiatement dans le SIEM, l’EDR et les journaux réseau.';}
-  else if(hasNetwork&&typeCount>=3){level='Investigation recommandée';priority='Priorité élevée';decision='Corrélation recommandée';rationale='La diversité des indicateurs fournit une base exploitable pour reconstruire la chronologie et rechercher des événements associés.';}
-  else if(state.items.length===1){level='Contexte insuffisant';priority='À contextualiser';decision='Ne pas conclure sur cet IOC seul';rationale='Un indicateur isolé doit être rapproché de sa source, de son horodatage et de la télémétrie disponible.';}
-  return{typeCount,hasNetwork,hasHashes,hasUrl,publicIpv4,level,priority,decision,rationale};
-}
-function summary(g,a){
-  const types=TYPES.filter(t=>g[t].length),p=[];
-  p.push(`L’analyse a identifié <strong>${state.items.length} ${plural(state.items.length,'IOC unique')}</strong> réparti${state.items.length>1?'s':''} en <strong>${a.typeCount} ${plural(a.typeCount,'catégorie')}</strong>.`);
-  if(types.length)p.push(`Les indicateurs comprennent : <strong>${types.join(', ')}</strong>.`);
-  if(a.hasUrl&&a.hasHashes)p.push('La présence simultanée d’URL et d’empreintes de fichiers fournit une base solide pour rechercher un téléchargement, une exécution ou une distribution de contenu.');
-  else if(a.hasUrl)p.push('Les URL conservent le chemin de la ressource contactée et apportent davantage de contexte que le domaine seul.');
-  if(state.privateIps)p.push(`<strong>${state.privateIps} ${plural(state.privateIps,'adresse IP privée')}</strong> ${state.privateIps>1?'ont':'a'} été détectée${state.privateIps>1?'s':''}. Elles doivent être rapprochées de l’inventaire interne.`);
-  if(state.duplicates)p.push(`${state.duplicates} ${plural(state.duplicates,'doublon')} ${state.duplicates>1?'ont':'a'} été supprimé${state.duplicates>1?'s':''}, réduisant le bruit avant investigation.`);
-  p.push('Cette analyse constitue une <strong>aide à la qualification</strong>, pas un verdict de malveillance.');
-  return p;
-}
-function recommendations(g,a){
-  const r=[];
-  if(a.hasNetwork)r.push({priority:'P1',title:'Rechercher les IOC dans le SIEM',description:'Corrélez les IP, domaines et URL avec les événements DNS, proxy, firewall, VPN et authentification.'});
-  if(a.hasHashes||a.hasUrl)r.push({priority:'P1',title:'Vérifier les endpoints',description:'Recherchez les hashes, noms de fichiers, URL et processus associés dans l’EDR.'});
-  if(g.Domain.length||g.URL.length)r.push({priority:'P2',title:'Analyser le contexte DNS et Web',description:'Contrôlez les résolutions DNS, redirections, réponses HTTP, certificats TLS et l’historique du domaine.'});
-  r.push({priority:'P2',title:'Enrichir avec la Threat Intelligence',description:'Consultez vos sources de réputation et de télémétrie avant de classer ou bloquer un IOC.'});
-  return r;
-}
-function context(item){
-  if(item.meta.private)return'IP interne RFC1918';
-  if(item.meta.extracted)return'Domaine extrait d’URL';
-  if(item.type==='URL')return item.meta.extension?`Ressource .${item.meta.extension}`:'URL complète';
-  if(item.type.includes('SHA')||item.type==='MD5')return'Empreinte de fichier';
-  if(item.type==='Email')return'Identité / messagerie';
-  if(item.type==='Domain')return'Domaine observable';
-  return'Infrastructure publique';
-}
-function status(item){return item.meta.private?'PRIVATE':'PUBLIC';}
-async function hashText(text){
-  try{const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text));return [...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,16);}catch{return Math.random().toString(16).slice(2,18);}
-}
-function serialize(format){
-  const g=grouped();
-  if(format==='json')return JSON.stringify({generatedAt:new Date().toISOString(),reportHash:state.reportHash,summary:{detected:state.rawDetected,unique:state.items.length,duplicatesRemoved:state.duplicates,ignored:state.ignored,normalized:state.normalized,privateIps:state.privateIps,extractedDomains:state.extractedDomains},indicators:g},null,2);
-  if(format==='csv')return['type,value,context,status,private,extracted,hostname',...state.items.map(i=>[i.type,`"${i.value.replace(/"/g,'""')}"`,`"${context(i)}"`,status(i),!!i.meta.private,!!i.meta.extracted,`"${(i.meta.hostname||'').replace(/"/g,'""')}"`].join(','))].join('\n');
-  return TYPES.filter(t=>g[t].length).map(t=>`# ${t}\n${g[t].map(i=>i.value).join('\n')}`).join('\n\n');
-}
-function download(data,name,type){const b=new Blob([data],{type}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();URL.revokeObjectURL(u);}
 
-let lastReport=null;
-async function render(raw){
-  const g=grouped(),a=assessment(g),paragraphs=summary(g,a),recs=recommendations(g,a);
-  state.reportHash=await hashText(`${raw}|${JSON.stringify(state.items)}`);
-  root.querySelector('[data-empty-state]').hidden=true;
-  root.querySelector('[data-result-content]').hidden=false;
-  root.querySelector('[data-report-title]').textContent=a.level;
-  root.querySelector('.priority-badge').textContent=a.priority;
-  root.querySelector('[data-report-subtitle]').textContent=`${state.items.length} IOC uniques détectés pour investigation.`;
-  root.querySelector('[data-assessment]').textContent=a.level;
-  root.querySelector('[data-summary]').innerHTML=paragraphs.map(p=>`<p>${p}</p>`).join('');
-  root.querySelector('[data-decision]').textContent=a.decision;
-  root.querySelector('[data-rationale]').textContent=a.rationale;
-  root.querySelector('[data-metric="unique"]').textContent=state.items.length;
-  root.querySelector('[data-metric-caption="unique"]').textContent=`Sur ${state.rawDetected} détectés`;
-  root.querySelector('[data-metric="types"]').textContent=a.typeCount;
-  root.querySelector('[data-metric-caption="types"]').textContent=TYPES.filter(t=>g[t].length).join(', ');
-  root.querySelector('[data-metric="private"]').textContent=state.privateIps;
-  root.querySelector('[data-metric="duplicates"]').textContent=state.duplicates;
-  root.querySelector('[data-processing]').textContent=`${state.normalized} normalisé${state.normalized>1?'s':''} · ${state.extractedDomains} domaine${state.extractedDomains>1?'s':''} extrait${state.extractedDomains>1?'s':''} · ${state.ignored} ignoré${state.ignored>1?'s':''}`;
-  const date=new Intl.DateTimeFormat('fr-FR',{dateStyle:'medium',timeStyle:'short'}).format(new Date());
-  root.querySelector('[data-generated]').textContent=date;
-  root.querySelector('[data-meta-date]').textContent=date;
-  root.querySelector('[data-report-hash]').textContent=`${state.reportHash.slice(0,12)}…`;
-  root.querySelector('[data-recommendations]').innerHTML=recs.map((r,n)=>`<article class="recommendation"><span>${String(n+1).padStart(2,'0')}</span><div><small>${r.priority} · Priorité</small><strong>${esc(r.title)}</strong><p>${esc(r.description)}</p></div></article>`).join('');
-  const typeSelect=root.querySelector('[data-type-filter]');
-  typeSelect.innerHTML='<option value="">Tous les types</option>'+TYPES.filter(t=>g[t].length).map(t=>`<option value="${t}">${t}</option>`).join('');
+  return element;
+}
+
+const root = queryElement<HTMLElement>('[data-ioc-results]');
+const form = queryElement<HTMLFormElement>('[data-ioc-form]');
+const input = queryElement<HTMLTextAreaElement>('[data-ioc-input]');
+const error = queryElement<HTMLElement>('[data-ioc-error]');
+
+let analysisResult: IocAnalysisResult | null = null;
+let displayedItems: IocItem[] = [];
+
+function escapeHtml(value: unknown): string {
+  return String(value).replace(
+    /[&<>"']/g,
+    (character) =>
+      ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;',
+      })[character] ?? character,
+  );
+}
+
+function plural(
+  count: number,
+  singular: string,
+  pluralForm = `${singular}s`,
+): string {
+  return count > 1 ? pluralForm : singular;
+}
+
+function createTypeCounts(items: readonly IocItem[]): IocTypeCounts {
+  const counts: IocTypeCounts = {};
+
+  for (const item of items) {
+    counts[item.type] = (counts[item.type] ?? 0) + 1;
+  }
+
+  return counts;
+}
+
+/**
+ * Produit une copie du rapport tenant compte des éventuelles suppressions
+ * réalisées dans le tableau. L'analyse source et son hash restent inchangés.
+ */
+function getCurrentResult(): IocAnalysisResult | null {
+  if (!analysisResult) {
+    return null;
+  }
+
+  const typeCounts = createTypeCounts(displayedItems);
+  const privateIps = displayedItems.filter(
+    (item) =>
+      (item.type === 'IPv4' || item.type === 'IPv6') &&
+      item.status === 'private',
+  ).length;
+
+  const extractedDomains = displayedItems.filter(
+    (item) => item.type === 'Domain' && item.origin === 'extracted',
+  ).length;
+
+  return {
+    ...analysisResult,
+    items: [...displayedItems],
+    typeCounts,
+    metrics: {
+      ...analysisResult.metrics,
+      unique: displayedItems.length,
+      privateIps,
+      extractedDomains,
+      detectedTypes: Object.keys(typeCounts).length,
+    },
+  };
+}
+
+function formatDate(value: string): string {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+
+  return new Intl.DateTimeFormat('fr-FR', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  }).format(date);
+}
+
+function getStatusLabel(status: IocStatus): string {
+  const labels: Record<IocStatus, string> = {
+    public: 'PUBLIC',
+    private: 'PRIVATE',
+    loopback: 'LOOPBACK',
+    'link-local': 'LINK-LOCAL',
+    reserved: 'RÉSERVÉ',
+    known: 'VALIDE',
+    unknown: 'INCONNU',
+  };
+
+  return labels[status];
+}
+
+function getContextLabel(item: IocItem): string {
+  if (item.origin === 'extracted') {
+    return 'Domaine extrait d’URL';
+  }
+
+  if (item.status === 'private') {
+    return 'Infrastructure interne';
+  }
+
+  if (item.status === 'loopback') {
+    return 'Adresse de loopback';
+  }
+
+  if (item.status === 'link-local') {
+    return 'Adresse link-local';
+  }
+
+  if (item.status === 'reserved') {
+    return 'Plage réservée / documentation';
+  }
+
+  if (item.type === 'URL') {
+    return item.metadata.extension
+      ? `Ressource .${item.metadata.extension}`
+      : 'URL complète';
+  }
+
+  if (
+    item.type === 'MD5' ||
+    item.type === 'SHA-1' ||
+    item.type === 'SHA-256' ||
+    item.type === 'SHA-512'
+  ) {
+    return 'Empreinte de fichier';
+  }
+
+  if (item.type === 'Email') {
+    return 'Identité / messagerie';
+  }
+
+  if (item.type === 'Domain') {
+    return 'Domaine observable';
+  }
+
+  if (item.context) {
+    return item.context;
+  }
+
+  return 'Infrastructure publique';
+}
+
+function createSummaryParagraphs(result: IocAnalysisResult): string[] {
+  const types = TYPES.filter((type) => (result.typeCounts[type] ?? 0) > 0);
+  const paragraphs: string[] = [];
+  const unique = result.items.length;
+  const typeCount = types.length;
+
+  paragraphs.push(
+    `L’analyse a identifié <strong>${unique} ${plural(unique, 'IOC unique')}</strong> ` +
+      `réparti${unique > 1 ? 's' : ''} en <strong>${typeCount} ${plural(typeCount, 'catégorie')}</strong>.`,
+  );
+
+  if (types.length > 0) {
+    paragraphs.push(
+      `Les indicateurs comprennent : <strong>${types.join(', ')}</strong>.`,
+    );
+  }
+
+  const hasUrl = (result.typeCounts.URL ?? 0) > 0;
+  const hasHash = ['MD5', 'SHA-1', 'SHA-256', 'SHA-512'].some(
+    (type) => (result.typeCounts[type as IocType] ?? 0) > 0,
+  );
+
+  if (hasUrl && hasHash) {
+    paragraphs.push(
+      'La présence simultanée d’URL et d’empreintes de fichiers fournit une base solide pour rechercher un téléchargement, une exécution ou une distribution de contenu.',
+    );
+  } else if (hasUrl) {
+    paragraphs.push(
+      'Les URL conservent le chemin de la ressource contactée et apportent davantage de contexte que le domaine seul.',
+    );
+  }
+
+  if (result.metrics.privateIps > 0) {
+    paragraphs.push(
+      `<strong>${result.metrics.privateIps} ${plural(result.metrics.privateIps, 'adresse IP privée')}</strong> ` +
+        `${result.metrics.privateIps > 1 ? 'ont' : 'a'} été détectée${result.metrics.privateIps > 1 ? 's' : ''}. ` +
+        'Elles doivent être rapprochées de l’inventaire interne.',
+    );
+  }
+
+  if (result.metrics.duplicatesRemoved > 0) {
+    paragraphs.push(
+      `${result.metrics.duplicatesRemoved} ${plural(result.metrics.duplicatesRemoved, 'doublon')} ` +
+        `${result.metrics.duplicatesRemoved > 1 ? 'ont' : 'a'} été supprimé${result.metrics.duplicatesRemoved > 1 ? 's' : ''}, réduisant le bruit avant investigation.`,
+    );
+  }
+
+  paragraphs.push(
+    'Cette analyse constitue une <strong>aide à la qualification</strong>, pas un verdict de malveillance.',
+  );
+
+  return paragraphs;
+}
+
+function createObservationItems(result: IocAnalysisResult): string[] {
+  const types = TYPES.filter((type) => (result.typeCounts[type] ?? 0) > 0);
+  const observations = [
+    `${result.items.length} ${plural(result.items.length, 'indicateur unique')} après normalisation.`,
+    `${types.length} ${plural(types.length, 'famille')} représentée${types.length > 1 ? 's' : ''} : ${types.join(', ') || 'aucune'}.`,
+  ];
+
+  if (result.metrics.privateIps > 0) {
+    observations.push(
+      `${result.metrics.privateIps} ${plural(result.metrics.privateIps, 'adresse IP privée')} à rapprocher de l’inventaire interne.`,
+    );
+  }
+
+  if (result.metrics.duplicatesRemoved > 0) {
+    observations.push(
+      `${result.metrics.duplicatesRemoved} ${plural(result.metrics.duplicatesRemoved, 'doublon')} retiré${result.metrics.duplicatesRemoved > 1 ? 's' : ''} avant investigation.`,
+    );
+  }
+
+  return observations;
+}
+
+function getRecommendationPlaybook(title: string, description: string): {
+  domain: string;
+  objective: string;
+  sources: string[];
+  expected: string;
+} {
+  const text = `${title} ${description}`.toLowerCase();
+
+  if (/siem|dns|proxy|firewall|réseau|network/.test(text)) {
+    return {
+      domain: 'NETWORK',
+      objective: 'Identifier les communications associées aux observables et les systèmes concernés.',
+      sources: ['DNS', 'Proxy', 'Firewall', 'NetFlow'],
+      expected: 'Hôtes sources, premières et dernières occurrences, volume et direction des communications.',
+    };
+  }
+
+  if (/edr|endpoint|process|fichier|hash|exécution/.test(text)) {
+    return {
+      domain: 'ENDPOINT',
+      objective: 'Déterminer si un fichier, un processus ou une activité liée aux IOC est présent sur les postes.',
+      sources: ['EDR', 'Process events', 'File events', 'Device timeline'],
+      expected: 'Machines impactées, chaîne d’exécution, utilisateur associé et mécanisme de persistance éventuel.',
+    };
+  }
+
+  if (/threat|intel|réputation|whois|domaine|enrich/.test(text)) {
+    return {
+      domain: 'THREAT INTEL',
+      objective: 'Qualifier la réputation, l’historique et les relations connues des observables publics.',
+      sources: ['Threat Intel', 'WHOIS', 'Passive DNS', 'Sandbox'],
+      expected: 'Contexte de menace, infrastructure liée, ancienneté et niveau de confiance des sources.',
+    };
+  }
+
+  return {
+    domain: 'VALIDATION',
+    objective: 'Confirmer le contexte technique avant de conclure ou d’engager une action de réponse.',
+    sources: ['SIEM', 'EDR', 'Inventaire', 'Tickets'],
+    expected: 'Éléments factuels permettant de confirmer, infirmer ou requalifier l’hypothèse.',
+  };
+}
+
+function renderRecommendations(result: IocAnalysisResult): void {
+  const container = queryElement<HTMLElement>('[data-recommendations]', root);
+
+  container.innerHTML = result.recommendations
+    .map((recommendation, index) => {
+      const playbook = getRecommendationPlaybook(
+        recommendation.title,
+        recommendation.description,
+      );
+
+      return `
+        <article class="recommendation">
+          <div class="recommendation-rail">
+            <span>${String(index + 1).padStart(2, '0')}</span>
+            <small>P${Math.min(recommendation.order, 2)}</small>
+          </div>
+          <div class="recommendation-content">
+            <div class="recommendation-heading">
+              <span class="domain-badge">${escapeHtml(playbook.domain)}</span>
+              <strong>${escapeHtml(recommendation.title)}</strong>
+            </div>
+            <p class="recommendation-description">${escapeHtml(recommendation.description)}</p>
+            <div class="playbook-grid">
+              <div><small>Pourquoi</small><p>${escapeHtml(playbook.objective)}</p></div>
+              <div><small>Sources</small><p class="source-list">${playbook.sources.map((source) => `<b>${escapeHtml(source)}</b>`).join('')}</p></div>
+              <div><small>Résultat attendu</small><p>${escapeHtml(playbook.expected)}</p></div>
+            </div>
+          </div>
+        </article>
+      `;
+    })
+    .join('');
+}
+
+function renderTypeFilter(result: IocAnalysisResult): void {
+  const select = queryElement<HTMLSelectElement>('[data-type-filter]', root);
+  const previousValue = select.value;
+  const availableTypes = TYPES.filter(
+    (type) => (result.typeCounts[type] ?? 0) > 0,
+  );
+
+  select.innerHTML = [
+    '<option value="">Tous les types</option>',
+    ...availableTypes.map(
+      (type) => `<option value="${escapeHtml(type)}">${escapeHtml(type)}</option>`,
+    ),
+  ].join('');
+
+  if (availableTypes.includes(previousValue as IocType)) {
+    select.value = previousValue;
+  }
+}
+
+function renderRows(): void {
+  const currentResult = getCurrentResult();
+
+  if (!currentResult) {
+    return;
+  }
+
+  const searchValue = queryElement<HTMLInputElement>('[data-filter]', root)
+    .value.trim()
+    .toLowerCase();
+
+  const selectedType = queryElement<HTMLSelectElement>(
+    '[data-type-filter]',
+    root,
+  ).value;
+
+  const rows = currentResult.items.filter((item) => {
+    const matchesSearch =
+      !searchValue ||
+      item.value.toLowerCase().includes(searchValue) ||
+      item.rawValue.toLowerCase().includes(searchValue) ||
+      item.type.toLowerCase().includes(searchValue) ||
+      getContextLabel(item).toLowerCase().includes(searchValue);
+
+    const matchesType = !selectedType || item.type === selectedType;
+
+    return matchesSearch && matchesType;
+  });
+
+  queryElement<HTMLElement>('[data-ioc-rows]', root).innerHTML = rows
+    .map((item) => {
+      const typeClass = item.type.replace(/[^a-z0-9]/gi, '').toLowerCase();
+      const statusClass = item.status.replace(/[^a-z0-9-]/gi, '').toLowerCase();
+
+      return `
+        <div class="table-row" role="row" data-row-id="${escapeHtml(item.id)}">
+          <span><b class="type-badge type-${typeClass}">${escapeHtml(item.type)}</b></span>
+          <code>${escapeHtml(item.value)}</code>
+          <span class="context">${escapeHtml(getContextLabel(item))}</span>
+          <span><b class="status ${statusClass}">${escapeHtml(getStatusLabel(item.status))}</b></span>
+          <span class="row-actions">
+            <button type="button" data-action="copy" title="Copier">□</button>
+            <button type="button" data-action="defang" title="Defang">◇</button>
+            <button type="button" data-action="delete" title="Supprimer">⌫</button>
+          </span>
+        </div>
+      `;
+    })
+    .join('');
+
+  queryElement<HTMLElement>('[data-result-count]', root).textContent =
+    `Affichage de ${rows.length} ${plural(rows.length, 'résultat')}`;
+}
+
+function renderReport(): void {
+  const currentResult = getCurrentResult();
+
+  if (!currentResult) {
+    return;
+  }
+
+  queryElement<HTMLElement>('[data-empty-state]', root).hidden = true;
+  queryElement<HTMLElement>('[data-result-content]', root).hidden = false;
+
+  queryElement<HTMLElement>('[data-report-title]', root).textContent =
+    currentResult.assessment.title;
+
+  queryElement<HTMLElement>('.priority-badge', root).textContent =
+    currentResult.assessment.priorityLabel;
+
+  queryElement<HTMLElement>('[data-report-subtitle]', root).textContent =
+    `${currentResult.items.length} ${plural(currentResult.items.length, 'IOC unique')} détecté${currentResult.items.length > 1 ? 's' : ''} pour investigation.`;
+
+  queryElement<HTMLElement>('[data-assessment]', root).textContent =
+    currentResult.assessment.title;
+
+  queryElement<HTMLElement>('[data-observations]', root).innerHTML =
+    createObservationItems(currentResult)
+      .map((observation) => `<li>${escapeHtml(observation)}</li>`)
+      .join('');
+
+  queryElement<HTMLElement>('[data-summary]', root).innerHTML =
+    createSummaryParagraphs(currentResult)
+      .slice(2)
+      .map((paragraph) => `<p>${paragraph}</p>`)
+      .join('');
+
+  queryElement<HTMLElement>('[data-decision]', root).textContent =
+    currentResult.assessment.decision;
+
+  queryElement<HTMLElement>('[data-rationale]', root).textContent =
+    currentResult.assessment.rationale;
+
+  queryElement<HTMLElement>('[data-metric="unique"]', root).textContent =
+    String(currentResult.metrics.unique);
+
+  queryElement<HTMLElement>('[data-metric-caption="unique"]', root).textContent =
+    `Sur ${currentResult.metrics.rawDetected} détectés`;
+
+  queryElement<HTMLElement>('[data-metric="types"]', root).textContent =
+    String(currentResult.metrics.detectedTypes);
+
+  queryElement<HTMLElement>('[data-metric-caption="types"]', root).textContent =
+    TYPES.filter((type) => (currentResult.typeCounts[type] ?? 0) > 0).join(', ') ||
+    'Aucun type';
+
+  queryElement<HTMLElement>('[data-metric="private"]', root).textContent =
+    String(currentResult.metrics.privateIps);
+
+  const privateCaption = root.querySelector<HTMLElement>('[data-private-caption]');
+  if (privateCaption) {
+    privateCaption.textContent = currentResult.metrics.privateIps > 0
+      ? 'À corréler avec les actifs et zones internes'
+      : 'Aucune adresse interne détectée';
+  }
+
+  queryElement<HTMLElement>('[data-metric="duplicates"]', root).textContent =
+    String(currentResult.metrics.duplicatesRemoved);
+
+  queryElement<HTMLElement>('[data-processing]', root).textContent =
+    `${currentResult.metrics.normalized} normalisé${currentResult.metrics.normalized > 1 ? 's' : ''} · ` +
+    `${currentResult.metrics.extractedDomains} domaine${currentResult.metrics.extractedDomains > 1 ? 's' : ''} extrait${currentResult.metrics.extractedDomains > 1 ? 's' : ''} · ` +
+    `${currentResult.metrics.ignored} ignoré${currentResult.metrics.ignored > 1 ? 's' : ''}`;
+
+  const generatedAt = formatDate(currentResult.metadata.generatedAt);
+
+  queryElement<HTMLElement>('[data-generated]', root).textContent = generatedAt;
+  queryElement<HTMLElement>('[data-meta-date]', root).textContent = generatedAt;
+  queryElement<HTMLElement>('[data-report-hash]', root).textContent =
+    `${currentResult.metadata.reportHash.slice(0, 12)}…`;
+
+  const toolVersion = root.querySelector<HTMLElement>('[data-tool-version]');
+
+  if (toolVersion) {
+    toolVersion.textContent = `MM IOC Analyzer v${currentResult.metadata.toolVersion}`;
+  }
+
+  renderRecommendations(currentResult);
+  renderTypeFilter(currentResult);
   renderRows();
-  lastReport={generatedAt:date,reportHash:state.reportHash,title:a.level,priority:a.priority,summary:paragraphs.map(p=>p.replace(/<[^>]+>/g,'')),decision:a.decision,rationale:a.rationale,metrics:{detected:state.rawDetected,unique:state.items.length,types:a.typeCount,privateIps:state.privateIps,duplicates:state.duplicates},recommendations:recs,items:state.items.map(i=>({type:i.type,value:i.value,context:context(i),status:status(i)}))};
-  root.scrollIntoView({behavior:'smooth',block:'start'});
 }
-function renderRows(){
-  const q=(root.querySelector('[data-filter]').value||'').toLowerCase();
-  const type=root.querySelector('[data-type-filter]').value;
-  const rows=state.items.map((i,index)=>({i,index})).filter(({i})=>(!q||i.value.toLowerCase().includes(q)||i.type.toLowerCase().includes(q))&&(!type||i.type===type));
-  root.querySelector('[data-ioc-rows]').innerHTML=rows.map(({i,index})=>`<div class="table-row" role="row" data-row="${index}"><span><b class="type-badge type-${i.type.replace(/[^a-z0-9]/gi,'').toLowerCase()}">${i.type}</b></span><code>${esc(i.value)}</code><span class="context">${esc(context(i))}</span><span><b class="status ${status(i).toLowerCase()}">${status(i)}</b></span><span class="row-actions"><button data-action="copy" title="Copier">□</button><button data-action="defang" title="Defang">◇</button><button data-action="delete" title="Supprimer">⌫</button></span></div>`).join('');
-  root.querySelector('[data-result-count]').textContent=`Affichage de ${rows.length} résultat${rows.length>1?'s':''}`;
+
+async function runAnalysis(rawSource: string): Promise<void> {
+  const submitButton = form.querySelector<HTMLButtonElement>('[type="submit"]');
+
+  try {
+    submitButton?.setAttribute('disabled', '');
+    form.setAttribute('aria-busy', 'true');
+
+    analysisResult = await analyzeIocText(rawSource);
+    displayedItems = [...analysisResult.items];
+
+    renderReport();
+
+    root.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  } catch (caughtError) {
+    console.error('MM IOC Analyzer:', caughtError);
+
+    error.hidden = false;
+    error.textContent =
+      caughtError instanceof Error
+        ? caughtError.message
+        : 'Une erreur est survenue pendant l’analyse.';
+  } finally {
+    submitButton?.removeAttribute('disabled');
+    form.removeAttribute('aria-busy');
+  }
 }
-form?.addEventListener('submit',async(e)=>{e.preventDefault();const raw=input.value.trim();if(!raw){error.hidden=false;input.focus();return;}error.hidden=true;Object.assign(state,analyze(raw));await render(raw);});
-root.querySelector('[data-filter]')?.addEventListener('input',renderRows);
-root.querySelector('[data-type-filter]')?.addEventListener('change',renderRows);
-root.addEventListener('click',async(e)=>{
-  const b=e.target.closest('button');if(!b)return;
-  if(b.hasAttribute('data-copy-all')){await navigator.clipboard.writeText(serialize('txt'));return;}
-  if(b.dataset.export){const f=b.dataset.export;download(serialize(f),`mm-ioc-analyzer.${f}`,f==='json'?'application/json':f==='csv'?'text/csv;charset=utf-8':'text/plain;charset=utf-8');return;}
-  if(b.hasAttribute('data-export-pdf')){if(lastReport)exportIocPdf(lastReport);return;}
-  const row=b.closest('[data-row]');if(!row)return;const index=Number(row.dataset.row),item=state.items[index];
-  if(b.dataset.action==='copy')await navigator.clipboard.writeText(item.value);
-  if(b.dataset.action==='defang')await navigator.clipboard.writeText(defang(item.value));
-  if(b.dataset.action==='delete'){state.items.splice(index,1);await render(input.value.trim());}
+
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const rawSource = input.value.trim();
+
+  if (!rawSource) {
+    error.hidden = false;
+    input.focus();
+    return;
+  }
+
+  error.hidden = true;
+
+  await runAnalysis(rawSource);
+});
+
+queryElement<HTMLInputElement>('[data-filter]', root).addEventListener(
+  'input',
+  renderRows,
+);
+
+queryElement<HTMLSelectElement>('[data-type-filter]', root).addEventListener(
+  'change',
+  renderRows,
+);
+
+root.addEventListener('click', async (event) => {
+  if (!(event.target instanceof Element)) {
+    return;
+  }
+
+  const button = event.target.closest<HTMLButtonElement>('button');
+
+  if (!button) {
+    return;
+  }
+
+  const currentResult = getCurrentResult();
+
+  if (!currentResult) {
+    return;
+  }
+
+  if (button.hasAttribute('data-copy-all')) {
+    await navigator.clipboard.writeText(
+      serializeIocReportToText(currentResult, {
+        valueMode: 'defanged',
+        includeContext: false,
+        includeMetadata: false,
+        includeRecommendations: false,
+      }),
+    );
+
+    return;
+  }
+
+  const exportFormat = button.dataset.export;
+
+  if (
+    exportFormat === 'json' ||
+    exportFormat === 'csv' ||
+    exportFormat === 'txt'
+  ) {
+    downloadIocReport(currentResult, exportFormat, {
+      valueMode: exportFormat === 'txt' ? 'defanged' : 'normalized',
+    });
+
+    return;
+  }
+
+  if (button.hasAttribute('data-export-pdf')) {
+    downloadIocPdf(currentResult, {
+      valueMode: 'defanged',
+      includeContext: true,
+      includeMetadata: false,
+      includeRecommendations: true,
+      includeSourceText: false,
+    });
+
+    return;
+  }
+
+  const row = button.closest<HTMLElement>('[data-row-id]');
+  const itemId = row?.dataset.rowId;
+
+  if (!itemId) {
+    return;
+  }
+
+  const item = displayedItems.find((candidate) => candidate.id === itemId);
+
+  if (!item) {
+    return;
+  }
+
+  if (button.dataset.action === 'copy') {
+    await navigator.clipboard.writeText(item.value);
+    return;
+  }
+
+  if (button.dataset.action === 'defang') {
+    await navigator.clipboard.writeText(item.defangedValue);
+    return;
+  }
+
+  if (button.dataset.action === 'delete') {
+    displayedItems = displayedItems.filter(
+      (candidate) => candidate.id !== item.id,
+    );
+
+    renderReport();
+  }
 });
 </script>
 
@@ -347,4 +879,1606 @@ root.addEventListener('click',async(e)=>{
   @media(max-width:1160px){.dashboard-grid{grid-template-columns:1fr}.side-column{grid-template-columns:repeat(2,minmax(0,1fr))}.metadata-panel{grid-column:1/-1}}
   @media(max-width:850px){.table-head,.table-row{grid-template-columns:90px minmax(0,1fr) 90px}.table-head span:nth-child(3),.table-head span:nth-child(5),.table-row .context,.table-row .row-actions{display:none}.side-column{grid-template-columns:1fr}}
   @media(max-width:700px){.report-header,.panel>header{align-items:flex-start;flex-direction:column}.export-area{justify-content:flex-start}.decision-box{grid-template-columns:1fr}.table-tools{width:100%;flex-direction:column}.table-tools label{min-width:0}.table-head{display:none}.table-row{grid-template-columns:1fr;gap:.4rem}.table-row .context,.table-row .row-actions{display:flex}.table-footer{flex-direction:column}}
+/* =========================================================
+   RESULT TYPOGRAPHY — V2
+   ========================================================= */
+
+.results {
+	--result-font-sans:
+		Inter,
+		"Segoe UI",
+		Roboto,
+		Helvetica,
+		Arial,
+		sans-serif;
+
+	--result-font-mono:
+		"JetBrains Mono",
+		"SFMono-Regular",
+		Consolas,
+		"Liberation Mono",
+		monospace;
+
+	font-family: var(--result-font-sans);
+	font-size: 15px;
+	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+/* Petits intitulés de section */
+.results .kicker {
+	display: block;
+	margin-bottom: 0.45rem;
+
+	font-family: var(--result-font-sans);
+	font-size: 0.6875rem;
+	font-weight: 700;
+	line-height: 1.2;
+	letter-spacing: 0.11em;
+	text-transform: uppercase;
+}
+
+/* Titre principal du rapport */
+.results .report-header h2 {
+	margin: 0;
+
+	font-family: var(--result-font-sans);
+	font-size: clamp(1.65rem, 2vw, 2.15rem);
+	font-weight: 700;
+	line-height: 1.12;
+	letter-spacing: -0.035em;
+}
+
+/* Sous-titre du rapport */
+.results .report-header > div > p {
+	margin: 0.65rem 0 0;
+
+	font-size: 0.925rem;
+	line-height: 1.55;
+}
+
+/* Titres des différentes cartes */
+.results .panel h3 {
+	margin: 0;
+
+	font-family: var(--result-font-sans);
+	font-size: 1.125rem;
+	font-weight: 680;
+	line-height: 1.3;
+	letter-spacing: -0.018em;
+}
+
+/* Paragraphes du résumé */
+.results .narrative {
+	font-family: var(--result-font-sans);
+	font-size: 0.925rem;
+	line-height: 1.7;
+}
+
+.results .narrative p {
+	margin: 0 0 0.75rem;
+}
+
+.results .narrative p:last-child {
+	margin-bottom: 0;
+}
+
+/* Bloc de décision */
+.results .decision-box span {
+	font-family: var(--result-font-sans);
+	font-size: 0.6875rem;
+	font-weight: 700;
+	line-height: 1.2;
+	letter-spacing: 0.09em;
+	text-transform: uppercase;
+}
+
+.results .decision-box strong {
+	font-family: var(--result-font-sans);
+	font-size: 0.95rem;
+	font-weight: 680;
+	line-height: 1.4;
+}
+
+.results .decision-box p {
+	font-family: var(--result-font-sans);
+	font-size: 0.8125rem;
+	line-height: 1.6;
+}
+
+/* Recommandations d’investigation */
+.results .recommendations {
+	font-family: var(--result-font-sans);
+}
+
+.results .recommendations strong,
+.results .recommendations h4 {
+	font-family: var(--result-font-sans);
+	font-size: 0.925rem;
+	font-weight: 680;
+	line-height: 1.4;
+	letter-spacing: -0.01em;
+}
+
+.results .recommendations p {
+	font-family: var(--result-font-sans);
+	font-size: 0.85rem;
+	line-height: 1.65;
+}
+
+/* Footer Analyst recommendations */
+.results .investigation-panel footer strong {
+	font-family: var(--result-font-sans);
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+.results .investigation-panel footer p {
+	margin: 0.2rem 0 0;
+
+	font-family: var(--result-font-sans);
+	font-size: 0.75rem;
+	line-height: 1.5;
+}
+
+/* Chiffres des métriques */
+.results .metrics article > strong {
+	font-family: var(--result-font-sans);
+	font-size: 1.85rem;
+	font-weight: 700;
+	line-height: 1;
+	letter-spacing: -0.04em;
+}
+
+.results .metrics article > span {
+	font-family: var(--result-font-sans);
+	font-size: 0.6875rem;
+	font-weight: 700;
+	line-height: 1.3;
+	letter-spacing: 0.07em;
+	text-transform: uppercase;
+}
+
+.results .metrics article > small {
+	font-family: var(--result-font-sans);
+	font-size: 0.72rem;
+	line-height: 1.45;
+}
+
+/* Tableau */
+.results .table-head {
+	font-family: var(--result-font-sans);
+	font-size: 0.65rem;
+	font-weight: 700;
+	line-height: 1.2;
+	letter-spacing: 0.09em;
+	text-transform: uppercase;
+}
+
+/* Valeurs techniques uniquement en monospace */
+.results [data-ioc-rows] code,
+.results [data-ioc-rows] .ioc-value,
+.results [data-ioc-rows] .indicator-value {
+	font-family: var(--result-font-mono);
+	font-size: 0.79rem;
+	font-weight: 500;
+	line-height: 1.45;
+	letter-spacing: -0.015em;
+}
+
+/* Inputs et boutons */
+.results button,
+.results input,
+.results select {
+	font-family: var(--result-font-sans);
+}
+
+.results .priority-badge,
+.results .assessment {
+	font-family: var(--result-font-sans);
+	font-size: 0.65rem;
+	font-weight: 700;
+	line-height: 1;
+	letter-spacing: 0.07em;
+	text-transform: uppercase;
+}
+
+/* =========================================================
+   INVESTIGATION PLAN — SPACING FIX
+   ========================================================= */
+
+.results .investigation-panel .recommendations {
+	display: grid;
+	gap: 0.9rem;
+
+	padding: 0 1.25rem 1.15rem;
+}
+
+/* Chaque recommandation générée */
+.results .investigation-panel .recommendations > * {
+	margin: 0;
+	padding: 1rem 1.05rem;
+
+	border: 1px solid rgba(91, 132, 190, 0.22);
+	border-radius: 0.65rem;
+
+	background: rgba(8, 19, 37, 0.34);
+}
+
+/* Numéro / priorité */
+.results .investigation-panel .recommendations > * > :first-child {
+	margin-top: 0;
+}
+
+/* Titres */
+.results .investigation-panel .recommendations strong,
+.results .investigation-panel .recommendations h4 {
+	display: block;
+	margin: 0 0 0.4rem;
+}
+
+/* Descriptions */
+.results .investigation-panel .recommendations p {
+	margin: 0;
+	max-width: 72ch;
+}
+
+/* Footer analyst recommendations */
+.results .investigation-panel footer {
+	margin: 0 1.25rem 1.2rem;
+	padding: 0.9rem 1rem;
+}
+
+/* =========================================================
+   IOC DETAILS TABLE — CLEAN GRID
+   ========================================================= */
+
+.results .ioc-table {
+	width: 100%;
+	overflow: hidden;
+}
+
+.results .table-head,
+.results .table-row {
+	display: grid;
+	grid-template-columns:
+		82px
+		minmax(240px, 1.8fr)
+		minmax(170px, 1fr)
+		90px
+		104px;
+
+	align-items: center;
+	column-gap: 1rem;
+}
+
+.results .table-head {
+	padding: 0.72rem 1rem;
+
+	border-top: 1px solid rgba(91, 132, 190, 0.14);
+	border-bottom: 1px solid rgba(91, 132, 190, 0.14);
+}
+
+.results .table-row {
+	min-height: 62px;
+	padding: 0.8rem 1rem;
+
+	border-bottom: 1px solid rgba(91, 132, 190, 0.1);
+}
+
+.results .table-row:last-child {
+	border-bottom: 0;
+}
+
+.results .table-head > *,
+.results .table-row > * {
+	min-width: 0;
+}
+
+/* TYPE */
+.results .table-row > :nth-child(1) {
+	display: flex;
+	align-items: center;
+}
+
+/* INDICATEUR */
+.results .table-row > code {
+	display: block;
+	min-width: 0;
+
+	padding: 0;
+
+	background: transparent;
+	border: 0;
+
+	color: rgba(235, 243, 255, 0.94);
+
+	font-family:
+		"JetBrains Mono",
+		"SFMono-Regular",
+		Consolas,
+		monospace;
+
+	font-size: 0.78rem;
+	font-weight: 500;
+	line-height: 1.5;
+
+	white-space: normal;
+	overflow-wrap: anywhere;
+	word-break: break-word;
+}
+
+/* CONTEXTE */
+.results .table-row .context {
+	display: block;
+	min-width: 0;
+
+	color: rgba(205, 218, 238, 0.82);
+
+	font-size: 0.78rem;
+	line-height: 1.45;
+
+	overflow-wrap: anywhere;
+}
+
+/* STATUT */
+.results .table-row > :nth-child(4) {
+	display: flex;
+	align-items: center;
+}
+
+/* ACTIONS */
+.results .row-actions {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 0.35rem;
+}
+
+.results .row-actions button {
+	display: inline-grid;
+	place-items: center;
+
+	flex: 0 0 auto;
+
+	width: 28px;
+	height: 28px;
+	padding: 0;
+
+	border: 1px solid rgba(104, 139, 190, 0.25);
+	border-radius: 0.42rem;
+
+	background: rgba(18, 32, 55, 0.72);
+	color: rgba(226, 236, 250, 0.85);
+
+	font-size: 0.72rem;
+	line-height: 1;
+
+	cursor: pointer;
+}
+
+.results .row-actions button:hover {
+	border-color: rgba(76, 142, 255, 0.55);
+	background: rgba(40, 91, 170, 0.22);
+	color: #ffffff;
+}
+
+@media (max-width: 1050px) {
+	.results .table-head,
+	.results .table-row {
+		grid-template-columns:
+			72px
+			minmax(190px, 1.5fr)
+			minmax(140px, 1fr)
+			78px
+			94px;
+
+		column-gap: 0.7rem;
+	}
+}
+
+/* =========================================================
+   IOC DETAILS — DYNAMIC ROWS FIX
+   Les lignes sont injectées en JavaScript : :global obligatoire
+   ========================================================= */
+
+.ioc-table {
+	width: 100%;
+	overflow: hidden;
+}
+
+.table-head,
+:global(.table-row) {
+	display: grid;
+	grid-template-columns:
+		82px
+		minmax(220px, 1.7fr)
+		minmax(160px, 1fr)
+		90px
+		104px;
+
+	align-items: center;
+	column-gap: 1rem;
+}
+
+.table-head {
+	padding: 0.72rem 1rem;
+	border-top: 1px solid rgba(91, 132, 190, 0.14);
+	border-bottom: 1px solid rgba(91, 132, 190, 0.14);
+}
+
+:global(.table-row) {
+	min-height: 62px;
+	padding: 0.8rem 1rem;
+	border-bottom: 1px solid rgba(91, 132, 190, 0.1);
+}
+
+:global(.table-row:last-child) {
+	border-bottom: 0;
+}
+
+.table-head > *,
+:global(.table-row > *) {
+	min-width: 0;
+}
+
+/* Valeur IOC */
+:global(.table-row > code) {
+	display: block;
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+
+	border: 0;
+	background: transparent;
+
+	color: rgba(235, 243, 255, 0.94);
+
+	font-family:
+		"JetBrains Mono",
+		"SFMono-Regular",
+		Consolas,
+		monospace;
+
+	font-size: 0.76rem;
+	font-weight: 500;
+	line-height: 1.5;
+
+	white-space: normal;
+	overflow-wrap: anywhere;
+	word-break: break-word;
+}
+
+/* Contexte */
+:global(.table-row .context) {
+	display: block;
+	min-width: 0;
+
+	color: rgba(205, 218, 238, 0.82);
+
+	font-size: 0.78rem;
+	line-height: 1.45;
+
+	overflow-wrap: anywhere;
+}
+
+/* Badges */
+:global(.table-row .type-badge),
+:global(.table-row .status) {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+	min-height: 24px;
+	padding: 0.25rem 0.48rem;
+
+	border-radius: 0.38rem;
+
+	font-family:
+		Inter,
+		"Segoe UI",
+		sans-serif;
+
+	font-size: 0.62rem;
+	font-weight: 700;
+	line-height: 1;
+	letter-spacing: 0.045em;
+	text-transform: uppercase;
+
+	white-space: nowrap;
+}
+
+/* Actions */
+:global(.table-row .row-actions) {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 0.35rem;
+}
+
+:global(.table-row .row-actions button) {
+	display: inline-grid;
+	place-items: center;
+
+	flex: 0 0 auto;
+
+	width: 28px;
+	height: 28px;
+	padding: 0;
+
+	border: 1px solid rgba(104, 139, 190, 0.25);
+	border-radius: 0.42rem;
+
+	background: rgba(18, 32, 55, 0.72);
+	color: rgba(226, 236, 250, 0.85);
+
+	font-size: 0.72rem;
+	line-height: 1;
+	cursor: pointer;
+}
+
+:global(.table-row .row-actions button:hover) {
+	border-color: rgba(76, 142, 255, 0.55);
+	background: rgba(40, 91, 170, 0.22);
+	color: #fff;
+}
+:global(.table-row)
+
+/* =========================================================
+   REPORT HASH — DISPLAY FIX
+   ========================================================= */
+
+:global([data-report-hash]) {
+	display: block;
+	min-width: 0;
+	max-width: 100%;
+
+	padding: 0.35rem 0.5rem;
+
+	border: 1px solid rgba(92, 128, 180, 0.22);
+	border-radius: 0.35rem;
+
+	background: rgba(10, 22, 40, 0.72);
+	color: rgba(210, 224, 244, 0.9);
+
+	font-family:
+		"JetBrains Mono",
+		"SFMono-Regular",
+		Consolas,
+		monospace;
+
+	font-size: 0.62rem;
+	line-height: 1.35;
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.metadata-row,
+:global(.metadata-row) {
+	display: grid;
+	grid-template-columns: minmax(90px, 0.8fr) minmax(0, 1.2fr);
+	align-items: center;
+	gap: 0.75rem;
+}
+
+:global(input[data-report-hash]) {
+	width: 100%;
+	height: auto;
+
+	outline: none;
+	cursor: text;
+}
+
+/* =========================================================
+   REPORT HASH — METADATA FIX
+   ========================================================= */
+
+.metadata-panel dl > div {
+	display: grid;
+	grid-template-columns: minmax(90px, 0.8fr) minmax(0, 1.2fr);
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.metadata-panel dd {
+	min-width: 0;
+	margin: 0;
+	text-align: right;
+}
+
+.metadata-panel dd:has(:global([data-report-hash])) {
+	display: flex;
+	justify-content: flex-end;
+	min-width: 0;
+}
+
+:global([data-report-hash]) {
+	display: block;
+	width: 100%;
+	max-width: 150px;
+	min-width: 0;
+
+	padding: 0.38rem 0.5rem;
+
+	border: 1px solid rgba(91, 132, 190, 0.22);
+	border-radius: 0.35rem;
+
+	background: rgba(8, 19, 36, 0.82);
+	color: rgba(216, 229, 247, 0.92);
+
+	font-family:
+		"JetBrains Mono",
+		"SFMono-Regular",
+		Consolas,
+		monospace;
+
+	font-size: 0.6rem;
+	font-weight: 500;
+	line-height: 1.35;
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+:global([data-report-hash])
+
+  /* =========================================================
+     MM REPORT FLOW — STORY-FIRST LAYOUT
+     ========================================================= */
+  .report-flow { display: grid; gap: .85rem; }
+  .phase-label { display: block; margin-bottom: .35rem; color: #64748b; font-size: .58rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  .assessment-panel { padding-bottom: 1rem; }
+  .assessment-panel > header { align-items: center; }
+  .assessment-metrics { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: .7rem; padding: 0 1.2rem 1rem; }
+  .assessment-metrics article { min-height: 112px; padding: .9rem; background: rgba(15,23,42,.74); border: 1px solid rgba(71,85,105,.5); border-radius: 10px; }
+  .assessment-metrics article > span { display: block; color: #60a5fa; font-size: .66rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+  .assessment-metrics strong { display: block; margin-top: .45rem; color: #f8fafc; font-size: 2rem; line-height: 1; letter-spacing: -.05em; }
+  .assessment-metrics small { display: block; margin-top: .42rem; color: #74839a; font-size: .7rem; line-height: 1.4; }
+  .assessment-body { display: grid; grid-template-columns: minmax(0,1.35fr) minmax(280px,.65fr); gap: .8rem; padding: 0 1.2rem; }
+  .observation-block { padding: 1rem; background: rgba(2,6,23,.48); border: 1px solid rgba(71,85,105,.38); border-radius: 10px; }
+  .story-step { display: block; color: #93c5fd; font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+  .observation-block .narrative { padding: .25rem 0 0; }
+  .assessment-panel .decision-box { display: grid; grid-template-columns: 1fr; margin: 0; padding: 1rem; }
+  .assessment-panel .decision-box > div + div { padding-top: .85rem; border-top: 1px solid rgba(71,85,105,.35); }
+  .assessment-panel .decision-box p { margin-top: .3rem; }
+  .assessment-panel .processing { margin: .9rem 1.2rem 0; }
+  .report-closing-grid { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(320px,.85fr); gap: .85rem; }
+  .action-panel h3,.metadata-panel h3 { margin: .3rem 0 0; }
+  @media(max-width:1050px){.assessment-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.assessment-body,.report-closing-grid{grid-template-columns:1fr}}
+  @media(max-width:650px){.assessment-metrics{grid-template-columns:1fr}.assessment-body{padding:0 .9rem}.assessment-metrics{padding:0 .9rem .9rem}.assessment-panel .processing{margin-left:.9rem;margin-right:.9rem}}
+
+
+
+  /* =========================================================
+     STORY-FIRST V2 — ENGINEERING NARRATIVE
+     ========================================================= */
+  .report-flow { position: relative; padding-left: 1.35rem; }
+  .report-flow::before { content: ""; position: absolute; left: .3rem; top: 1.4rem; bottom: 1.4rem; width: 1px; background: linear-gradient(to bottom, rgba(59,130,246,.55), rgba(59,130,246,.12)); }
+  .report-flow > .panel, .report-flow > .report-closing-grid { position: relative; }
+  .report-flow > .panel::before, .report-flow > .report-closing-grid::before { content: ""; position: absolute; left: -1.35rem; top: 1.45rem; width: .62rem; height: .62rem; border: 2px solid #60a5fa; border-radius: 50%; background: #071126; box-shadow: 0 0 0 5px rgba(59,130,246,.08); z-index: 2; }
+  .section-intent { max-width: 72ch; margin: .45rem 0 0; color: #7f8ca2; font-size: .78rem; line-height: 1.55; }
+
+  .assessment-metrics article { min-height: 118px; }
+  .assessment-metrics article > div { display: flex; align-items: baseline; gap: .42rem; margin-top: .48rem; }
+  .assessment-metrics article b { color: #cbd5e1; font-size: .72rem; font-weight: 650; }
+  .assessment-metrics article small { margin-top: .55rem; }
+
+  .assessment-body { display: grid; grid-template-columns: minmax(0,.85fr) minmax(0,1.15fr); gap: .8rem; padding: 0 1.2rem 1rem; }
+  .analysis-layer { padding: 1rem; border: 1px solid rgba(91,132,190,.18); border-radius: 10px; background: rgba(2,6,23,.46); }
+  .analysis-layer h4 { margin: .28rem 0 .8rem; color: #e5edf9; font-size: .84rem; }
+  .observation-list { display: grid; gap: .62rem; margin: 0; padding: 0; list-style: none; }
+  .observation-list li { position: relative; padding-left: 1.15rem; color: #b6c2d4; font-size: .79rem; line-height: 1.5; }
+  .observation-list li::before { content: "✓"; position: absolute; left: 0; color: #4ade80; font-weight: 800; }
+  .interpretation-block .narrative { padding: 0; }
+  .decision-box { grid-column: 1 / -1; }
+
+  :global(.recommendation) { grid-template-columns: 58px minmax(0,1fr); padding: 0; overflow: hidden; }
+  :global(.recommendation-rail) { display: flex; flex-direction: column; align-items: center; gap: .35rem; padding: 1rem .6rem; background: rgba(15,23,42,.58); border-right: 1px solid rgba(91,132,190,.16); }
+  :global(.recommendation-rail > span) { color: #60a5fa; font-size: 1rem; font-weight: 800; }
+  :global(.recommendation-rail > small) { color: #94a3b8; font-size: .58rem; font-weight: 800; }
+  :global(.recommendation-content) { min-width: 0; padding: 1rem 1.05rem; }
+  :global(.recommendation-heading) { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem; }
+  :global(.domain-badge) { padding: .28rem .48rem; color: #93c5fd; background: rgba(37,99,235,.12); border: 1px solid rgba(96,165,250,.2); border-radius: 5px; font-size: .58rem; font-weight: 800; letter-spacing: .07em; }
+  :global(.recommendation-description) { margin: .55rem 0 .8rem !important; color: #9aa9bd !important; }
+  :global(.playbook-grid) { display: grid; grid-template-columns: 1fr 1fr 1.25fr; gap: .65rem; }
+  :global(.playbook-grid > div) { padding: .75rem; border: 1px solid rgba(91,132,190,.14); border-radius: 8px; background: rgba(2,6,23,.38); }
+  :global(.playbook-grid small) { color: #60a5fa; font-size: .56rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  :global(.playbook-grid p) { margin: .35rem 0 0 !important; color: #9eacbf !important; font-size: .69rem !important; line-height: 1.5 !important; }
+  :global(.source-list) { display: flex; flex-wrap: wrap; gap: .3rem; }
+  :global(.source-list b) { padding: .2rem .35rem; color: #cbd5e1; background: rgba(30,41,59,.75); border-radius: 4px; font-size: .58rem; font-weight: 650; }
+
+  .action-panel, .metadata-panel { position: relative; }
+  @media (max-width: 850px) {
+    .assessment-body { grid-template-columns: 1fr; }
+    .decision-box { grid-column: auto; }
+    :global(.playbook-grid) { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 700px) {
+    .report-flow { padding-left: 0; }
+    .report-flow::before, .report-flow > .panel::before, .report-flow > .report-closing-grid::before { display: none; }
+  }
+
+
+  /* =========================================================
+     STORY-FIRST V3 — READABILITY & PREMIUM DENSITY
+     Plus proche de la maquette : police plus généreuse,
+     cartes plus lisibles et playbook horizontal compact.
+     ========================================================= */
+
+  .results {
+    font-size: 17px;
+    line-height: 1.62;
+  }
+
+  .result-content,
+  .report-flow {
+    gap: 1rem;
+  }
+
+  .report-header,
+  .panel {
+    border-color: rgba(91, 132, 190, 0.42);
+    border-radius: 16px;
+    box-shadow: 0 18px 52px rgba(0, 0, 0, 0.22);
+  }
+
+  .report-header {
+    padding: 1.15rem 1.35rem;
+  }
+
+  .results .report-header h2 {
+    font-size: clamp(1.9rem, 2.35vw, 2.55rem);
+  }
+
+  .results .report-header > div > p {
+    font-size: 1rem;
+    color: rgba(192, 207, 228, 0.78);
+  }
+
+  .results .kicker,
+  .phase-label {
+    font-size: 0.72rem;
+  }
+
+  .results .panel h3 {
+    font-size: clamp(1.3rem, 1.55vw, 1.55rem);
+    line-height: 1.2;
+  }
+
+  .section-intent {
+    margin-top: 0.45rem;
+    font-size: 0.9rem;
+    color: rgba(177, 194, 216, 0.72);
+  }
+
+  .panel > header {
+    padding: 1.3rem 1.4rem 1.05rem;
+  }
+
+  .assessment,
+  .priority-badge {
+    font-size: 0.7rem;
+    padding: 0.48rem 0.68rem;
+  }
+
+  .export-area button {
+    min-height: 40px;
+    padding: 0.55rem 0.82rem;
+    font-size: 0.72rem;
+  }
+
+  /* Key signals */
+  .assessment-metrics {
+    gap: 0.85rem;
+    padding: 0 1.4rem 1.1rem;
+  }
+
+  .assessment-metrics article {
+    min-height: 138px;
+    padding: 1rem 1.05rem;
+    border-radius: 12px;
+    background: linear-gradient(145deg, rgba(14, 29, 53, 0.9), rgba(8, 19, 37, 0.86));
+  }
+
+  .assessment-metrics article > span {
+    font-size: 0.72rem;
+  }
+
+  .assessment-metrics strong {
+    font-size: 2.45rem;
+  }
+
+  .assessment-metrics article b {
+    font-size: 0.86rem;
+  }
+
+  .assessment-metrics small {
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+
+  /* Observation / interpretation / conclusion */
+  .assessment-body {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 0.9rem;
+    padding: 0 1.4rem 1.1rem;
+  }
+
+  .analysis-layer,
+  .assessment-panel .decision-box {
+    padding: 1.15rem;
+    border-radius: 12px;
+  }
+
+  .story-step,
+  .decision-box span {
+    font-size: 0.72rem;
+  }
+
+  .analysis-layer h4 {
+    margin: 0.35rem 0 0.9rem;
+    font-size: 1rem;
+  }
+
+  .observation-list li {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    padding-left: 1.35rem;
+  }
+
+  .results .narrative {
+    font-size: 0.94rem;
+    line-height: 1.72;
+  }
+
+  .results .decision-box strong {
+    font-size: 1.1rem;
+  }
+
+  .results .decision-box p {
+    font-size: 0.88rem;
+    line-height: 1.62;
+  }
+
+  .assessment-panel .processing {
+    margin: 0 1.4rem 1.1rem;
+    padding: 0.8rem 1rem;
+    font-size: 0.78rem;
+    border: 1px solid rgba(91, 132, 190, 0.18);
+    border-radius: 10px;
+    background: rgba(3, 10, 24, 0.5);
+  }
+
+  /* Investigation playbook — one readable row per step */
+  .results .investigation-panel .recommendations {
+    gap: 0.75rem;
+    padding: 0 1.4rem 1.2rem;
+  }
+
+  :global(.recommendation) {
+    grid-template-columns: 72px minmax(0, 1fr);
+    border-radius: 12px;
+    background: linear-gradient(145deg, rgba(10, 24, 45, 0.86), rgba(5, 15, 31, 0.9));
+  }
+
+  :global(.recommendation-rail) {
+    justify-content: center;
+    padding: 1rem 0.65rem;
+  }
+
+  :global(.recommendation-rail > span) {
+    font-size: 1.35rem;
+  }
+
+  :global(.recommendation-rail > small) {
+    font-size: 0.68rem;
+  }
+
+  :global(.recommendation-content) {
+    display: grid;
+    grid-template-columns: minmax(190px, 0.9fr) minmax(0, 2.1fr);
+    column-gap: 1rem;
+    row-gap: 0.55rem;
+    align-items: center;
+    padding: 1rem 1.15rem;
+  }
+
+  :global(.recommendation-heading) {
+    align-self: end;
+  }
+
+  :global(.domain-badge) {
+    font-size: 0.68rem;
+    padding: 0.34rem 0.52rem;
+  }
+
+  :global(.recommendation-heading strong) {
+    width: 100%;
+    margin-top: 0.35rem;
+    font-size: 0.94rem !important;
+  }
+
+  :global(.recommendation-description) {
+    grid-column: 1;
+    align-self: start;
+    margin: 0 !important;
+    font-size: 0.82rem !important;
+    line-height: 1.5 !important;
+  }
+
+  :global(.playbook-grid) {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    grid-template-columns: 1fr 0.95fr 1.15fr;
+    gap: 0;
+    height: 100%;
+  }
+
+  :global(.playbook-grid > div) {
+    padding: 0.25rem 0.95rem;
+    border: 0;
+    border-left: 1px solid rgba(91, 132, 190, 0.18);
+    border-radius: 0;
+    background: transparent;
+  }
+
+  :global(.playbook-grid small) {
+    font-size: 0.66rem;
+  }
+
+  :global(.playbook-grid p) {
+    font-size: 0.82rem !important;
+    line-height: 1.5 !important;
+  }
+
+  :global(.source-list b) {
+    padding: 0.27rem 0.42rem;
+    font-size: 0.68rem;
+  }
+
+  .investigation-panel footer {
+    margin: 0 1.4rem 1.25rem;
+    padding: 0.9rem 1rem;
+  }
+
+  .results .investigation-panel footer strong {
+    font-size: 0.76rem;
+  }
+
+  .results .investigation-panel footer p {
+    font-size: 0.8rem;
+  }
+
+  /* Evidence table */
+  .details-panel > header {
+    padding-bottom: 1.15rem;
+  }
+
+  .table-tools label {
+    min-width: 235px;
+    padding: 0.6rem 0.75rem;
+  }
+
+  .table-tools input,
+  .table-tools select {
+    font-size: 0.78rem;
+  }
+
+  .table-head,
+  :global(.table-row) {
+    grid-template-columns: 94px minmax(245px, 1.7fr) minmax(185px, 1fr) 98px 112px;
+  }
+
+  .table-head {
+    padding: 0.82rem 1.2rem;
+    font-size: 0.7rem;
+  }
+
+  :global(.table-row) {
+    min-height: 68px;
+    padding: 0.85rem 1.2rem;
+  }
+
+  :global(.table-row > code) {
+    font-size: 0.84rem;
+  }
+
+  :global(.table-row .context) {
+    font-size: 0.84rem;
+  }
+
+  :global(.table-row .type-badge),
+  :global(.table-row .status) {
+    font-size: 0.68rem;
+    min-height: 27px;
+  }
+
+  :global(.table-row .row-actions button) {
+    width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
+  }
+
+  .table-footer {
+    padding: 0.8rem 1.2rem;
+    font-size: 0.76rem;
+  }
+
+  /* Action cards closer to the visual reference */
+  .report-closing-grid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(340px, 0.8fr);
+    gap: 1rem;
+  }
+
+  .action-panel,
+  .metadata-panel {
+    padding: 1.25rem;
+  }
+
+  .quick-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .quick-actions article {
+    min-height: 116px;
+    grid-template-columns: 44px minmax(0, 1fr);
+    align-items: start;
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .quick-actions article > b {
+    display: none;
+  }
+
+  .action-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.15rem;
+  }
+
+  .quick-actions strong {
+    font-size: 0.92rem;
+  }
+
+  .quick-actions p {
+    margin-top: 0.35rem;
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .metadata-panel dl > div {
+    padding: 0.8rem 0;
+  }
+
+  .metadata-panel dt,
+  .metadata-panel dd {
+    font-size: 0.8rem;
+  }
+
+  :global([data-report-hash]) {
+    max-width: 190px;
+    font-size: 0.72rem;
+  }
+
+  .confidential {
+    font-size: 0.78rem;
+    padding: 0.85rem;
+  }
+
+  @media (max-width: 1150px) {
+    :global(.recommendation-content) {
+      grid-template-columns: 1fr;
+    }
+
+    :global(.recommendation-description),
+    :global(.playbook-grid) {
+      grid-column: 1;
+      grid-row: auto;
+    }
+
+    :global(.playbook-grid) {
+      margin-top: 0.5rem;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .results { font-size: 16px; }
+    .assessment-body,
+    .report-closing-grid { grid-template-columns: 1fr; }
+    :global(.playbook-grid) { grid-template-columns: 1fr; gap: 0.55rem; }
+    :global(.playbook-grid > div) {
+      padding: 0.75rem;
+      border: 1px solid rgba(91, 132, 190, 0.14);
+      border-radius: 8px;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .assessment-metrics,
+    .quick-actions { grid-template-columns: 1fr; }
+    .panel > header { padding: 1.05rem; }
+    .assessment-body,
+    .assessment-metrics,
+    .results .investigation-panel .recommendations { padding-left: 1rem; padding-right: 1rem; }
+  }
+
+
+
+  /* =========================================================
+     STORY-FIRST V4 — ENGINEERING EDITION
+     Lisibilité renforcée, hiérarchie plus affirmée,
+     densité maîtrisée sans codes marketing.
+     ========================================================= */
+
+  .results {
+    font-size: 19px;
+    line-height: 1.66;
+    color: rgba(221, 231, 245, 0.92);
+  }
+
+  .result-content,
+  .report-flow {
+    gap: 1.15rem;
+  }
+
+  .report-header,
+  .panel {
+    border-color: rgba(96, 144, 208, 0.46);
+    border-radius: 15px;
+    box-shadow:
+      0 20px 56px rgba(0, 0, 0, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.018);
+  }
+
+  .report-header {
+    padding: 1.35rem 1.55rem;
+  }
+
+  .results .report-header h2 {
+    font-size: clamp(2.15rem, 2.65vw, 2.85rem);
+    line-height: 1.06;
+  }
+
+  .results .report-header > div > p {
+    margin-top: 0.7rem;
+    font-size: 1.08rem;
+    line-height: 1.5;
+  }
+
+  .results .kicker,
+  .phase-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.105em;
+  }
+
+  .results .panel h3 {
+    font-size: clamp(1.55rem, 1.8vw, 1.85rem);
+    line-height: 1.16;
+    letter-spacing: -0.025em;
+  }
+
+  .section-intent {
+    max-width: 82ch;
+    margin-top: 0.55rem;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: rgba(183, 199, 220, 0.78);
+  }
+
+  .panel > header {
+    padding: 1.5rem 1.6rem 1.25rem;
+  }
+
+  .assessment,
+  .priority-badge {
+    font-size: 0.78rem;
+    padding: 0.55rem 0.78rem;
+  }
+
+  .export-area {
+    gap: 0.5rem;
+  }
+
+  .export-area button {
+    min-height: 44px;
+    padding: 0.62rem 0.95rem;
+    font-size: 0.82rem;
+  }
+
+  /* Assessment: trois colonnes lisibles, une idée par bloc */
+  .assessment-metrics {
+    gap: 0.95rem;
+    padding: 0 1.6rem 1.25rem;
+  }
+
+  .assessment-metrics article {
+    min-height: 154px;
+    padding: 1.15rem 1.2rem;
+    border-radius: 12px;
+  }
+
+  .assessment-metrics article > span {
+    font-size: 0.78rem;
+  }
+
+  .assessment-metrics article > div {
+    margin-top: 0.58rem;
+  }
+
+  .assessment-metrics strong {
+    font-size: 2.75rem;
+  }
+
+  .assessment-metrics article b {
+    font-size: 0.98rem;
+  }
+
+  .assessment-metrics small {
+    margin-top: 0.65rem;
+    font-size: 0.88rem;
+    line-height: 1.48;
+  }
+
+  .assessment-body {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    padding: 0 1.6rem 1.25rem;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+
+  .analysis-layer,
+  .assessment-panel .decision-box {
+    min-height: 100%;
+    padding: 1.25rem 1.3rem;
+    border-radius: 0;
+    background: rgba(4, 12, 27, 0.56);
+    border: 1px solid rgba(91, 132, 190, 0.22);
+  }
+
+  .analysis-layer + .analysis-layer,
+  .assessment-panel .decision-box {
+    border-left: 0;
+  }
+
+  .analysis-layer:first-child {
+    border-radius: 12px 0 0 12px;
+  }
+
+  .assessment-panel .decision-box {
+    display: block;
+    border-radius: 0 12px 12px 0;
+  }
+
+  .assessment-panel .decision-box > div + div {
+    margin-top: 1rem;
+    padding-top: 1rem;
+  }
+
+  .story-step,
+  .decision-box span {
+    font-size: 0.78rem;
+  }
+
+  .analysis-layer h4 {
+    margin: 0.38rem 0 0.95rem;
+    font-size: 1.08rem;
+    line-height: 1.35;
+  }
+
+  .observation-list {
+    gap: 0.7rem;
+  }
+
+  .observation-list li {
+    padding-left: 1.45rem;
+    font-size: 1rem;
+    line-height: 1.56;
+  }
+
+  .results .narrative {
+    font-size: 1rem;
+    line-height: 1.72;
+  }
+
+  .results .narrative p {
+    margin-bottom: 0.85rem;
+  }
+
+  .results .decision-box strong {
+    font-size: 1.22rem;
+    line-height: 1.35;
+  }
+
+  .results .decision-box p {
+    font-size: 0.98rem;
+    line-height: 1.62;
+  }
+
+  .assessment-panel .processing {
+    margin: 0 1.6rem 1.25rem;
+    padding: 0.9rem 1.05rem;
+    font-size: 0.88rem;
+  }
+
+  /* Playbook: plus grand, mais toujours compact et opérationnel */
+  .results .investigation-panel .recommendations {
+    gap: 0.85rem;
+    padding: 0 1.6rem 1.35rem;
+  }
+
+  :global(.recommendation) {
+    grid-template-columns: 82px minmax(0, 1fr);
+    min-height: 154px;
+    border-radius: 12px;
+  }
+
+  :global(.recommendation-rail) {
+    padding: 1.1rem 0.75rem;
+  }
+
+  :global(.recommendation-rail > span) {
+    font-size: 1.55rem;
+  }
+
+  :global(.recommendation-rail > small) {
+    font-size: 0.75rem;
+  }
+
+  :global(.recommendation-content) {
+    grid-template-columns: minmax(220px, 0.9fr) minmax(0, 2.1fr);
+    column-gap: 1.2rem;
+    row-gap: 0.65rem;
+    padding: 1.2rem 1.35rem;
+  }
+
+  :global(.domain-badge) {
+    font-size: 0.76rem;
+    padding: 0.38rem 0.58rem;
+  }
+
+  :global(.recommendation-heading strong) {
+    margin-top: 0.45rem;
+    font-size: 1.08rem !important;
+    line-height: 1.35 !important;
+  }
+
+  :global(.recommendation-description) {
+    font-size: 0.94rem !important;
+    line-height: 1.55 !important;
+  }
+
+  :global(.playbook-grid > div) {
+    padding: 0.35rem 1.1rem;
+  }
+
+  :global(.playbook-grid small) {
+    font-size: 0.74rem;
+  }
+
+  :global(.playbook-grid p) {
+    margin-top: 0.45rem !important;
+    font-size: 0.94rem !important;
+    line-height: 1.55 !important;
+  }
+
+  :global(.source-list) {
+    gap: 0.38rem;
+  }
+
+  :global(.source-list b) {
+    padding: 0.32rem 0.48rem;
+    font-size: 0.76rem;
+  }
+
+  .investigation-panel footer {
+    margin: 0 1.6rem 1.35rem;
+    padding: 1rem 1.1rem;
+  }
+
+  .results .investigation-panel footer strong {
+    font-size: 0.84rem;
+  }
+
+  .results .investigation-panel footer p {
+    font-size: 0.9rem;
+  }
+
+  /* Evidence */
+  .details-panel > header {
+    padding-bottom: 1.25rem;
+  }
+
+  .table-tools {
+    gap: 0.6rem;
+  }
+
+  .table-tools label {
+    min-width: 270px;
+    padding: 0.68rem 0.85rem;
+  }
+
+  .table-tools select {
+    padding: 0.68rem 0.85rem;
+  }
+
+  .table-tools input,
+  .table-tools select {
+    font-size: 0.9rem;
+  }
+
+  .table-head,
+  :global(.table-row) {
+    grid-template-columns: 104px minmax(270px, 1.7fr) minmax(205px, 1fr) 108px 122px;
+    column-gap: 1.05rem;
+  }
+
+  .table-head {
+    padding: 0.92rem 1.35rem;
+    font-size: 0.78rem;
+  }
+
+  :global(.table-row) {
+    min-height: 76px;
+    padding: 0.95rem 1.35rem;
+  }
+
+  :global(.table-row > code) {
+    font-size: 0.96rem;
+    line-height: 1.5;
+  }
+
+  :global(.table-row .context) {
+    font-size: 0.95rem;
+    line-height: 1.48;
+  }
+
+  :global(.table-row .type-badge),
+  :global(.table-row .status) {
+    min-height: 30px;
+    padding: 0.34rem 0.55rem;
+    font-size: 0.75rem;
+  }
+
+  :global(.table-row .row-actions button) {
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+  }
+
+  .table-footer {
+    padding: 0.9rem 1.35rem;
+    font-size: 0.86rem;
+  }
+
+  /* Actions et traçabilité */
+  .report-closing-grid {
+    grid-template-columns: minmax(0, 1.22fr) minmax(380px, 0.78fr);
+    gap: 1.15rem;
+  }
+
+  .action-panel,
+  .metadata-panel {
+    padding: 1.45rem;
+  }
+
+  .quick-actions {
+    gap: 0.85rem;
+    margin-top: 1.15rem;
+  }
+
+  .quick-actions article {
+    min-height: 140px;
+    grid-template-columns: 48px minmax(0, 1fr);
+    padding: 1.15rem;
+  }
+
+  .action-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 1.28rem;
+  }
+
+  .quick-actions strong {
+    font-size: 1.02rem;
+    line-height: 1.35;
+  }
+
+  .quick-actions p {
+    margin-top: 0.45rem;
+    font-size: 0.9rem;
+    line-height: 1.52;
+  }
+
+  .metadata-panel dl {
+    margin-top: 1rem;
+  }
+
+  .metadata-panel dl > div {
+    padding: 0.92rem 0;
+  }
+
+  .metadata-panel dt,
+  .metadata-panel dd {
+    font-size: 0.91rem;
+    line-height: 1.45;
+  }
+
+  :global([data-report-hash]) {
+    max-width: 220px;
+    font-size: 0.82rem;
+  }
+
+  .confidential {
+    margin-top: 1rem;
+    padding: 0.95rem;
+    font-size: 0.88rem;
+  }
+
+  @media (max-width: 1260px) {
+    .results { font-size: 18px; }
+
+    .assessment-body {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      overflow: visible;
+    }
+
+    .analysis-layer,
+    .assessment-panel .decision-box,
+    .analysis-layer:first-child {
+      border: 1px solid rgba(91, 132, 190, 0.22);
+      border-radius: 12px;
+    }
+
+    .assessment-panel .decision-box {
+      grid-column: 1 / -1;
+    }
+
+    .report-closing-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 980px) {
+    .results { font-size: 17px; }
+    .assessment-body { grid-template-columns: 1fr; }
+    .assessment-panel .decision-box { grid-column: auto; }
+    :global(.recommendation-content) { grid-template-columns: 1fr; }
+    :global(.playbook-grid) {
+      grid-column: 1;
+      grid-row: auto;
+      grid-template-columns: 1fr;
+      gap: 0.65rem;
+    }
+    :global(.playbook-grid > div) {
+      padding: 0.85rem;
+      border: 1px solid rgba(91, 132, 190, 0.16);
+      border-radius: 8px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .results { font-size: 16px; }
+    .results .panel h3 { font-size: 1.38rem; }
+    .assessment-metrics,
+    .quick-actions { grid-template-columns: 1fr; }
+    .panel > header { padding: 1.15rem; }
+    .assessment-body,
+    .assessment-metrics,
+    .results .investigation-panel .recommendations {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+
 </style>
