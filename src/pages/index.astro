@@ -62,6 +62,20 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 					<div>
 						<p class="section-tag"></p>
 						<h2>Retours d’expérience sur le terrain</h2>
+
+							<p class="section-intro">
+			Des retours d'expérience organisés par domaine d'expertise.
+		</p>
+
+		<div class="editorial-pillars">
+			<span class="pillar vm">VM Fundamentals</span>
+			<span class="pillar endpoint">Endpoint Security</span>
+			<span class="pillar engineering">Security Platform Engineering</span>
+			
+		</div>
+	
+
+	
 					</div>
 
 					<a href="/notes-de-terrain" class="see-all">Voir tous les articles →</a>
@@ -69,7 +83,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 				<div class="articles-grid">
 
-					<a href="/articles/pourquoi-plateforme-securite-a-jour-techniquement-en-retard" class="article-card">
+					<a href="/articles/pourquoi-plateforme-securite-a-jour-techniquement-en-retard" class="article-card category-engineering">
 						<div class="article-image">
 							<img src="/Images/security-platform-engineering-plateforme-a-jour.png" alt="" />
 						</div>
@@ -85,7 +99,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 					</a>
 
 
-<a href="/articles/angles-morts-console-edr" class="article-card">
+<a href="/articles/angles-morts-console-edr" class="article-card category-endpoint">
 	<div class="article-image">
 		<img
 			src="/Images/edr-console-angles-morts.png"
@@ -110,7 +124,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	</div>
 </a>
 
-					<a href="/articles/ce-que-votre-edr-ne-voit-pas" class="article-card">
+					<a href="/articles/ce-que-votre-edr-ne-voit-pas" class="article-card category-endpoint">
 						<div class="article-image">
 							<img src="/Images/edr-assets.png" alt="Votre EDR voit-il vraiment tout ?" />
 						</div>
@@ -128,7 +142,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 					</a>
 
 					
-					<a href="/articles/tagging-vulnerability-management" class="article-card">
+					<a href="/articles/tagging-vulnerability-management" class="article-card category-vm">
 						<div class="article-image">
 							<img src="/Images/tagging.png" alt="" />
 						</div>
@@ -357,6 +371,56 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 	/* Retours d'expérience */
 
+
+	.section-intro {
+	margin: .75rem 0 1.25rem;
+	color: #64748b;
+	font-size: 1.1rem;
+}
+
+.editorial-pillars {
+	display: flex;
+	flex-wrap: wrap;
+	gap: .75rem;
+}
+
+.pillar {
+	display: inline-flex;
+	align-items: center;
+
+	padding: .45rem .85rem;
+
+	border-radius: 999px;
+
+	font-size: .78rem;
+	font-weight: 800;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+}
+
+.vm {
+	color: #2563EB;
+	background: rgba(37,99,235,.10);
+	border: 1px solid rgba(37,99,235,.22);
+}
+
+.endpoint {
+	color: #DC2626;
+	background: rgba(220,38,38,.10);
+	border: 1px solid rgba(220,38,38,.22);
+}
+
+.engineering {
+	color: #7C3AED;
+	background: rgba(124,58,237,.10);
+	border: 1px solid rgba(124,58,237,.22);
+}
+
+.exposure {
+	color: #F97316;
+	background: rgba(249,115,22,.10);
+	border: 1px solid rgba(249,115,22,.22);
+}
 	.articles-section {
 		margin-top: 3.5rem;
 	}
@@ -407,10 +471,44 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			box-shadow 0.25s ease;
 	}
 
+	.category-vm {
+	--category-color: #2563eb;
+	--category-background: rgba(37, 99, 235, 0.1);
+	--category-border: rgba(37, 99, 235, 0.24);
+	--category-shadow: rgba(37, 99, 235, 0.18);
+}
+
+.category-endpoint {
+	--category-color: #dc2626;
+	--category-background: rgba(220, 38, 38, 0.1);
+	--category-border: rgba(220, 38, 38, 0.24);
+	--category-shadow: rgba(220, 38, 38, 0.18);
+}
+
+.category-engineering {
+	--category-color: #7c3aed;
+	--category-background: rgba(124, 58, 237, 0.1);
+	--category-border: rgba(124, 58, 237, 0.24);
+	--category-shadow: rgba(124, 58, 237, 0.18);
+}
+
+.category-exposure {
+	--category-color: #f97316;
+	--category-background: rgba(249, 115, 22, 0.1);
+	--category-border: rgba(249, 115, 22, 0.24);
+	--category-shadow: rgba(249, 115, 22, 0.18);
+}
+
+
 	.article-card:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 20px 50px rgba(15, 23, 42, 0.1);
-	}
+	transform: translateY(-4px);
+
+	border-color: var(--category-border);
+
+	box-shadow:
+		0 20px 50px rgba(15,23,42,.12),
+		0 12px 30px var(--category-shadow);
+}
 
 	.article-image {
 		width: 100%;
@@ -439,13 +537,25 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	}
 
 	.article-category {
-		margin: 0 0 0.55rem;
-		color: #2563eb;
-		font-size: 0.62rem;
-		font-weight: 800;
-		letter-spacing: 0.1em;
-		text-transform: uppercase;
-	}
+	display: inline-flex;
+	align-items: center;
+	width: fit-content;
+
+	padding: .4rem .75rem;
+
+	margin: 0 auto 1rem;
+
+	border-radius: 999px;
+
+	font-size: .72rem;
+	font-weight: 900;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+
+	color: var(--category-color);
+	background: var(--category-background);
+	border: 1px solid var(--category-border);
+}
 
 	.article-card h3 {
 		margin: 0 0 0.7rem;

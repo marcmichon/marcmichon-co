@@ -50,7 +50,7 @@ import { SITE_TITLE } from '../consts';
 				
 				<div class="articles-grid">
 
-					<a href="/articles/pourquoi-plateforme-securite-a-jour-techniquement-en-retard" class="article-card">
+					<a href="/articles/pourquoi-plateforme-securite-a-jour-techniquement-en-retard" class="article-card category-engineering">
 						<div class="article-image">
 							<img src="/Images/security-platform-engineering-plateforme-a-jour.png" alt="" />
 						</div>
@@ -65,7 +65,7 @@ import { SITE_TITLE } from '../consts';
 						</div>
 					</a>
 
-<a href="/articles/angles-morts-console-edr" class="article-card">
+<a href="/articles/angles-morts-console-edr" class="article-card category-endpoint">
 						<div class="article-image">
 							<img src="/Images/edr-console-angles-morts.png" alt="" />
 						</div>
@@ -81,7 +81,7 @@ import { SITE_TITLE } from '../consts';
 					</a>
 
 
-					<a href="/articles/exclusions-edr-risque-silencieux" class="article-card">
+					<a href="/articles/exclusions-edr-risque-silencieux" class="article-card category-endpoint">
 						<div class="article-image">
 							<img src="/Images/exclusions.png" alt="" />
 						</div>
@@ -96,7 +96,7 @@ import { SITE_TITLE } from '../consts';
 						</div>
 					</a>
 
-					<a href="/articles/ce-que-votre-edr-ne-voit-pas" class="article-card">
+					<a href="/articles/ce-que-votre-edr-ne-voit-pas" class="article-card category-endpoint">
 						<div class="article-image">
 							<img src="/Images/edr-assets.png" alt="" />
 						</div>
@@ -112,7 +112,7 @@ import { SITE_TITLE } from '../consts';
 						</div>
 					</a>
 
-					<a href="/articles/endpoint-protege-endpoint-securise" class="article-card">
+					<a href="/articles/endpoint-protege-endpoint-securise" class="article-card category-endpoint">
 						<div class="article-image">
 							<img src="/Images/secops.png" alt="" />
 						</div>
@@ -125,7 +125,7 @@ import { SITE_TITLE } from '../consts';
 						</div>
 					</a>
 
-					<a href="/articles/programmes-vm-echec-scan" class="article-card">
+					<a href="/articles/programmes-vm-echec-scan" class="article-card category-vm">
 						<div class="article-image">
 							<img src="/Images/scanVM.png" alt="" />
 						</div>
@@ -138,7 +138,7 @@ import { SITE_TITLE } from '../consts';
 						</div>
 					</a>
 
-					<a href="/articles/assets-inconnus-visibilite" class="article-card">
+					<a href="/articles/assets-inconnus-visibilite" class="article-card category-vm">
 						<div class="article-image">
 							<img src="/Images/assetsinconnus.png" alt="" />
 						</div>
@@ -151,7 +151,7 @@ import { SITE_TITLE } from '../consts';
 						</div>
 					</a>
 
-					<a href="/articles/tagging-vulnerability-management" class="article-card">
+					<a href="/articles/tagging-vulnerability-management" class="article-card category-vm">
 						<div class="article-image">
 							<img src="/Images/tagging.png" alt="" />
 						</div>
@@ -167,7 +167,7 @@ import { SITE_TITLE } from '../consts';
 						</div>
 					</a>
 
-					<a href="/articles/remediation-maillon-faible-vulnerability-management" class="article-card">
+					<a href="/articles/remediation-maillon-faible-vulnerability-management" class="article-card category-vm">
 						<div class="article-image">
 							<img src="/Images/remediation-vm.png" alt="" />
 						</div>
@@ -189,7 +189,7 @@ import { SITE_TITLE } from '../consts';
 						</div>
 					</a>
 
-					<a href="/articles/vulnerabilite-critique-risque" class="article-card">
+					<a href="/articles/vulnerabilite-critique-risque" class="article-card category-vm">
 						<div class="article-image">
 							<img src="/Images/vulncritique.png" alt="" />
 						</div>
@@ -309,9 +309,12 @@ import { SITE_TITLE } from '../consts';
 	}
 
 	.article-card:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
-	}
+	transform: translateY(-4px);
+	border-color: var(--category-border);
+	box-shadow:
+		0 20px 50px rgba(15, 23, 42, 0.12),
+		0 12px 30px var(--category-shadow);
+}
 
 	.article-image {
 		width: 100%;
@@ -339,15 +342,53 @@ import { SITE_TITLE } from '../consts';
 		padding: 1.75rem;
 	}
 
-	.article-category {
-		font-size: 0.75rem;
-		font-weight: 800;
-		color: #2563eb;
-		letter-spacing: 0.1em;
-		text-transform: uppercase;
-		margin: 0 0 0.75rem;
-	}
+.article-category {
+	display: inline-flex;
+	align-items: center;
+	width: fit-content;
 
+	padding: 0.4rem 0.75rem;
+	border-radius: 999px;
+
+	font-size: 0.72rem;
+	font-weight: 900;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+
+	color: var(--category-color);
+	background: var(--category-background);
+	border: 1px solid var(--category-border);
+
+	margin: 0 auto 1rem;
+}
+
+.category-vm {
+	--category-color: #2563eb;
+	--category-background: rgba(37, 99, 235, 0.1);
+	--category-border: rgba(37, 99, 235, 0.24);
+	--category-shadow: rgba(37, 99, 235, 0.18);
+}
+
+.category-endpoint {
+	--category-color: #dc2626;
+	--category-background: rgba(220, 38, 38, 0.1);
+	--category-border: rgba(220, 38, 38, 0.24);
+	--category-shadow: rgba(220, 38, 38, 0.18);
+}
+
+.category-engineering {
+	--category-color: #7c3aed;
+	--category-background: rgba(124, 58, 237, 0.1);
+	--category-border: rgba(124, 58, 237, 0.24);
+	--category-shadow: rgba(124, 58, 237, 0.18);
+}
+
+.category-exposure {
+	--category-color: #f97316;
+	--category-background: rgba(249, 115, 22, 0.1);
+	--category-border: rgba(249, 115, 22, 0.24);
+	--category-shadow: rgba(249, 115, 22, 0.18);
+}
 	.article-card h3 {
 		font-size: 1.35rem;
 		line-height: 1.35;

@@ -1,0 +1,350 @@
+<section class="results" data-ioc-results>
+  <div class="empty-state" data-empty-state>
+    <span class="pulse"></span>
+    <div>
+      <strong>Prêt pour l’analyse</strong>
+      <p>Collez un contenu dans le moteur ci-dessus pour générer le rapport d’investigation.</p>
+    </div>
+  </div>
+
+  <div class="result-content" data-result-content hidden>
+    <section class="report-header">
+      <div>
+        <span class="kicker">IOC Intelligence Report</span>
+        <div class="title-line">
+          <h2 data-report-title>Investigation recommandée</h2>
+          <span class="priority-badge">Haute priorité</span>
+        </div>
+        <p data-report-subtitle>IOC uniques détectés pour investigation.</p>
+      </div>
+
+      <div class="export-area">
+        <button type="button" class="copy-all" data-copy-all>Copier les IOC</button>
+        <button type="button" data-export="json">JSON</button>
+        <button type="button" data-export="csv">CSV</button>
+        <button type="button" data-export="txt">TXT</button>
+        <button type="button" class="pdf-button" data-export-pdf>PDF</button>
+      </div>
+    </section>
+
+    <div class="dashboard-grid">
+      <div class="main-column">
+        <section class="panel summary-panel">
+          <header>
+            <div><span class="kicker">Executive Summary</span><h3>Ce que raconte l’analyse</h3></div>
+            <span class="assessment" data-assessment>Investigation recommandée</span>
+          </header>
+          <div class="narrative" data-summary></div>
+          <div class="decision-box">
+            <div><span>Lecture rapide</span><strong data-decision>IOC exploitables</strong></div>
+            <p data-rationale></p>
+          </div>
+        </section>
+
+        <section class="panel investigation-panel">
+          <header>
+            <div><span class="kicker">Recommended Next Steps</span><h3>Plan d’investigation</h3></div>
+            <div class="generated"><span>Généré</span><strong data-generated></strong></div>
+          </header>
+          <div class="recommendations" data-recommendations></div>
+          <footer><span class="pulse"></span><div><strong>Analyst recommendations</strong><p>Les actions proposées restent à qualifier selon votre contexte, votre télémétrie et la criticité des systèmes.</p></div></footer>
+        </section>
+
+        <section class="panel details-panel">
+          <header>
+            <div><span class="kicker">IOC Details</span><h3>Détail des indicateurs détectés</h3></div>
+            <div class="table-tools">
+              <label><span aria-hidden="true">⌕</span><input type="search" data-filter placeholder="Rechercher un IOC…" /></label>
+              <select data-type-filter aria-label="Filtrer par type"><option value="">Tous les types</option></select>
+            </div>
+          </header>
+          <div class="ioc-table" role="table">
+            <div class="table-head" role="row"><span>Type</span><span>Indicateur</span><span>Contexte</span><span>Statut</span><span>Actions</span></div>
+            <div data-ioc-rows></div>
+          </div>
+          <div class="table-footer"><span data-result-count></span><span>Analyse locale · aucune transmission</span></div>
+        </section>
+      </div>
+
+      <aside class="side-column">
+        <section class="panel metrics-panel">
+          <span class="kicker">IOC Overview</span>
+          <h3>Signaux clés</h3>
+          <div class="metrics">
+            <article><span>IOC uniques</span><strong data-metric="unique">0</strong><small data-metric-caption="unique"></small></article>
+            <article><span>Types détectés</span><strong data-metric="types">0</strong><small data-metric-caption="types"></small></article>
+            <article><span>IP privées</span><strong data-metric="private">0</strong><small>Aucune IP interne détectée</small></article>
+            <article><span>Doublons supprimés</span><strong data-metric="duplicates">0</strong><small>Éliminés de l’analyse</small></article>
+          </div>
+          <p class="processing" data-processing></p>
+        </section>
+
+        <section class="panel action-panel">
+          <span class="kicker">Plan d’investigation</span>
+          <div class="quick-actions">
+            <article><span class="action-icon blue">⌕</span><div><strong>Rechercher dans le SIEM</strong><p>Corréler les IOC dans les logs DNS, proxy et firewall.</p></div><b>›</b></article>
+            <article><span class="action-icon green">◇</span><div><strong>Vérifier dans l’EDR</strong><p>Rechercher les IOC dans les activités et processus.</p></div><b>›</b></article>
+            <article><span class="action-icon violet">◎</span><div><strong>Analyser le domaine</strong><p>WHOIS, DNS, réputation et historique d’hébergement.</p></div><b>›</b></article>
+            <article><span class="action-icon amber">◇</span><div><strong>Soumettre aux Threat Intel</strong><p>Enrichissement et contexte de menace.</p></div><b>›</b></article>
+          </div>
+        </section>
+
+        <section class="panel metadata-panel">
+          <span class="kicker">Métadonnées du rapport</span>
+          <dl>
+            <div><dt>Généré le</dt><dd data-meta-date></dd></div>
+            <div><dt>Outil</dt><dd>MM IOC Analyzer v2.0</dd></div>
+            <div><dt>Hash du rapport</dt><dd><code data-report-hash></code></dd></div>
+            <div><dt>Mode</dt><dd>Analyse locale (aucun envoi)</dd></div>
+          </dl>
+          <div class="confidential">▣ Rapport confidentiel – Usage interne uniquement</div>
+        </section>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script>
+import { exportIocPdf } from '../../../lib/ioc/iocPdf';
+
+const TYPES = ['IPv4','IPv6','Domain','URL','Email','MD5','SHA-1','SHA-256','SHA-512'];
+const root = document.querySelector('[data-ioc-results]');
+const form = document.querySelector('[data-ioc-form]');
+const input = document.querySelector('[data-ioc-input]');
+const error = document.querySelector('[data-ioc-error]');
+const state = { items: [], rawDetected: 0, duplicates: 0, ignored: 0, normalized: 0, privateIps: 0, extractedDomains: 0, reportHash: '' };
+
+const esc = (s) => s.replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+const refang = (s) => s.replace(/\[\.\]|\(\.\)|\{\.\}/g,'.').replace(/hxxps/gi,'https').replace(/hxxp/gi,'http').replace(/\[:\]/g,':').replace(/\[@\]/g,'@');
+const defang = (s) => s.replace(/^https:/i,'hxxps:').replace(/^http:/i,'hxxp:').replace(/\./g,'[.]').replace(/@/g,'[@]');
+const private4 = (ip) => { const p=ip.split('.').map(Number); return p[0]===10||p[0]===127||(p[0]===169&&p[1]===254)||(p[0]===172&&p[1]>=16&&p[1]<=31)||(p[0]===192&&p[1]===168); };
+const plural = (n, one, many=`${one}s`) => n > 1 ? many : one;
+
+function classify(v){
+  if(/^[a-f0-9]{32}$/i.test(v))return'MD5';
+  if(/^[a-f0-9]{40}$/i.test(v))return'SHA-1';
+  if(/^[a-f0-9]{64}$/i.test(v))return'SHA-256';
+  if(/^[a-f0-9]{128}$/i.test(v))return'SHA-512';
+  if(/^(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)$/.test(v))return'IPv4';
+  if(/^(?:(?:[a-f0-9]{1,4}:){2,7}[a-f0-9]{0,4}|::1)$/i.test(v))return'IPv6';
+  if(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(v))return'Email';
+  try{const u=new URL(v);if(['http:','https:'].includes(u.protocol)&&u.hostname)return'URL'}catch{}
+  if(/^(?=.{1,253}$)(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,63}$/i.test(v))return'Domain';
+  return null;
+}
+function candidates(raw){
+  const pattern=/(?:https?:\/\/[^\s<>"']+)|(?:[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})|(?:\b(?:[A-F0-9]{32}|[A-F0-9]{40}|[A-F0-9]{64}|[A-F0-9]{128})\b)|(?:\b(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)\b)|(?:\b(?:[A-F0-9]{1,4}:){2,7}[A-F0-9]{0,4}\b)|(?:\b(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,63}\b)/gi;
+  return refang(raw).match(pattern)||[];
+}
+function analyze(raw){
+  const found=candidates(raw),seen=new Set(),items=[];
+  let duplicates=0,ignored=0,normalized=0,privateIps=0,extractedDomains=0;
+  for(const rawValue of found){
+    const original=rawValue.replace(/[>\])}'"`;,]+$/,'');
+    const value=refang(original); if(value!==original)normalized++;
+    const type=classify(value); if(!type){ignored++;continue;}
+    const clean=['Domain','Email','URL'].includes(type)?value.toLowerCase():value;
+    const key=`${type}:${clean}`; if(seen.has(key)){duplicates++;continue;} seen.add(key);
+    const meta={};
+    if(type==='IPv4'&&private4(clean)){meta.private=true;privateIps++;}
+    if(type==='URL'){try{const u=new URL(clean);meta.hostname=u.hostname.toLowerCase();meta.path=u.pathname;meta.extension=u.pathname.includes('.')?u.pathname.split('.').pop().toLowerCase():null;}catch{}}
+    items.push({type,value:clean,meta});
+  }
+  const domains=new Set(items.filter(i=>i.type==='Domain').map(i=>i.value));
+  for(const i of [...items]) if(i.type==='URL'&&i.meta.hostname&&!domains.has(i.meta.hostname)){items.push({type:'Domain',value:i.meta.hostname,meta:{extracted:true}});domains.add(i.meta.hostname);extractedDomains++;}
+  return {items,rawDetected:found.length,duplicates,ignored,normalized,privateIps,extractedDomains};
+}
+const grouped=()=>TYPES.reduce((g,t)=>(g[t]=state.items.filter(i=>i.type===t),g),{});
+function assessment(g){
+  const typeCount=TYPES.filter(t=>g[t].length).length;
+  const hasNetwork=g.IPv4.length||g.IPv6.length||g.Domain.length||g.URL.length;
+  const hasHashes=g.MD5.length||g['SHA-1'].length||g['SHA-256'].length||g['SHA-512'].length;
+  const hasUrl=g.URL.length>0;
+  const publicIpv4=g.IPv4.filter(i=>!i.meta.private).length;
+  let level='À qualifier',priority='Priorité normale',decision='Analyse complémentaire recommandée',rationale='Les IOC ont été structurés, mais leur caractère malveillant ne peut pas être établi sans corrélation externe.';
+  if(hasUrl&&hasHashes&&publicIpv4){level='Investigation recommandée';priority='Haute priorité';decision='IOC exploitables';rationale='Plusieurs familles d’indicateurs peuvent être corrélées immédiatement dans le SIEM, l’EDR et les journaux réseau.';}
+  else if(hasNetwork&&typeCount>=3){level='Investigation recommandée';priority='Priorité élevée';decision='Corrélation recommandée';rationale='La diversité des indicateurs fournit une base exploitable pour reconstruire la chronologie et rechercher des événements associés.';}
+  else if(state.items.length===1){level='Contexte insuffisant';priority='À contextualiser';decision='Ne pas conclure sur cet IOC seul';rationale='Un indicateur isolé doit être rapproché de sa source, de son horodatage et de la télémétrie disponible.';}
+  return{typeCount,hasNetwork,hasHashes,hasUrl,publicIpv4,level,priority,decision,rationale};
+}
+function summary(g,a){
+  const types=TYPES.filter(t=>g[t].length),p=[];
+  p.push(`L’analyse a identifié <strong>${state.items.length} ${plural(state.items.length,'IOC unique')}</strong> réparti${state.items.length>1?'s':''} en <strong>${a.typeCount} ${plural(a.typeCount,'catégorie')}</strong>.`);
+  if(types.length)p.push(`Les indicateurs comprennent : <strong>${types.join(', ')}</strong>.`);
+  if(a.hasUrl&&a.hasHashes)p.push('La présence simultanée d’URL et d’empreintes de fichiers fournit une base solide pour rechercher un téléchargement, une exécution ou une distribution de contenu.');
+  else if(a.hasUrl)p.push('Les URL conservent le chemin de la ressource contactée et apportent davantage de contexte que le domaine seul.');
+  if(state.privateIps)p.push(`<strong>${state.privateIps} ${plural(state.privateIps,'adresse IP privée')}</strong> ${state.privateIps>1?'ont':'a'} été détectée${state.privateIps>1?'s':''}. Elles doivent être rapprochées de l’inventaire interne.`);
+  if(state.duplicates)p.push(`${state.duplicates} ${plural(state.duplicates,'doublon')} ${state.duplicates>1?'ont':'a'} été supprimé${state.duplicates>1?'s':''}, réduisant le bruit avant investigation.`);
+  p.push('Cette analyse constitue une <strong>aide à la qualification</strong>, pas un verdict de malveillance.');
+  return p;
+}
+function recommendations(g,a){
+  const r=[];
+  if(a.hasNetwork)r.push({priority:'P1',title:'Rechercher les IOC dans le SIEM',description:'Corrélez les IP, domaines et URL avec les événements DNS, proxy, firewall, VPN et authentification.'});
+  if(a.hasHashes||a.hasUrl)r.push({priority:'P1',title:'Vérifier les endpoints',description:'Recherchez les hashes, noms de fichiers, URL et processus associés dans l’EDR.'});
+  if(g.Domain.length||g.URL.length)r.push({priority:'P2',title:'Analyser le contexte DNS et Web',description:'Contrôlez les résolutions DNS, redirections, réponses HTTP, certificats TLS et l’historique du domaine.'});
+  r.push({priority:'P2',title:'Enrichir avec la Threat Intelligence',description:'Consultez vos sources de réputation et de télémétrie avant de classer ou bloquer un IOC.'});
+  return r;
+}
+function context(item){
+  if(item.meta.private)return'IP interne RFC1918';
+  if(item.meta.extracted)return'Domaine extrait d’URL';
+  if(item.type==='URL')return item.meta.extension?`Ressource .${item.meta.extension}`:'URL complète';
+  if(item.type.includes('SHA')||item.type==='MD5')return'Empreinte de fichier';
+  if(item.type==='Email')return'Identité / messagerie';
+  if(item.type==='Domain')return'Domaine observable';
+  return'Infrastructure publique';
+}
+function status(item){return item.meta.private?'PRIVATE':'PUBLIC';}
+async function hashText(text){
+  try{const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text));return [...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,16);}catch{return Math.random().toString(16).slice(2,18);}
+}
+function serialize(format){
+  const g=grouped();
+  if(format==='json')return JSON.stringify({generatedAt:new Date().toISOString(),reportHash:state.reportHash,summary:{detected:state.rawDetected,unique:state.items.length,duplicatesRemoved:state.duplicates,ignored:state.ignored,normalized:state.normalized,privateIps:state.privateIps,extractedDomains:state.extractedDomains},indicators:g},null,2);
+  if(format==='csv')return['type,value,context,status,private,extracted,hostname',...state.items.map(i=>[i.type,`"${i.value.replace(/"/g,'""')}"`,`"${context(i)}"`,status(i),!!i.meta.private,!!i.meta.extracted,`"${(i.meta.hostname||'').replace(/"/g,'""')}"`].join(','))].join('\n');
+  return TYPES.filter(t=>g[t].length).map(t=>`# ${t}\n${g[t].map(i=>i.value).join('\n')}`).join('\n\n');
+}
+function download(data,name,type){const b=new Blob([data],{type}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();URL.revokeObjectURL(u);}
+
+let lastReport=null;
+async function render(raw){
+  const g=grouped(),a=assessment(g),paragraphs=summary(g,a),recs=recommendations(g,a);
+  state.reportHash=await hashText(`${raw}|${JSON.stringify(state.items)}`);
+  root.querySelector('[data-empty-state]').hidden=true;
+  root.querySelector('[data-result-content]').hidden=false;
+  root.querySelector('[data-report-title]').textContent=a.level;
+  root.querySelector('.priority-badge').textContent=a.priority;
+  root.querySelector('[data-report-subtitle]').textContent=`${state.items.length} IOC uniques détectés pour investigation.`;
+  root.querySelector('[data-assessment]').textContent=a.level;
+  root.querySelector('[data-summary]').innerHTML=paragraphs.map(p=>`<p>${p}</p>`).join('');
+  root.querySelector('[data-decision]').textContent=a.decision;
+  root.querySelector('[data-rationale]').textContent=a.rationale;
+  root.querySelector('[data-metric="unique"]').textContent=state.items.length;
+  root.querySelector('[data-metric-caption="unique"]').textContent=`Sur ${state.rawDetected} détectés`;
+  root.querySelector('[data-metric="types"]').textContent=a.typeCount;
+  root.querySelector('[data-metric-caption="types"]').textContent=TYPES.filter(t=>g[t].length).join(', ');
+  root.querySelector('[data-metric="private"]').textContent=state.privateIps;
+  root.querySelector('[data-metric="duplicates"]').textContent=state.duplicates;
+  root.querySelector('[data-processing]').textContent=`${state.normalized} normalisé${state.normalized>1?'s':''} · ${state.extractedDomains} domaine${state.extractedDomains>1?'s':''} extrait${state.extractedDomains>1?'s':''} · ${state.ignored} ignoré${state.ignored>1?'s':''}`;
+  const date=new Intl.DateTimeFormat('fr-FR',{dateStyle:'medium',timeStyle:'short'}).format(new Date());
+  root.querySelector('[data-generated]').textContent=date;
+  root.querySelector('[data-meta-date]').textContent=date;
+  root.querySelector('[data-report-hash]').textContent=`${state.reportHash.slice(0,12)}…`;
+  root.querySelector('[data-recommendations]').innerHTML=recs.map((r,n)=>`<article class="recommendation"><span>${String(n+1).padStart(2,'0')}</span><div><small>${r.priority} · Priorité</small><strong>${esc(r.title)}</strong><p>${esc(r.description)}</p></div></article>`).join('');
+  const typeSelect=root.querySelector('[data-type-filter]');
+  typeSelect.innerHTML='<option value="">Tous les types</option>'+TYPES.filter(t=>g[t].length).map(t=>`<option value="${t}">${t}</option>`).join('');
+  renderRows();
+  lastReport={generatedAt:date,reportHash:state.reportHash,title:a.level,priority:a.priority,summary:paragraphs.map(p=>p.replace(/<[^>]+>/g,'')),decision:a.decision,rationale:a.rationale,metrics:{detected:state.rawDetected,unique:state.items.length,types:a.typeCount,privateIps:state.privateIps,duplicates:state.duplicates},recommendations:recs,items:state.items.map(i=>({type:i.type,value:i.value,context:context(i),status:status(i)}))};
+  root.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function renderRows(){
+  const q=(root.querySelector('[data-filter]').value||'').toLowerCase();
+  const type=root.querySelector('[data-type-filter]').value;
+  const rows=state.items.map((i,index)=>({i,index})).filter(({i})=>(!q||i.value.toLowerCase().includes(q)||i.type.toLowerCase().includes(q))&&(!type||i.type===type));
+  root.querySelector('[data-ioc-rows]').innerHTML=rows.map(({i,index})=>`<div class="table-row" role="row" data-row="${index}"><span><b class="type-badge type-${i.type.replace(/[^a-z0-9]/gi,'').toLowerCase()}">${i.type}</b></span><code>${esc(i.value)}</code><span class="context">${esc(context(i))}</span><span><b class="status ${status(i).toLowerCase()}">${status(i)}</b></span><span class="row-actions"><button data-action="copy" title="Copier">□</button><button data-action="defang" title="Defang">◇</button><button data-action="delete" title="Supprimer">⌫</button></span></div>`).join('');
+  root.querySelector('[data-result-count]').textContent=`Affichage de ${rows.length} résultat${rows.length>1?'s':''}`;
+}
+form?.addEventListener('submit',async(e)=>{e.preventDefault();const raw=input.value.trim();if(!raw){error.hidden=false;input.focus();return;}error.hidden=true;Object.assign(state,analyze(raw));await render(raw);});
+root.querySelector('[data-filter]')?.addEventListener('input',renderRows);
+root.querySelector('[data-type-filter]')?.addEventListener('change',renderRows);
+root.addEventListener('click',async(e)=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.hasAttribute('data-copy-all')){await navigator.clipboard.writeText(serialize('txt'));return;}
+  if(b.dataset.export){const f=b.dataset.export;download(serialize(f),`mm-ioc-analyzer.${f}`,f==='json'?'application/json':f==='csv'?'text/csv;charset=utf-8':'text/plain;charset=utf-8');return;}
+  if(b.hasAttribute('data-export-pdf')){if(lastReport)exportIocPdf(lastReport);return;}
+  const row=b.closest('[data-row]');if(!row)return;const index=Number(row.dataset.row),item=state.items[index];
+  if(b.dataset.action==='copy')await navigator.clipboard.writeText(item.value);
+  if(b.dataset.action==='defang')await navigator.clipboard.writeText(defang(item.value));
+  if(b.dataset.action==='delete'){state.items.splice(index,1);await render(input.value.trim());}
+});
+</script>
+
+<style>
+  .results { margin-top: .75rem; scroll-margin-top: 1rem; }
+  .empty-state { display: flex; align-items: center; gap: .8rem; padding: 1rem 1.2rem; color: #7f8ca2; background: rgba(9,17,36,.78); border: 1px solid rgba(71,85,105,.45); border-radius: 14px; }
+  .empty-state strong { color: #dbeafe; font-size: .82rem; }
+  .empty-state p { margin: .15rem 0 0; font-size: .7rem; }
+  .pulse { width: 7px; height: 7px; flex: 0 0 7px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 12px rgba(34,197,94,.65); }
+  .result-content { display: grid; gap: .75rem; }
+  .report-header,.panel { background: linear-gradient(145deg,rgba(10,19,39,.98),rgba(5,12,27,.98)); border: 1px solid rgba(71,85,105,.5); border-radius: 14px; box-shadow: 0 16px 45px rgba(0,0,0,.16); }
+  .report-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.2rem; }
+  .kicker { display: block; color: #60a5fa; font-size: .58rem; font-weight: 900; letter-spacing: .13em; text-transform: uppercase; }
+  .title-line { display: flex; flex-wrap: wrap; align-items: center; gap: .7rem; margin-top: .28rem; }
+  .report-header h2 { margin: 0; color: #f8fafc; font-size: clamp(1.55rem,2.5vw,2.25rem); line-height: 1; letter-spacing: -.04em; }
+  .report-header p { margin: .38rem 0 0; color: #8a99b0; font-size: .72rem; }
+  .priority-badge { padding: .38rem .58rem; color: #fca5a5; font-size: .57rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; background: rgba(220,38,38,.11); border: 1px solid rgba(248,113,113,.18); border-radius: 999px; }
+  .export-area { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .4rem; }
+  .export-area button { min-height: 34px; padding: .45rem .65rem; color: #cbd5e1; font: 800 .62rem inherit; background: rgba(15,23,42,.72); border: 1px solid rgba(71,85,105,.55); border-radius: 8px; cursor: pointer; }
+  .export-area .pdf-button { color: #fff; background: linear-gradient(145deg,#2563eb,#1d4ed8); border-color: #3b82f6; }
+  .dashboard-grid { display: grid; grid-template-columns: minmax(0,1fr) 350px; gap: .75rem; align-items: start; }
+  .main-column,.side-column { display: grid; gap: .75rem; }
+  .panel { overflow: hidden; }
+  .panel > header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 1.1rem 1.2rem; }
+  .panel h3 { margin: .32rem 0 0; color: #f1f5f9; font-size: 1rem; letter-spacing: -.02em; }
+  .summary-panel { padding-bottom: 1rem; }
+  .summary-panel > header { padding-bottom: .4rem; }
+  .assessment { padding: .38rem .55rem; color: #fbbf24; font-size: .58rem; font-weight: 900; background: rgba(245,158,11,.08); border: 1px solid rgba(245,158,11,.2); border-radius: 999px; }
+  .narrative { padding: 0 1.2rem; color: #b6c2d4; font-size: .83rem; line-height: 1.68; }
+  .narrative p { margin: .58rem 0; }
+  .decision-box { display: grid; grid-template-columns: 190px minmax(0,1fr); gap: 1rem; margin: .9rem 1.2rem 0; padding: .85rem; background: rgba(2,6,23,.75); border: 1px solid rgba(71,85,105,.45); border-radius: 10px; }
+  .decision-box span { display: block; color: #60a5fa; font-size: .55rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+  .decision-box strong { display: block; margin-top: .22rem; color: #f8fafc; font-size: .78rem; }
+  .decision-box p { margin: 0; color: #8a99b0; font-size: .7rem; line-height: 1.5; }
+  .metrics-panel { padding: 1.1rem; }
+  .metrics-panel h3 { margin: .3rem 0 0; }
+  .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: .65rem; margin-top: .9rem; }
+  .metrics article { min-height: 104px; padding: .8rem; background: rgba(15,23,42,.74); border: 1px solid rgba(71,85,105,.5); border-radius: 10px; }
+  .metrics article > span { display: block; color: #60a5fa; font-size: .56rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+  .metrics strong { display: block; margin-top: .45rem; color: #f8fafc; font-size: 2.35rem; line-height: 1; letter-spacing: -.05em; }
+  .metrics small { display: block; margin-top: .38rem; color: #74839a; font-size: .58rem; line-height: 1.35; }
+  .processing { margin: .8rem 0 0; padding-top: .7rem; color: #5f6f86; font-size: .58rem; border-top: 1px solid rgba(71,85,105,.35); }
+  .investigation-panel > header p { margin: .4rem 0 0; }
+  .generated { text-align: right; }
+  .generated span { display: block; color: #64748b; font-size: .55rem; text-transform: uppercase; }
+  .generated strong { color: #93c5fd; font-size: .63rem; }
+  .recommendations { border-top: 1px solid rgba(71,85,105,.4); }
+  .recommendation { display: grid; grid-template-columns: 46px minmax(0,1fr); gap: .8rem; padding: .85rem 1.2rem; border-bottom: 1px solid rgba(71,85,105,.32); }
+  .recommendation > span { color: #3b82f6; font-size: .85rem; font-weight: 900; }
+  .recommendation small { display: block; color: #60a5fa; font-size: .53rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+  .recommendation strong { display: block; margin-top: .18rem; color: #e5edf9; font-size: .78rem; }
+  .recommendation p { margin: .28rem 0 0; color: #7f8ca2; font-size: .68rem; line-height: 1.45; }
+  .investigation-panel footer { display: flex; align-items: flex-start; gap: .65rem; padding: .8rem 1.2rem; background: rgba(2,6,23,.48); }
+  .investigation-panel footer strong { color: #86efac; font-size: .56rem; letter-spacing: .06em; text-transform: uppercase; }
+  .investigation-panel footer p { margin: .18rem 0 0; color: #74839a; font-size: .62rem; }
+  .action-panel { padding: 1rem; }
+  .quick-actions { display: grid; gap: .65rem; margin-top: .85rem; }
+  .quick-actions article { display: grid; grid-template-columns: 35px minmax(0,1fr) auto; gap: .7rem; align-items: center; padding: .8rem; background: rgba(15,23,42,.7); border: 1px solid rgba(71,85,105,.5); border-radius: 10px; }
+  .action-icon { display: grid; width: 31px; height: 31px; place-items: center; font-size: 1rem; background: rgba(37,99,235,.12); border-radius: 9px; }
+  .action-icon.blue { color:#3b82f6; }.action-icon.green{color:#34d399;background:rgba(16,185,129,.1)}.action-icon.violet{color:#a855f7;background:rgba(168,85,247,.1)}.action-icon.amber{color:#f59e0b;background:rgba(245,158,11,.1)}
+  .quick-actions strong { color: #e5edf9; font-size: .7rem; }
+  .quick-actions p { margin: .2rem 0 0; color: #7f8ca2; font-size: .59rem; line-height: 1.35; }
+  .quick-actions b { color: #93c5fd; font-size: 1rem; }
+  .metadata-panel { padding: 1rem; }
+  .metadata-panel dl { margin: .75rem 0 0; }
+  .metadata-panel dl > div { display: flex; justify-content: space-between; gap: 1rem; padding: .72rem 0; border-top: 1px solid rgba(71,85,105,.3); }
+  .metadata-panel dt,.metadata-panel dd { margin: 0; font-size: .66rem; }
+  .metadata-panel dt { color: #8a99b0; }.metadata-panel dd { color: #cbd5e1; text-align: right; }.metadata-panel code { color: #dbeafe; font-size: .62rem; }
+  .confidential { margin-top: .8rem; padding: .75rem; color: #4ade80; font-size: .62rem; background: rgba(16,185,129,.08); border: 1px solid rgba(16,185,129,.14); border-radius: 9px; }
+  .details-panel > header { align-items: center; }
+  .table-tools { display: flex; gap: .5rem; }
+  .table-tools label { display: flex; align-items: center; gap: .45rem; min-width: 190px; padding: .45rem .65rem; color: #64748b; background: rgba(2,6,23,.55); border: 1px solid rgba(71,85,105,.45); border-radius: 8px; }
+  .table-tools input,.table-tools select { color: #cbd5e1; font: 600 .62rem inherit; background: transparent; border: 0; outline: 0; }
+  .table-tools input { width: 100%; }.table-tools select { padding: .5rem .65rem; background: rgba(2,6,23,.55); border: 1px solid rgba(71,85,105,.45); border-radius: 8px; }
+  .ioc-table { border-top: 1px solid rgba(71,85,105,.4); }
+  .table-head,.table-row { display: grid; grid-template-columns: 110px minmax(250px,1fr) 180px 90px 110px; gap: .7rem; align-items: center; }
+  .table-head { padding: .65rem 1.2rem; color: #718096; background: rgba(2,6,23,.58); font-size: .54rem; font-weight: 900; letter-spacing: .09em; text-transform: uppercase; }
+  .table-row { min-height: 48px; padding: .55rem 1.2rem; border-top: 1px solid rgba(71,85,105,.28); }
+  .table-row code { color: #e2e8f0; font-size: .7rem; overflow-wrap: anywhere; }
+  .type-badge,.status { display: inline-flex; width: max-content; padding: .3rem .55rem; font-size: .58rem; font-weight: 900; border-radius: 6px; }
+  .type-badge { color: #60a5fa; background: rgba(37,99,235,.13); }.type-domain{color:#a78bfa;background:rgba(139,92,246,.13)}.type-url{color:#38bdf8;background:rgba(14,165,233,.13)}.type-sha256,.type-sha1,.type-sha512,.type-md5{color:#c084fc;background:rgba(168,85,247,.12)}
+  .context { color: #94a3b8; font-size: .64rem; }
+  .status { color: #4ade80; background: rgba(34,197,94,.1); }.status.private{color:#fbbf24;background:rgba(245,158,11,.1)}
+  .row-actions { display: flex; gap: .35rem; }
+  .row-actions button { display: grid; width: 29px; height: 29px; place-items: center; color: #cbd5e1; font-size: .7rem; background: rgba(15,23,42,.75); border: 1px solid rgba(71,85,105,.48); border-radius: 7px; cursor: pointer; }.row-actions button:last-child{color:#f87171}
+  .table-footer { display: flex; justify-content: space-between; gap: 1rem; padding: .7rem 1.2rem; color: #64748b; font-size: .58rem; border-top: 1px solid rgba(71,85,105,.3); }
+  [hidden]{display:none!important}
+  @media(max-width:1160px){.dashboard-grid{grid-template-columns:1fr}.side-column{grid-template-columns:repeat(2,minmax(0,1fr))}.metadata-panel{grid-column:1/-1}}
+  @media(max-width:850px){.table-head,.table-row{grid-template-columns:90px minmax(0,1fr) 90px}.table-head span:nth-child(3),.table-head span:nth-child(5),.table-row .context,.table-row .row-actions{display:none}.side-column{grid-template-columns:1fr}}
+  @media(max-width:700px){.report-header,.panel>header{align-items:flex-start;flex-direction:column}.export-area{justify-content:flex-start}.decision-box{grid-template-columns:1fr}.table-tools{width:100%;flex-direction:column}.table-tools label{min-width:0}.table-head{display:none}.table-row{grid-template-columns:1fr;gap:.4rem}.table-row .context,.table-row .row-actions{display:flex}.table-footer{flex-direction:column}}
+</style>

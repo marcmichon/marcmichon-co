@@ -12,6 +12,8 @@ import TerrainNote from '../../components/article/TerrainNote.astro';
 
 import { SITE_TITLE } from '../../consts';
 
+
+
 const toc = [
 	{
 		id: 'pourquoi-cette-note',
@@ -46,6 +48,7 @@ const toc = [
 
 <!doctype html>
 
+
 <html lang="fr">
 	<head>
 		<BaseHead
@@ -60,6 +63,8 @@ const toc = [
 		<main>
 			<ArticleHero
 				tag="SECURITY PLATFORM ENGINEERING"
+                badgeColor="#7C3AED"
+                badgeBackground="rgba(124,58,237,.12)"
 				title="Pourquoi une plateforme peut être parfaitement à jour... tout en étant techniquement en retard"
 				subtitle="Une plateforme maintenue n’est pas forcément une plateforme qui continue d’évoluer. Retour d’expérience sur une confusion que je rencontre régulièrement lors des revues techniques."
 				image="/Images/security-platform-engineering-plateforme-a-jour.png"

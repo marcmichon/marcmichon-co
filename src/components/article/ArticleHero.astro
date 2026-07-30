@@ -1,6 +1,7 @@
 ---
 const {
 	tag = 'NOTE DE TERRAIN',
+	badgeColor = '#60a5fa',
 	title,
 	subtitle,
 	image,
@@ -13,7 +14,12 @@ const {
 
 <section class="article-hero">
 	<div class="article-hero-text">
-		<p class="article-tag">{tag}</p>
+		<p
+			class="article-tag"
+			style={`--badge-color:${badgeColor}; --badge-bg:${badgeColor}15;`}
+		>
+			{tag}
+		</p>
 
 		<h1>{title}</h1>
 
@@ -65,18 +71,33 @@ const {
 	}
 
 	.article-tag {
-		color: #60a5fa;
+		display: inline-flex;
+		align-items: center;
+
+		width: fit-content;
+
+		padding: .45rem .9rem;
+
+		margin: 0 0 1.5rem;
+
+		border-radius: 999px;
+
+		font-size: .82rem;
 		font-weight: 900;
-		font-size: .85rem;
 		letter-spacing: .12em;
 		text-transform: uppercase;
-		margin: 0 0 1rem;
+
+		color: var(--badge-color);
+
+		background: var(--badge-bg);
+
+		border: 1px solid color-mix(in srgb, var(--badge-color) 25%, transparent);
 	}
 
 	h1 {
 		font-size: 4.5rem;
 		line-height: .95;
-		letter-spacing: -0.05em;
+		letter-spacing: -.05em;
 		margin: 0 0 2rem;
 		color: white;
 	}
@@ -127,19 +148,20 @@ const {
 		box-shadow: 0 30px 70px rgba(0,0,0,.45);
 	}
 
-	@media (max-width: 1000px) {
+	@media (max-width:1000px) {
 		.article-hero {
-			grid-template-columns: 1fr;
+			grid-template-columns:1fr;
 		}
 	}
 
-	@media (max-width: 640px) {
+	@media (max-width:640px) {
+
 		.article-hero {
-			padding: 3rem 2rem;
+			padding:3rem 2rem;
 		}
 
 		h1 {
-			font-size: 3rem;
+			font-size:3rem;
 		}
 	}
 </style>

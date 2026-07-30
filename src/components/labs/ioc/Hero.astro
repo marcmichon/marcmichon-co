@@ -1,0 +1,180 @@
+<section class="hero" aria-labelledby="ioc-title">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-orb" aria-hidden="true"></div>
+
+  <div class="hero-main">
+    <div class="eyebrow">MM Security Intelligence Suite</div>
+    <h1 id="ioc-title"><span>MM</span> IOC Analyzer</h1>
+    <p class="intro">
+      Collez un rapport CERT, une alerte EDR, un ticket SOC ou une liste brute d’IOC.
+      L’outil extrait, normalise, valide, déduplique et structure les indicateurs afin
+      de les transformer en décisions opérationnelles.
+    </p>
+
+    <form class="input-zone" data-ioc-form novalidate>
+      <div class="editor-shell">
+        <div class="line-numbers" aria-hidden="true">1<br />2<br />3<br />4<br />5<br />6</div>
+        <span class="editor-label">EXEMPLE</span>
+        <textarea
+          id="ioc-input"
+          data-ioc-input
+          aria-label="Contenu à analyser"
+          spellcheck="false"
+          placeholder="Collez ici un rapport d’incident, une alerte EDR, des logs ou une liste d’IOC…"
+        ></textarea>
+        <span class="line-count" data-line-count>LIGNE 0</span>
+      </div>
+
+      <button class="analyze-button" type="submit">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8" />
+          <path d="m16 16 4 4M8.5 11h5M11 8.5v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+        </svg>
+        <span>Analyser</span>
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+    </form>
+
+    <p class="error" data-ioc-error hidden>Collez au moins un contenu à analyser.</p>
+
+    <div class="examples">
+      <span>Ou essayez un exemple :</span>
+      <button type="button" data-example="incident">Rapport d’incident</button>
+      <button type="button" data-example="phishing">Alerte phishing</button>
+      <button type="button" data-example="raw">Liste d’IOC</button>
+    </div>
+
+    <div class="privacy">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 3 5 6v5c0 4.3 2.9 8.15 7 9.2 4.1-1.05 7-4.9 7-9.2V6l-7-3Z" fill="currentColor" opacity=".18" />
+        <path d="M9 12.2 11 14l4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      Analyse 100 % locale dans votre navigateur. Aucun IOC n’est envoyé à un serveur.
+    </div>
+  </div>
+
+  <aside class="pipeline" aria-label="Moteur de traitement IOC">
+    <header>
+      <div>
+        <span>Local intelligence</span>
+        <strong>IOC processing</strong>
+      </div>
+      <em><i></i> Actif</em>
+    </header>
+
+    <ol>
+      <li>
+        <div class="step">01</div>
+        <div><strong>Extraction</strong><span>Détection automatique des IOC</span></div>
+        <b>OK</b>
+      </li>
+      <li>
+        <div class="step">02</div>
+        <div><strong>Normalisation</strong><span>Refang, validation et standardisation</span></div>
+        <b>OK</b>
+      </li>
+      <li>
+        <div class="step">03</div>
+        <div><strong>Déduplication</strong><span>Suppression des doublons</span></div>
+        <b>OK</b>
+      </li>
+      <li>
+        <div class="step">04</div>
+        <div><strong>Contextualisation</strong><span>IP privées, domaines extraits, contexte</span></div>
+        <b>OK</b>
+      </li>
+    </ol>
+
+    <div class="output">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 3 5 6v5c0 4.3 2.9 8.15 7 9.2 4.1-1.05 7-4.9 7-9.2V6l-7-3Z" stroke="currentColor" stroke-width="1.6" />
+        <path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <div><span>Analyst-ready output</span><strong>Structured investigation</strong></div>
+    </div>
+  </aside>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.58fr) minmax(330px, .62fr);
+    gap: 1.5rem;
+    overflow: hidden;
+    padding: 2rem;
+    background: linear-gradient(145deg, rgba(8, 18, 39, .98), rgba(3, 10, 25, .99));
+    border: 1px solid rgba(96, 165, 250, .18);
+    border-radius: 18px;
+    box-shadow: 0 28px 80px rgba(0, 0, 0, .28);
+  }
+  .hero-grid { position: absolute; inset: 0; opacity: .4; background-image: linear-gradient(rgba(96,165,250,.045) 1px, transparent 1px), linear-gradient(90deg,rgba(96,165,250,.045) 1px,transparent 1px); background-size: 32px 32px; mask-image: linear-gradient(to right, black, transparent 78%); }
+  .hero-orb { position: absolute; right: 17%; bottom: -16rem; width: 28rem; height: 28rem; background: rgba(37,99,235,.16); border-radius: 999px; filter: blur(55px); }
+  .hero-main,.pipeline { position: relative; z-index: 1; }
+  .eyebrow { display: inline-flex; padding: .45rem .72rem; color: #60a5fa; font-size: .66rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; background: rgba(37,99,235,.1); border: 1px solid rgba(96,165,250,.17); border-radius: 999px; }
+  h1 { margin: 1rem 0 0; color: #f8fafc; font-size: clamp(3rem, 5.7vw, 5.15rem); line-height: .92; letter-spacing: -.06em; }
+  h1 span { color: #2563eb; }
+  .intro { max-width: 830px; margin: 1.25rem 0 0; color: #b7c3d6; font-size: .98rem; line-height: 1.72; }
+  .input-zone { display: grid; grid-template-columns: minmax(0, 1fr) 156px; gap: .85rem; margin-top: 1.6rem; }
+  .editor-shell { position: relative; min-width: 0; }
+  textarea { display: block; width: 100%; min-height: 178px; padding: 2.45rem 4.5rem 1rem 3.4rem; resize: vertical; box-sizing: border-box; color: #e2e8f0; font: 500 .88rem/1.58 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; background: rgba(2,8,23,.76); border: 1px solid rgba(71,85,105,.78); border-radius: 14px; outline: none; transition: border-color .2s, box-shadow .2s; }
+  textarea:focus { border-color: #2563eb; box-shadow: 0 0 0 4px rgba(37,99,235,.14); }
+  textarea::placeholder { color: #64748b; }
+  .line-numbers { position: absolute; z-index: 2; top: 2.55rem; left: 1rem; color: #475569; font: 500 .78rem/1.58 ui-monospace,SFMono-Regular,Menlo,monospace; text-align: right; }
+  .editor-label { position: absolute; z-index: 2; top: .85rem; left: 3.35rem; padding: .22rem .38rem; color: #93c5fd; font-size: .58rem; font-weight: 900; letter-spacing: .08em; background: rgba(37,99,235,.16); border-radius: 4px; }
+  .line-count { position: absolute; z-index: 2; top: 1rem; right: 1rem; color: #5f75a0; font-size: .58rem; font-weight: 800; letter-spacing: .08em; }
+  .analyze-button { display: flex; align-items: center; justify-content: center; gap: .65rem; min-height: 178px; padding: 1rem; color: #fff; font: 800 .9rem inherit; background: linear-gradient(145deg,#2864f0,#1f4ed8); border: 1px solid #4c7cff; border-radius: 14px; cursor: pointer; box-shadow: 0 16px 34px rgba(37,99,235,.28); transition: transform .18s, box-shadow .18s; }
+  .analyze-button:hover { transform: translateY(-2px); box-shadow: 0 20px 42px rgba(37,99,235,.34); }
+  .analyze-button svg { width: 21px; height: 21px; }
+  .examples { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem; margin-top: .9rem; color: #8a99b0; font-size: .72rem; }
+  .examples button { padding: .4rem .68rem; color: #cbd5e1; font: 700 .68rem inherit; background: rgba(15,23,42,.72); border: 1px solid rgba(71,85,105,.5); border-radius: 999px; cursor: pointer; }
+  .privacy { display: flex; align-items: center; gap: .5rem; margin-top: 1rem; color: #8a99b0; font-size: .72rem; }
+  .privacy svg { width: 17px; height: 17px; color: #34d399; }
+  .error { margin: .65rem 0 0; color: #fca5a5; font-size: .78rem; }
+
+  .pipeline { padding: 1.1rem; background: rgba(2,8,23,.54); border: 1px solid rgba(96,165,250,.16); border-radius: 16px; }
+  .pipeline header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: .15rem .1rem .9rem; }
+  .pipeline header span { display: block; color: #60a5fa; font-size: .57rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+  .pipeline header strong { display: block; margin-top: .2rem; color: #f8fafc; font-size: .82rem; text-transform: uppercase; letter-spacing: .06em; }
+  .pipeline header em { display: flex; align-items: center; gap: .4rem; color: #4ade80; font-size: .6rem; font-weight: 900; font-style: normal; text-transform: uppercase; }
+  .pipeline header i { width: 6px; height: 6px; background: #4ade80; border-radius: 50%; box-shadow: 0 0 10px rgba(74,222,128,.7); }
+  .pipeline ol { display: grid; gap: .65rem; margin: 0; padding: 0; list-style: none; }
+  .pipeline li { display: grid; grid-template-columns: 38px minmax(0,1fr) auto; gap: .75rem; align-items: center; padding: .85rem; background: rgba(15,23,42,.72); border: 1px solid rgba(71,85,105,.5); border-radius: 12px; }
+  .step { display: grid; width: 34px; height: 34px; place-items: center; color: #60a5fa; font-size: .68rem; font-weight: 900; background: rgba(37,99,235,.14); border-radius: 10px; }
+  .pipeline li strong { display: block; color: #e5edf9; font-size: .78rem; }
+  .pipeline li span { display: block; margin-top: .2rem; color: #7f8ca2; font-size: .62rem; line-height: 1.35; }
+  .pipeline li b { color: #4ade80; font-size: .58rem; }
+  .output { display: flex; align-items: center; gap: .7rem; margin-top: .7rem; padding: .75rem; color: #60a5fa; background: linear-gradient(135deg,rgba(37,99,235,.13),rgba(14,165,233,.05)); border: 1px solid rgba(96,165,250,.15); border-radius: 12px; }
+  .output svg { width: 24px; height: 24px; }
+  .output span { display: block; color: #7f8ca2; font-size: .54rem; letter-spacing: .08em; text-transform: uppercase; }
+  .output strong { display: block; margin-top: .15rem; color: #dbeafe; font-size: .7rem; }
+
+  @media (max-width: 1040px) { .hero { grid-template-columns: 1fr; } .pipeline { max-width: none; } }
+  @media (max-width: 700px) { .hero { padding: 1.25rem; border-radius: 16px; } .input-zone { grid-template-columns: 1fr; } .analyze-button { min-height: 54px; } h1 { font-size: 3.2rem; } }
+</style>
+
+<script>
+  const input = document.querySelector('[data-ioc-input]');
+  const lineCount = document.querySelector('[data-line-count]');
+  const examples = {
+    incident: `Incident report — Suspicious activity detected\nSource IP: 185.220.101.44\nInternal pivot: 192.168.10.25\nC2 domain: malicious-example[.]com\nObserved URL: hxxps://malicious-example[.]com/payload.exe\nSHA256: 275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f`,
+    phishing: `Phishing alert\nSender: security-update[@]example-login[.]com\nLink: hxxps://example-login[.]com/auth/session\nMalicious IP: 45.67.89.101\nDomain: example-login[.]com\nSHA256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4`,
+    raw: `8.8.8.8\n192.168.1.25\nmalicious-example[.]com\nhxxps://malicious-example[.]com/dropper.js\n44d88612fea8a8f36de82e1278abb02f`,
+  };
+  const updateLines = () => {
+    if (!(input instanceof HTMLTextAreaElement) || !lineCount) return;
+    const count = input.value ? input.value.split(/\r?\n/).length : 0;
+    lineCount.textContent = `LIGNE ${count}`;
+  };
+  input?.addEventListener('input', updateLines);
+  document.querySelectorAll('[data-example]').forEach((button) => {
+    button.addEventListener('click', () => {
+      if (!(input instanceof HTMLTextAreaElement)) return;
+      input.value = examples[button.dataset.example] ?? '';
+      updateLines();
+      input.focus();
+    });
+  });
+</script>
