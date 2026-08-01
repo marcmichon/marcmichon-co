@@ -6,16 +6,26 @@ import type { ImageMetadata } from 'astro';
 import FallbackImage from '../assets/blog-placeholder-1.jpg';
 import { SITE_TITLE } from '../consts';
 import { Font } from 'astro:assets';
+import StructuredData from './seo/StructuredData.astro';
+import type { JsonLdSchema } from '../lib/seo/schema';
 
 interface Props {
 	title: string;
 	description: string;
 	image?: ImageMetadata;
+	schema?: JsonLdSchema | JsonLdSchema[];
+	ogType?: 'website' | 'article';
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = FallbackImage } = Astro.props;
+const {
+	title,
+	description,
+	image = FallbackImage,
+	schema,
+	ogType = 'website',
+} = Astro.props;
 ---
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-NQVJE81J9L"></script>
@@ -97,7 +107,7 @@ const { title, description, image = FallbackImage } = Astro.props;
      Open Graph
 ========================================== -->
 
-<meta property="og:type" content="website" />
+<meta property="og:type" content={ogType} />
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
@@ -112,3 +122,9 @@ const { title, description, image = FallbackImage } = Astro.props;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image.src, Astro.url)} />
+
+<!-- ==========================================
+     Structured Data (JSON-LD)
+========================================== -->
+
+<StructuredData schema={schema} />

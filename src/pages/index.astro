@@ -4,13 +4,30 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import HeroPremium from '../components/HeroPremium.astro';
 import StatsBar from '../components/StatsBar.astro';
+
+import {
+	graphSchema,
+	personSchema,
+	websiteSchema,
+	suiteSchema,
+} from '../lib/seo/schema';
+
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const schema = graphSchema([
+	personSchema(),
+	websiteSchema(),
+]);
 ---
 
 <!doctype html>
 <html lang="fr">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+<BaseHead
+			title={SITE_TITLE}
+			description={SITE_DESCRIPTION}
+			schema={schema}
+		/>
 	</head>
 
 	<body>

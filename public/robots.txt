@@ -1,0 +1,13 @@
+# ============================================================
+# MM Security Intelligence Suite
+# https://marcmichon.co
+#
+# Robots configuration
+# ============================================================
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://marcmichon.co/sitemap-index.xml
+
