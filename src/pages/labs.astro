@@ -43,10 +43,22 @@ const products = [
 		category: 'Threat Intelligence',
 		description:
 			'Détectez, normalisez, dédupliquez et préparez vos indicateurs de compromission pour l’investigation.',
-		status: 'development',
-		statusLabel: 'In Development',
-		version: 'v0.1 Preview',
-		icon: '⌁',
+		status: 'released',
+		statusLabel: 'Released',
+		version: 'v1.0',
+		href: '/labs/ioc-analyzer',
+		image: '/Images/tools/ioc-analyzer.png',
+	},
+	{
+		name: 'MM Password Generator',
+		category: 'Security Utility',
+		description:
+			'Générez localement des mots de passe robustes et des passphrases avec une source aléatoire cryptographique.',
+		status: 'released',
+		statusLabel: 'Released',
+		version: 'v1.0',
+		href: '/labs/password-generator',
+		image: '/Images/tools/password-generator.png',
 	},
 	{
 		name: 'MM Exposure Analyzer',
@@ -82,7 +94,6 @@ const products = [
 
 const statusLegend = [
 	{ status: 'released', label: 'Released' },
-	{ status: 'development', label: 'In Development' },
 	{ status: 'planned', label: 'Planned' },
 	{ status: 'research', label: 'Research' },
 ];
@@ -142,13 +153,8 @@ const statusLegend = [
 							<li>MM Risk Score</li>
 							<li>MM CVSS Calculator</li>
 							<li>MM Vulnerability Explorer</li>
-						</ul>
-					</div>
-
-					<div class="roadmap-group">
-						<p class="roadmap-label development-label">In Development</p>
-						<ul>
 							<li>MM IOC Analyzer</li>
+							<li>MM Password Generator</li>
 						</ul>
 					</div>
 
@@ -169,12 +175,8 @@ const statusLegend = [
 
 					<div class="hero-stats" aria-label="Statuts de la suite">
 						<div class="stat-released">
-							<strong>3</strong>
+							<strong>5</strong>
 							<span>Released</span>
-						</div>
-						<div class="stat-development">
-							<strong>1</strong>
-							<span>In Development</span>
 						</div>
 						<div class="stat-planned">
 							<strong>2</strong>
@@ -189,22 +191,23 @@ const statusLegend = [
 					<div class="latest-update">
 						<div class="latest-update-head">
 							<div>
-								<p class="latest-kicker">Latest update</p>
-								<h2>MM IOC Analyzer</h2>
+								<p class="latest-kicker">Latest release</p>
+								<h2>IOC Analyzer + Password Generator</h2>
 							</div>
 
-							<span class="development-pill">In Development</span>
+							<span class="released-pill">Released</span>
 						</div>
 
 						<p class="latest-copy">
-							Le prochain produit de la suite transformera des blocs de texte bruts
-							en indicateurs de compromission structurés, validés et prêts à être exploités.
+							IOC Analyzer rejoint officiellement la suite avec son moteur local
+							d’extraction, de qualification et de préparation à l’investigation.
+							Le Password Generator complète en parallèle la famille des utilitaires.
 						</p>
 
-						<div class="delivery-steps" aria-label="Étapes de conception du produit">
-							<span class="step done">Product definition</span>
-							<span class="step active">UX design</span>
-							<span class="step">MVP development</span>
+						<div class="delivery-steps" aria-label="Fonctionnalités publiées">
+							<span class="step done">IOC investigation</span>
+							<span class="step done">Local generation</span>
+							<span class="step done">PDF reports</span>
 						</div>
 					</div>
 					<div class="roadmap-author">
@@ -252,9 +255,18 @@ const statusLegend = [
 						products.map((product) =>
 							product.href ? (
 								<a href={product.href} class={`product-card status-${product.status}`}>
-									<div class="product-visual">
-										<img src={product.image} alt="" loading="lazy" decoding="async" />
-									</div>
+									{
+										product.image ? (
+											<div class="product-visual">
+												<img src={product.image} alt="" loading="lazy" decoding="async" />
+											</div>
+										) : (
+											<div class="roadmap-visual released-visual" aria-hidden="true">
+												<span>{product.icon}</span>
+												<div class="roadmap-lines"></div>
+											</div>
+										)
+									}
 
 									<div class="product-content">
 										<div class="product-meta">
@@ -383,7 +395,7 @@ const statusLegend = [
 
 	.eyebrow,
 	.section-kicker {
-		margin: -0.35rem 0 0.55rem;
+		margin: 0 0 0.55rem;
 		color: #60a5fa;
 		font-size: 0.75rem;
 		font-weight: 900;
@@ -450,7 +462,7 @@ const statusLegend = [
 	}
 
 	.hero-actions {
-		margin-top: 2rem;
+		margin-top: 1.35rem;
 	}
 
 	.primary-action {
@@ -477,7 +489,7 @@ const statusLegend = [
 
 	.hero-roadmap .hero-stats {
 		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 0.5rem;
 		margin-top: 0.8rem;
 		padding-top: 0.9rem;
@@ -583,6 +595,22 @@ const statusLegend = [
 		text-transform: uppercase;
 		background: rgba(234, 88, 12, 0.1);
 		border: 1px solid rgba(251, 146, 60, 0.26);
+		border-radius: 999px;
+		white-space: nowrap;
+	}
+
+	.released-pill {
+		display: inline-flex;
+		align-items: center;
+		min-height: 25px;
+		padding: 0.28rem 0.52rem;
+		color: #86efac;
+		font-size: 0.58rem;
+		font-weight: 900;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		background: rgba(34, 197, 94, 0.12);
+		border: 1px solid rgba(74, 222, 128, 0.28);
 		border-radius: 999px;
 		white-space: nowrap;
 	}
@@ -919,23 +947,44 @@ const statusLegend = [
 	}
 
 	.product-visual {
+		position: relative;
 		height: 172px;
 		flex: 0 0 172px;
 		overflow: hidden;
 		background: #020817;
+		border-radius: 25px 25px 0 0;
+		isolation: isolate;
 	}
 
+	/*
+	 * Les visuels générés contiennent une fine bordure claire intégrée
+	 * dans le fichier. On la recadre avec un léger bleed en dimensions
+	 * réelles, sans transform: scale(), afin d'éviter le flou à 100 %.
+	 */
 	.product-visual img {
+		position: absolute;
+		top: -6px;
+		right: -6px;
+		bottom: -6px;
+		left: -6px;
 		display: block;
-		width: 100%;
-		height: 100%;
+		width: calc(100% + 12px);
+		height: calc(100% + 12px);
+		max-width: none;
 		object-fit: cover;
-		transform: scale(1.075);
-		transition: transform 0.45s ease;
+		object-position: center;
+		transform: none;
+		backface-visibility: hidden;
+		image-rendering: auto;
+		transition:
+			filter 0.25s ease,
+			opacity 0.25s ease;
 	}
 
+	/* Survol sans zoom raster : on garde la netteté native. */
 	a.product-card:hover .product-visual img {
-		transform: scale(1.11);
+		transform: none;
+		filter: brightness(1.045) contrast(1.025);
 	}
 
 	.roadmap-visual {
@@ -1181,9 +1230,13 @@ const statusLegend = [
 		}
 
 		.primary-action:hover,
-		a.product-card:hover,
+		a.product-card:hover {
+			transform: none;
+		}
+
 		a.product-card:hover .product-visual img {
 			transform: none;
+			filter: none;
 		}
 	}
 </style>

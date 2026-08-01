@@ -8,6 +8,242 @@ Ce projet suit le principe du **Semantic Versioning** et ce changelog s'inspire 
 
 ---
 
+# [1.5.0]
+
+## 🚀 # [1.5.0]
+
+## 🚀 MM Security Intelligence Suite reaches production maturity
+
+Cette version marque une étape importante dans la maturité de la plateforme.
+
+La MM Security Intelligence Suite évolue d'une collection de démonstrateurs vers une véritable suite d'outils d'aide à la décision destinée aux analystes, ingénieurs sécurité et RSSI.
+
+Deux nouveaux produits rejoignent officiellement la plateforme tandis que l'ensemble de l'expérience utilisateur, des rapports PDF et de l'identité visuelle ont été profondément revus.
+
+---
+
+### ✨ Added
+
+- Official release of **MM IOC Analyzer**.
+- IOC normalization engine.
+- IOC deduplication.
+- IOC classification.
+- Multi-format IOC extraction.
+- Professional IOC PDF investigation report.
+
+- Official release of **MM Password Generator**.
+- Cryptographically secure password generation.
+- Secure passphrase generation.
+- Local entropy estimation.
+- Password quality assessment.
+- 100% client-side generation using `crypto.getRandomValues()`.
+
+- New product artwork for every published application.
+- Dedicated Utility visual identity.
+- Dedicated Intelligence Apps visual identity.
+
+---
+
+### 🎨 Changed
+
+- Complete redesign of the Labs page.
+- New product card system.
+- High-quality application illustrations.
+- Improved navigation between tools.
+- Consistent branding across the complete suite.
+
+- MM Risk Score visual refresh.
+- Password Generator aligned with the Risk Score design language.
+
+- IOC Analyzer fully integrated into the product catalog.
+
+---
+
+### 🛡️ MM Vulnerability Explorer
+
+The Vulnerability Explorer receives its largest evolution since its initial release.
+
+#### Analysis Engine
+
+- Improved operational prioritization.
+- Improved executive decision engine.
+- Smarter remediation recommendations.
+- Context-aware operational guidance.
+- Better confidence evaluation.
+- Improved vulnerability qualification.
+
+#### Operational Assessment
+
+- New remediation resources section.
+- Vendor advisory integration.
+- Patch reference support.
+- Improved business impact presentation.
+- Cleaner operational evaluation layout.
+
+#### User Experience
+
+- Redesigned action cards.
+- Better typography.
+- Improved readability.
+- Better information hierarchy.
+- Cleaner engineering-oriented language.
+
+#### PDF Reporting
+
+- Complete redesign of the executive PDF report.
+- New printable layout.
+- Improved pagination.
+- Better typography.
+- Improved rendering quality.
+- More executive-oriented presentation.
+
+---
+
+### 📄 IOC Analyzer
+
+- Executive PDF investigation report.
+- Multi-page printable report.
+- Redesigned evidence presentation.
+- Investigation workflow improvements.
+- Better IOC normalization.
+
+---
+
+### ⚙️ Technical
+
+- Multiple rendering optimizations.
+- Sharper application previews.
+- Improved image rendering.
+- Better responsive behaviour.
+- UI consistency improvements.
+- Refactored report generation architecture.
+
+---
+
+### 🐛 Fixed
+
+- Fixed image blurriness on Labs product cards.
+- Fixed product image integration.
+- Improved PDF rendering stability.
+- Multiple layout corrections.
+- Various typography fixes.
+
+Cette version marque une étape importante dans la maturité de la plateforme.
+
+Les notes de terrains s'étoffent avec chaque semaine une nouvelle note.
+
+La MM Security Intelligence Suite évolue d'une collection de démonstrateurs vers une véritable suite d'outils d'aide à la décision destinée aux analystes, ingénieurs sécurité et RSSI.
+
+Deux nouveaux produits rejoignent officiellement la plateforme tandis que l'ensemble de l'expérience utilisateur, des rapports PDF et de l'identité visuelle ont été profondément revus.
+
+---
+
+### ✨ Added
+
+- Official release of **MM IOC Analyzer**.
+- IOC normalization engine.
+- IOC deduplication.
+- IOC classification.
+- Multi-format IOC extraction.
+- Professional IOC PDF investigation report.
+
+- Official release of **MM Password Generator**.
+- Cryptographically secure password generation.
+- Secure passphrase generation.
+- Local entropy estimation.
+- Password quality assessment.
+- 100% client-side generation using `crypto.getRandomValues()`.
+
+- New product artwork for every published application.
+- Dedicated Utility visual identity.
+- Dedicated Intelligence Apps visual identity.
+
+---
+
+### 🎨 Changed
+
+- Complete redesign of the Labs page.
+- New product card system.
+- High-quality application illustrations.
+- Improved navigation between tools.
+- Consistent branding across the complete suite.
+
+- MM Risk Score visual refresh.
+- Password Generator aligned with the Risk Score design language.
+
+- IOC Analyzer fully integrated into the product catalog.
+
+---
+
+### 🛡️ MM Vulnerability Explorer
+
+The Vulnerability Explorer receives its largest evolution since its initial release.
+
+#### Analysis Engine
+
+- Improved operational prioritization.
+- Improved executive decision engine.
+- Smarter remediation recommendations.
+- Context-aware operational guidance.
+- Better confidence evaluation.
+- Improved vulnerability qualification.
+
+#### Operational Assessment
+
+- New remediation resources section.
+- Vendor advisory integration.
+- Patch reference support.
+- Improved business impact presentation.
+- Cleaner operational evaluation layout.
+
+#### User Experience
+
+- Redesigned action cards.
+- Better typography.
+- Improved readability.
+- Better information hierarchy.
+- Cleaner engineering-oriented language.
+
+#### PDF Reporting
+
+- Complete redesign of the executive PDF report.
+- New printable layout.
+- Improved pagination.
+- Better typography.
+- Improved rendering quality.
+- More executive-oriented presentation.
+
+---
+
+### 📄 IOC Analyzer
+
+- Executive PDF investigation report.
+- Multi-page printable report.
+- Redesigned evidence presentation.
+- Investigation workflow improvements.
+- Better IOC normalization.
+
+---
+
+### ⚙️ Technical
+
+- Multiple rendering optimizations.
+- Sharper application previews.
+- Improved image rendering.
+- Better responsive behaviour.
+- UI consistency improvements.
+- Refactored report generation architecture.
+
+---
+
+### 🐛 Fixed
+
+- Fixed image blurriness on Labs product cards.
+- Fixed product image integration.
+- Improved PDF rendering stability.
+- Multiple layout corrections.
+- Various typography fixes.
+
 # [1.4.0] 
 
 ## 🎨 Birth of the MM Security Intelligence Suite
