@@ -12,7 +12,7 @@ import type { JsonLdSchema } from '../lib/seo/schema';
 interface Props {
 	title: string;
 	description: string;
-	image?: ImageMetadata;
+	image?: ImageMetadata | string;
 	schema?: JsonLdSchema | JsonLdSchema[];
 	ogType?: 'website' | 'article';
 }
@@ -26,15 +26,22 @@ const {
 	schema,
 	ogType = 'website',
 } = Astro.props;
+
+const imageSrc = typeof image === 'string' ? image : image.src;
+const socialImageURL = new URL(imageSrc, Astro.site);
 ---
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-NQVJE81J9L"></script>
 <script is:inline>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+	window.dataLayer = window.dataLayer || [];
 
-  gtag('config', 'G-NQVJE81J9L');
+	function gtag() {
+		window.dataLayer.push(arguments);
+	}
+
+	gtag('js', new Date());
+	gtag('config', 'G-NQVJE81J9L');
 </script>
 
 <!-- ==========================================
@@ -108,20 +115,22 @@ const {
 ========================================== -->
 
 <meta property="og:type" content={ogType} />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image.src, Astro.url)} />
+<meta property="og:image" content={socialImageURL} />
+<meta property="og:image:alt" content={title} />
 
 <!-- ==========================================
      Twitter
 ========================================== -->
 
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image.src, Astro.url)} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={socialImageURL} />
+<meta name="twitter:image:alt" content={title} />
 
 <!-- ==========================================
      Structured Data (JSON-LD)
