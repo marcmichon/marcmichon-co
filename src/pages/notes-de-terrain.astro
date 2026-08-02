@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE } from '../consts';
 import { collections, getLatestNotes, notes } from '../data/notes';
+import CarnetCTA from '../components/article/CarnetCTA.astro';
 
 const latestNotes = getLatestNotes(4);
 
@@ -156,6 +157,7 @@ const collectionCount = (collectionId: string) =>
 					}
 				</div>
 			</section>
+			<CarnetCTA />
 		</main>
 
 		<Footer />
