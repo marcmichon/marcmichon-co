@@ -161,6 +161,7 @@ function isAllowedOrigin(
 	if (!origin) return true;
 
 	const allowedOrigins = new Set<string>([
+		new URL(request.url).origin,
 		'http://localhost:4321',
 		'http://127.0.0.1:4321',
 	]);
