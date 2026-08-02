@@ -1,0 +1,207 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import LegalPage from '../components/legal/LegalPage.astro';
+import { SITE_TITLE } from '../consts';
+import { LEGAL } from '../data/legal';
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`Politique de confidentialité | ${SITE_TITLE}`}
+			description="Comment les données personnelles sont utilisées et protégées sur marcmichon.co."
+		/>
+	</head>
+
+	<body>
+		<Header />
+
+		<LegalPage
+			eyebrow="VIE PRIVÉE"
+			title="Politique de confidentialité"
+			description="Comment vos données sont utilisées et protégées."
+		>
+			<h2>Responsable du traitement</h2>
+
+			<p>
+				Le responsable des traitements décrits dans cette politique est
+				<strong>{LEGAL.publisherName}</strong>, éditeur de
+				<strong>{LEGAL.siteName}</strong>.
+			</p>
+
+			<p>
+				Contact :
+				<a href={`mailto:${LEGAL.publisherEmail}`}>{LEGAL.publisherEmail}</a>.
+			</p>
+
+			<h2>Données traitées</h2>
+
+			<h3>Inscription au Carnet de Terrain</h3>
+
+			<p>
+				Lorsque vous vous inscrivez au Carnet de Terrain, l’adresse email que
+				vous renseignez est collectée afin de vous envoyer les prochains
+				numéros et les messages nécessaires à la gestion de votre
+				inscription.
+			</p>
+
+			<p>
+				La base légale de ce traitement est votre consentement. L’inscription
+				sera confirmée par un mécanisme de double opt-in dès le branchement
+				du prestataire d’envoi.
+			</p>
+
+			<h3>Messages envoyés via la page Contact</h3>
+
+			<p>
+				Les informations que vous transmettez volontairement sont utilisées
+				uniquement pour lire votre demande et vous répondre. La base légale
+				est l’intérêt légitime à assurer le suivi des échanges.
+			</p>
+
+			<h3>Mesure d’audience</h3>
+
+			<p>
+				Le site utilise {LEGAL.analytics.name}, fourni par
+				{LEGAL.analytics.provider}, pour comprendre de manière agrégée la
+				fréquentation et l’utilisation du site.
+			</p>
+
+			<p>
+				Ces traceurs ne doivent être activés qu’après votre consentement,
+				sauf si leur configuration remplit strictement les conditions
+				d’exemption prévues par la réglementation applicable. Vous pouvez
+				revenir sur votre choix à tout moment depuis l’outil de gestion des
+				cookies qui sera mis à disposition.
+			</p>
+
+			<h3>Données techniques</h3>
+
+			<p>
+				Le prestataire d’hébergement peut traiter des données techniques
+				nécessaires à la fourniture, à la sécurisation et à la protection du
+				service, comme l’adresse IP, la date de connexion, l’URL demandée ou
+				des informations relatives au navigateur.
+			</p>
+
+			<h2>Finalités et durées de conservation</h2>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Traitement</th>
+						<th>Finalité</th>
+						<th>Durée indicative</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Carnet de Terrain</td>
+						<td>Envoi du contenu et gestion de l’abonnement</td>
+						<td>
+							Pendant la durée de l’abonnement. Après désinscription,
+							seules les données minimales nécessaires au respect de
+							l’opposition peuvent être conservées.
+						</td>
+					</tr>
+					<tr>
+						<td>Contact</td>
+						<td>Répondre aux demandes</td>
+						<td>
+							Le temps nécessaire au traitement de l’échange, puis
+							suppression ou archivage limité si nécessaire.
+						</td>
+					</tr>
+					<tr>
+						<td>Mesure d’audience</td>
+						<td>Statistiques de fréquentation</td>
+						<td>Selon la configuration du service et votre consentement.</td>
+					</tr>
+					<tr>
+						<td>Journaux techniques</td>
+						<td>Sécurité et fonctionnement</td>
+						<td>Durée définie par l’hébergeur et limitée au nécessaire.</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h2>Destinataires et sous-traitants</h2>
+
+			<p>
+				Les données sont accessibles uniquement aux personnes et
+				prestataires qui en ont besoin pour fournir le service :
+			</p>
+
+			<ul>
+				<li>l’éditeur du site ;</li>
+				<li>{LEGAL.host.name}, pour l’hébergement et la sécurité ;</li>
+				<li>
+					le prestataire d’envoi du Carnet de Terrain, une fois celui-ci
+					sélectionné et configuré ;
+				</li>
+				<li>
+					{LEGAL.analytics.provider}, pour la mesure d’audience lorsque vous
+					y avez consenti.
+				</li>
+			</ul>
+
+			<p class="legal-note">
+				Le nom et les informations du prestataire d’envoi devront être
+				ajoutés ici avant l’ouverture publique des inscriptions.
+			</p>
+
+			<h2>Transferts hors de l’Union européenne</h2>
+
+			<p>
+				Certains prestataires peuvent traiter des données en dehors de
+				l’Union européenne. Dans ce cas, les transferts doivent reposer sur
+				un mécanisme juridique reconnu, tel qu’une décision d’adéquation ou
+				des clauses contractuelles types.
+			</p>
+
+			<h2>Vos droits</h2>
+
+			<p>
+				Vous disposez, selon les conditions prévues par la réglementation,
+				d’un droit d’accès, de rectification, d’effacement, de limitation,
+				d’opposition et de portabilité. Vous pouvez également retirer votre
+				consentement à tout moment, sans remettre en cause la licéité du
+				traitement effectué auparavant.
+			</p>
+
+			<p>
+				Pour exercer vos droits, écrivez à
+				<a href={`mailto:${LEGAL.publisherEmail}`}>{LEGAL.publisherEmail}</a>
+				en précisant votre demande.
+			</p>
+
+			<p>
+				Vous pouvez également adresser une réclamation à la Commission
+				nationale de l’informatique et des libertés (CNIL).
+			</p>
+
+			<h2>Sécurité</h2>
+
+			<p>
+				Des mesures techniques et organisationnelles raisonnables sont mises
+				en œuvre afin de limiter les accès non autorisés, les pertes et les
+				altérations de données. Aucun service accessible sur Internet ne
+				peut toutefois garantir une sécurité absolue.
+			</p>
+
+			<h2>Évolution de cette politique</h2>
+
+			<p>
+				Cette politique pourra être adaptée en fonction de l’évolution du
+				site, des prestataires utilisés ou des obligations applicables. La
+				date de mise à jour figurant sur cette page permet d’identifier la
+				version en vigueur.
+			</p>
+		</LegalPage>
+
+		<Footer />
+	</body>
+</html>

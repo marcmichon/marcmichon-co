@@ -1,0 +1,419 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+import ArticleHero from '../../components/article/ArticleHero.astro';
+import ArticleLayout from '../../components/article/ArticleLayout.astro';
+import Callout from '../../components/article/Callout.astro';
+import RelatedArticles from '../../components/article/RelatedArticles.astro';
+import ArticleQuote from '../../components/article/ArticleQuote.astro';
+import TerrainNote from '../../components/article/TerrainNote.astro';
+
+import { SITE_TITLE } from '../../consts';
+
+const toc = [
+	{
+		id: 'il-y-a-toujours-un-moment',
+		label: 'Il y a toujours un moment',
+	},
+	{
+		id: 'quand-tout-avait-du-sens',
+		label: 'Quand tout avait du sens',
+	},
+	{
+		id: 'entreprise-continue-avancer',
+		label: 'Pendant que l’entreprise continuait d’avancer',
+	},
+	{
+		id: 'projet-termine-pas-histoire',
+		label: 'Le projet est terminé. Pas l’histoire.',
+	},
+	{
+		id: 'console-raconte',
+		label: 'Ce que la console raconte vraiment',
+	},
+	{
+		id: 'remplacer-ou-remettre-en-mouvement',
+		label: 'Remplacer ou remettre en mouvement ?',
+	},
+	{
+		id: 'conclusion',
+		label: 'Conclusion',
+	},
+];
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`Les plateformes qui se figent après leur déploiement | ${SITE_TITLE}`}
+			description="Pourquoi une plateforme de cybersécurité finit parfois par ne plus donner satisfaction alors qu’elle fonctionne encore : le projet d’intégration s’est terminé, mais son évolution aussi."
+		/>
+	</head>
+
+	<body>
+		<Header />
+
+		<main>
+			<ArticleHero
+				tag="SECURITY PLATFORM ENGINEERING"
+				badgeColor="#7C3AED"
+				badgeBackground="rgba(124,58,237,.12)"
+				title="Les plateformes qui se figent après leur déploiement"
+				subtitle="Le projet d’intégration est terminé. Le projet de la plateforme, lui, ne fait que commencer."
+				image="/Images/plateforme-figee.png"
+				readTime="7 min de lecture"
+				level="Intermédiaire"
+				updated="Publié : août 2026"
+				technologies={[
+					'Security Platform Engineering',
+					'Platform Lifecycle',
+					'Gouvernance',
+					'Architecture',
+					'Technical Debt',
+				]}
+			/>
+
+			<aside
+				class="series-intro"
+				aria-label="Présentation de la série Security Platform Engineering"
+			>
+				<span class="series-intro__eyebrow">SECURITY PLATFORM ENGINEERING</span>
+
+				<p>
+					Cette série explore la manière dont les plateformes de cybersécurité
+					évoluent, vieillissent et conservent — ou perdent — progressivement
+					leur valeur après leur mise en production.
+				</p>
+			</aside>
+
+			<ArticleLayout toc={toc}>
+				<h2 id="il-y-a-toujours-un-moment">Il y a toujours un moment</h2>
+
+				<p>
+					La console est ouverte depuis quelques minutes. On navigue tranquillement
+					d’un écran à l’autre, sans chercher immédiatement une anomalie précise.
+					On regarde les périmètres, les groupes, les tableaux de bord, les règles.
+					Puis quelqu’un s’arrête devant un objet dont le nom ne dit plus grand-chose
+					à personne.
+				</p>
+
+				<p>
+					<strong>« Ah… ça, c’était pour un ancien projet. »</strong>
+				</p>
+
+				<p>
+					On continue. Quelques clics plus loin, un tableau de bord apparaît. Il est
+					toujours alimenté, les données sont bien là, mais personne ne semble
+					réellement savoir quand il a été consulté pour la dernière fois. Une règle
+					est encore active pour un besoin devenu flou. Une fonctionnalité, disponible
+					depuis plusieurs versions, n’a jamais été activée parce qu’elle n’existait
+					pas au moment du déploiement.
+				</p>
+
+				<p>
+					À cet instant, on ne regarde plus seulement une plateforme de sécurité.
+					On regarde le temps qui a passé.
+				</p>
+
+				<ArticleQuote>
+					Une console conserve parfois mieux la mémoire des anciens projets que
+					l’organisation elle-même.
+				</ArticleQuote>
+
+				<h2 id="quand-tout-avait-du-sens">Quand tout avait du sens</h2>
+
+				<p>
+					Le plus important est de ne pas juger trop vite ce que l’on découvre. Trois
+					ou quatre ans plus tôt, chacun de ces éléments avait probablement une vraie
+					raison d’exister. Le groupe correspondait à un projet, le tableau de bord
+					répondait à un besoin, la règle protégeait un périmètre identifié. Les choix
+					étaient cohérents avec l’entreprise telle qu’elle fonctionnait à ce moment-là.
+				</p>
+
+				<p>
+					C’est d’ailleurs ce qui caractérise généralement les phases d’intégration.
+					Pendant plusieurs semaines, parfois plusieurs mois, la plateforme évolue
+					presque tous les jours. Les ateliers s’enchaînent, les périmètres sont affinés,
+					les règles sont discutées, les tableaux de bord sont repris jusqu’à ce qu’ils
+					répondent réellement aux attentes. Chaque décision est encore récente et
+					chaque paramètre possède une histoire connue de tous.
+				</p>
+
+				<p>
+					Puis vient la mise en production. Les derniers tests sont concluants, les
+					équipes valident la recette, le planning est clôturé et le projet est considéré
+					comme terminé. Tout le monde passe naturellement au sujet suivant.
+				</p>
+
+				<p>
+					C’est souvent là que la plateforme commence à se figer, non pas parce que
+					quelqu’un l’a décidé, mais parce que son évolution n’est plus portée par un
+					projet clairement identifié.
+				</p>
+
+				<TerrainNote context="Security Platform Engineering • Cycle de vie • Gouvernance">
+					<p>
+						La fin d’un projet d’intégration valide la mise en production d’une
+						plateforme. Elle ne valide pas le fait que son paramétrage restera pertinent
+						pendant les années suivantes.
+					</p>
+				</TerrainNote>
+
+				<h2 id="entreprise-continue-avancer">
+					Pendant que l’entreprise continuait d’avancer
+				</h2>
+
+				<p>
+					Le système d’information, lui, ne connaît pas vraiment de fin de projet.
+					Une application en remplace une autre, une migration vers le cloud modifie
+					les périmètres, de nouveaux environnements apparaissent pendant que d’anciens
+					serveurs sont décommissionnés. Une filiale rejoint le groupe, les équipes se
+					réorganisent, les métiers formulent de nouveaux besoins et les usages changent
+					parfois bien plus vite que l’architecture officielle.
+				</p>
+
+				<p>
+					Aucun de ces changements ne semble, pris isolément, justifier une remise à
+					plat de la plateforme. Le nouveau projet est intégré plus tard, le tableau de
+					bord sera revu lorsque l’on aura davantage de recul, la règle historique
+					fonctionne encore et la nouvelle fonctionnalité pourra attendre le prochain
+					chantier. Chaque décision est compréhensible. C’est leur accumulation qui finit
+					par créer un décalage.
+				</p>
+
+				<p>
+					Trois ans plus tard, la plateforme continue souvent de fonctionner sur les
+					hypothèses qui avaient servi à la construire. Elle décrit encore des projets
+					terminés, des organisations qui ont changé et des priorités qui ne sont plus
+					tout à fait les mêmes. Pendant que l’entreprise écrivait un nouveau chapitre,
+					la plateforme relisait toujours le précédent.
+				</p>
+
+				<Callout type="field">
+					<p>
+						<strong>Ce que le terrain m’a appris :</strong> une plateforme ne perd
+						pas nécessairement de sa valeur parce que sa technologie vieillit. Elle en
+						perd surtout lorsque sa représentation du système d’information cesse
+						d’évoluer avec lui.
+					</p>
+				</Callout>
+
+				<h2 id="projet-termine-pas-histoire">
+					Le projet est terminé. Pas l’histoire.
+				</h2>
+
+				<p>
+					C’est probablement le principal malentendu autour des plateformes de sécurité.
+					Nous les déployons comme des projets, avec un début, un planning, des livrables
+					et une date de fin. Cette organisation est nécessaire pour les intégrer. Elle
+					devient problématique lorsqu’elle nous pousse à penser que la plateforme est
+					elle aussi terminée une fois le projet clôturé.
+				</p>
+
+				<p>
+					Une plateforme de sécurité n’est pourtant pas un objet figé. Elle est une
+					représentation du système d’information et de la manière dont l’organisation
+					souhaite l’observer, le protéger et prendre des décisions. Tant que ce système
+					évolue, cette représentation doit pouvoir être remise en question.
+				</p>
+
+				<p>
+					Cela ne signifie pas lancer un nouveau projet tous les six mois. Le plus souvent,
+					la plateforme a surtout besoin d’une attention régulière : revoir ce qui n’est
+					plus utilisé, intégrer les nouveaux périmètres, supprimer les objets devenus
+					inutiles, réévaluer certaines exceptions et se demander si les fonctionnalités
+					apparues depuis le déploiement répondent désormais à un besoin réel.
+				</p>
+
+				<ArticleQuote>
+					Le projet d’intégration est terminé. Le projet de la plateforme, lui,
+					ne fait que commencer.
+				</ArticleQuote>
+
+				<h2 id="console-raconte">Ce que la console raconte vraiment</h2>
+
+				<p>
+					Avec le temps, je me suis aperçu que je cherchais de moins en moins les erreurs
+					de configuration. Elles existent, bien sûr, mais elles ne sont pas toujours le
+					sujet le plus intéressant. Je passe davantage de temps à comprendre les
+					décisions qui ont construit la plateforme et, surtout, depuis combien de temps
+					certaines d’entre elles n’ont plus été réévaluées.
+				</p>
+
+				<p>
+					Pourquoi ce tableau de bord existe-t-il encore ? Pourquoi cette méthode est-elle
+					toujours utilisée ? Pourquoi cette fonctionnalité n’a-t-elle jamais été activée ?
+					Pourquoi ce groupe historique reste-t-il dans le périmètre ? Ces questions ne
+					cherchent pas à démontrer que les choix initiaux étaient mauvais. Je pars au
+					contraire du principe qu’ils étaient probablement justes dans leur contexte.
+				</p>
+
+				<p>
+					La question est simplement de savoir s’ils le seraient encore aujourd’hui.
+					Et la réponse est très souvent différente de celle qui aurait été donnée le
+					jour du déploiement. Non pas parce que les équipes se sont trompées, mais parce
+					que l’organisation, les usages et la technologie ont continué d’évoluer.
+				</p>
+
+				<p>
+					Une console finit ainsi par raconter bien davantage que l’état d’un produit.
+					Elle raconte la manière dont une organisation a accompagné ses changements,
+					les décisions qu’elle a conservées et celles qu’elle a cessé de remettre en
+					question.
+				</p>
+
+				<h2 id="remplacer-ou-remettre-en-mouvement">
+					Remplacer ou remettre en mouvement ?
+				</h2>
+
+				<p>
+					Lorsque les tableaux de bord ne donnent plus satisfaction, que les indicateurs
+					inspirent moins confiance ou que les équipes ont le sentiment de contourner
+					l’outil, la conclusion arrive assez vite : la plateforme commence à montrer ses
+					limites et il serait peut-être temps de regarder une autre solution.
+				</p>
+
+				<p>
+					Cette conclusion peut être juste. Certaines plateformes ne répondent plus aux
+					besoins, certaines architectures doivent être repensées et certaines limites
+					technologiques sont bien réelles. Mais ce n’est pas toujours ce que l’on découvre
+					en regardant plus attentivement.
+				</p>
+
+				<p>
+					Je rencontre finalement assez peu de plateformes qu’il faudrait immédiatement
+					remplacer. En revanche, j’en rencontre beaucoup qui ont simplement cessé
+					d’évoluer. Elles disposent encore des capacités nécessaires, mais leur
+					paramétrage, leur organisation et leurs usages sont restés trop proches du
+					premier jour.
+				</p>
+
+				<p>
+					La nuance est importante. Dans un cas, il faut changer de solution. Dans l’autre,
+					il faut recommencer à la faire vivre. Ces deux décisions n’ont ni le même coût,
+					ni le même délai, ni les mêmes conséquences pour les équipes.
+				</p>
+
+				<h2 id="conclusion">Conclusion</h2>
+
+				<p>
+					Je crois que la durée de vie d’une plateforme se joue moins dans son numéro de
+					version que dans la fréquence à laquelle les décisions qui l’entourent sont
+					remises en question. Une solution ancienne peut rester remarquablement
+					pertinente lorsqu’elle continue d’évoluer. Une solution récente peut, à
+					l’inverse, se retrouver très vite en décalage si son exploitation reste figée.
+				</p>
+
+				<p>
+					Avant d’engager un nouveau projet d’intégration, je commencerais donc par une
+					question plus simple : la plateforme est-elle réellement arrivée au bout de ce
+					qu’elle peut apporter, ou avons-nous simplement cessé de la faire évoluer avec
+					notre système d’information ?
+				</p>
+
+				<ArticleQuote>
+					Une plateforme ne devient pas moins pertinente avec le temps. Elle le devient
+					lorsque l’entreprise continue d’avancer sans l’emmener avec elle.
+				</ArticleQuote>
+
+				<Callout type="warning">
+					<p>
+						Cette Note de terrain est inspirée de situations rencontrées au cours de
+						différentes missions. Les exemples ont été volontairement anonymisés et
+						généralisés afin de préserver la confidentialité des organisations concernées.
+					</p>
+				</Callout>
+
+				<RelatedArticles
+					articles={[
+						{
+							href: '/articles/pourquoi-plateforme-securite-a-jour-techniquement-en-retard',
+							category: 'SECURITY PLATFORM ENGINEERING',
+							title: 'Pourquoi une plateforme à jour peut être techniquement en retard',
+							description:
+								'Une plateforme maintenue n’est pas forcément une plateforme dont les usages continuent d’évoluer.',
+						},
+						{
+							href: '/articles/angles-morts-console-edr',
+							category: 'ENDPOINT SECURITY',
+							title: 'Les angles morts d’une console EDR',
+							description:
+								'Une console au vert ne garantit pas que la couverture de sécurité soit réellement complète.',
+						},
+					]}
+				/>
+			</ArticleLayout>
+		</main>
+
+		<Footer />
+	</body>
+</html>
+
+<style>
+	body {
+		background: #f8fafc;
+	}
+
+	main {
+		width: min(1320px, calc(100% - 4rem));
+		margin: 0 auto;
+		padding: 3rem 0 5rem;
+	}
+
+	.series-intro {
+		position: relative;
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin: 1.5rem 0 2rem;
+		padding: 1rem 1.25rem;
+		border: 1px solid rgba(124, 58, 237, 0.2);
+		border-radius: 1rem;
+		background:
+			linear-gradient(
+				135deg,
+				rgba(124, 58, 237, 0.09),
+				rgba(37, 99, 235, 0.04)
+			),
+			#ffffff;
+		box-shadow: 0 14px 35px rgba(76, 29, 149, 0.07);
+	}
+
+	.series-intro::before {
+		content: '';
+		position: absolute;
+		inset: 0 auto 0 0;
+		width: 4px;
+		background: linear-gradient(180deg, #7c3aed, #4f46e5);
+	}
+
+	.series-intro__eyebrow {
+		flex: 0 0 auto;
+		font-size: 0.72rem;
+		font-weight: 800;
+		letter-spacing: 0.12em;
+		color: #6d28d9;
+	}
+
+	.series-intro p {
+		margin: 0;
+		color: #334155;
+		line-height: 1.65;
+	}
+
+	@media (max-width: 640px) {
+		main {
+			width: min(100% - 2rem, 1320px);
+		}
+
+		.series-intro {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 0.45rem;
+		}
+	}
+</style>

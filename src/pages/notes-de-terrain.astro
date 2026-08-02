@@ -3,6 +3,12 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE } from '../consts';
+import { collections, getLatestNotes, notes } from '../data/notes';
+
+const latestNotes = getLatestNotes(4);
+
+const collectionCount = (collectionId: string) =>
+	notes.filter((note) => note.collectionId === collectionId).length;
 ---
 
 <!doctype html>
@@ -10,7 +16,7 @@ import { SITE_TITLE } from '../consts';
 	<head>
 		<BaseHead
 			title={`Notes de terrain | ${SITE_TITLE}`}
-			description="Articles et retours d’expérience terrain autour du Vulnerability Management, de l’Exposure Management et des opérations de sécurité."
+			description="Articles et retours d’expérience terrain autour du Vulnerability Management, de l’Endpoint Security et du Security Platform Engineering."
 		/>
 	</head>
 
@@ -37,170 +43,117 @@ import { SITE_TITLE } from '../consts';
 				</div>
 			</section>
 
-			<section class="articles-section">
+			<section class="stats-section" aria-label="Statistiques des Notes de Terrain">
+				<div class="stats-grid">
+					<div class="stat-card">
+						<strong>{notes.length}</strong>
+						<span>Notes de Terrain</span>
+					</div>
+
+					<div class="stat-card">
+						<strong>{collections.length}</strong>
+						<span>Collections thématiques</span>
+					</div>
+
+					<div class="stat-card">
+						<strong>1</strong>
+						<span>Nouvel article par semaine</span>
+					</div>
+				</div>
+			</section>
+
+			<section class="collections-section">
 				<div class="section-header">
-					<h2>Tous les articles</h2>
+					<div>
+						<p class="section-kicker">COLLECTIONS</p>
+						<h2>Explorer par domaine</h2>
+					</div>
 
 					<p>
-						Analyses courtes, pragmatiques et orientées exploitation.
+						Chaque collection développe un même sujet au fil de plusieurs
+						observations et retours d’expérience.
 					</p>
 				</div>
 
+				<div class="collections-grid">
+					{
+						collections.map((collection) => (
+							<a
+								href={`/notes-de-terrain/${collection.id}/`}
+								class={`collection-card ${collection.className}`}
+							>
+								<div class="collection-image">
+									<img src={collection.image} alt="" loading="lazy" />
+								</div>
 
-				
-				<div class="articles-grid">
+								<div class="collection-content">
+									<div class="collection-heading">
+										<h3>{collection.name}</h3>
+										<span class="collection-count">
+											{collectionCount(collection.id)} articles
+										</span>
+									</div>
 
-					<a href="/articles/pourquoi-plateforme-securite-a-jour-techniquement-en-retard" class="article-card category-engineering">
-						<div class="article-image">
-							<img src="/Images/security-platform-engineering-plateforme-a-jour.png" alt="" />
-						</div>
+									<p>{collection.description}</p>
 
-						<div class="article-content">
-							<p class="article-category">SECURITY PLATFORM ENGINEERING</p>
-							<h3>Une plateforme à jour, mais ... techniquement en retard</h3>
-							<p>
-								Une plateforme maintenue n’est pas forcément une plateforme qui continue d’évoluer. Retour d’expérience sur une confusion que je rencontre régulièrement lors des revues techniques.
-							</p>
-							<span>⏱ 7 min de lecture</span>
-						</div>
-					</a>
+									<span class="collection-link">
+										Explorer la collection <span aria-hidden="true">→</span>
+									</span>
+								</div>
+							</a>
+						))
+					}
+				</div>
+			</section>
 
-<a href="/articles/angles-morts-console-edr" class="article-card category-endpoint">
-						<div class="article-image">
-							<img src="/Images/edr-console-angles-morts.png" alt="" />
-						</div>
+			<section class="latest-section">
+				<div class="section-header">
+					<div>
+						<p class="section-kicker">DERNIÈRES PUBLICATIONS</p>
+						<h2>Les dernières Notes de Terrain</h2>
+					</div>
 
-						<div class="article-content">
-							<p class="article-category">ENDPOINT SECURITY</p>
-							<h3>Les angles morts d’une console EDR</h3>
-							<p>
-								Pourquoi une console au vert ne garantit pas que votre niveau de sécurité est réellement bon.
-							</p>
-							<span>⏱ 7 min de lecture</span>
-						</div>
-					</a>
+					<p>
+						Les publications les plus récentes, toutes collections confondues.
+					</p>
+				</div>
 
+				<div class="latest-list">
+					{
+						latestNotes.map((note, index) => {
+							const collection = collections.find(
+								(item) => item.id === note.collectionId,
+							);
 
-					<a href="/articles/exclusions-edr-risque-silencieux" class="article-card category-endpoint">
-						<div class="article-image">
-							<img src="/Images/exclusions.png" alt="" />
-						</div>
+							return (
+								<a
+									href={note.href}
+									class={`latest-row ${collection?.className ?? ''}`}
+								>
+									<div class="note-id">
+										<span>NOTE</span>
+										<strong>{note.id.replace('NT-', '')}</strong>
+									</div>
 
-						<div class="article-content">
-							<p class="article-category">ENDPOINT SECURITY</p>
-							<h3>Les exclusions : le risque silencieux des plateformes EDR</h3>
-							<p>
-								Indispensables au fonctionnement de certaines applications, les exclusions peuvent devenir un angle mort lorsqu’elles s’accumulent sans gouvernance.
-							</p>
-							<span>⏱ 4 min de lecture</span>
-						</div>
-					</a>
+									<div class="latest-content">
+										<div class="latest-title-line">
+											<h3>{note.title}</h3>
+											{index === 0 && <span class="latest-badge">Dernière note</span>}
+										</div>
 
-					<a href="/articles/ce-que-votre-edr-ne-voit-pas" class="article-card category-endpoint">
-						<div class="article-image">
-							<img src="/Images/edr-assets.png" alt="" />
-						</div>
+										<p>{note.description}</p>
+									</div>
 
-						<div class="article-content">
-							<p class="article-category">ENDPOINT SECURITY</p>
-							<h3>Votre EDR voit-il vraiment tout ?</h3>
-							<p>
-								Déployer un EDR est une étape essentielle. Encore faut-il identifier
-								les équipements qui échappent à sa visibilité et constituent de véritables angles morts.
-							</p>
-							<span>⏱ 3 min de lecture</span>
-						</div>
-					</a>
+									<div class="latest-meta">
+										<span>{collection?.shortName}</span>
+										<span>{note.readTime} • {note.date}</span>
+									</div>
 
-					<a href="/articles/endpoint-protege-endpoint-securise" class="article-card category-endpoint">
-						<div class="article-image">
-							<img src="/Images/secops.png" alt="" />
-						</div>
-
-						<div class="article-content">
-							<p class="article-category">ENDPOINT SECURITY</p>
-							<h3>Pourquoi un endpoint protégé n'est pas forcément un endpoint sécurisé</h3>
-							<p>Un EDR protège un poste. Il ne garantit pas à lui seul qu'il soit sécurisé.</p>
-							<span>⏱ 3 min de lecture</span>
-						</div>
-					</a>
-
-					<a href="/articles/programmes-vm-echec-scan" class="article-card category-vm">
-						<div class="article-image">
-							<img src="/Images/scanVM.png" alt="" />
-						</div>
-
-						<div class="article-content">
-							<p class="article-category">VM FUNDAMENTALS</p>
-							<h3>Pourquoi les programmes VM échouent rarement à cause du moteur de scan</h3>
-							<p>Le vrai problème se situe souvent ailleurs : gouvernance, processus et remédiation.</p>
-							<span>⏱ 3 min de lecture</span>
-						</div>
-					</a>
-
-					<a href="/articles/assets-inconnus-visibilite" class="article-card category-vm">
-						<div class="article-image">
-							<img src="/Images/assetsinconnus.png" alt="" />
-						</div>
-
-						<div class="article-content">
-							<p class="article-category">VM FUNDAMENTALS</p>
-							<h3>Pourquoi les assets inconnus détruisent votre visibilité sécurité</h3>
-							<p>On ne protège pas ce qu’on ne connaît pas.</p>
-							<span>⏱ 4 min de lecture</span>
-						</div>
-					</a>
-
-					<a href="/articles/tagging-vulnerability-management" class="article-card category-vm">
-						<div class="article-image">
-							<img src="/Images/tagging.png" alt="" />
-						</div>
-
-						<div class="article-content">
-							<p class="article-category">VM FUNDAMENTALS</p>
-							<h3>Le tagging est le pilier oublié du Vulnerability Management</h3>
-							<p>
-								Sans contexte métier, ownership et structuration,
-								une plateforme VM produit des données mais peine à produire des décisions.
-							</p>
-							<span>⏱ 6 min de lecture</span>
-						</div>
-					</a>
-
-					<a href="/articles/remediation-maillon-faible-vulnerability-management" class="article-card category-vm">
-						<div class="article-image">
-							<img src="/Images/remediation-vm.png" alt="" />
-						</div>
-
-						<div class="article-content">
-							<p class="article-category">VM FUNDAMENTALS</p>
-
-							<h3>
-								Pourquoi la remédiation est souvent le maillon faible du Vulnerability Management
-							</h3>
-
-							<p>
-								Détecter une vulnérabilité est rarement le problème. La corriger,
-								la piloter et la suivre jusqu'à sa résolution représentent souvent
-								le véritable défi.
-							</p>
-
-							<span>⏱ 9 min de lecture</span>
-						</div>
-					</a>
-
-					<a href="/articles/vulnerabilite-critique-risque" class="article-card category-vm">
-						<div class="article-image">
-							<img src="/Images/vulncritique.png" alt="" />
-						</div>
-
-						<div class="article-content">
-							<p class="article-category">VM FUNDAMENTALS</p>
-							<h3>Une vulnérabilité critique détectée n’a jamais réduit le risque</h3>
-							<p>Détecter n’est que la première étape.</p>
-							<span>⏱ 5 min de lecture</span>
-						</div>
-					</a>
+									<span class="latest-arrow" aria-hidden="true">→</span>
+								</a>
+							);
+						})
+					}
 				</div>
 			</section>
 		</main>
@@ -222,25 +175,22 @@ import { SITE_TITLE } from '../consts';
 
 	.page-hero {
 		margin-top: 2rem;
-		margin-bottom: 5rem;
+		margin-bottom: 2.25rem;
 		padding: 5rem;
 		border-radius: 32px;
 		background:
-			linear-gradient(rgba(2,8,23,.78), rgba(2,8,23,.78)),
+			linear-gradient(rgba(2, 8, 23, 0.78), rgba(2, 8, 23, 0.78)),
 			url('/Images/fondsite.png');
 		background-size: cover;
 		background-position: center;
 		background-repeat: no-repeat;
 		color: white;
-		box-shadow: 0 25px 60px rgba(2,8,23,.20);
+		box-shadow: 0 25px 60px rgba(2, 8, 23, 0.2);
 		overflow: hidden;
 	}
 
-	.hero-text {
-		min-width: 0;
-	}
-
-	.section-tag {
+	.section-tag,
+	.section-kicker {
 		color: #60a5fa;
 		font-weight: 800;
 		font-size: 0.85rem;
@@ -249,19 +199,57 @@ import { SITE_TITLE } from '../consts';
 	}
 
 	h1 {
-		font-size: 5rem;
-		line-height: 0.95;
+		max-width: 1000px;
 		margin: 1rem 0 2rem;
 		color: white;
+		font-size: 5rem;
+		line-height: 0.95;
 		letter-spacing: -0.05em;
-		max-width: 1000px;
 	}
 
 	.intro {
 		max-width: 900px;
+		color: #dbeafe;
 		font-size: 1.3rem;
 		line-height: 1.8;
-		color: #dbeafe;
+	}
+
+	.stats-section {
+		margin-bottom: 3.25rem;
+	}
+
+	.stats-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1.25rem;
+	}
+
+	.stat-card {
+		display: flex;
+		align-items: baseline;
+		gap: 1rem;
+		padding: 1.5rem 1.75rem;
+		background: white;
+		border: 1px solid #e5e7eb;
+		border-radius: 20px;
+		box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+	}
+
+	.stat-card strong {
+		color: #0f172a;
+		font-size: 2.4rem;
+		line-height: 1;
+		letter-spacing: -0.04em;
+	}
+
+	.stat-card span {
+		color: #64748b;
+		font-size: 0.95rem;
+		font-weight: 700;
+	}
+
+	.collections-section {
+		margin-bottom: 3.5rem;
 	}
 
 	.section-header {
@@ -269,149 +257,279 @@ import { SITE_TITLE } from '../consts';
 		justify-content: space-between;
 		align-items: flex-end;
 		gap: 2rem;
-		margin-bottom: 2rem;
+		margin-bottom: 1.6rem;
 	}
 
 	.section-header h2 {
+		margin: 0.35rem 0 0;
 		font-size: 3rem;
-		margin: 0;
 		letter-spacing: -0.04em;
 	}
 
-	.section-header p {
-		max-width: 400px;
-		color: #64748b;
-		font-size: 1.2rem;
-		line-height: 1.7;
+	.section-header > p {
+		max-width: 480px;
 		margin: 0;
+		color: #64748b;
+		font-size: 1.1rem;
+		line-height: 1.7;
 	}
 
-	.articles-grid {
+	.collections-grid {
 		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 2rem;
-		width: 100%;
 	}
 
-	.article-card {
+	.collection-card,
+	.latest-row {
+		--category-color: #2563eb;
+		--category-background: rgba(37, 99, 235, 0.1);
+		--category-border: rgba(37, 99, 235, 0.24);
+		--category-shadow: rgba(37, 99, 235, 0.16);
+	}
+
+	.collection-card {
 		display: flex;
 		flex-direction: column;
-		padding: 0;
-		min-height: 420px;
+		min-height: 410px;
 		overflow: hidden;
 		background: white;
 		border: 1px solid #e5e7eb;
 		border-radius: 24px;
-		text-decoration: none;
 		color: inherit;
-		transition: all 0.2s ease;
+		text-decoration: none;
 		box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+		transition:
+			transform 0.2s ease,
+			border-color 0.2s ease,
+			box-shadow 0.2s ease;
 	}
 
-	.article-card:hover {
-	transform: translateY(-4px);
-	border-color: var(--category-border);
-	box-shadow:
-		0 20px 50px rgba(15, 23, 42, 0.12),
-		0 12px 30px var(--category-shadow);
-}
+	.collection-card:hover {
+		transform: translateY(-4px);
+		border-color: var(--category-border);
+		box-shadow:
+			0 20px 50px rgba(15, 23, 42, 0.12),
+			0 12px 30px var(--category-shadow);
+	}
 
-	.article-image {
-		width: 100%;
+	.collection-image {
 		height: 180px;
-		flex-shrink: 0;
 		overflow: hidden;
+		background: #020817;
 	}
 
-	.article-image img {
+	.collection-image img {
+		display: block;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		display: block;
 		transition: transform 0.3s ease;
 	}
 
-	.article-card:hover .article-image img {
-		transform: scale(1.04);
+	.collection-card:hover .collection-image img {
+		transform: scale(1.025);
 	}
 
-	.article-content {
+	.collection-content {
 		display: flex;
-		flex-direction: column;
 		flex: 1;
-		padding: 1.75rem;
+		flex-direction: column;
+		padding: 1.5rem;
 	}
 
-.article-category {
-	display: inline-flex;
-	align-items: center;
-	width: fit-content;
-
-	padding: 0.4rem 0.75rem;
-	border-radius: 999px;
-
-	font-size: 0.72rem;
-	font-weight: 900;
-	letter-spacing: 0.1em;
-	text-transform: uppercase;
-
-	color: var(--category-color);
-	background: var(--category-background);
-	border: 1px solid var(--category-border);
-
-	margin: 0 auto 1rem;
-}
-
-.category-vm {
-	--category-color: #2563eb;
-	--category-background: rgba(37, 99, 235, 0.1);
-	--category-border: rgba(37, 99, 235, 0.24);
-	--category-shadow: rgba(37, 99, 235, 0.18);
-}
-
-.category-endpoint {
-	--category-color: #dc2626;
-	--category-background: rgba(220, 38, 38, 0.1);
-	--category-border: rgba(220, 38, 38, 0.24);
-	--category-shadow: rgba(220, 38, 38, 0.18);
-}
-
-.category-engineering {
-	--category-color: #7c3aed;
-	--category-background: rgba(124, 58, 237, 0.1);
-	--category-border: rgba(124, 58, 237, 0.24);
-	--category-shadow: rgba(124, 58, 237, 0.18);
-}
-
-.category-exposure {
-	--category-color: #f97316;
-	--category-background: rgba(249, 115, 22, 0.1);
-	--category-border: rgba(249, 115, 22, 0.24);
-	--category-shadow: rgba(249, 115, 22, 0.18);
-}
-	.article-card h3 {
-		font-size: 1.35rem;
-		line-height: 1.35;
-		margin: 0 0 1rem;
+	.collection-heading {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 1.15rem;
 	}
 
-	.article-content p:not(.article-category) {
-		color: #475569;
-		line-height: 1.7;
-		flex-grow: 1;
-		margin: 0 0 1.5rem;
+	.collection-heading h3 {
+		display: inline-flex;
+		width: fit-content;
+		margin: 0;
+		padding: 0.55rem 0.95rem;
+		border: 1px solid var(--category-border);
+		border-radius: 999px;
+		background: var(--category-background);
+		color: var(--category-color);
+		font-size: 0.78rem;
+		font-weight: 900;
+		line-height: 1;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
 	}
 
-	.article-content span {
-		margin-top: auto;
+	.collection-count {
 		color: #64748b;
-		font-size: 0.9rem;
-		font-weight: 600;
+		font-size: 0.78rem;
+		font-weight: 800;
+		white-space: nowrap;
 	}
 
-	@media (max-width: 1200px) {
-		.articles-grid {
-			grid-template-columns: repeat(2, 1fr);
+	.collection-card p {
+		margin: 0 0 1.5rem;
+		color: #475569;
+		line-height: 1.65;
+	}
+
+	.collection-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-top: auto;
+		color: var(--category-color);
+		font-size: 0.88rem;
+		font-weight: 850;
+	}
+
+	.latest-list {
+		overflow: hidden;
+		background: white;
+		border: 1px solid #e5e7eb;
+		border-radius: 24px;
+		box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+	}
+
+	.latest-row {
+		display: grid;
+		grid-template-columns: 3.25rem minmax(0, 1fr) auto auto;
+		align-items: center;
+		gap: 1.25rem;
+		min-height: 104px;
+		padding: 1.05rem 1.4rem;
+		color: inherit;
+		text-decoration: none;
+		border-bottom: 1px solid #eef2f7;
+		transition: background 0.2s ease;
+	}
+
+	.latest-row:last-child {
+		border-bottom: 0;
+	}
+
+	.latest-row:hover {
+		background: #f8fbff;
+	}
+
+	.note-id {
+		display: grid;
+		place-items: center;
+		align-content: center;
+		width: 3.25rem;
+		height: 3.25rem;
+		border-radius: 13px;
+		color: var(--category-color);
+		background:
+			linear-gradient(145deg, rgba(255, 255, 255, 0.96), var(--category-background));
+		border: 1px solid var(--category-border);
+		line-height: 1;
+	}
+
+	.note-id span {
+		font-size: 0.52rem;
+		font-weight: 900;
+		letter-spacing: 0.1em;
+	}
+
+	.note-id strong {
+		margin-top: 0.18rem;
+		font-size: 0.9rem;
+		font-weight: 900;
+	}
+
+	.latest-title-line {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+	}
+
+	.latest-content h3 {
+		margin: 0;
+		color: #0f172a;
+		font-size: 1.1rem;
+		line-height: 1.35;
+	}
+
+	.latest-content p {
+		margin: 0.4rem 0 0;
+		color: #64748b;
+		font-size: 0.84rem;
+		line-height: 1.5;
+	}
+
+	.latest-badge {
+		display: inline-flex;
+		padding: 0.28rem 0.55rem;
+		border: 1px solid var(--category-border);
+		border-radius: 999px;
+		background: var(--category-background);
+		color: var(--category-color);
+		font-size: 0.58rem;
+		font-weight: 900;
+		letter-spacing: 0.07em;
+		text-transform: uppercase;
+	}
+
+	.latest-meta {
+		display: grid;
+		gap: 0.25rem;
+		min-width: 150px;
+		color: #64748b;
+		text-align: right;
+		font-size: 0.78rem;
+		font-weight: 700;
+	}
+
+	.latest-arrow {
+		color: var(--category-color);
+		font-size: 1.25rem;
+		font-weight: 900;
+		transition: transform 0.2s ease;
+	}
+
+	.latest-row:hover .latest-arrow {
+		transform: translateX(4px);
+	}
+
+	.category-vm {
+		--category-color: #2563eb;
+		--category-background: rgba(37, 99, 235, 0.1);
+		--category-border: rgba(37, 99, 235, 0.24);
+		--category-shadow: rgba(37, 99, 235, 0.18);
+	}
+
+	.category-endpoint {
+		--category-color: #dc2626;
+		--category-background: rgba(220, 38, 38, 0.1);
+		--category-border: rgba(220, 38, 38, 0.24);
+		--category-shadow: rgba(220, 38, 38, 0.18);
+	}
+
+	.category-engineering {
+		--category-color: #7c3aed;
+		--category-background: rgba(124, 58, 237, 0.1);
+		--category-border: rgba(124, 58, 237, 0.24);
+		--category-shadow: rgba(124, 58, 237, 0.18);
+	}
+
+	@media (max-width: 1100px) {
+		.collections-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.collection-card {
+			display: grid;
+			grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+			min-height: 0;
+		}
+
+		.collection-image {
+			height: 100%;
+			min-height: 260px;
 		}
 	}
 
@@ -424,17 +542,52 @@ import { SITE_TITLE } from '../consts';
 			padding: 3rem 2rem;
 		}
 
+		h1 {
+			font-size: 3rem;
+		}
+
+		.stats-grid {
+			grid-template-columns: 1fr;
+		}
+
 		.section-header {
 			flex-direction: column;
 			align-items: flex-start;
 		}
 
-		.articles-grid {
-			grid-template-columns: 1fr;
+		.collection-card {
+			display: flex;
 		}
 
-		h1 {
-			font-size: 3rem;
+		.collection-image {
+			height: 200px;
+			min-height: 0;
+		}
+
+		.latest-row {
+			grid-template-columns: 3.25rem minmax(0, 1fr) auto;
+		}
+
+		.latest-meta {
+			display: none;
+		}
+	}
+
+	@media (max-width: 520px) {
+		.page-hero {
+			margin-bottom: 1.75rem;
+		}
+
+		.latest-row {
+			grid-template-columns: 3.25rem minmax(0, 1fr);
+		}
+
+		.latest-arrow {
+			display: none;
+		}
+
+		.latest-content p {
+			display: none;
 		}
 	}
 </style>

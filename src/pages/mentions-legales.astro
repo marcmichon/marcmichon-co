@@ -1,0 +1,117 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import LegalPage from '../components/legal/LegalPage.astro';
+import { SITE_TITLE } from '../consts';
+import { LEGAL } from '../data/legal';
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`Mentions légales | ${SITE_TITLE}`}
+			description="Les informations légales relatives à marcmichon.co."
+		/>
+	</head>
+
+	<body>
+		<Header />
+
+		<LegalPage
+			eyebrow="MENTIONS LÉGALES"
+			title="Mentions légales"
+			description="Les informations légales relatives à marcmichon.co."
+		>
+			<h2>Édition du site</h2>
+
+			<p>
+				Le site <strong>{LEGAL.siteName}</strong>, accessible à l’adresse
+				<a href={LEGAL.siteUrl}>{LEGAL.siteUrl}</a>, est un site édité à titre
+				non professionnel.
+			</p>
+
+			<p>
+				Éditeur et directeur de la publication :
+				<strong>{LEGAL.publicationDirector}</strong>.
+			</p>
+
+			<p>
+				Contact :
+				<a href={`mailto:${LEGAL.publisherEmail}`}>{LEGAL.publisherEmail}</a>.
+			</p>
+
+			<p class="legal-note">
+				Conformément aux dispositions applicables aux éditeurs non
+				professionnels, les éléments d’identification personnelle complets de
+				l’éditeur ont été communiqués au prestataire d’hébergement.
+			</p>
+
+			<h2>Hébergement</h2>
+
+			<p>
+				Le site est hébergé par :
+			</p>
+
+			<p>
+				<strong>{LEGAL.host.name}</strong><br />
+				{LEGAL.host.address}<br />
+				Téléphone : {LEGAL.host.phone}
+			</p>
+
+			<h2>Propriété intellectuelle</h2>
+
+			<p>
+				Sauf indication contraire, les textes, Notes de Terrain, outils,
+				schémas, éléments graphiques et contenus publiés sur
+				<strong>{LEGAL.siteName}</strong> sont protégés par le droit de la
+				propriété intellectuelle.
+			</p>
+
+			<p>
+				Toute reproduction, représentation, adaptation ou réutilisation
+				substantielle de ces contenus nécessite l’autorisation préalable de
+				l’éditeur, sauf dans les cas prévus par la loi.
+			</p>
+
+			<p>
+				Les marques, noms de produits et logos éventuellement cités restent
+				la propriété de leurs titulaires respectifs.
+			</p>
+
+			<h2>Responsabilité</h2>
+
+			<p>
+				Les contenus sont publiés à titre informatif et reflètent des retours
+				d’expérience et analyses à un instant donné. Ils ne constituent pas
+				un conseil juridique, contractuel ou une recommandation universelle.
+			</p>
+
+			<p>
+				L’éditeur s’efforce de fournir des informations fiables, mais ne peut
+				garantir l’absence totale d’erreur ni l’adéquation des contenus à
+				chaque contexte technique ou organisationnel.
+			</p>
+
+			<h2>Liens externes</h2>
+
+			<p>
+				Le site peut contenir des liens vers des ressources externes.
+				L’éditeur n’exerce aucun contrôle permanent sur leur contenu et ne
+				peut être tenu responsable de leur disponibilité ou de leurs
+				pratiques.
+			</p>
+
+			<h2>Signalement et contact</h2>
+
+			<p>
+				Pour signaler une erreur, demander une correction ou exercer un droit
+				de réponse, vous pouvez écrire à
+				<a href={`mailto:${LEGAL.publisherEmail}`}>{LEGAL.publisherEmail}</a>.
+			</p>
+		</LegalPage>
+
+		<Footer />
+	</body>
+</html>

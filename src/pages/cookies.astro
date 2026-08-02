@@ -1,0 +1,125 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import LegalPage from '../components/legal/LegalPage.astro';
+import { SITE_TITLE } from '../consts';
+import { LEGAL } from '../data/legal';
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`Cookies | ${SITE_TITLE}`}
+			description="Les cookies et traceurs utilisés par marcmichon.co."
+		/>
+	</head>
+
+	<body>
+		<Header />
+
+		<LegalPage
+			eyebrow="COOKIES ET TRACEURS"
+			title="Cookies"
+			description="Les cookies et traceurs utilisés par marcmichon.co."
+		>
+			<h2>Qu’est-ce qu’un cookie ?</h2>
+
+			<p>
+				Un cookie est un petit fichier enregistré ou lu sur votre terminal
+				lorsque vous consultez un site. Il peut servir au fonctionnement
+				technique du service, à sa sécurisation, à la mémorisation de vos
+				choix ou à la mesure d’audience.
+			</p>
+
+			<h2>Traceurs utilisés sur le site</h2>
+
+			<h3>Traceurs strictement nécessaires</h3>
+
+			<p>
+				Des traceurs techniques peuvent être utilisés par
+				{LEGAL.host.name} pour assurer la sécurité, la disponibilité du site,
+				la prévention des abus et la répartition du trafic. Lorsqu’ils sont
+				strictement nécessaires au fonctionnement du service, ils ne
+				requièrent pas votre consentement.
+			</p>
+
+			<h3>Mesure d’audience</h3>
+
+			<p>
+				Le site intègre {LEGAL.analytics.name}, fourni par
+				{LEGAL.analytics.provider}. Selon sa configuration, ce service peut
+				déposer ou lire des traceurs tels que <code>_ga</code> et
+				<code>_ga_*</code>.
+			</p>
+
+			<p>
+				Les traceurs de mesure d’audience sont soumis au consentement sauf
+				lorsqu’ils respectent l’ensemble des conditions permettant de
+				bénéficier d’une exemption. En l’état, ils doivent donc rester
+				désactivés tant que vous n’avez pas exprimé votre choix.
+			</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>Traceur</th>
+						<th>Finalité</th>
+						<th>Durée indicative</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>_ga</code></td>
+						<td>Distinguer les visiteurs pour produire des statistiques</td>
+						<td>Jusqu’à 2 ans selon la configuration</td>
+					</tr>
+					<tr>
+						<td><code>_ga_*</code></td>
+						<td>Conserver l’état d’une session de mesure</td>
+						<td>Jusqu’à 2 ans selon la configuration</td>
+					</tr>
+					<tr>
+						<td>Traceurs Cloudflare</td>
+						<td>Sécurité et fonctionnement technique</td>
+						<td>Variable selon le traceur et le service utilisé</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h2>Gérer votre choix</h2>
+
+			<p>
+				Un bandeau de gestion du consentement doit permettre d’accepter ou
+				de refuser les traceurs non nécessaires avec le même niveau de
+				simplicité. Votre choix doit pouvoir être modifié ultérieurement.
+			</p>
+
+			<p class="legal-note">
+				Avant la mise en production, il reste nécessaire de brancher un
+				gestionnaire de consentement et de bloquer Google Analytics tant que
+				le consentement n’a pas été donné. La seule publication de cette page
+				ne suffit pas à rendre les traceurs conformes.
+			</p>
+
+			<h2>Paramètres du navigateur</h2>
+
+			<p>
+				Vous pouvez également supprimer ou bloquer les cookies depuis les
+				paramètres de votre navigateur. Cette action peut toutefois affecter
+				certaines fonctions techniques du site.
+			</p>
+
+			<h2>Contact</h2>
+
+			<p>
+				Pour toute question concernant les cookies ou vos données, vous
+				pouvez écrire à 
+				<a href={`mailto:${LEGAL.publisherEmail}`}>{LEGAL.publisherEmail}</a>.
+			</p>
+		</LegalPage>
+
+		<Footer />
+	</body>
+</html>

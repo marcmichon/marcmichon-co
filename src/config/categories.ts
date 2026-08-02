@@ -70,9 +70,9 @@ export interface EditorialCategory {
 export const categories = {
   vm: {
     id: "vm",
-    label: "VM Fundamentals",
+    label: "Vulnerability Management",
     shortLabel: "VM",
-    slug: "vm-fundamentals",
+    slug: "vulnerability-management",
 
     color: "#2563EB",
     softColor: "rgba(37, 99, 235, 0.10)",

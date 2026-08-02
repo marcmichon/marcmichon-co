@@ -1,0 +1,642 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE } from '../consts';
+
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`Carnet de Terrain | ${SITE_TITLE}`}
+			description="Une nouvelle Note de Terrain, les avancées de MM Security Intelligence et Le Coin de l’Ingénieur, directement par email."
+		/>
+	</head>
+
+	<body>
+		<Header />
+
+		<main>
+			<section class="carnet-hero">
+				<div class="hero-content">
+					<p class="hero-kicker">LE CARNET DE TERRAIN</p>
+
+					<h1>
+						Chaque semaine, je partage<br />
+						ce que le terrain m’a appris.
+					</h1>
+
+					<p class="hero-intro">
+						Le prolongement naturel des Notes de Terrain : une nouvelle
+						publication, les avancées de MM Security Intelligence et une
+						réflexion dans Le Coin de l’Ingénieur.
+					</p>
+				</div>
+			</section>
+
+			<section class="editorial-intro">
+				<div>
+					<p class="section-kicker">POURQUOI CE CARNET ?</p>
+					<h2>Continuer la réflexion</h2>
+				</div>
+
+				<p>
+					Le Carnet de Terrain ne résume pas simplement les nouveaux
+					articles. Il permet de poursuivre une idée, de suivre l’évolution
+					des outils et de partager des observations plus courtes,
+					directement issues du terrain.
+				</p>
+			</section>
+
+			<section class="carnet-signup" aria-labelledby="carnet-signup-title">
+				<div class="signup-copy">
+					<p class="signup-kicker">PROLONGER LES NOTES DE TERRAIN</p>
+
+					<h2 id="carnet-signup-title">Recevoir le Carnet de Terrain</h2>
+
+					<p class="signup-intro">
+						Chaque semaine, je partage une nouvelle Note de Terrain, les avancées
+						de MM Security Intelligence et une réflexion dans Le Coin de l’Ingénieur.
+					</p>
+
+					<ul class="signup-items" aria-label="Contenu du Carnet de Terrain">
+						<li>
+							<span class="item-line" aria-hidden="true"></span>
+							<span>Une nouvelle Note de Terrain</span>
+						</li>
+
+						<li>
+							<span class="item-line" aria-hidden="true"></span>
+							<span>Les avancées de MM Security Intelligence</span>
+						</li>
+
+						<li>
+							<span class="item-line" aria-hidden="true"></span>
+							<span>Le Coin de l’Ingénieur</span>
+						</li>
+					</ul>
+				</div>
+
+				<form
+					class="signup-form"
+					id="carnet-form"
+					method="post"
+					novalidate
+				>
+					<input type="hidden" name="source" value="page-carnet-de-terrain" />
+
+					<div class="honeypot" aria-hidden="true">
+						<label for="company">Entreprise</label>
+						<input
+							id="company"
+							name="company"
+							type="text"
+							tabindex="-1"
+							autocomplete="off"
+						/>
+					</div>
+
+					<p class="form-kicker">RECEVOIR LE PROCHAIN CARNET</p>
+					<h3>Seulement du terrain.</h3>
+
+					<p class="form-intro">
+						Une lecture courte, une fois par semaine. Pas de publicité, pas de spam.
+					</p>
+
+					<label for="carnet-email">Votre adresse email</label>
+
+					<div class="email-row">
+						<input
+							id="carnet-email"
+							name="email"
+							type="email"
+							placeholder="vous@exemple.fr"
+							autocomplete="email"
+							inputmode="email"
+							aria-describedby="email-help carnet-feedback"
+							required
+						/>
+
+						<button type="submit">
+							<span class="button-label">Recevoir le Carnet</span>
+							<span aria-hidden="true">→</span>
+						</button>
+					</div>
+
+					<label class="consent-row" for="carnet-consent">
+						<input
+							id="carnet-consent"
+							name="consent"
+							type="checkbox"
+							value="accepted"
+							required
+						/>
+
+						<span>
+							J’accepte de recevoir le Carnet de Terrain par email et
+							j’ai pris connaissance de la
+							<a href="/politique-de-confidentialite/" target="_blank" rel="noopener">
+								Politique de confidentialité
+							</a>.
+							Je pourrai me désinscrire à tout moment.
+						</span>
+					</label>
+
+					<p class="privacy-note" id="email-help">
+						Votre adresse email est utilisée uniquement pour l’envoi du Carnet de
+						Terrain. Un email de confirmation vous sera envoyé.
+					</p>
+
+					<div
+						class="form-feedback"
+						id="carnet-feedback"
+						role="status"
+						aria-live="polite"
+						aria-atomic="true"
+					></div>
+				</form>
+			</section>
+		</main>
+
+		<Footer />
+	</body>
+</html>
+
+<script>
+	const form =
+		document.querySelector<HTMLFormElement>('#carnet-form');
+
+	const feedback =
+		form?.querySelector<HTMLElement>('#carnet-feedback');
+
+	const button =
+		form?.querySelector<HTMLButtonElement>('button[type="submit"]');
+
+	const buttonLabel =
+		form?.querySelector<HTMLElement>('.button-label');
+
+	form?.addEventListener('submit', async (event) => {
+		event.preventDefault();
+
+		if (!form || !feedback || !button || !buttonLabel) return;
+
+		feedback.className = 'form-feedback';
+		feedback.textContent = '';
+
+		if (!form.reportValidity()) return;
+
+		const formData = new FormData(form);
+
+		const email = String(formData.get('email') ?? '').trim();
+		const consent = formData.get('consent') === 'accepted';
+		const company = String(formData.get('company') ?? '').trim();
+		const source = String(
+			formData.get('source') ?? 'page-carnet-de-terrain',
+		);
+
+		button.disabled = true;
+		button.setAttribute('aria-busy', 'true');
+		buttonLabel.textContent = 'Inscription…';
+		feedback.textContent = 'Connexion au Carnet de Terrain…';
+
+		try {
+			const response = await fetch('/api/carnet-de-terrain', {
+				method: 'POST',
+				headers: {
+					'content-type': 'application/json',
+				},
+				body: JSON.stringify({
+					email,
+					consent,
+					company,
+					source,
+				}),
+			});
+
+			const result = await response.json() as {
+				success?: boolean;
+				message?: string;
+			};
+
+			if (!response.ok || !result.success) {
+				throw new Error(
+					result.message || 'Impossible de traiter votre inscription.',
+				);
+			}
+
+			feedback.classList.add('is-success');
+			feedback.innerHTML = `
+				<strong>Vérifiez votre boîte mail.</strong>
+				<span>${escapeHtml(
+					result.message ||
+						'Un email de confirmation vient de vous être envoyé.',
+				)}</span>
+			`;
+
+			form.reset();
+		} catch (error) {
+			feedback.classList.add('is-error');
+			feedback.textContent =
+				error instanceof Error
+					? error.message
+					: 'Une erreur est survenue. Veuillez réessayer.';
+		} finally {
+			button.disabled = false;
+			button.removeAttribute('aria-busy');
+			buttonLabel.textContent = 'Recevoir le Carnet';
+		}
+	});
+
+	function escapeHtml(value: string): string {
+		const element = document.createElement('div');
+		element.textContent = value;
+		return element.innerHTML;
+	}
+</script>
+
+<style>
+	:global(body) {
+		background: #f8fafc;
+	}
+
+	main {
+		width: min(1320px, calc(100% - 4rem));
+		margin: 0 auto;
+		padding: 2rem 0 5rem;
+	}
+
+	.carnet-hero {
+		position: relative;
+		display: flex;
+		align-items: center;
+		min-height: 460px;
+		overflow: hidden;
+		padding: 4.8rem;
+		color: white;
+		background:
+			linear-gradient(
+				90deg,
+				rgba(2, 8, 23, 0.98) 0%,
+				rgba(2, 8, 23, 0.94) 42%,
+				rgba(2, 8, 23, 0.58) 70%,
+				rgba(2, 8, 23, 0.78) 100%
+			),
+			url('/Images/carnet-de-terrain.png');
+		background-size: cover;
+		background-position: 68% center;
+		background-repeat: no-repeat;
+		border-radius: 32px;
+		box-shadow: 0 25px 60px rgba(2, 8, 23, 0.2);
+	}
+
+	.hero-content {
+		position: relative;
+		z-index: 1;
+		max-width: 700px;
+	}
+
+	.hero-kicker,
+	.section-kicker,
+	.signup-kicker,
+	.form-kicker {
+		margin: 0;
+		color: #60a5fa;
+		font-size: 0.76rem;
+		font-weight: 900;
+		letter-spacing: 0.13em;
+		text-transform: uppercase;
+	}
+
+	h1 {
+		margin: 1rem 0 1.5rem;
+		color: white;
+		font-size: clamp(2.8rem, 5vw, 4.5rem);
+		line-height: 0.98;
+		letter-spacing: -0.055em;
+	}
+
+	.hero-intro {
+		max-width: 680px;
+		margin: 0;
+		color: #dbeafe;
+		font-size: 1.08rem;
+		line-height: 1.8;
+	}
+
+	.editorial-intro {
+		display: grid;
+		grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+		gap: 4rem;
+		align-items: end;
+		margin: 4rem 0 2rem;
+	}
+
+	.editorial-intro h2 {
+		margin: 0.45rem 0 0;
+		color: #0f172a;
+		font-size: clamp(2.2rem, 4vw, 3.4rem);
+		line-height: 1.05;
+		letter-spacing: -0.045em;
+	}
+
+	.editorial-intro > p {
+		margin: 0;
+		color: #475569;
+		font-size: 1.02rem;
+		line-height: 1.8;
+	}
+
+	.carnet-signup {
+		display: grid;
+		grid-template-columns: minmax(0, 1.05fr) minmax(390px, 0.8fr);
+		gap: 3rem;
+		align-items: center;
+		margin: 3rem 0 0;
+		padding: 2.75rem;
+		background: #ffffff;
+		border: 1px solid #dbe7f5;
+		border-radius: 24px;
+		box-shadow:
+			0 18px 46px rgba(15, 23, 42, 0.07),
+			0 8px 18px rgba(37, 99, 235, 0.04);
+	}
+
+	.signup-kicker,
+	.form-kicker {
+		color: #2563eb;
+	}
+
+	.signup-copy h2 {
+		margin: 0.75rem 0 0;
+		color: #0f172a;
+		font-size: clamp(2rem, 4vw, 3rem);
+		line-height: 1.05;
+		letter-spacing: -0.045em;
+	}
+
+	.signup-intro {
+		max-width: 680px;
+		margin: 1rem 0 0;
+		color: #475569;
+		font-size: 1rem;
+		line-height: 1.75;
+	}
+
+	.signup-items {
+		display: grid;
+		gap: 0.9rem;
+		margin: 1.5rem 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.signup-items li {
+		display: flex;
+		align-items: center;
+		gap: 0.8rem;
+		color: #334155;
+		font-size: 0.88rem;
+		font-weight: 760;
+	}
+
+	.item-line {
+		width: 22px;
+		height: 2px;
+		flex: 0 0 auto;
+		background: linear-gradient(90deg, #2563eb, #60a5fa);
+		border-radius: 999px;
+		box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.06);
+	}
+
+	.signup-form {
+		padding: 1.6rem;
+		background: #f8fbff;
+		border: 1px solid #dbeafe;
+		border-radius: 18px;
+	}
+
+	.signup-form h3 {
+		margin: 0.75rem 0 0;
+		color: #0f172a;
+		font-size: 1.35rem;
+		line-height: 1.2;
+		letter-spacing: -0.025em;
+	}
+
+	.form-intro {
+		margin: 0.45rem 0 1.2rem;
+		color: #64748b;
+		font-size: 0.82rem;
+		line-height: 1.5;
+	}
+
+	.signup-form > label {
+		display: block;
+		margin-bottom: 0.55rem;
+		color: #334155;
+		font-size: 0.78rem;
+		font-weight: 850;
+	}
+
+	.email-row {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		gap: 0.7rem;
+	}
+
+	.email-row input {
+		width: 100%;
+		min-width: 0;
+		padding: 0.95rem 1rem;
+		color: #0f172a;
+		font: inherit;
+		background: #ffffff;
+		border: 1px solid #cbd5e1;
+		border-radius: 12px;
+		outline: none;
+		transition:
+			border-color 0.18s ease,
+			box-shadow 0.18s ease;
+	}
+
+	.email-row input::placeholder {
+		color: #94a3b8;
+	}
+
+	.email-row input:focus {
+		border-color: #2563eb;
+		box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+	}
+
+	.email-row button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		min-height: 50px;
+		padding: 0.85rem 1rem;
+		color: #ffffff;
+		font: inherit;
+		font-size: 0.8rem;
+		font-weight: 850;
+		white-space: nowrap;
+		cursor: pointer;
+		background: #2563eb;
+		border: 0;
+		border-radius: 12px;
+		box-shadow: 0 10px 20px rgba(37, 99, 235, 0.18);
+		transition:
+			transform 0.18s ease,
+			background 0.18s ease,
+			box-shadow 0.18s ease;
+	}
+
+	.email-row button:hover {
+		transform: translateY(-1px);
+		background: #1d4ed8;
+		box-shadow: 0 13px 24px rgba(37, 99, 235, 0.24);
+	}
+
+	.privacy-note {
+		margin: 0.8rem 0 0;
+		color: #64748b;
+		font-size: 0.7rem;
+		line-height: 1.55;
+	}
+
+	.consent-row {
+		display: grid;
+		grid-template-columns: 18px minmax(0, 1fr);
+		gap: 0.65rem;
+		align-items: start;
+		margin: 1rem 0 0;
+		color: #64748b;
+		font-size: 0.72rem;
+		line-height: 1.55;
+		cursor: pointer;
+	}
+
+	.consent-row input {
+		width: 16px;
+		height: 16px;
+		margin: 0.16rem 0 0;
+		accent-color: #2563eb;
+	}
+
+	.consent-row a {
+		color: #2563eb;
+		font-weight: 780;
+		text-decoration: none;
+	}
+
+	.consent-row a:hover {
+		text-decoration: underline;
+	}
+
+	.form-feedback {
+		display: none;
+		margin: 0.9rem 0 0;
+		padding: 0.85rem 0.95rem;
+		font-size: 0.74rem;
+		font-weight: 700;
+		line-height: 1.5;
+		border-radius: 12px;
+	}
+
+	.form-feedback:not(:empty) {
+		display: grid;
+		gap: 0.2rem;
+	}
+
+	.form-feedback strong {
+		font-size: 0.78rem;
+	}
+
+	.form-feedback.is-success {
+		color: #1e3a8a;
+		background: #eff6ff;
+		border: 1px solid #bfdbfe;
+	}
+
+	.form-feedback.is-error {
+		color: #991b1b;
+		background: #fef2f2;
+		border: 1px solid #fecaca;
+	}
+
+	.email-row button:disabled {
+		cursor: wait;
+		opacity: 0.72;
+		transform: none;
+		box-shadow: none;
+	}
+
+	.honeypot {
+		position: absolute;
+		left: -9999px;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+	}
+
+	@media (max-width: 900px) {
+		.carnet-hero {
+			min-height: 400px;
+			padding: 3.5rem;
+			background-position: 72% center;
+		}
+
+		.editorial-intro,
+		.carnet-signup {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
+	}
+
+	@media (max-width: 620px) {
+		main {
+			width: min(100% - 2rem, 1320px);
+		}
+
+		.carnet-hero {
+			min-height: 0;
+			padding: 2.5rem 2rem;
+			background-position: 78% center;
+			border-radius: 24px;
+		}
+
+		.carnet-signup {
+			padding: 1.35rem;
+			border-radius: 20px;
+		}
+
+		.signup-form {
+			padding: 1.15rem;
+		}
+
+		.email-row {
+			grid-template-columns: 1fr;
+		}
+
+		.email-row button {
+			width: 100%;
+		}
+
+		.consent-row {
+			font-size: 0.74rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.email-row input,
+		.email-row button {
+			transition: none;
+		}
+
+		.email-row button:hover {
+			transform: none;
+		}
+	}
+</style>

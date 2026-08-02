@@ -7,10 +7,116 @@ Au fil de son évolution, le projet est passé d'un simple carnet de notes techn
 Ce projet suit le principe du **Semantic Versioning** et ce changelog s'inspire du format **Keep a Changelog**.
 
 ---
+# [1.6.0]
+
+## 🚀 Carnet de Terrain Platform
+
+Cette version marque une nouvelle étape dans l'évolution de **marcmichon.co**.
+
+Le projet ne se limite désormais plus à publier des Notes de Terrain : il dispose désormais de sa propre plateforme éditoriale avec un système complet d'abonnement, de double validation (Double Opt-In), d'automatisation marketing et d'une expérience utilisateur entièrement intégrée.
+
+Cette évolution pose les bases de la diffusion hebdomadaire du **Carnet de Terrain**, tout en garantissant une conformité RGPD complète et une expérience premium de bout en bout.
+
+---
+
+## ✨ Added
+
+### 📬 Carnet de Terrain
+
+- Official release of the **Carnet de Terrain** newsletter.
+- Dedicated newsletter landing page.
+- Premium newsletter Hero.
+- Editorial signup component.
+- Newsletter confirmation page.
+- Premium subscription journey.
+- Weekly editorial workflow.
+
+### 🤖 Brevo Integration
+
+- Full Brevo API integration.
+- Double Opt-In workflow.
+- Transactional email integration.
+- Temporary subscriber list.
+- Official subscriber list.
+- Automatic subscriber migration.
+- Automatic temporary list cleanup.
+- Newsletter-ready infrastructure.
+
+### ⚖️ Compliance
+
+- GDPR compliant subscription workflow.
+- Consent collection.
+- Privacy Policy.
+- Legal Notice.
+- Cookie Policy.
+- One-click unsubscribe support.
+
+### 📝 Editorial
+
+- New Note de Terrain published.
+- New editorial components.
+- Editorial data layer.
+- Improved article categorization.
+- Dedicated newsletter branding.
+
+---
+
+## 🎨 Changed
+
+### User Experience
+
+- Premium newsletter landing page.
+- Premium confirmation experience.
+- Refined confirmation page design.
+- Improved homepage editorial call-to-actions.
+- Improved Hero Premium component.
+- Improved footer navigation.
+- Harmonized typography.
+- Improved editorial navigation.
+
+### Visual Identity
+
+- Dedicated Carnet de Terrain branding.
+- Consistent editorial experience.
+- Newsletter visual identity.
+- Improved premium layout.
+
+---
+
+## ⚙️ Technical
+
+- Astro API endpoint for subscriptions.
+- Brevo service layer.
+- Environment variable support.
+- Wrangler configuration update.
+- Secure secret management.
+- Local development configuration.
+- Improved project structure.
+
+---
+
+## 🔒 Security & Privacy
+
+- Double Opt-In enabled.
+- Proof of consent handled by Brevo.
+- Secure API communication.
+- Newsletter automation.
+- GDPR-compliant subscriber lifecycle.
+
+---
+
+## 🐛 Fixed
+
+- Newsletter confirmation flow.
+- Subscription error handling.
+- Editorial page consistency.
+- Footer layout refinements.
+- Responsive confirmation page.
+- Hero spacing and typography improvements.
+
+---
 
 # [1.5.0]
-
-## 🚀 # [1.5.0]
 
 ## 🚀 MM Security Intelligence Suite reaches production maturity
 

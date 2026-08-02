@@ -1,0 +1,339 @@
+---
+interface Props {
+	action?: string;
+	method?: 'post' | 'get';
+	source?: string;
+	compact?: boolean;
+	issueNumber?: string;
+}
+
+const {
+	action = '',
+	method = 'post',
+	source = 'marcmichon.co',
+	compact = false,
+	issueNumber = '001',
+} = Astro.props;
+
+const isPreview = action.trim().length === 0;
+---
+
+<section
+	class:list={['carnet-signup', { 'is-compact': compact }]}
+	aria-labelledby="carnet-signup-title"
+>
+	<div class="signup-copy">
+		<div class="signup-heading">
+			<p class="signup-kicker">CARNET DE TERRAIN #{issueNumber}</p>
+			<h2 id="carnet-signup-title">Rejoindre le Carnet de Terrain</h2>
+		</div>
+
+		<p class="signup-intro">
+			Chaque semaine, je partage une nouvelle Note de Terrain, les avancées
+			de MM Security Intelligence et une réflexion dans Le Coin de l’Ingénieur.
+		</p>
+
+		<ul class="signup-items" aria-label="Contenu du Carnet de Terrain">
+			<li>
+				<span class="item-line" aria-hidden="true"></span>
+				<span>Une nouvelle Note de Terrain</span>
+			</li>
+			<li>
+				<span class="item-line" aria-hidden="true"></span>
+				<span>Les avancées de MM Security Intelligence</span>
+			</li>
+			<li>
+				<span class="item-line" aria-hidden="true"></span>
+				<span>Le Coin de l’Ingénieur</span>
+			</li>
+		</ul>
+	</div>
+
+	<form
+		class="signup-form"
+		action={action || undefined}
+		method={method}
+		data-preview={isPreview ? 'true' : 'false'}
+	>
+		<input type="hidden" name="source" value={source} />
+
+		<div class="honeypot" aria-hidden="true">
+			<label for="company">Entreprise</label>
+			<input
+				id="company"
+				name="company"
+				type="text"
+				tabindex="-1"
+				autocomplete="off"
+			/>
+		</div>
+
+		<p class="form-kicker">RECEVOIR LE PROCHAIN CARNET</p>
+		<h3>Seulement du terrain.</h3>
+		<p class="form-intro">
+			Une lecture courte, une fois par semaine. Pas de publicité, pas de spam.
+		</p>
+
+		<label for="carnet-email">Votre adresse email</label>
+
+		<div class="email-row">
+			<input
+				id="carnet-email"
+				name="email"
+				type="email"
+				placeholder="vous@exemple.fr"
+				autocomplete="email"
+				required
+			/>
+
+			<button type="submit">
+				<span>Rejoindre le Carnet</span>
+				<span aria-hidden="true">→</span>
+			</button>
+		</div>
+
+		<p class="privacy-note">
+			Votre adresse email est utilisée uniquement pour l’envoi du Carnet de
+			Terrain. Désinscription possible à tout moment.
+		</p>
+
+		<p class="form-feedback" role="status" aria-live="polite"></p>
+	</form>
+</section>
+
+<script>
+	const previewForms = document.querySelectorAll<HTMLFormElement>(
+		'.signup-form[data-preview="true"]',
+	);
+
+	previewForms.forEach((form) => {
+		form.addEventListener('submit', (event) => {
+			event.preventDefault();
+
+			const email = form.querySelector<HTMLInputElement>('input[type="email"]');
+			const feedback = form.querySelector<HTMLElement>('.form-feedback');
+
+			if (!email || !feedback) return;
+
+			if (!email.validity.valid) {
+				email.reportValidity();
+				return;
+			}
+
+			feedback.textContent =
+				'Prévisualisation validée. Le service d’envoi sera branché à l’étape suivante.';
+		});
+	});
+</script>
+
+<style>
+	.carnet-signup {
+		display: grid;
+		grid-template-columns: minmax(0, 1.05fr) minmax(390px, 0.8fr);
+		gap: 3rem;
+		align-items: center;
+		margin: 3rem 0;
+		padding: 2.75rem;
+		background: #ffffff;
+		border: 1px solid #dbe7f5;
+		border-radius: 24px;
+		box-shadow:
+			0 18px 46px rgba(15, 23, 42, 0.07),
+			0 8px 18px rgba(37, 99, 235, 0.04);
+	}
+
+	.signup-kicker,
+	.form-kicker {
+		margin: 0 0 0.75rem;
+		color: #2563eb;
+		font-size: 0.72rem;
+		font-weight: 900;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.signup-copy h2 {
+		margin: 0;
+		color: #0f172a;
+		font-size: clamp(2rem, 4vw, 3rem);
+		line-height: 1.05;
+		letter-spacing: -0.045em;
+	}
+
+	.signup-intro {
+		max-width: 680px;
+		margin: 1rem 0 0;
+		color: #475569;
+		font-size: 1rem;
+		line-height: 1.75;
+	}
+
+	.signup-items {
+		display: grid;
+		gap: 0.9rem;
+		margin: 1.5rem 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.signup-items li {
+		display: flex;
+		align-items: center;
+		gap: 0.8rem;
+		color: #334155;
+		font-size: 0.88rem;
+		font-weight: 760;
+	}
+
+	.item-line {
+		width: 22px;
+		height: 2px;
+		flex: 0 0 auto;
+		background: linear-gradient(90deg, #2563eb, #60a5fa);
+		border-radius: 999px;
+		box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.06);
+	}
+
+	.signup-form {
+		padding: 1.6rem;
+		background: #f8fbff;
+		border: 1px solid #dbeafe;
+		border-radius: 18px;
+	}
+
+	.signup-form h3 {
+		margin: 0;
+		color: #0f172a;
+		font-size: 1.35rem;
+		line-height: 1.2;
+		letter-spacing: -0.025em;
+	}
+
+	.form-intro {
+		margin: 0.45rem 0 1.2rem;
+		color: #64748b;
+		font-size: 0.82rem;
+		line-height: 1.5;
+	}
+
+	.signup-form > label {
+		display: block;
+		margin-bottom: 0.55rem;
+		color: #334155;
+		font-size: 0.78rem;
+		font-weight: 850;
+	}
+
+	.email-row {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		gap: 0.7rem;
+	}
+
+	.email-row input {
+		width: 100%;
+		min-width: 0;
+		padding: 0.95rem 1rem;
+		color: #0f172a;
+		font: inherit;
+		background: #ffffff;
+		border: 1px solid #cbd5e1;
+		border-radius: 12px;
+		outline: none;
+		transition:
+			border-color 0.18s ease,
+			box-shadow 0.18s ease;
+	}
+
+	.email-row input:focus {
+		border-color: #2563eb;
+		box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+	}
+
+	.email-row button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		min-height: 50px;
+		padding: 0.85rem 1rem;
+		color: #ffffff;
+		font: inherit;
+		font-size: 0.8rem;
+		font-weight: 850;
+		white-space: nowrap;
+		cursor: pointer;
+		background: #2563eb;
+		border: 0;
+		border-radius: 12px;
+		box-shadow: 0 10px 20px rgba(37, 99, 235, 0.18);
+		transition:
+			transform 0.18s ease,
+			background 0.18s ease;
+	}
+
+	.email-row button:hover {
+		transform: translateY(-1px);
+		background: #1d4ed8;
+	}
+
+	.privacy-note {
+		margin: 0.8rem 0 0;
+		color: #64748b;
+		font-size: 0.7rem;
+		line-height: 1.55;
+	}
+
+	.form-feedback {
+		min-height: 1.15rem;
+		margin: 0.55rem 0 0;
+		color: #1d4ed8;
+		font-size: 0.72rem;
+		font-weight: 750;
+	}
+
+	.honeypot {
+		position: absolute;
+		left: -9999px;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+	}
+
+	.is-compact {
+		grid-template-columns: minmax(0, 1fr) minmax(330px, 0.72fr);
+		padding: 2rem;
+	}
+
+	.is-compact .signup-copy h2 {
+		font-size: clamp(1.8rem, 3vw, 2.5rem);
+	}
+
+	@media (max-width: 900px) {
+		.carnet-signup,
+		.is-compact {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
+	}
+
+	@media (max-width: 600px) {
+		.carnet-signup,
+		.is-compact {
+			padding: 1.35rem;
+			border-radius: 20px;
+		}
+
+		.signup-form {
+			padding: 1.15rem;
+		}
+
+		.email-row {
+			grid-template-columns: 1fr;
+		}
+
+		.email-row button {
+			width: 100%;
+		}
+	}
+</style>

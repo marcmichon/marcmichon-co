@@ -1,0 +1,260 @@
+---
+interface Props {
+	eyebrow: string;
+	title: string;
+	description: string;
+	updated?: string;
+}
+
+const {
+	eyebrow,
+	title,
+	description,
+	updated = '2 août 2026',
+} = Astro.props;
+---
+
+<main class="legal-page">
+	<section class="legal-hero">
+		<div class="legal-hero-content">
+			<p class="legal-eyebrow">{eyebrow}</p>
+			<h1>{title}</h1>
+			<p>{description}</p>
+		</div>
+	</section>
+
+	<div class="legal-layout">
+		<article class="legal-content">
+			<slot />
+		</article>
+
+		<aside class="legal-aside" aria-label="Informations sur le document">
+			<p class="aside-label">DOCUMENT</p>
+			<strong>{title}</strong>
+
+			<div class="aside-separator"></div>
+
+			<p class="aside-label">DERNIÈRE MISE À JOUR</p>
+			<span>{updated}</span>
+
+			<div class="aside-separator"></div>
+
+			<a href="/contact">Une question ? Nous contacter →</a>
+		</aside>
+	</div>
+</main>
+
+<style>
+	.legal-page {
+		width: min(1320px, calc(100% - 4rem));
+		margin: 0 auto;
+		padding: 2rem 0 5rem;
+	}
+
+	.legal-hero {
+		display: flex;
+		align-items: center;
+		min-height: 360px;
+		overflow: hidden;
+		padding: 4.75rem;
+		color: white;
+		background:
+			radial-gradient(circle at 78% 42%, rgba(37, 99, 235, 0.24), transparent 34%),
+			linear-gradient(135deg, #020817 0%, #06142d 48%, #031b4d 100%);
+		border-radius: 32px;
+		box-shadow: 0 25px 60px rgba(2, 8, 23, 0.2);
+	}
+
+	.legal-hero-content {
+		max-width: 900px;
+	}
+
+	.legal-eyebrow {
+		margin: 0;
+		color: #60a5fa;
+		font-size: 0.78rem;
+		font-weight: 900;
+		letter-spacing: 0.13em;
+		text-transform: uppercase;
+	}
+
+	.legal-hero h1 {
+		margin: 1rem 0 1.4rem;
+		color: white;
+		font-size: clamp(3rem, 6vw, 5rem);
+		line-height: 0.98;
+		letter-spacing: -0.055em;
+	}
+
+	.legal-hero-content > p:not(.legal-eyebrow) {
+		max-width: 760px;
+		margin: 0;
+		color: #dbeafe;
+		font-size: 1.1rem;
+		line-height: 1.8;
+	}
+
+	.legal-layout {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 270px;
+		gap: 4rem;
+		align-items: start;
+		margin-top: 4rem;
+	}
+
+	.legal-content {
+		padding: 2.75rem;
+		background: white;
+		border: 1px solid #e5e7eb;
+		border-radius: 24px;
+		box-shadow: 0 12px 32px rgba(15, 23, 42, 0.05);
+	}
+
+	.legal-content :global(h2) {
+		margin: 2.6rem 0 0.9rem;
+		color: #0f172a;
+		font-size: 1.65rem;
+		line-height: 1.2;
+		letter-spacing: -0.025em;
+	}
+
+	.legal-content :global(h2:first-child) {
+		margin-top: 0;
+	}
+
+	.legal-content :global(h3) {
+		margin: 1.7rem 0 0.65rem;
+		color: #1e293b;
+		font-size: 1.05rem;
+	}
+
+	.legal-content :global(p),
+	.legal-content :global(li) {
+		color: #475569;
+		font-size: 0.98rem;
+		line-height: 1.8;
+	}
+
+	.legal-content :global(p) {
+		margin: 0 0 1rem;
+	}
+
+	.legal-content :global(ul) {
+		margin: 0.75rem 0 1.25rem;
+		padding-left: 1.25rem;
+	}
+
+	.legal-content :global(a) {
+		color: #2563eb;
+		font-weight: 750;
+		text-decoration: none;
+	}
+
+	.legal-content :global(a:hover) {
+		text-decoration: underline;
+	}
+
+	.legal-content :global(.legal-note) {
+		margin: 1.5rem 0;
+		padding: 1rem 1.15rem;
+		color: #334155;
+		background: #eff6ff;
+		border-left: 3px solid #2563eb;
+		border-radius: 0 12px 12px 0;
+	}
+
+	.legal-content :global(table) {
+		width: 100%;
+		margin: 1.2rem 0 1.8rem;
+		border-collapse: collapse;
+		font-size: 0.88rem;
+	}
+
+	.legal-content :global(th),
+	.legal-content :global(td) {
+		padding: 0.85rem;
+		text-align: left;
+		vertical-align: top;
+		border: 1px solid #e2e8f0;
+	}
+
+	.legal-content :global(th) {
+		color: #0f172a;
+		background: #f8fafc;
+	}
+
+	.legal-aside {
+		position: sticky;
+		top: 110px;
+		padding: 1.5rem;
+		background: white;
+		border: 1px solid #e5e7eb;
+		border-radius: 18px;
+		box-shadow: 0 10px 28px rgba(15, 23, 42, 0.04);
+	}
+
+	.aside-label {
+		margin: 0 0 0.35rem;
+		color: #2563eb;
+		font-size: 0.62rem;
+		font-weight: 900;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.legal-aside strong {
+		color: #0f172a;
+		font-size: 0.9rem;
+	}
+
+	.legal-aside span {
+		color: #64748b;
+		font-size: 0.82rem;
+	}
+
+	.aside-separator {
+		height: 1px;
+		margin: 1.1rem 0;
+		background: #e5e7eb;
+	}
+
+	.legal-aside a {
+		color: #2563eb;
+		font-size: 0.78rem;
+		font-weight: 800;
+		text-decoration: none;
+	}
+
+	@media (max-width: 900px) {
+		.legal-layout {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
+
+		.legal-aside {
+			position: static;
+		}
+	}
+
+	@media (max-width: 620px) {
+		.legal-page {
+			width: min(100% - 2rem, 1320px);
+		}
+
+		.legal-hero {
+			min-height: 0;
+			padding: 2.75rem 2rem;
+			border-radius: 24px;
+		}
+
+		.legal-content {
+			padding: 1.4rem;
+			border-radius: 20px;
+		}
+
+		.legal-content :global(table) {
+			display: block;
+			overflow-x: auto;
+		}
+	}
+</style>

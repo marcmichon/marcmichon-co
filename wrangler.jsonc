@@ -4,10 +4,21 @@
 	"compatibility_flags": ["global_fetch_strictly_public"],
 	"name": "marcmichon-co",
 	"main": "@astrojs/cloudflare/entrypoints/server",
+
+	"secrets": {
+		"required": ["BREVO_API_KEY"]
+	},
+
+	"vars": {
+	"BREVO_TEMP_LIST_ID": "4",
+	"PUBLIC_SITE_URL": "http://localhost:4321"
+},
+
 	"assets": {
 		"directory": "./dist",
 		"binding": "ASSETS"
 	},
+
 	"observability": {
 		"enabled": true
 	}

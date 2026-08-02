@@ -1,6 +1,3 @@
-
----
-
 # À propos
 
 **marcmichon.co** est une plateforme dédiée à la cybersécurité opérationnelle.
@@ -9,18 +6,19 @@ Le projet est né d'un besoin simple :
 
 **centraliser, structurer et partager des retours d'expérience issus de situations réelles rencontrées en exploitation, en audit, en investigation et en accompagnement client.**
 
-Aujourd'hui, le site repose sur deux piliers complémentaires :
+Aujourd'hui, **marcmichon.co** réunit trois dimensions complémentaires :
 
-- 📚 **Les Notes de Terrain**
-- 🛡️ **La MM Security Intelligence Suite**
+- 📚 **Les Notes de Terrain**, pour partager des retours d'expérience issus du terrain ;
+- 📬 **Le Carnet de Terrain**, pour diffuser chaque semaine cette expertise auprès de ses abonnés ;
+- 🛡️ **La MM Security Intelligence Suite**, pour transformer cette expérience en outils concrets destinés aux équipes cybersécurité.
 
-L'objectif n'est pas de publier de la théorie générique, mais de proposer du contenu directement exploitable par les ingénieurs sécurité, analystes SOC, RSSI et consultants.
+Ces trois dimensions poursuivent un même objectif : rendre la cybersécurité opérationnelle plus accessible, plus pragmatique et directement exploitable sur le terrain.
 
 ---
 
 # 📚 Les Notes de Terrain
 
-Les Notes de Terrain constituent le cœur du projet.
+Les Notes de Terrain constituent le cœur éditorial du projet.
 
 Chaque article est basé sur une problématique réellement rencontrée :
 
@@ -33,7 +31,21 @@ Chaque article est basé sur une problématique réellement rencontrée :
 
 L'objectif est de conserver des explications claires, des méthodes de travail et des solutions immédiatement réutilisables.
 
-📰 **Un nouvel article technique est publié chaque semaine.**
+📰 **Une nouvelle Note de Terrain est publiée chaque semaine.**
+
+---
+
+# 📬 Le Carnet de Terrain
+
+Le Carnet de Terrain prolonge naturellement les Notes de Terrain.
+
+Chaque semaine, les abonnés reçoivent une sélection éditoriale regroupant :
+
+- une nouvelle Note de Terrain ;
+- les dernières avancées de la MM Security Intelligence Suite ;
+- une réflexion issue du **Coin de l'Ingénieur**.
+
+Le Carnet de Terrain est diffusé via un processus **Double Opt-In** conforme au RGPD afin de garantir une inscription explicite et un contrôle total des abonnements.
 
 ---
 
@@ -70,17 +82,17 @@ L'objectif n'est pas de créer des démonstrateurs mais des applications réelle
 
 # Notre philosophie
 
-Tous les modules suivent les mêmes principes :
+L'ensemble du projet suit les mêmes principes :
 
-- issus de problématiques réelles ;
-- orientés cybersécurité opérationnelle ;
+- issu de problématiques réelles ;
+- orienté cybersécurité opérationnelle ;
 - traitement local lorsque cela est possible ;
 - aucune collecte inutile de données ;
 - interfaces pensées pour les ingénieurs ;
 - rapports PDF exploitables en contexte professionnel ;
 - amélioration continue grâce aux retours du terrain.
 
-Chaque fonctionnalité répond à un besoin concret rencontré lors d'une mission, d'un audit ou d'une investigation.
+Chaque article, chaque fonctionnalité et chaque outil répond à un besoin concret rencontré lors d'une mission, d'un audit ou d'une investigation.
 
 ---
 
@@ -90,6 +102,8 @@ Chaque fonctionnalité répond à un besoin concret rencontré lors d'une missio
 - TypeScript
 - PDFKit
 - Cloudflare Pages
+- Cloudflare Workers
+- Brevo
 - GitHub Actions
 - Markdown
 
@@ -97,18 +111,21 @@ Chaque fonctionnalité répond à un besoin concret rencontré lors d'une missio
 
 # Dernière version
 
-## 🚀 v1.5.0 — MM Security Intelligence Suite
+## 🚀 v1.6.0 — Carnet de Terrain Platform
 
-Cette version marque une étape importante dans la maturité du projet.
+Cette version marque une nouvelle étape dans l'évolution de **marcmichon.co**.
+
+Le projet devient une véritable plateforme éditoriale intégrant un système complet d'abonnement au **Carnet de Terrain**, une diffusion automatisée via Brevo, un workflow Double Opt-In conforme au RGPD et une nouvelle expérience utilisateur dédiée.
 
 ### Nouveautés
 
-- 🚀 Publication officielle de MM IOC Analyzer
-- 🔐 Nouveau MM Password Generator
-- 🛡️ Refonte majeure de MM Vulnerability Explorer
-- 📄 Nouveaux rapports PDF professionnels
-- 🎨 Refonte complète de la page Labs
-- 🖼️ Nouvelle identité visuelle des applications
+- 📬 Lancement officiel du Carnet de Terrain
+- 🤖 Intégration complète de Brevo
+- ✅ Workflow Double Opt-In
+- ⚖️ Conformité RGPD
+- 📄 Pages légales
+- 🎨 Refonte de l'expérience éditoriale
+- ✨ Nouvelle page de confirmation premium
 
 Consultez le détail dans le **CHANGELOG.md**.
 
@@ -117,6 +134,10 @@ Consultez le détail dans le **CHANGELOG.md**.
 # Roadmap
 
 ## Disponible aujourd'hui
+
+✅ Notes de Terrain
+
+✅ Carnet de Terrain
 
 ✅ MM CVSS Calculator
 
@@ -137,6 +158,7 @@ Consultez le détail dans le **CHANGELOG.md**.
 - Nouveaux utilitaires cybersécurité
 - Évolution des moteurs d'analyse
 - Nouveaux rapports décisionnels
+- Évolutions du Carnet de Terrain
 
 ---
 
@@ -149,6 +171,7 @@ Au programme :
 - amélioration continue des outils existants ;
 - nouveaux modules de cybersécurité ;
 - publication hebdomadaire d'une nouvelle Note de Terrain ;
+- publication hebdomadaire du Carnet de Terrain ;
 - évolution permanente de la MM Security Intelligence Suite.
 
 ---

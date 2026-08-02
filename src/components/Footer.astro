@@ -1,42 +1,73 @@
 ---
-const today = new Date();
+const currentYear = new Date().getFullYear();
 ---
 
-<footer>
-	&copy; {today.getFullYear()} marcmichon.co. All rights reserved.
-	<div class="social-links">
-		
-		<a href="https://www.linkedin.com/in/michonmarc/" target="_blank">
-	LinkedIn
-</a>
+<footer class="site-footer">
+	<div class="footer-inner">
+		<p>© {currentYear} marcmichon.co</p>
 
-<a href="mailto:michon.marc@gmail.com">
-	Email
-</a>
-
-<a href="https://github.com/marcmichon" target="_blank">
-	GitHub
-</a>
+		<nav class="legal-links" aria-label="Informations légales">
+			<a href="/mentions-legales/">Mentions légales</a>
+			<span aria-hidden="true">·</span>
+			<a href="/politique-de-confidentialite/">Politique de confidentialité</a>
+			<span aria-hidden="true">·</span>
+			<a href="/cookies/">Cookies</a>
+		</nav>
 	</div>
 </footer>
+
 <style>
-	footer {
-		padding: 1.25rem 1rem;
-		background: linear-gradient(var(--gray-gradient)) no-repeat;
-		color: rgb(var(--gray));
+	.site-footer {
+		padding: 1.8rem 1rem;
+		color: #64748b;
+		background: linear-gradient(rgba(229, 233, 240, 0.5), #fff) no-repeat;
+		border-top: 1px solid #e5e7eb;
+	}
+
+	.footer-inner {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 1.1rem;
+		width: min(1320px, 100%);
+		margin: 0 auto;
 		text-align: center;
 	}
-	.social-links {
+
+	.footer-inner p {
+		margin: 0;
+		font-size: 0.9rem;
+		font-weight: 750;
+	}
+
+	.legal-links {
 		display: flex;
+		align-items: center;
 		justify-content: center;
-		gap: 1em;
-		margin-top: 1em;
+		gap: 0.88rem;
+		flex-wrap: wrap;
 	}
-	.social-links a {
+
+	.legal-links a {
+		color: #64748b;
+		font-size: 0.76rem;
+		font-weight: 750;
 		text-decoration: none;
-		color: rgb(var(--gray));
+		transition: color 0.18s ease;
 	}
-	.social-links a:hover {
-		color: rgb(var(--gray-dark));
+
+	.legal-links a:hover {
+		color: #2563eb;
+	}
+
+	.legal-links span {
+		color: #cbd5e1;
+	}
+
+	@media (max-width: 720px) {
+		.footer-inner {
+			flex-direction: column;
+			gap: 0.7rem;
+		}
 	}
 </style>

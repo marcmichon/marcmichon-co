@@ -84,12 +84,19 @@ const schema = graphSchema([
 			Des retours d'expérience organisés par domaine d'expertise.
 		</p>
 
-		<div class="editorial-pillars">
-			<span class="pillar vm">VM Fundamentals</span>
-			<span class="pillar endpoint">Endpoint Security</span>
-			<span class="pillar engineering">Security Platform Engineering</span>
-			
-		</div>
+	<div class="editorial-pillars">
+	<a href="/notes-de-terrain/vulnerability-management/" class="pillar vm">
+		Vulnerability Management
+	</a>
+
+	<a href="/notes-de-terrain/endpoint-security/" class="pillar endpoint">
+		Endpoint Security
+	</a>
+
+	<a href="/notes-de-terrain/security-platform-engineering/" class="pillar engineering">
+		Security Platform Engineering
+	</a>
+</div>
 	
 
 	
@@ -99,6 +106,33 @@ const schema = graphSchema([
 				</div>
 
 				<div class="articles-grid">
+
+<a href="/articles/plateformes-figees-apres-deploiement" class="article-card category-engineering">
+	<div class="article-image">
+		<img
+			src="/Images/plateforme-figee.png"
+			alt="Les plateformes qui se figent après leur déploiement"
+		/>
+	</div>
+
+	<div class="article-content">
+		<p class="article-category">
+			SECURITY PLATFORM ENGINEERING
+		</p>
+
+		<h3>
+			Les plateformes qui se figent après leur déploiement
+		</h3>
+
+		<p>
+			Le projet d’intégration est terminé. Le projet de la plateforme, lui, ne fait que commencer.
+
+		</p>
+
+		<span>⏱ 7 min de lecture</span>
+	</div>
+</a>
+
 
 					<a href="/articles/pourquoi-plateforme-securite-a-jour-techniquement-en-retard" class="article-card category-engineering">
 						<div class="article-image">
@@ -116,30 +150,7 @@ const schema = graphSchema([
 					</a>
 
 
-<a href="/articles/angles-morts-console-edr" class="article-card category-endpoint">
-	<div class="article-image">
-		<img
-			src="/Images/edr-console-angles-morts.png"
-			alt="Les angles morts d’une console EDR"
-		/>
-	</div>
 
-	<div class="article-content">
-		<p class="article-category">
-			ENDPOINT SECURITY
-		</p>
-
-		<h3>
-			Les angles morts d’une console EDR
-		</h3>
-
-		<p>
-			Pourquoi une console au vert ne garantit pas que votre niveau de sécurité est réellement bon.
-		</p>
-
-		<span>⏱ 7 min de lecture</span>
-	</div>
-</a>
 
 					<a href="/articles/ce-que-votre-edr-ne-voit-pas" class="article-card category-endpoint">
 						<div class="article-image">
@@ -397,23 +408,43 @@ const schema = graphSchema([
 
 .editorial-pillars {
 	display: flex;
+	gap: 1rem !important;
 	flex-wrap: wrap;
-	gap: .75rem;
+	align-items: center;
+	column-gap: 1rem;
+	row-gap: 0.75rem;
+	margin-top: 1.5rem;
 }
 
 .pillar {
 	display: inline-flex;
 	align-items: center;
-
-	padding: .45rem .85rem;
-
+	padding: 0.55rem 1rem;
 	border-radius: 999px;
-
-	font-size: .78rem;
+	font-size: 0.82rem;
 	font-weight: 800;
-	letter-spacing: .08em;
-	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	text-decoration: none;
+	cursor: pointer;
+	transition: transform 0.18s ease, opacity 0.18s ease;
 }
+
+.pillar:hover {
+	text-decoration: none;
+	transform: translateY(-1px);
+	opacity: 0.95;
+}
+
+.pillar:link,
+.pillar:visited {
+	text-decoration: none;
+}
+
+.pillar {
+	cursor: pointer;
+}
+
+
 
 .vm {
 	color: #2563EB;
