@@ -7,6 +7,30 @@ Au fil de son évolution, le projet est passé d'un simple carnet de notes techn
 Ce projet suit le principe du **Semantic Versioning** et ce changelog s'inspire du format **Keep a Changelog**.
 
 ---
+
+# 🚀 v1.6.1 — Carnet de Terrain Integration
+
+## ✨ Nouveautés
+
+- Intégration du Carnet de Terrain au sein des Notes de Terrain
+- Nouveau composant éditorial "CarnetCTA"
+- Invitation à l'abonnement directement après la conclusion des articles
+- Design compact et cohérent avec l'identité visuelle du site
+
+## 🎨 Améliorations
+
+- Hiérarchie visuelle retravaillée
+- Espacements optimisés
+- Typographie simplifiée
+- Intégration discrète dans le parcours de lecture
+
+## 📚 Expérience utilisateur
+
+- Le Carnet de Terrain devient le prolongement naturel des Notes de Terrain
+- Affichage limité au dernier article publié afin de préserver une expérience de lecture épurée
+
+---
+
 # [1.6.0]
 
 ## 🚀 Carnet de Terrain Platform

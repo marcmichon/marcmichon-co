@@ -1,0 +1,122 @@
+<section class="carnet-cta" aria-label="Recevoir le Carnet de Terrain">
+	<div class="carnet-copy">
+		<p class="eyebrow">LE CARNET DE TERRAIN</p>
+
+		<p class="description">
+			<span>Le prolongement naturel des Notes de Terrain.</span>
+			<span>
+				Chaque semaine, recevez une nouvelle publication, les avancées de
+				<strong> MM Security Intelligence</strong> et une réflexion dans
+				<strong> Le Coin de l’Ingénieur</strong>.
+			</span>
+		</p>
+	</div>
+
+	<a href="/carnet-de-terrain/" class="cta">
+		Recevoir le Carnet
+		<span aria-hidden="true">→</span>
+	</a>
+</section>
+
+<style>
+	.carnet-cta {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		margin: 1.5rem 0 2rem;
+		padding: 0.55rem 1rem;
+		background: #f8fafc;
+		border: 1px solid #e2e8f0;
+		border-radius: 12px;
+	}
+
+	.carnet-copy {
+		min-width: 0;
+	}
+
+	.eyebrow {
+		margin: 0 0 0.18rem;
+		color: #2563eb;
+		font-size: 0.58rem;
+		font-weight: 850;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.description {
+		display: grid;
+		gap: 0.08rem;
+		margin: 0;
+		color: #475569;
+		font-size: 0.79rem;
+		line-height: 1.42;
+	}
+
+	.description span {
+		display: block;
+	}
+
+	.description strong {
+		color: #0f172a;
+		font-weight: 750;
+	}
+
+	.cta {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.3rem;
+		flex: 0 0 auto;
+		min-height: 34px;
+		padding: 0.5rem 0.7rem;
+		white-space: nowrap;
+		color: #1d4ed8;
+		font-size: 0.7rem;
+		font-weight: 800;
+		text-decoration: none;
+		background: #ffffff;
+		border: 1px solid #bfdbfe;
+		border-radius: 8px;
+		transition:
+			background 0.18s ease,
+			border-color 0.18s ease,
+			color 0.18s ease;
+	}
+
+	.cta:hover {
+		color: #1e40af;
+		background: #eff6ff;
+		border-color: #93c5fd;
+	}
+
+	@media (max-width: 700px) {
+		.carnet-cta {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 0.55rem;
+			padding: 0.65rem 0.85rem;
+		}
+
+		.cta {
+			align-self: flex-start;
+		}
+	}
+
+	@media (max-width: 520px) {
+		.carnet-cta {
+			margin: 1.25rem 0 1.75rem;
+			border-radius: 10px;
+		}
+
+		.cta {
+			width: 100%;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.cta {
+			transition: none;
+		}
+	}
+</style>
