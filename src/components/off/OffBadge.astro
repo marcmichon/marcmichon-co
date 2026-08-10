@@ -1,0 +1,68 @@
+---
+interface Props {
+	label: string;
+	variant?: 'blue' | 'violet' | 'orange' | 'green' | 'red' | 'neutral';
+}
+
+const {
+	label,
+	variant = 'neutral',
+} = Astro.props;
+---
+
+<span class:list={['off-badge', variant]}>
+	{label}
+</span>
+
+<style>
+	.off-badge {
+		display: inline-flex;
+		align-items: center;
+		min-height: 21px;
+	padding: 0.22rem 0.38rem;
+	font-size: 0.48rem;
+		font-weight: 900;
+		letter-spacing: 0.09em;
+		line-height: 1;
+		white-space: nowrap;
+		text-transform: uppercase;
+		border: 1px solid;
+		border-radius: 999px;
+	}
+
+	.neutral {
+		color: #475569;
+		background: #f8fafc;
+		border-color: #e2e8f0;
+	}
+
+	.blue {
+		color: #1d4ed8;
+		background: #eff6ff;
+		border-color: #bfdbfe;
+	}
+
+	.violet {
+		color: #7c3aed;
+		background: #f5f3ff;
+		border-color: #ddd6fe;
+	}
+
+	.orange {
+		color: #c2410c;
+		background: #fff7ed;
+		border-color: #fed7aa;
+	}
+
+	.green {
+		color: #047857;
+		background: #ecfdf5;
+		border-color: #a7f3d0;
+	}
+
+	.red {
+		color: #b91c1c;
+		background: #fef2f2;
+		border-color: #fecaca;
+	}
+</style>

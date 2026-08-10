@@ -1,0 +1,56 @@
+---
+const lines = [
+	'Aucun consultant n’a été blessé pendant le développement.',
+	'Probablement une mauvaise idée. Définitivement assumée.',
+	'Inspiré de situations plus ou moins réelles.',
+	'À ne pas utiliser pour prendre une décision importante.',
+	'Développé entre deux sujets beaucoup trop sérieux.',
+];
+
+const line = lines[Math.floor(Math.random() * lines.length)];
+---
+
+<aside class="off-footer" aria-label="Avertissement EN OFF">
+	<span>EN OFF</span>
+	<p>{line}</p>
+</aside>
+
+<style>
+	.off-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+			margin-top: 0.5rem;
+	padding: 0.65rem 0.9rem;
+		color: #64748b;
+		background: #ffffff;
+		border: 1px solid #e2e8f0;
+		border-radius: 12px;
+	}
+
+	.off-footer span {
+		color: #2563eb;
+		font-size: 0.6rem;
+		font-weight: 900;
+		letter-spacing: 0.12em;
+	}
+
+	.off-footer p {
+		margin: 0;
+		font-size: 0.76rem;
+		text-align: right;
+	}
+
+	@media (max-width: 620px) {
+		.off-footer {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 0.25rem;
+		}
+
+		.off-footer p {
+			text-align: left;
+		}
+	}
+</style>

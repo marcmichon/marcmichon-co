@@ -1,0 +1,66 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import OffFooter from '../components/off/OffFooter.astro';
+import { SITE_TITLE } from '../consts';
+
+interface Props {
+	title: string;
+	description: string;
+	image?: string;
+	ogType?: 'website' | 'article';
+	showOffFooter?: boolean;
+}
+
+const {
+	title,
+	description,
+	image,
+	ogType = 'website',
+	showOffFooter = true,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`${title} | ${SITE_TITLE}`}
+			description={description}
+			image={image}
+			ogType={ogType}
+		/>
+	</head>
+
+	<body>
+		<Header />
+
+		<main class="off-main">
+			<slot />
+
+			{showOffFooter && <OffFooter />}
+		</main>
+
+		<Footer />
+	</body>
+</html>
+
+<style>
+	:global(body) {
+		background: #f8fafc;
+	}
+
+	.off-main {
+		width: min(1180px, calc(100% - 4rem));
+		margin: 0 auto;
+		padding: 1rem 0 0.75rem;
+	}
+
+	@media (max-width: 680px) {
+		.off-main {
+			width: min(100% - 2rem, 1180px);
+			padding: 0.75rem 0 0.75rem;
+		}
+	}
+</style>

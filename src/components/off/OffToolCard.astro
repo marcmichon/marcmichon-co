@@ -1,0 +1,199 @@
+---
+import OffBadge from './OffBadge.astro';
+import type { OffTool } from '../../data/off';
+
+interface Props {
+	tool: OffTool;
+}
+
+const { tool } = Astro.props;
+const disabled = tool.status === 'coming-soon';
+const linkTarget = tool.external ? '_blank' : undefined;
+const linkRel = tool.external ? 'noreferrer' : undefined;
+---
+
+<article class:list={['off-card', tool.accent, { disabled }]}>
+	<div class="card-topline">
+		<p class="number">
+			<span>EN OFF</span>
+			<strong>{tool.number}</strong>
+		</p>
+
+		<OffBadge
+			label={tool.badge}
+			variant={tool.accent}
+		/>
+	</div>
+
+	<div class="card-copy">
+		<h2>{tool.title}</h2>
+		<p>{tool.description}</p>
+	</div>
+
+	{
+		disabled ? (
+			<span class="card-link disabled-link" aria-disabled="true">
+				Bientôt
+			</span>
+		) : (
+			<a
+				class="card-link"
+				href={tool.href}
+				target={linkTarget}
+				rel={linkRel}
+			>
+				{tool.external ? 'Découvrir le projet' : 'Lancer l’outil'}
+				<span aria-hidden="true">→</span>
+			</a>
+		)
+	}
+</article>
+
+<style>
+	.off-card {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		min-height: 108px;
+		height: 100%;
+		padding: 0.58rem 0.7rem;
+		overflow: hidden;
+		background: #ffffff;
+		border: 1px solid #e2e8f0;
+		border-radius: 11px;
+		box-shadow: 0 7px 18px rgba(15, 23, 42, 0.035);
+		transition:
+			transform 0.18s ease,
+			border-color 0.18s ease,
+			box-shadow 0.18s ease;
+	}
+
+	.off-card::before {
+		content: '';
+		position: absolute;
+		inset: 0 0 auto;
+		height: 2px;
+		background: var(--card-accent);
+	}
+
+	.off-card:hover:not(.disabled) {
+		transform: translateY(-2px);
+		border-color: #cbd5e1;
+		box-shadow: 0 11px 24px rgba(15, 23, 42, 0.055);
+	}
+
+	.blue {
+		--card-accent: #2563eb;
+	}
+
+	.violet {
+		--card-accent: #7c3aed;
+	}
+
+	.orange {
+		--card-accent: #ea580c;
+	}
+
+	.green {
+		--card-accent: #059669;
+	}
+
+	.red {
+		--card-accent: #dc2626;
+	}
+
+	.disabled {
+		background: #fbfdff;
+	}
+
+	.card-topline {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 0.45rem;
+	}
+
+	.number {
+		display: grid;
+		gap: 0.01rem;
+		margin: 0;
+		color: #64748b;
+		font-size: 0.4rem;
+		font-weight: 850;
+		letter-spacing: 0.1em;
+		line-height: 1.05;
+		text-transform: uppercase;
+	}
+
+	.number strong {
+		color: #0f172a;
+		font-size: 0.53rem;
+	}
+
+	.card-copy {
+		margin-top: 0.42rem;
+		margin-bottom: 0;
+	}
+
+	h2 {
+		margin: 0;
+		color: #0f172a;
+		font-size: 0.82rem;
+		line-height: 1.08;
+	}
+
+	.card-copy p {
+		margin: 0.16rem 0 0;
+		color: #64748b;
+		font-size: 0.78rem;
+		line-height: 1.12;
+	}
+
+	.card-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+		align-self: flex-start;
+		margin-top: auto;
+		padding-top: 0.38rem;
+		color: #1d4ed8;
+		font-size: 0.59rem;
+		font-weight: 850;
+		line-height: 1;
+		text-decoration: none;
+	}
+
+	.card-link:hover {
+		color: #1e40af;
+	}
+
+	.disabled-link {
+		color: #94a3b8;
+		cursor: default;
+	}
+
+	@media (max-width: 680px) {
+		.off-card {
+			min-height: 106px;
+			padding: 0.58rem 0.65rem;
+		}
+
+		h2 {
+			font-size: 0.8rem;
+		}
+
+		.card-copy p {
+			font-size: 0.76rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.off-card {
+			transition: none;
+		}
+
+		.off-card:hover:not(.disabled) {
+			transform: none;
+		}
+	}
+</style>

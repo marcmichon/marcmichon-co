@@ -1,0 +1,865 @@
+---
+import OffLayout from '../../layouts/OffLayout.astro';
+import OffBackLink from '../../components/off/OffBackLink.astro';
+import OffBadge from '../../components/off/OffBadge.astro';
+---
+
+<OffLayout
+	title="Build Your Incident | EN OFF"
+	description="Construisez une catastrophe informatique en quelques secondes."
+>
+	<OffBackLink />
+
+	<section class="incident-shell">
+		<header class="incident-heading">
+			<div>
+				<p class="eyebrow">EN OFF · #006</p>
+				<h1>Build Your Incident</h1>
+				<p class="lead">
+					Construisez une catastrophe informatique en quelques secondes.
+				</p>
+			</div>
+
+			<OffBadge label="CHAOS ENGINE" variant="red" />
+		</header>
+
+		<div class="incident-layout">
+			<form class="builder-panel" id="incident-form">
+				<div class="panel-meta">
+					<span>INCIDENT VARIABLES</span>
+					<span>MODE · SIMPLE CHAOS</span>
+				</div>
+
+				<label class="field">
+					<span>Qui ?</span>
+					<select id="actor">
+						<option>Le stagiaire</option>
+						<option>Le développeur</option>
+						<option>Le RSSI</option>
+						<option>Le DSI</option>
+						<option>Le consultant</option>
+						<option>L’utilisateur</option>
+						<option>Le prestataire</option>
+						<option>L’administrateur système</option>
+						<option>Le chef de projet</option>
+						<option>L’alternant</option>
+						<option>Le DevOps</option>
+						<option>Le support N1</option>
+						<option>Le support N2</option>
+						<option>Le support N3</option>
+						<option>L’expert sécurité</option>
+					</select>
+				</label>
+
+				<label class="field">
+					<span>Sur quoi ?</span>
+					<select id="domain">
+						<option value="network">Réseau & firewall</option>
+						<option value="identity">Identité & MFA</option>
+						<option value="production">Production</option>
+						<option value="backup">Sauvegarde & stockage</option>
+						<option value="endpoint">Postes & utilisateurs</option>
+						<option value="cloud">Cloud & DevOps</option>
+						<option value="mail">Messagerie & Microsoft 365</option>
+						<option value="soc">SOC & SIEM</option>
+						<option value="database">Bases de données</option>
+						<option value="certificate">Certificats & PKI</option>
+					</select>
+				</label>
+
+				<label class="field">
+					<span>Avec quelle intention ?</span>
+					<select id="intent">
+						<option value="simplify">Simplifier</option>
+						<option value="secure">Sécuriser</option>
+						<option value="speed">Gagner du temps</option>
+						<option value="test">Tester rapidement</option>
+						<option value="cleanup">Faire du ménage</option>
+						<option value="help">Aider</option>
+						<option value="optimize">Optimiser</option>
+						<option value="urgent">Traiter l’urgence</option>
+						<option value="planning">Respecter le planning</option>
+						<option value="youtube">Faire comme dans le tuto</option>
+						<option value="avoid">Éviter une réunion</option>
+						<option value="normally">Parce que normalement</option>
+					</select>
+				</label>
+
+				<div class="action-row">
+					<button class="primary-action" type="submit">
+						Générer l’incident
+						<span aria-hidden="true">→</span>
+					</button>
+
+					<button class="secondary-action" id="randomize-button" type="button">
+						Chaos aléatoire
+						<span aria-hidden="true">↻</span>
+					</button>
+				</div>
+			</form>
+
+			<section class="report-panel" aria-live="polite">
+				<div class="panel-meta">
+					<span>INCIDENT REPORT</span>
+					<span id="incident-id">INCIDENT · #84721</span>
+				</div>
+
+				<div class="summary-card">
+					<span>RÉSUMÉ</span>
+					<p id="incident-summary">
+						Le stagiaire a supprimé toutes les règles firewall. Comme ça, il n’y a plus de conflits.
+					</p>
+				</div>
+
+				<div class="report-grid">
+					<div>
+						<span>CONSÉQUENCES IMMÉDIATES</span>
+						<strong id="incident-impact">Tout passe. Même ce qui n’avait rien demandé.</strong>
+					</div>
+
+					<div>
+						<span>ESTIMATION DU CONSULTANT</span>
+						<strong id="announced-time">Le temps d’un café</strong>
+					</div>
+
+					<div>
+						<span>RÉALITÉ OBSERVÉE</span>
+						<strong id="real-time">jusqu’à ce que quelqu’un lise les logs</strong>
+					</div>
+
+					<div>
+						<span>Niveau de chaos</span>
+						<strong id="chaos-score">92 / 100</strong>
+					</div>
+				</div>
+
+				<div class="finding-card">
+					<span>COMMENT ON EN EST ARRIVÉ LÀ</span>
+					<p id="root-cause">
+						Le bouton « Supprimer » était plus accessible que la documentation.
+					</p>
+				</div>
+
+				<div class="finding-card">
+					<span>CE QU’ON FERA PROBABLEMENT ENCORE</span>
+					<p id="lesson-learned">Créer une nouvelle règle temporaire, mais mieux nommée.</p>
+				</div>
+			</section>
+		</div>
+
+		<aside class="disclaimer">
+			<strong>Aucun système n’a été réellement impacté.</strong>
+			<span>Le niveau de crédibilité reste néanmoins préoccupant.</span>
+		</aside>
+
+		<script is:inline>
+			const $ = (selector) => document.querySelector(selector);
+			const actor = $('#actor');
+			const domain = $('#domain');
+			const intent = $('#intent');
+
+			const scenarios = [
+				{
+					domains: ['network'],
+					intents: ['simplify', 'speed', 'test'],
+					summary: '{actor} a supprimé toutes les règles firewall. Comme ça, il n’y a plus de conflits.',
+					impact: 'Tout passe. Même ce qui n’avait rien demandé.',
+					announced: 'Le temps d’un café',
+					real: 'jusqu’à ce que quelqu’un lise les logs',
+					cause: 'Le bouton « Supprimer » était plus accessible que la documentation.',
+					lesson: 'Créer une nouvelle règle temporaire, mais mieux nommée.',
+					chaos: [90, 99],
+				},
+				{
+					domains: ['network'],
+					intents: ['secure'],
+					summary: '{actor} a bloqué le DNS. Aucun utilisateur ne peut désormais accéder à un site malveillant.',
+					impact: 'Aucun utilisateur ne peut accéder à un site tout court.',
+					announced: 'Immédiat',
+					real: 'jusqu’à ce que quelqu’un distingue sécurité et disparition',
+					cause: 'Le contrôle affiche 100 % d’efficacité.',
+					lesson: 'Présenter le résultat au prochain comité des risques.',
+					chaos: [88, 99],
+				},
+				{
+					domains: ['network'],
+					intents: ['help', 'urgent'],
+					summary: '{actor} a redémarré Internet. Le Wi-Fi était lent.',
+					impact: 'Internet n’a pas redémarré. L’entreprise, si.',
+					announced: 'Le temps que ça revienne',
+					real: 'le temps d’expliquer qu’Internet n’est pas un service Windows',
+					cause: 'Le bouton existait et personne n’avait documenté pourquoi.',
+					lesson: 'Mettre un post-it « Ne pas redémarrer Internet ».',
+					chaos: [85, 98],
+				},
+				{
+					domains: ['network'],
+					intents: ['optimize', 'cleanup'],
+					summary: '{actor} a fusionné tous les VLAN pour réduire la complexité.',
+					impact: 'Le réseau est beaucoup plus simple à attaquer.',
+					announced: 'Une demi-journée',
+					real: 'jusqu’à la prochaine segmentation',
+					cause: 'La segmentation créait trop de segments.',
+					lesson: 'Créer un VLAN unique appelé SECURE.',
+					chaos: [86, 98],
+				},
+				{
+					domains: ['identity'],
+					intents: ['secure', 'simplify'],
+					summary: '{actor} a désactivé le MFA. Les attaquants aussi méritent une expérience premium.',
+					impact: 'Les connexions sont plus simples. Absolument toutes.',
+					announced: 'Immédiat',
+					real: 'jusqu’au prochain rapport d’audit',
+					cause: 'La sécurité ralentissait visiblement la sécurité.',
+					lesson: 'Réactiver le MFA dans la prochaine version de la stratégie.',
+					chaos: [92, 99],
+				},
+				{
+					domains: ['identity'],
+					intents: ['test', 'speed'],
+					summary: '{actor} a changé tous les mots de passe. Comme ça, personne ne peut les connaître.',
+					impact: 'Mission accomplie, y compris pour les utilisateurs.',
+					announced: '10 minutes',
+					real: 'jusqu’à la fin de la file d’attente du support',
+					cause: 'La confidentialité a été privilégiée au-delà du raisonnable.',
+					lesson: 'Communiquer les nouveaux mots de passe dans Excel.',
+					chaos: [91, 99],
+				},
+				{
+					domains: ['identity'],
+					intents: ['cleanup'],
+					summary: '{actor} a supprimé les comptes inactifs, y compris ceux qui travaillaient à distance.',
+					impact: 'Le nombre de comptes orphelins a baissé. Le nombre de salariés aussi.',
+					announced: 'Une opération de nettoyage',
+					real: 'deux jours de ré-enrôlement et une note RH',
+					cause: 'Le télétravail ressemblait beaucoup à de l’inactivité.',
+					lesson: 'Ajouter « encore employé » dans les critères.',
+					chaos: [86, 98],
+				},
+				{
+					domains: ['identity'],
+					intents: ['help', 'normally'],
+					summary: '{actor} a réinitialisé le compte de service avec le mot de passe de l’utilisateur.',
+					impact: 'Le service fonctionne sur son poste.',
+					announced: '5 minutes',
+					real: 'jusqu’au prochain redémarrage du service',
+					cause: 'Les deux comptes avaient presque le même nom.',
+					lesson: 'Créer un compte de service pour le compte de service.',
+					chaos: [80, 96],
+				},
+				{
+					domains: ['production'],
+					intents: ['test', 'speed'],
+					summary: '{actor} a validé directement en production. La recette, c’est pour les gens qui doutent.',
+					impact: 'La recette est désormais parfaitement représentative de la production.',
+					announced: '30 secondes',
+					real: '3 jours et un point quotidien',
+					cause: 'DEV et PROD avaient beaucoup de points communs.',
+					lesson: 'La prochaine fois, faire semblant de tester avant.',
+					chaos: [91, 99],
+				},
+				{
+					domains: ['production'],
+					intents: ['simplify', 'cleanup'],
+					summary: '{actor} a supprimé la PREPROD pour réduire le périmètre.',
+					impact: 'Tous les tests passent désormais directement en production.',
+					announced: 'Une économie immédiate',
+					real: 'un dépassement budgétaire très progressif',
+					cause: 'La PREPROD ne produisait rien.',
+					lesson: 'Créer une POSTPROD pour analyser ce qui aurait dû être testé.',
+					chaos: [86, 98],
+				},
+				{
+					domains: ['production'],
+					intents: ['planning', 'urgent'],
+					summary: '{actor} a clôturé l’incident pour respecter le SLA.',
+					impact: 'Le SLA est vert. L’application est toujours rouge.',
+					announced: 'Résolu',
+					real: 'toujours en cours mais dans un autre ticket',
+					cause: 'La priorité était le tableau de bord.',
+					lesson: 'Créer automatiquement un nouveau ticket après chaque clôture.',
+					chaos: [82, 96],
+				},
+				{
+					domains: ['production'],
+					intents: ['help', 'avoid'],
+					summary: '{actor} a demandé un rollback vers une version qui n’a jamais existé. Elle était pourtant dans le PowerPoint.',
+					impact: 'La production cherche encore la bonne timeline.',
+					announced: '15 minutes',
+					real: 'indéterminé dans cet univers',
+					cause: 'La version cible avait une très belle flèche dans la roadmap.',
+					lesson: 'Versionner aussi les présentations.',
+					chaos: [87, 99],
+				},
+				{
+					domains: ['backup'],
+					intents: ['cleanup', 'help'],
+					summary: '{actor} a supprimé les sauvegardes. Personne ne les utilisait depuis des mois.',
+					impact: 'Le stockage est impeccable. La restauration beaucoup moins.',
+					announced: 'Deux minutes',
+					real: 'depuis, personne ne regarde l’horloge',
+					cause: 'Le dossier s’appelait OLD_BACKUP.',
+					lesson: 'Renommer les prochaines en IMPORTANT_MAIS_PAS_TROP.',
+					chaos: [94, 99],
+				},
+				{
+					domains: ['backup'],
+					intents: ['test', 'speed'],
+					summary: '{actor} a restauré la production depuis une capture d’écran. Les données étaient bien visibles.',
+					impact: 'La restauration est conforme visuellement.',
+					announced: '15 minutes',
+					real: 'le temps de retrouver une sauvegarde avec des données',
+					cause: 'Le screenshot figurait dans la procédure.',
+					lesson: 'Ajouter « Ne pas imprimer » sous les captures.',
+					chaos: [92, 99],
+				},
+				{
+					domains: ['backup'],
+					intents: ['optimize'],
+					summary: '{actor} a compressé les sauvegardes jusqu’à ce qu’elles n’occupent plus rien.',
+					impact: 'Le taux de compression est exceptionnel.',
+					announced: 'Une heure',
+					real: 'jusqu’à la découverte du fichier vide',
+					cause: 'L’objectif de stockage était prioritaire.',
+					lesson: 'Mesurer aussi la présence des données.',
+					chaos: [88, 99],
+				},
+				{
+					domains: ['endpoint'],
+					intents: ['cleanup', 'help'],
+					summary: '{actor} a supprimé le dossier Windows. Il prenait presque toute la place sur le disque Windows.',
+					impact: 'Le disque C: respire enfin.',
+					announced: 'Instantané',
+					real: 'jusqu’à la réinstallation du poste et de la confiance',
+					cause: 'Une optimisation menée jusqu’au bout.',
+					lesson: 'Préinstaller moins de système d’exploitation.',
+					chaos: [84, 97],
+				},
+				{
+					domains: ['endpoint'],
+					intents: ['speed', 'help'],
+					summary: '{actor} a cliqué sur « Autoriser toujours ». « Refuser » semblait trop négatif.',
+					impact: 'L’application dispose de plus de droits que l’équipe sécurité.',
+					announced: 'Aucun impact',
+					real: 'jusqu’à ce que l’EDR pose des questions',
+					cause: 'Le bouton vert inspirait confiance.',
+					lesson: 'Remplacer « Autoriser » par « J’assume ».',
+					chaos: [78, 95],
+				},
+				{
+					domains: ['endpoint'],
+					intents: ['youtube'],
+					summary: '{actor} a désactivé l’antivirus comme dans le tuto. Le tuto fonctionnait très bien.',
+					impact: 'Le poste est maintenant parfaitement compatible avec le malware.',
+					announced: 'Trois clics',
+					real: 'jusqu’au prochain master',
+					cause: 'La vidéo avait beaucoup de pouces bleus.',
+					lesson: 'Ajouter la date des tutoriels au processus de validation.',
+					chaos: [88, 99],
+				},
+				{
+					domains: ['cloud'],
+					intents: ['simplify', 'speed'],
+					summary: '{actor} a rendu le bucket public. Le cloud, c’est fait pour partager.',
+					impact: 'Les équipes externes collaborent déjà beaucoup.',
+					announced: '5 minutes',
+					real: 'le temps de changer de bucket, de région et de métier',
+					cause: 'Internet a été considéré comme une extension du LAN.',
+					lesson: 'Ajouter « mondial » dans la classification.',
+					chaos: [94, 99],
+				},
+				{
+					domains: ['cloud'],
+					intents: ['test', 'cleanup'],
+					summary: '{actor} a supprimé Kubernetes pour vérifier l’auto-scaling.',
+					impact: 'Le cluster a parfaitement scalé à zéro.',
+					announced: 'Automatique',
+					real: '4 jours, 26 manifests et une réunion',
+					cause: 'Une confiance excessive dans le préfixe « auto ».',
+					lesson: 'Tester ensuite l’auto-résurrection.',
+					chaos: [95, 99],
+				},
+				{
+					domains: ['cloud'],
+					intents: ['optimize', 'cleanup'],
+					summary: '{actor} a supprimé les ressources cloud inutilisées. Elles ne répondaient plus depuis l’arrêt.',
+					impact: 'La facture a baissé, ainsi que le chiffre d’affaires.',
+					announced: 'Une optimisation',
+					real: 'jusqu’à la restauration des ressources inutiles',
+					cause: 'Le monitoring confirmait qu’elles ne faisaient plus rien.',
+					lesson: 'Distinguer « inutile » de « déjà en panne ».',
+					chaos: [89, 99],
+				},
+				{
+					domains: ['mail'],
+					intents: ['secure', 'cleanup'],
+					summary: '{actor} a bloqué toutes les pièces jointes. Aucun phishing ne passera désormais par mail.',
+					impact: 'Aucun document de travail non plus.',
+					announced: 'Immédiat',
+					real: 'jusqu’au premier comité de direction',
+					cause: 'La sécurité de la messagerie était jugée prioritaire.',
+					lesson: 'Réautoriser uniquement les fichiers dont personne n’a besoin.',
+					chaos: [84, 97],
+				},
+				{
+					domains: ['mail'],
+					intents: ['help', 'speed'],
+					summary: '{actor} a recréé la boîte Exchange. Les anciens mails ralentissaient la recherche.',
+					impact: 'La recherche est instantanée. Il n’y a plus rien à chercher.',
+					announced: '10 minutes',
+					real: 'jusqu’à la restauration du PST de 48 Go',
+					cause: 'Une boîte vide est objectivement plus rapide.',
+					lesson: 'Limiter les utilisateurs à trois mails.',
+					chaos: [86, 98],
+				},
+				{
+					domains: ['mail'],
+					intents: ['youtube', 'test'],
+					summary: '{actor} a activé toutes les macros pour que le fichier du fournisseur fonctionne.',
+					impact: 'Le fichier fonctionne. Le fournisseur inconnu aussi.',
+					announced: 'Deux clics',
+					real: 'jusqu’à l’isolement du poste',
+					cause: 'La barre jaune semblait inutilement alarmiste.',
+					lesson: 'Ajouter un bouton « Faire confiance à Internet ».',
+					chaos: [90, 99],
+				},
+				{
+					domains: ['soc'],
+					intents: ['optimize', 'cleanup'],
+					summary: '{actor} a désactivé les alertes pour réduire le nombre d’incidents.',
+					impact: 'Le SOC n’a effectivement plus détecté aucun problème.',
+					announced: 'Immédiat',
+					real: 'jusqu’au prochain audit ou ransomware',
+					cause: 'La baisse des alertes a été confondue avec une baisse du risque.',
+					lesson: 'Éteindre aussi le dashboard.',
+					chaos: [93, 99],
+				},
+				{
+					domains: ['soc'],
+					intents: ['secure', 'test'],
+					summary: '{actor} a mis toutes les alertes en critique pour être sûr de ne rien manquer.',
+					impact: 'Le SOC ne manque plus rien. Il ne voit plus rien non plus.',
+					announced: 'Une règle',
+					real: 'jusqu’à la prochaine revue de tuning',
+					cause: 'La priorité unique simplifiait la priorisation.',
+					lesson: 'Créer un niveau SUPER CRITICAL.',
+					chaos: [85, 98],
+				},
+				{
+					domains: ['soc'],
+					intents: ['urgent', 'planning'],
+					summary: '{actor} a fermé le ticket parce que l’incident était toujours ouvert depuis trop longtemps.',
+					impact: 'Le backlog a baissé. L’incident non.',
+					announced: 'Résolu',
+					real: 'toujours en cours dans Teams',
+					cause: 'Le KPI regardait l’âge du ticket.',
+					lesson: 'Créer un nouveau ticket plus jeune.',
+					chaos: [82, 96],
+				},
+				{
+					domains: ['database'],
+					intents: ['cleanup', 'optimize'],
+					summary: '{actor} a supprimé les tables vides. Elles attendaient simplement le batch de nuit.',
+					impact: 'La base est plus légère et l’entreprise aussi.',
+					announced: '20 minutes',
+					real: 'jusqu’au prochain traitement mensuel',
+					cause: 'Une table vide ressemblait à une table inutile.',
+					lesson: 'Ajouter une colonne « peut servir demain ».',
+					chaos: [91, 99],
+				},
+				{
+					domains: ['database'],
+					intents: ['test', 'speed'],
+					summary: '{actor} a lancé le DELETE sans WHERE pour vérifier les performances.',
+					impact: 'La requête est extrêmement rapide.',
+					announced: 'Une seconde',
+					real: 'jusqu’à la restauration complète',
+					cause: 'Le filtre ralentissait la requête.',
+					lesson: 'Benchmarker aussi le rollback.',
+					chaos: [95, 99],
+				},
+				{
+					domains: ['database'],
+					intents: ['help', 'normally'],
+					summary: '{actor} a redémarré Oracle parce que l’application affichait une erreur Java.',
+					impact: 'Java affiche toujours l’erreur. Oracle affiche maintenant la sienne.',
+					announced: 'Le temps d’un restart',
+					real: 'jusqu’au retour du DBA',
+					cause: 'Tout était sur le même serveur dans le schéma.',
+					lesson: 'Accuser le réseau au prochain essai.',
+					chaos: [83, 97],
+				},
+				{
+					domains: ['certificate'],
+					intents: ['cleanup'],
+					summary: '{actor} a supprimé le certificat expiré. Il était expiré de toute façon.',
+					impact: 'Le service n’est plus protégé par un certificat expiré. Ni par aucun certificat.',
+					announced: 'Immédiat',
+					real: 'jusqu’à l’émission du nouveau certificat',
+					cause: 'Le rouge dans la console semblait demander une suppression.',
+					lesson: 'Renommer le prochain certificat CERT_FINAL_OK.',
+					chaos: [89, 99],
+				},
+				{
+					domains: ['certificate'],
+					intents: ['secure', 'simplify'],
+					summary: '{actor} a remplacé tous les certificats par un certificat unique pour centraliser la confiance.',
+					impact: 'Toute l’entreprise partage désormais la même erreur TLS.',
+					announced: 'Une opération globale',
+					real: 'jusqu’à la propagation mondiale du problème',
+					cause: 'La centralisation paraissait plus simple.',
+					lesson: 'Créer une PKI pour gérer le certificat unique.',
+					chaos: [92, 99],
+				},
+				{
+					domains: ['certificate'],
+					intents: ['urgent', 'normally'],
+					summary: '{actor} a repoussé l’expiration du certificat dans Excel.',
+					impact: 'Le planning est à jour. Le certificat, non.',
+					announced: '5 minutes',
+					real: 'jusqu’à 00:00 UTC',
+					cause: 'La date était surtout un sujet de gouvernance.',
+					lesson: 'Demander au certificat de respecter la roadmap.',
+					chaos: [87, 98],
+				}
+			];
+
+			const fallbackScenarios = [
+				{
+					summary: '{actor} a appliqué la documentation éditeur à la lettre. L’éditeur n’avait simplement pas la même infrastructure.',
+					impact: 'La plateforme fonctionne parfaitement dans une entreprise imaginaire.',
+					announced: 'Une petite heure',
+					real: 'jusqu’à l’ouverture du ticket support',
+					cause: 'Le mot « exemple » a été interprété comme « ordre de production ».',
+					lesson: 'Lire aussi les lignes qui commencent par « Attention ».',
+					chaos: [72, 94],
+				},
+				{
+					summary: '{actor} a mis le changement en production pour vérifier s’il fonctionnait en production.',
+					impact: 'Le test a produit des résultats très concrets.',
+					announced: 'Sans impact',
+					real: 'avec beaucoup d’impact',
+					cause: 'Le mot « test » n’avait pas précisé l’environnement.',
+					lesson: 'Ajouter une case « Pas la PROD » dans le formulaire.',
+					chaos: [80, 97],
+				},
+			];
+
+			const pick = (items) => items[Math.floor(Math.random() * items.length)];
+			const randomOption = (select) => {
+				select.selectedIndex = Math.floor(Math.random() * select.options.length);
+			};
+
+			const compatibleScenarios = () => {
+				const exact = scenarios.filter((scenario) =>
+					scenario.domains.includes(domain.value) &&
+					scenario.intents.includes(intent.value)
+				);
+				if (exact.length) return exact;
+
+				const domainMatches = scenarios.filter((scenario) =>
+					scenario.domains.includes(domain.value)
+				);
+				return domainMatches.length ? domainMatches : fallbackScenarios;
+			};
+
+			const renderIncident = () => {
+				const scenario = pick(compatibleScenarios());
+				const [minChaos, maxChaos] = scenario.chaos;
+				const score = Math.floor(minChaos + Math.random() * (maxChaos - minChaos + 1));
+				const id = Math.floor(10000 + Math.random() * 89999);
+
+				$('#incident-summary').textContent = scenario.summary.replace('{actor}', actor.value);
+				$('#incident-impact').textContent = scenario.impact;
+				$('#announced-time').textContent = scenario.announced;
+				$('#real-time').textContent = scenario.real;
+				$('#root-cause').textContent = scenario.cause;
+				$('#lesson-learned').textContent = scenario.lesson;
+				$('#chaos-score').textContent = `${score} / 100`;
+				$('#incident-id').textContent = `INCIDENT · #${id}`;
+			};
+
+			$('#incident-form').addEventListener('submit', (event) => {
+				event.preventDefault();
+				renderIncident();
+			});
+
+			$('#randomize-button').addEventListener('click', () => {
+				[actor, domain, intent].forEach(randomOption);
+				renderIncident();
+			});
+		</script>
+	</section>
+</OffLayout>
+
+<style>
+	.incident-shell {
+		padding: 1rem 1.15rem 0.8rem;
+		background:
+			radial-gradient(circle at 92% 8%, rgba(220, 38, 38, 0.08), transparent 26%),
+			#ffffff;
+		border: 1px solid #dbe4ef;
+		border-radius: 22px;
+		box-shadow: 0 18px 44px rgba(15, 23, 42, 0.065);
+	}
+
+	.incident-heading {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1.5rem;
+	}
+
+	.eyebrow {
+		margin: 0;
+		color: #2563eb;
+		font-size: 0.64rem;
+		font-weight: 900;
+		letter-spacing: 0.13em;
+		text-transform: uppercase;
+	}
+
+	h1 {
+		margin: 0.28rem 0 0;
+		color: #0f172a;
+		font-size: clamp(2.1rem, 4.35vw, 3.9rem);
+		line-height: 0.96;
+		letter-spacing: -0.055em;
+	}
+
+	.lead {
+		margin: 0.42rem 0 0;
+		color: #64748b;
+		font-size: 0.92rem;
+	}
+
+	.incident-layout {
+		display: grid;
+		grid-template-columns: minmax(0, 0.82fr) minmax(360px, 1.18fr);
+		align-items: stretch;
+		gap: 0.8rem;
+		margin-top: 0.85rem;
+	}
+
+	.builder-panel,
+	.report-panel {
+		min-height: 100%;
+		padding: 0.88rem;
+		border-radius: 16px;
+	}
+
+	.builder-panel {
+		display: flex;
+		flex-direction: column;
+		background: #f8fafc;
+		border: 1px solid #e2e8f0;
+	}
+
+	.report-panel {
+		display: flex;
+		flex-direction: column;
+		color: #e2e8f0;
+		background:
+			linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+			linear-gradient(135deg, #020817 0%, #07142c 100%);
+		background-size: 40px 40px, 40px 40px, auto;
+		border: 1px solid rgba(96, 165, 250, 0.1);
+	}
+
+	.panel-meta {
+		display: flex;
+		justify-content: space-between;
+		gap: 0.75rem;
+		color: #60a5fa;
+		font-size: 0.59rem;
+		font-weight: 900;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.field {
+		display: grid;
+		gap: 0.3rem;
+		margin-top: 0.72rem;
+	}
+
+	.field span {
+		color: #475569;
+		font-size: 0.68rem;
+		font-weight: 850;
+	}
+
+	.field select {
+		width: 100%;
+		min-height: 42px;
+		padding: 0.6rem 0.68rem;
+		color: #0f172a;
+		font: inherit;
+		font-size: 0.76rem;
+		font-weight: 750;
+		background: #ffffff;
+		border: 1px solid #dbe4ef;
+		border-radius: 9px;
+	}
+
+	.action-row {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 0.5rem;
+		margin-top: auto;
+		padding-top: 0.75rem;
+	}
+
+	.primary-action,
+	.secondary-action {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.4rem;
+		min-height: 42px;
+		padding: 0.65rem 0.9rem;
+		font: inherit;
+		font-size: 0.72rem;
+		font-weight: 850;
+		cursor: pointer;
+		border-radius: 9px;
+		transition:
+			background 0.16s ease,
+			transform 0.16s ease;
+	}
+
+	.primary-action {
+		color: #ffffff;
+		background: #dc2626;
+		border: 1px solid #dc2626;
+	}
+
+	.primary-action:hover {
+		background: #b91c1c;
+	}
+
+	.secondary-action {
+		color: #b91c1c;
+		background: #ffffff;
+		border: 1px solid #fecaca;
+	}
+
+	.secondary-action:hover {
+		background: #fef2f2;
+	}
+
+	.primary-action:hover,
+	.secondary-action:hover {
+		transform: translateY(-1px);
+	}
+
+	.summary-card,
+	.finding-card {
+		margin-top: 0.65rem;
+		padding: 0.75rem;
+		background: rgba(37, 99, 235, 0.08);
+		border: 1px solid rgba(96, 165, 250, 0.18);
+		border-radius: 10px;
+	}
+
+	.summary-card span,
+	.finding-card span,
+	.report-grid span {
+		color: #60a5fa;
+		font-size: 0.57rem;
+		font-weight: 900;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.summary-card p {
+		margin: 0.3rem 0 0;
+		color: #ffffff;
+		font-size: 1.05rem;
+		font-weight: 820;
+		line-height: 1.3;
+	}
+
+	.report-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.5rem;
+		margin-top: 0.65rem;
+	}
+
+	.report-grid div {
+		display: grid;
+		gap: 0.2rem;
+		padding: 0.68rem;
+		background: rgba(15, 31, 59, 0.72);
+		border: 1px solid rgba(148, 163, 184, 0.15);
+		border-radius: 9px;
+	}
+
+	.report-grid strong {
+		color: #ffffff;
+		font-size: 0.82rem;
+		line-height: 1.25;
+	}
+
+	.finding-card p {
+		margin: 0.28rem 0 0;
+		color: #cbd5e1;
+		font-size: 0.8rem;
+		font-weight: 700;
+		line-height: 1.32;
+	}
+
+	.disclaimer {
+		display: flex;
+		align-items: center;
+		gap: 0.3rem;
+		margin-top: 0.5rem;
+		padding-top: 0.45rem;
+		color: #64748b;
+		font-size: 0.69rem;
+		border-top: 1px solid #e2e8f0;
+	}
+
+	.disclaimer strong {
+		color: #334155;
+	}
+
+	@media (max-width: 900px) {
+		.incident-layout {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 680px) {
+		.incident-shell {
+			padding: 1rem;
+			border-radius: 18px;
+		}
+
+		.incident-heading,
+		.panel-meta,
+		.disclaimer {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+
+		.action-row,
+		.report-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.primary-action,
+		.secondary-action {
+			transition: none;
+		}
+
+		.primary-action:hover,
+		.secondary-action:hover {
+			transform: none;
+		}
+	}
+</style>

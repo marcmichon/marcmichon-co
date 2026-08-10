@@ -1,0 +1,469 @@
+---
+import OffLayout from '../../layouts/OffLayout.astro';
+import OffBackLink from '../../components/off/OffBackLink.astro';
+import OffBadge from '../../components/off/OffBadge.astro';
+---
+
+<OffLayout
+	title="Firewall Rule Fortune Cookie | EN OFF"
+	description="Parce que parfois, le firewall essaie juste de te parler."
+>
+	<OffBackLink />
+
+	<section class="fortune-shell">
+		<header class="fortune-heading">
+			<div>
+				<p class="eyebrow">EN OFF · #008</p>
+				<h1>Firewall Rule Fortune Cookie</h1>
+				<p class="lead">
+					Parce que parfois, le firewall essaie juste de te parler.
+				</p>
+			</div>
+
+			<OffBadge label="OFFICIALLY SPIRITUAL" variant="orange" />
+		</header>
+
+		<section class="fortune-card" aria-live="polite">
+			<div class="card-meta">
+				<span>RULE PROPHECY</span>
+				<span id="cookie-id">QUERY · 001</span>
+			</div>
+
+			<div class="prophecy-panel">
+				<div class="fortune-number">
+					<span></span>
+					<strong id="fortune-number">RULE FORTUNE · 001</strong>
+					<span></span>
+				</div>
+
+				<blockquote id="fortune-text">
+					Le NAT oublié est toujours celui qui fonctionne.
+				</blockquote>
+
+				<p class="paper-signature">— Firewall Rule Fortune Cookie</p>
+			</div>
+
+			<div class="validity-card">
+				<span>VALIDITÉ DE LA PRÉDICTION</span>
+				<p id="validity-text">
+					Garantie jusqu’au prochain commit.
+				</p>
+			</div>
+
+			<div class="action-row">
+				<button class="primary-action" id="open-cookie" type="button">
+					Interroger le firewall
+					<span aria-hidden="true">↻</span>
+				</button>
+
+				<button class="secondary-action" id="copy-button" type="button">
+					Copier la fortune
+				</button>
+
+				<p id="copy-feedback" aria-live="polite"></p>
+			</div>
+		</section>
+
+		<aside class="disclaimer">
+			<strong>Les cookies firewall sont plus fiables que certaines documentations.</strong>
+			<span>Résultat non opposable au support éditeur.</span>
+		</aside>
+
+		<script is:inline>
+			const fortunes = [
+				'Toute règle temporaire attend simplement son CDI.',
+				'Le NAT oublié est toujours celui qui fonctionne.',
+				'Si personne ne connaît cette règle, ne la supprime jamais.',
+				'Application-default apporte la paix intérieure.',
+				'Le cleanup du vendredi devient l’incident du lundi.',
+				'Une règle ANY ANY ne disparaît jamais. Elle change seulement de propriétaire.',
+				'Le ticket disait « à supprimer après migration ». La migration date de 2019.',
+				'Tu cherches la bonne règle. Elle est dans le device-group d’à côté.',
+				'Le plus dangereux des objets s’appelle Test_New_v2_Final.',
+				'La règle documentée est rarement celle qui est utilisée.',
+				'Le log que tu cherches est dans l’autre firewall.',
+				'Le commit réussi n’est qu’une théorie.',
+				'Le rollback est une croyance tant qu’il n’a pas été testé.',
+				'Les objets hérités se nourrissent des audits.',
+				'Toute règle avec un commentaire inspire davantage confiance. Même si le commentaire est faux.',
+				'Le dernier ANY n’est jamais vraiment le dernier.',
+				'Une règle non utilisée depuis trois ans devient critique le jour où tu la supprimes.',
+				'Le firewall ne bloque pas le flux. Il protège simplement le métier contre son propre besoin.',
+				'Le NAT du DG n’est jamais dans la documentation.',
+				'Plus le nom de la règle est précis, moins son usage est clair.',
+				'Une règle appelée TEMP est souvent plus ancienne que l’équipe réseau.',
+				'Le trafic incomplete possède toujours une histoire que personne ne veut entendre.',
+				'La règle qui marche n’est pas forcément celle que tu viens de modifier.',
+				'Quand le commit prend du temps, le firewall réfléchit à tes choix.',
+				'Le port 443 n’est pas une application.',
+				'Le service ANY sait toujours pourquoi il est là. Toi, moins.',
+				'Une politique propre commence souvent par une règle qu’on n’ose pas toucher.',
+				'Le firewall a de la mémoire. Surtout pour les erreurs de 2017.',
+				'Le prochain audit trouvera la règle que tu viens d’oublier.',
+				'La règle temporaire la mieux nommée reste une règle temporaire.',
+				'Quand tout fonctionne après un rollback, personne ne demande pourquoi.',
+				'Le plus vieux objet réseau est généralement celui du projet « urgent ».',
+				'Une règle désactivée depuis cinq ans mérite encore une réunion avant suppression.',
+				'Le flux métier le plus critique commence souvent par « juste pour tester ».',
+				'Le firewall ne juge pas. Il logue.',
+				'Une règle sans owner appartient naturellement à la personne qui la découvre.',
+				'Le commit de 17 h 58 connaît déjà ton numéro d’astreinte.',
+				'Le meilleur troubleshooting commence par vérifier le bon firewall.',
+				'La règle clonée conserve toujours un peu du chaos original.',
+				'Le nom « final » annonce rarement la dernière version.',
+			];
+
+			const validityMessages = [
+				'Garantie jusqu’au prochain commit.',
+				'Valable jusqu’à modification de la règle TEMP.',
+				'Prédiction stable jusqu’au retour du consultant.',
+				'Applicable tant que personne ne lance un cleanup.',
+				'Valide jusqu’à la prochaine migration « sans impact ».',
+				'Garantie hors production uniquement.',
+				'Expiration prévue au prochain audit.',
+				'Valable tant que le ticket reste assigné à quelqu’un d’autre.',
+				'Prédiction reconnue par aucune autorité compétente.',
+				'Applicable jusqu’à la prochaine demande du métier.',
+				'Garantie jusqu’au prochain « juste pour tester ».',
+				'Valide tant que personne ne clique sur Commit.',
+				'Expiration automatique vendredi à 17 h 58.',
+				'Valable jusqu’à la découverte d’un second firewall.',
+				'Garantie tant que le NAT reste dans l’ombre.',
+				'Applicable jusqu’à la prochaine revue de règles.',
+				'Valide jusqu’à ce qu’un ancien flux redevienne critique.',
+				'Garantie jusqu’au prochain départ de consultant.',
+				'Prédiction stable tant que le commentaire reste faux.',
+				'Valable uniquement dans le device-group actuellement ouvert.',
+				'Expiration prévue dès qu’un responsable est identifié.',
+				'Applicable sous réserve que le rollback existe réellement.',
+				'Garantie jusqu’à ce que quelqu’un lise la documentation.',
+				'Valide tant que la règle garde le mot TEMP dans son nom.',
+				'Prédiction suspendue en cas d’astreinte.',
+				'Applicable jusqu’à la prochaine demande « urgente mais simple ».',
+				'Garantie jusqu’à la prochaine synchronisation Panorama.',
+				'Valable tant que le trafic reste incomplete.',
+				'Expiration au premier audit qui pose la bonne question.',
+				'Prédiction stable jusqu’à ce que le DG perde son accès.',
+				'Applicable uniquement si le commit passe du premier coup.',
+				'Garantie jusqu’au prochain changement de zone.',
+				'Valable tant que personne ne demande l’owner de la règle.',
+				'Prédiction confirmée par le firewall, contestée par le métier.',
+				'Expiration prévue dès que la règle sera documentée.',
+				'Applicable tant que l’objet Test_New_v2_Final existe.',
+				'Garantie jusqu’à la prochaine fenêtre de maintenance.',
+				'Valable jusqu’au prochain « ça marchait hier ».',
+				'Prédiction maintenue tant que le service reste en ANY.',
+				'Expiration automatique à la prochaine montée de version.',
+			];
+
+			const fortuneText = document.querySelector('#fortune-text');
+			const validityText = document.querySelector('#validity-text');
+			const cookieId = document.querySelector('#cookie-id');
+			const fortuneNumber = document.querySelector('#fortune-number');
+			const openCookie = document.querySelector('#open-cookie');
+			const copyButton = document.querySelector('#copy-button');
+			const copyFeedback = document.querySelector('#copy-feedback');
+
+			let lastFortune = fortuneText.textContent.trim();
+			let lastValidity = validityText.textContent.trim();
+			let cookieNumber = 1;
+
+			const pick = (items) => items[Math.floor(Math.random() * items.length)];
+
+			const pickDifferent = (items, previous) => {
+				const available = items.filter((item) => item !== previous);
+				return pick(available.length ? available : items);
+			};
+
+			const renderFortune = () => {
+				const fortune = pickDifferent(fortunes, lastFortune);
+				const validity = pickDifferent(validityMessages, lastValidity);
+				lastFortune = fortune;
+				lastValidity = validity;
+				cookieNumber += 1;
+
+				fortuneText.textContent = fortune;
+				validityText.textContent = validity;
+				cookieId.textContent = `QUERY · ${String(cookieNumber).padStart(3, '0')}`;
+				fortuneNumber.textContent = `RULE FORTUNE · ${String(cookieNumber).padStart(3, '0')}`;
+				copyFeedback.textContent = '';
+			};
+
+			openCookie.addEventListener('click', renderFortune);
+
+			copyButton.addEventListener('click', async () => {
+				try {
+					await navigator.clipboard.writeText(fortuneText.textContent.trim());
+					copyFeedback.textContent = 'Fortune copiée. Le firewall approuve.';
+				} catch {
+					copyFeedback.textContent = 'Copie impossible. Vérifie la règle du navigateur.';
+				}
+			});
+		</script>
+	</section>
+</OffLayout>
+
+<style>
+	.fortune-shell {
+		padding: 1rem 1.15rem 0.8rem;
+		background:
+			radial-gradient(circle at 92% 8%, rgba(234, 88, 12, 0.075), transparent 26%),
+			#ffffff;
+		border: 1px solid #dbe4ef;
+		border-radius: 22px;
+		box-shadow: 0 18px 44px rgba(15, 23, 42, 0.065);
+	}
+
+	.fortune-heading {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1.5rem;
+	}
+
+	.eyebrow {
+		margin: 0;
+		color: #2563eb;
+		font-size: 0.64rem;
+		font-weight: 900;
+		letter-spacing: 0.13em;
+		text-transform: uppercase;
+	}
+
+	h1 {
+		margin: 0.28rem 0 0;
+		color: #0f172a;
+		font-size: clamp(2.05rem, 4.2vw, 3.75rem);
+		line-height: 0.96;
+		letter-spacing: -0.055em;
+	}
+
+	.lead {
+		margin: 0.42rem 0 0;
+		color: #64748b;
+		font-size: 0.92rem;
+	}
+
+	.fortune-card {
+		margin-top: 0.85rem;
+		padding: 0.9rem;
+		color: #e2e8f0;
+		background:
+			linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+			linear-gradient(135deg, #020817 0%, #07142c 100%);
+		background-size: 40px 40px, 40px 40px, auto;
+		border: 1px solid rgba(96, 165, 250, 0.1);
+		border-radius: 16px;
+	}
+
+	.card-meta {
+		display: flex;
+		justify-content: space-between;
+		gap: 0.75rem;
+		color: #60a5fa;
+		font-size: 0.59rem;
+		font-weight: 900;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.prophecy-panel {
+		position: relative;
+		margin-top: 0.72rem;
+		padding: 1.2rem 1.35rem 1.05rem;
+		background:
+			radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.1), transparent 43%),
+			linear-gradient(135deg, #071126 0%, #0a1933 100%);
+		border: 1px solid rgba(96, 165, 250, 0.17);
+		border-radius: 12px;
+		box-shadow:
+			inset 0 1px 0 rgba(255, 255, 255, 0.025),
+			0 14px 30px rgba(2, 8, 23, 0.18);
+	}
+
+	.fortune-number {
+		display: grid;
+		grid-template-columns: 1fr auto 1fr;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.fortune-number span {
+		height: 1px;
+		background: rgba(96, 165, 250, 0.18);
+	}
+
+	.fortune-number strong {
+		color: #60a5fa;
+		font-size: 0.58rem;
+		font-weight: 900;
+		letter-spacing: 0.12em;
+	}
+
+	blockquote {
+	max-width: 920px;
+	margin: 1.05rem auto 0;
+	padding-left: 0;
+	border-left: 0;
+
+	color: #f8fafc;
+	font-size: clamp(1.45rem, 2.8vw, 2.25rem);
+	font-weight: 800;
+	line-height: 1.28;
+	letter-spacing: -0.03em;
+	text-align: center;
+}
+
+	.paper-signature {
+		margin: 0.9rem 0 0;
+		color: #64748b;
+		font-size: 0.63rem;
+		font-weight: 800;
+		letter-spacing: 0.04em;
+		text-align: center;
+	}
+
+	.validity-card {
+		margin-top: 0.65rem;
+		padding: 0.68rem 0.72rem;
+		background: rgba(15, 31, 59, 0.7);
+		border: 1px solid rgba(148, 163, 184, 0.14);
+		border-radius: 10px;
+	}
+
+	.validity-card span {
+		color: #60a5fa;
+		font-size: 0.57rem;
+		font-weight: 900;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.validity-card p {
+		margin: 0.3rem 0 0;
+		color: #ffffff;
+		font-size: 0.8rem;
+		font-weight: 720;
+		line-height: 1.3;
+	}
+
+	.action-row {
+		display: flex;
+		align-items: center;
+		gap: 0.55rem;
+		margin-top: 0.65rem;
+	}
+
+	.primary-action,
+	.secondary-action {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.4rem;
+		min-height: 42px;
+		padding: 0.65rem 0.9rem;
+		font: inherit;
+		font-size: 0.72rem;
+		font-weight: 850;
+		cursor: pointer;
+		border-radius: 9px;
+		transition:
+			background 0.16s ease,
+			transform 0.16s ease;
+	}
+
+	.primary-action {
+		color: #ffffff;
+		background: #ea580c;
+		border: 1px solid #ea580c;
+	}
+
+	.primary-action:hover {
+		transform: translateY(-1px);
+		background: #c2410c;
+	}
+
+	.secondary-action {
+		color: #dbeafe;
+		background: transparent;
+		border: 1px solid rgba(96, 165, 250, 0.34);
+	}
+
+	.secondary-action:hover {
+		transform: translateY(-1px);
+		background: rgba(37, 99, 235, 0.1);
+	}
+
+	#copy-feedback {
+		margin: 0 0 0 auto;
+		color: #94a3b8;
+		font-size: 0.66rem;
+		line-height: 1.3;
+	}
+
+	.disclaimer {
+		display: flex;
+		align-items: center;
+		gap: 0.3rem;
+		margin-top: 0.5rem;
+		padding-top: 0.45rem;
+		color: #64748b;
+		font-size: 0.69rem;
+		border-top: 1px solid #e2e8f0;
+	}
+
+	.disclaimer strong {
+		color: #334155;
+	}
+
+	@media (max-width: 760px) {
+		.fortune-details {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 680px) {
+		.fortune-shell {
+			padding: 1rem;
+			border-radius: 18px;
+		}
+
+		.fortune-heading,
+		.card-meta,
+		.disclaimer,
+		.action-row {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+
+		.prophecy-panel {
+			padding: 1.1rem 1rem 1rem;
+		}
+
+		blockquote {
+			font-size: clamp(1.3rem, 7vw, 1.8rem);
+		}
+
+		.primary-action,
+		.secondary-action {
+			width: 100%;
+		}
+
+		#copy-feedback {
+			margin-left: 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.primary-action,
+		.secondary-action {
+			transition: none;
+		}
+
+		.primary-action:hover,
+		.secondary-action:hover {
+			transform: none;
+		}
+	}
+</style>

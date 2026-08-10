@@ -1,0 +1,510 @@
+---
+import OffLayout from '../../layouts/OffLayout.astro';
+import OffBadge from '../../components/off/OffBadge.astro';
+import OffBackLink from '../../components/off/OffBackLink.astro';
+import {
+	bullshitLexicons,
+	bullshitModes,
+	type BullshitMode,
+} from '../../data/security-bullshit';
+
+const defaultMode: BullshitMode = 'cyber';
+---
+
+<OffLayout
+	title="Security Bullshit Generator | EN OFF"
+	description="Chaque mot a du sens. La phrase, beaucoup moins. Un générateur de jargon cybersécurité volontairement décalé."
+>
+	<OffBackLink />
+
+	<section class="generator-shell">
+		<div class="generator-heading">
+			<div>
+				<p class="eyebrow">EN OFF · #001</p>
+				<h1>Security Bullshit Generator</h1>
+				<p class="lead">
+					Chaque mot a du sens. La phrase, beaucoup moins.
+				</p>
+			</div>
+
+			<OffBadge label="OFFICIALLY USELESS" variant="violet" />
+		</div>
+
+		<div class="mode-list" role="group" aria-label="Choisir un mode">
+			{
+				bullshitModes.map((mode) => (
+					<button
+						type="button"
+						class:list={['mode-button', { active: mode.value === defaultMode }]}
+						data-mode={mode.value}
+						aria-pressed={mode.value === defaultMode ? 'true' : 'false'}
+					>
+						{mode.label}
+					</button>
+				))
+			}
+		</div>
+
+		<p class="mode-description" id="mode-description">
+			{bullshitLexicons[defaultMode].description}
+		</p>
+
+		<div class="output-card" aria-live="polite">
+			<div class="output-meta">
+				<span id="output-mode">{bullshitLexicons[defaultMode].label}</span>
+				<span id="bullshit-score">Bullshit level · 86 %</span>
+			</div>
+
+			<blockquote id="generated-sentence">
+				Dans une logique d’amélioration continue, la posture globale de cybersécurité
+				permet de consolider les capacités de détection transverse afin d’optimiser
+				la valeur métier, sous réserve de validation des parties prenantes.
+			</blockquote>
+
+			<div class="translation">
+				<span>Traduction</span>
+				<p id="generated-translation">
+					La décision n’est pas prise, mais la phrase est très rassurante.
+				</p>
+			</div>
+		</div>
+
+		<div class="actions">
+			<button type="button" class="primary-action" id="generate-button">
+				Générer une phrase
+				<span aria-hidden="true">↻</span>
+			</button>
+
+			<button type="button" class="secondary-action" id="copy-button">
+				Copier pour votre prochain COPIL
+			</button>
+		</div>
+
+		<p class="copy-feedback" id="copy-feedback" aria-live="polite"></p>
+
+		<aside class="disclaimer">
+			<strong>Aucune intelligence artificielle n’a été utilisée.</strong>
+			<span>Et franchement, ça ne change pas grand-chose.</span>
+		</aside>
+	</section>
+
+	<script is:inline define:vars={{ bullshitLexicons, defaultMode }}>
+		const state = {
+			mode: defaultMode,
+			lastSentence: '',
+		};
+
+		const modeButtons = Array.from(document.querySelectorAll('[data-mode]'));
+		const modeDescription = document.querySelector('#mode-description');
+		const outputMode = document.querySelector('#output-mode');
+		const outputScore = document.querySelector('#bullshit-score');
+		const sentenceElement = document.querySelector('#generated-sentence');
+		const translationElement = document.querySelector('#generated-translation');
+		const generateButton = document.querySelector('#generate-button');
+		const copyButton = document.querySelector('#copy-button');
+		const copyFeedback = document.querySelector('#copy-feedback');
+
+		const randomItem = (items) => items[Math.floor(Math.random() * items.length)];
+
+		const normalizeSentence = (value) =>
+			value
+				.replace(/\s+/g, ' ')
+				.replace(/\s+([,.;])/g, '$1')
+				.trim();
+
+		const generateSentence = () => {
+			const lexicon = bullshitLexicons[state.mode];
+			let sentence = '';
+
+			for (let attempt = 0; attempt < 12; attempt += 1) {
+				const candidate = normalizeSentence(
+					[
+						randomItem(lexicon.intros),
+						randomItem(lexicon.subjects),
+						randomItem(lexicon.verbs),
+						randomItem(lexicon.objects),
+						randomItem(lexicon.purposes),
+						randomItem(lexicon.endings),
+					].join(' '),
+				);
+
+				if (candidate !== state.lastSentence) {
+					sentence = candidate;
+					break;
+				}
+			}
+
+			if (!sentence) {
+				sentence = normalizeSentence(
+					[
+						randomItem(lexicon.intros),
+						randomItem(lexicon.subjects),
+						randomItem(lexicon.verbs),
+						randomItem(lexicon.objects),
+						randomItem(lexicon.purposes),
+						randomItem(lexicon.endings),
+					].join(' '),
+				);
+			}
+
+			state.lastSentence = sentence;
+			sentenceElement.textContent = sentence;
+			translationElement.textContent = randomItem(lexicon.translations);
+			outputMode.textContent = lexicon.label;
+			outputScore.textContent = `Bullshit level · ${Math.floor(76 + Math.random() * 23)} %`;
+
+			sentenceElement.animate(
+				[
+					{ opacity: 0.2, transform: 'translateY(4px)' },
+					{ opacity: 1, transform: 'translateY(0)' },
+				],
+				{ duration: 220, easing: 'ease-out' },
+			);
+
+			copyFeedback.textContent = '';
+		};
+
+		modeButtons.forEach((button) => {
+			button.addEventListener('click', () => {
+				const selectedMode = button.dataset.mode;
+
+				if (!selectedMode || !bullshitLexicons[selectedMode]) return;
+
+				state.mode = selectedMode;
+
+				modeButtons.forEach((item) => {
+					const active = item === button;
+					item.classList.toggle('active', active);
+					item.setAttribute('aria-pressed', active ? 'true' : 'false');
+				});
+
+				modeDescription.textContent = bullshitLexicons[selectedMode].description;
+				generateSentence();
+			});
+		});
+
+		generateButton.addEventListener('click', generateSentence);
+
+		copyButton.addEventListener('click', async () => {
+			const value = sentenceElement.textContent?.trim();
+			if (!value) return;
+
+			try {
+				await navigator.clipboard.writeText(value);
+				copyFeedback.textContent = 'Phrase copiée. Bon courage pour le COPIL.';
+			} catch {
+				copyFeedback.textContent = 'Copie impossible. Le processus est en cours de consolidation.';
+			}
+		});
+	</script>
+</OffLayout>
+
+<style>
+	.generator-shell {
+		padding: clamp(1.15rem, 2.3vw, 1.85rem);
+		background:
+			radial-gradient(circle at 92% 8%, rgba(37, 99, 235, 0.09), transparent 26%),
+			#ffffff;
+		border: 1px solid #dbe4ef;
+		border-radius: 22px;
+		box-shadow: 0 18px 44px rgba(15, 23, 42, 0.065);
+	}
+
+	.generator-heading {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1.25rem;
+	}
+
+	.eyebrow {
+		margin: 0;
+		color: #2563eb;
+		font-size: 0.66rem;
+		font-weight: 900;
+		letter-spacing: 0.13em;
+		text-transform: uppercase;
+	}
+
+	h1 {
+		margin: 0.32rem 0 0;
+		color: #0f172a;
+		font-size: clamp(2.2rem, 4.75vw, 4.15rem);
+		line-height: 0.96;
+		letter-spacing: -0.055em;
+	}
+
+	.lead {
+		margin: 0.52rem 0 0;
+		color: #64748b;
+		font-size: 0.94rem;
+	}
+
+	.mode-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.42rem;
+		margin-top: 1.15rem;
+	}
+
+	.mode-button {
+		padding: 0.46rem 0.68rem;
+		color: #475569;
+		font: inherit;
+		font-size: 0.72rem;
+		font-weight: 800;
+		cursor: pointer;
+		background: #f8fafc;
+		border: 1px solid #e2e8f0;
+		border-radius: 8px;
+		transition:
+			color 0.16s ease,
+			background 0.16s ease,
+			border-color 0.16s ease;
+	}
+
+	.mode-button:hover,
+	.mode-button.active {
+		color: #1d4ed8;
+		background: #eff6ff;
+		border-color: #93c5fd;
+	}
+
+	.mode-description {
+		margin: 0.45rem 0 0;
+		color: #64748b;
+		font-size: 0.76rem;
+		line-height: 1.35;
+	}
+
+	.output-card {
+		margin-top: 1rem;
+		padding: clamp(1.05rem, 2.2vw, 1.55rem);
+		color: #e2e8f0;
+		background:
+			linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+			linear-gradient(135deg, #020817 0%, #07142c 100%);
+		background-size: 40px 40px, 40px 40px, auto;
+		border-radius: 16px;
+	}
+
+	.output-meta {
+		display: flex;
+		justify-content: space-between;
+		gap: 0.75rem;
+		color: #60a5fa;
+		font-size: 0.62rem;
+		font-weight: 900;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	blockquote {
+		max-width: 980px;
+		margin: 0.85rem 0 0;
+		padding-left: 0.85rem;
+		color: #ffffff;
+		font-size: clamp(1.25rem, 2.55vw, 1.95rem);
+		font-weight: 780;
+		line-height: 1.2;
+		letter-spacing: -0.03em;
+		border-left: 3px solid #2563eb;
+	}
+
+	.translation {
+		margin-top: 0.9rem;
+		padding-top: 0.72rem;
+		border-top: 1px solid rgba(148, 163, 184, 0.2);
+	}
+
+	.translation span {
+		color: #94a3b8;
+		font-size: 0.58rem;
+		font-weight: 900;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+	}
+
+	.translation p {
+		margin: 0.22rem 0 0;
+		color: #cbd5e1;
+		font-size: 0.8rem;
+		line-height: 1.35;
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.55rem;
+		margin-top: 0.7rem;
+	}
+
+	.actions button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.4rem;
+		min-height: 40px;
+		padding: 0.65rem 0.9rem;
+		font: inherit;
+		font-size: 0.74rem;
+		font-weight: 850;
+		cursor: pointer;
+		border-radius: 9px;
+		transition:
+			transform 0.16s ease,
+			background 0.16s ease,
+			border-color 0.16s ease;
+	}
+
+	.actions button:hover {
+		transform: translateY(-1px);
+	}
+
+	.primary-action {
+		color: #ffffff;
+		background: #2563eb;
+		border: 1px solid #2563eb;
+	}
+
+	.primary-action:hover {
+		background: #1d4ed8;
+		border-color: #1d4ed8;
+	}
+
+	.secondary-action {
+		color: #1d4ed8;
+		background: #ffffff;
+		border: 1px solid #bfdbfe;
+	}
+
+	.secondary-action:hover {
+		background: #eff6ff;
+		border-color: #93c5fd;
+	}
+
+	.copy-feedback {
+		min-height: 0.9rem;
+		margin: 0.3rem 0 0;
+		color: #64748b;
+		font-size: 0.7rem;
+	}
+
+	.disclaimer {
+		display: flex;
+		align-items: center;
+		gap: 0.3rem;
+		margin-top: 0.65rem;
+		padding-top: 0.62rem;
+		color: #64748b;
+		font-size: 0.7rem;
+		border-top: 1px solid #e2e8f0;
+	}
+
+	.disclaimer strong {
+		color: #334155;
+	}
+
+	.generator-shell {
+	padding-block: 1rem;
+}
+
+.mode-list {
+	margin-top: 0.85rem;
+}
+
+.mode-description {
+	margin-top: 0.3rem;
+}
+
+.output-card {
+	margin-top: 0.8rem;
+	padding-block: 0.9rem;
+}
+
+blockquote {
+	margin-top: 0.65rem;
+	font-size: clamp(1.2rem, 2.35vw, 1.8rem);
+	line-height: 1.16;
+}
+
+.translation {
+	margin-top: 0.65rem;
+	padding-top: 0.55rem;
+}
+
+.actions {
+	margin-top: 0.55rem;
+}
+
+.copy-feedback {
+	min-height: 0.7rem;
+	margin-top: 0.2rem;
+}
+
+.disclaimer {
+	margin-top: 0.45rem;
+	padding-top: 0.5rem;
+}
+
+	@media (max-width: 900px) {
+		h1 {
+			max-width: 760px;
+		}
+	}
+
+	@media (max-width: 720px) {
+		.generator-shell {
+			padding: 1rem;
+			border-radius: 18px;
+		}
+
+		.generator-heading,
+		.output-meta,
+		.disclaimer {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+
+		h1 {
+			font-size: clamp(2rem, 11vw, 3.1rem);
+		}
+
+		.mode-list {
+			margin-top: 0.9rem;
+		}
+
+		.mode-description {
+			display: none;
+		}
+
+		.output-card {
+			margin-top: 0.85rem;
+			padding: 1rem;
+		}
+
+		blockquote {
+			font-size: clamp(1.2rem, 7vw, 1.7rem);
+		}
+
+		.actions {
+			flex-direction: column;
+		}
+
+		.actions button {
+			width: 100%;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.mode-button,
+		.actions button {
+			transition: none;
+		}
+
+		.actions button:hover {
+			transform: none;
+		}
+	}
+</style>

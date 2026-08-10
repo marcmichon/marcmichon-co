@@ -1,0 +1,740 @@
+---
+import OffLayout from '../../layouts/OffLayout.astro';
+import OffBackLink from '../../components/off/OffBackLink.astro';
+import OffBadge from '../../components/off/OffBadge.astro';
+---
+
+<OffLayout
+	title="RSSI Translator | EN OFF"
+	description="Transforme une phrase simple en formulation prête pour le prochain comité."
+>
+	<OffBackLink />
+
+	<section class="translator-shell">
+		<header class="translator-heading">
+			<div>
+				<p class="eyebrow">EN OFF · #007</p>
+				<h1>RSSI Translator</h1>
+				<p class="lead">
+					Transforme une phrase simple en formulation prête pour le prochain comité.
+				</p>
+			</div>
+
+			<OffBadge label="COMMITTEE READY" variant="violet" />
+		</header>
+
+		<div class="translator-layout">
+			<form class="input-panel" id="translator-form">
+				<div class="panel-meta">
+					<span>MESSAGE INITIAL</span>
+					<span>MODE · EXECUTIVE</span>
+				</div>
+
+				<label class="field">
+					<span>Phrase simple</span>
+					<textarea
+						id="source-text"
+						rows="6"
+						placeholder="Ex. Le firewall bloque le flux."
+					>Le firewall bloque le flux.</textarea>
+				</label>
+
+				<div class="tone-grid">
+					<label class="tone-card">
+						<input type="radio" name="tone" value="governance" checked />
+						<span>
+							<strong>Gouvernance</strong>
+							<small>Plus de pilotage, moins de réponse.</small>
+						</span>
+					</label>
+
+					<label class="tone-card">
+						<input type="radio" name="tone" value="risk" />
+						<span>
+							<strong>Risque</strong>
+							<small>Tout devient une exposition maîtrisée.</small>
+						</span>
+					</label>
+
+					<label class="tone-card">
+						<input type="radio" name="tone" value="copil" />
+						<span>
+							<strong>COPIL</strong>
+							<small>Prêt pour 14 slides et zéro décision.</small>
+						</span>
+					</label>
+
+					<label class="tone-card">
+						<input type="radio" name="tone" value="strategic" />
+						<span>
+							<strong>Stratégique</strong>
+							<small>Parce que « problème » fait trop opérationnel.</small>
+						</span>
+					</label>
+				</div>
+
+				<div class="action-row">
+					<button class="primary-action" type="submit">
+						Traduire pour le comité
+						<span aria-hidden="true">→</span>
+					</button>
+
+					<button class="secondary-action" id="example-button" type="button">
+						Exemple aléatoire
+						<span aria-hidden="true">↻</span>
+					</button>
+				</div>
+			</form>
+
+			<section class="output-panel" aria-live="polite">
+				<div class="panel-meta">
+					<span>FORMULATION OFFICIELLE</span>
+					<span id="translation-id">VERSION · #001</span>
+				</div>
+
+				<div class="translation-card">
+					<span>PRÊT POUR LE COMITÉ</span>
+					<p id="translated-text">
+						Le dispositif de filtrage a identifié une divergence entre le besoin
+						opérationnel exprimé et la politique de sécurité actuellement appliquée.
+					</p>
+				</div>
+
+				<div class="committee-grid">
+					<div>
+						<span>NIVEAU DE CLARTÉ</span>
+						<strong id="clarity-score">23 %</strong>
+					</div>
+
+					<div>
+						<span>POTENTIEL DE RÉUNION</span>
+						<strong id="meeting-score">94 %</strong>
+					</div>
+				</div>
+
+				<div class="subtext-card">
+					<span>CE QUE ÇA VEUT VRAIMENT DIRE</span>
+					<p id="plain-meaning">Le firewall bloque le flux.</p>
+				</div>
+
+				<div class="copy-row">
+					<button class="copy-action" id="copy-button" type="button">
+						Copier la version comité
+					</button>
+					<p id="copy-feedback" aria-live="polite"></p>
+				</div>
+			</section>
+		</div>
+
+		<aside class="disclaimer">
+			<strong>Compatible avec la plupart des comités.</strong>
+			<span>Décision non incluse.</span>
+		</aside>
+
+		<script is:inline>
+			const $ = (selector) => document.querySelector(selector);
+
+			const sourceText = $('#source-text');
+			const translatedText = $('#translated-text');
+			const plainMeaning = $('#plain-meaning');
+			const clarityScore = $('#clarity-score');
+			const meetingScore = $('#meeting-score');
+			const translationId = $('#translation-id');
+			const copyFeedback = $('#copy-feedback');
+
+			const examples = [
+				'Le firewall bloque le flux.',
+				'Le MFA ne marche plus.',
+				'On n’a pas les logs.',
+				'Le certificat est expiré.',
+				'Le projet est en retard.',
+				'Personne ne sait qui doit corriger.',
+				'Le fournisseur ne répond pas.',
+				'La règle est trop large.',
+				'Le serveur est tombé.',
+				'On n’a pas testé le rollback.',
+				'Le ticket est bloqué.',
+				'La production est lente.',
+				'Le patch n’a pas été appliqué.',
+				'Le compte de service ne fonctionne plus.',
+				'Le client veut une réponse aujourd’hui.',
+			];
+
+			const banks = {
+				governance: {
+					openings: [
+						'Le sujet met en évidence',
+						'Les constats disponibles confirment',
+						'Une première analyse fait apparaître',
+						'Les éléments consolidés révèlent',
+						'Le dispositif actuel laisse apparaître',
+						'Les investigations menées à date soulignent',
+						'Le retour terrain confirme',
+						'L’analyse du périmètre met en lumière',
+					],
+					nouns: [
+						'une divergence',
+						'un point de gouvernance',
+						'une situation',
+						'un besoin d’alignement',
+						'une zone de décision',
+						'un écart de pilotage',
+						'une dynamique',
+						'un sujet transverse',
+					],
+					middles: [
+						'nécessitant un réalignement',
+						'appelant un arbitrage partagé',
+						'devant être consolidé',
+						'méritant une revue du dispositif',
+						'devant être replacé dans le cadre de gouvernance',
+						'nécessitant une clarification des responsabilités',
+						'appelant une coordination renforcée',
+						'devant faire l’objet d’un cadrage complémentaire',
+					],
+					endings: [
+						'afin de sécuriser la trajectoire.',
+						'dans le respect du cadre défini.',
+						'sous réserve des arbitrages attendus.',
+						'dans une logique d’amélioration continue.',
+						'avec une approche pragmatique et partagée.',
+						'au regard des enjeux métiers associés.',
+						'afin de consolider la prise de décision.',
+						'pour garantir un pilotage cohérent du sujet.',
+					],
+				},
+				risk: {
+					openings: [
+						'La situation traduit',
+						'Les éléments observés mettent en évidence',
+						'L’analyse de risque fait apparaître',
+						'Le dispositif actuel présente',
+						'Les investigations confirment',
+						'Le contexte opérationnel révèle',
+						'L’exposition identifiée correspond à',
+						'Les contrôles en place montrent',
+					],
+					nouns: [
+						'une exposition résiduelle',
+						'un niveau de risque',
+						'une vulnérabilité de maîtrise',
+						'un point de fragilité',
+						'une dépendance critique',
+						'une surface d’exposition',
+						'un risque opérationnel',
+						'une incertitude de contrôle',
+					],
+					middles: [
+						'dont l’acceptabilité reste à confirmer',
+						'nécessitant une qualification complémentaire',
+						'devant être réévalué',
+						'partiellement couvert par les mesures existantes',
+						'appelant la mise en place de contrôles compensatoires',
+						'devant être consolidé par des éléments factuels',
+						'nécessitant une revue de criticité',
+						'dont la maîtrise reste perfectible',
+					],
+					endings: [
+						'afin de préciser le niveau d’exposition réel.',
+						'sous réserve de validation des mesures compensatoires.',
+						'dans le cadre de l’appétence au risque définie.',
+						'avec une attention particulière portée à la continuité de service.',
+						'afin de sécuriser les actifs concernés.',
+						'au regard de la criticité métier du périmètre.',
+						'dans l’attente d’une analyse d’impact consolidée.',
+						'avec un suivi renforcé jusqu’à stabilisation.',
+					],
+				},
+				copil: {
+					openings: [
+						'Le point est désormais',
+						'Le sujet a été',
+						'Les travaux en cours ont permis de',
+						'Le besoin a été',
+						'La situation est',
+						'Le chantier reste',
+						'Les parties prenantes ont',
+						'Le plan d’action est',
+					],
+					nouns: [
+						'identifié',
+						'partagé',
+						'consolidé',
+						'qualifié',
+						'positionné',
+						'structuré',
+						'remonté',
+						'pris en compte',
+					],
+					middles: [
+						'et nécessite un arbitrage',
+						'dans l’attente d’une décision',
+						'avec plusieurs dépendances encore ouvertes',
+						'mais requiert une validation complémentaire',
+						'et fera l’objet d’un suivi dédié',
+						'dans le cadre du prochain jalon',
+						'avec un besoin de convergence',
+						'sans remettre en cause la trajectoire globale',
+					],
+					endings: [
+						'lors du prochain comité.',
+						'après consolidation des éléments techniques.',
+						'dès stabilisation des dépendances.',
+						'sous réserve d’alignement des parties prenantes.',
+						'dans le cadre de la prochaine séquence de pilotage.',
+						'avant toute décision définitive.',
+						'avec une restitution prévue au prochain point.',
+						'selon le calendrier actuellement partagé.',
+					],
+				},
+				strategic: {
+					openings: [
+						'La situation constitue',
+						'Le constat actuel confirme',
+						'Les éléments observés mettent en lumière',
+						'Le contexte ouvre',
+						'L’évolution du besoin souligne',
+						'Le dispositif actuel révèle',
+						'La trajectoire engagée fait apparaître',
+						'Le sujet représente',
+					],
+					nouns: [
+						'une opportunité d’évolution',
+						'un axe de transformation',
+						'un levier de résilience',
+						'un enjeu structurant',
+						'une priorité de modernisation',
+						'un potentiel d’optimisation',
+						'un chantier stratégique',
+						'une occasion de renforcer la posture',
+					],
+					middles: [
+						'permettant de renforcer durablement le dispositif',
+						'devant être inscrit dans une trajectoire structurée',
+						'appelant une évolution ciblée',
+						'nécessitant une approche transverse',
+						'permettant d’améliorer la robustesse globale',
+						'à intégrer dans la feuille de route',
+						'favorisant une meilleure capacité de pilotage',
+						'devant être abordé dans une logique long terme',
+					],
+					endings: [
+						'au service des priorités métiers.',
+						'dans une logique de résilience durable.',
+						'avec un niveau d’ambition adapté aux enjeux.',
+						'afin de renforcer la maturité globale.',
+						'dans le cadre de la transformation engagée.',
+						'avec une vision cible partagée.',
+						'au regard des objectifs de performance et de sécurité.',
+						'pour accompagner durablement l’évolution du SI.',
+					],
+				},
+			};
+
+			const fillers = [
+				'à date',
+				'sur le périmètre considéré',
+				'dans une certaine mesure',
+				'de manière transverse',
+				'au regard des éléments disponibles',
+				'dans le contexte actuel',
+				'globalement',
+				'à ce stade',
+			];
+
+			const pick = (items) => items[Math.floor(Math.random() * items.length)];
+
+			const getTone = () =>
+				document.querySelector('input[name="tone"]:checked')?.value ?? 'governance';
+
+			const renderTranslation = () => {
+				const tone = getTone();
+				const source = sourceText.value.trim() || 'Le sujet présente une anomalie.';
+				const bank = banks[tone];
+				const filler = Math.random() > 0.45 ? ` ${pick(fillers)}` : '';
+				const result =
+					`${pick(bank.openings)} ${pick(bank.nouns)} ${pick(bank.middles)}${filler} ${pick(bank.endings)}`;
+
+				const clarity = Math.floor(9 + Math.random() * 25);
+				const meeting = Math.floor(84 + Math.random() * 15);
+				const id = Math.floor(1 + Math.random() * 999);
+
+				translatedText.textContent = result;
+				plainMeaning.textContent = source;
+				clarityScore.textContent = `${clarity} %`;
+				meetingScore.textContent = `${meeting} %`;
+				translationId.textContent = `VERSION · #${String(id).padStart(3, '0')}`;
+				copyFeedback.textContent = '';
+			};
+
+			$('#translator-form').addEventListener('submit', (event) => {
+				event.preventDefault();
+				renderTranslation();
+			});
+
+			$('#example-button').addEventListener('click', () => {
+				sourceText.value = pick(examples);
+				renderTranslation();
+			});
+
+			$('#copy-button').addEventListener('click', async () => {
+				const text = translatedText.textContent.trim();
+
+				try {
+					await navigator.clipboard.writeText(text);
+					copyFeedback.textContent = 'Version comité copiée. La décision peut attendre.';
+				} catch {
+					copyFeedback.textContent = 'Copie impossible. Il faudra improviser en réunion.';
+				}
+			});
+		</script>
+	</section>
+</OffLayout>
+
+<style>
+	.translator-shell {
+		padding: 1rem 1.15rem 0.8rem;
+		background:
+			radial-gradient(circle at 92% 8%, rgba(124, 58, 237, 0.08), transparent 26%),
+			#ffffff;
+		border: 1px solid #dbe4ef;
+		border-radius: 22px;
+		box-shadow: 0 18px 44px rgba(15, 23, 42, 0.065);
+	}
+
+	.translator-heading {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1.5rem;
+	}
+
+	.eyebrow {
+		margin: 0;
+		color: #2563eb;
+		font-size: 0.64rem;
+		font-weight: 900;
+		letter-spacing: 0.13em;
+		text-transform: uppercase;
+	}
+
+	h1 {
+		margin: 0.28rem 0 0;
+		color: #0f172a;
+		font-size: clamp(2.1rem, 4.25vw, 3.8rem);
+		line-height: 0.96;
+		letter-spacing: -0.055em;
+	}
+
+	.lead {
+		margin: 0.42rem 0 0;
+		color: #64748b;
+		font-size: 0.92rem;
+	}
+
+	.translator-layout {
+		display: grid;
+		grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+		align-items: stretch;
+		gap: 0.8rem;
+		margin-top: 0.85rem;
+	}
+
+	.input-panel,
+	.output-panel {
+		min-height: 100%;
+		padding: 0.88rem;
+		border-radius: 16px;
+	}
+
+	.input-panel {
+		display: flex;
+		flex-direction: column;
+		background: #f8fafc;
+		border: 1px solid #e2e8f0;
+	}
+
+	.output-panel {
+		display: flex;
+		flex-direction: column;
+		color: #e2e8f0;
+		background:
+			linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+			linear-gradient(135deg, #020817 0%, #07142c 100%);
+		background-size: 40px 40px, 40px 40px, auto;
+		border: 1px solid rgba(96, 165, 250, 0.1);
+	}
+
+	.panel-meta {
+		display: flex;
+		justify-content: space-between;
+		gap: 0.75rem;
+		color: #60a5fa;
+		font-size: 0.59rem;
+		font-weight: 900;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.field {
+		display: grid;
+		gap: 0.3rem;
+		margin-top: 0.7rem;
+	}
+
+	.field > span {
+		color: #475569;
+		font-size: 0.68rem;
+		font-weight: 850;
+	}
+
+	.field textarea {
+		width: 100%;
+		min-height: 132px;
+		resize: vertical;
+		padding: 0.72rem;
+		color: #0f172a;
+		font: inherit;
+		font-size: 0.78rem;
+		line-height: 1.45;
+		background: #ffffff;
+		border: 1px solid #dbe4ef;
+		border-radius: 10px;
+	}
+
+	.tone-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.45rem;
+		margin-top: 0.55rem;
+	}
+
+	.tone-card {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.5rem;
+		padding: 0.52rem 0.56rem;
+		cursor: pointer;
+		background: #ffffff;
+		border: 1px solid #e2e8f0;
+		border-radius: 10px;
+	}
+
+	.tone-card input {
+		margin-top: 0.12rem;
+		accent-color: #7c3aed;
+	}
+
+	.tone-card span {
+		display: grid;
+		gap: 0.12rem;
+	}
+
+	.tone-card strong {
+		color: #0f172a;
+		font-size: 0.68rem;
+		line-height: 1.2;
+	}
+
+	.tone-card small {
+		color: #64748b;
+		font-size: 0.58rem;
+		line-height: 1.25;
+	}
+
+	.action-row {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 0.5rem;
+		margin-top: auto;
+		padding-top: 0.65rem;
+	}
+
+	.primary-action,
+	.secondary-action,
+	.copy-action {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.4rem;
+		min-height: 42px;
+		padding: 0.65rem 0.9rem;
+		font: inherit;
+		font-size: 0.72rem;
+		font-weight: 850;
+		cursor: pointer;
+		border-radius: 9px;
+		transition:
+			background 0.16s ease,
+			transform 0.16s ease;
+	}
+
+	.primary-action {
+		color: #ffffff;
+		background: #7c3aed;
+		border: 1px solid #7c3aed;
+	}
+
+	.primary-action:hover {
+		background: #6d28d9;
+	}
+
+	.secondary-action {
+		color: #6d28d9;
+		background: #ffffff;
+		border: 1px solid #ddd6fe;
+	}
+
+	.secondary-action:hover {
+		background: #f5f3ff;
+	}
+
+	.primary-action:hover,
+	.secondary-action:hover,
+	.copy-action:hover {
+		transform: translateY(-1px);
+	}
+
+	.translation-card,
+	.subtext-card {
+		margin-top: 0.65rem;
+		padding: 0.78rem;
+		background: rgba(124, 58, 237, 0.1);
+		border: 1px solid rgba(167, 139, 250, 0.22);
+		border-radius: 11px;
+	}
+
+	.translation-card span,
+	.subtext-card span,
+	.committee-grid span {
+		color: #c4b5fd;
+		font-size: 0.57rem;
+		font-weight: 900;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.translation-card p {
+		margin: 0.32rem 0 0;
+		color: #ffffff;
+		font-size: 1rem;
+		font-weight: 820;
+		line-height: 1.35;
+	}
+
+	.committee-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.5rem;
+		margin-top: 0.65rem;
+	}
+
+	.committee-grid div {
+		display: grid;
+		gap: 0.2rem;
+		padding: 0.68rem;
+		background: rgba(15, 31, 59, 0.72);
+		border: 1px solid rgba(148, 163, 184, 0.15);
+		border-radius: 9px;
+	}
+
+	.committee-grid strong {
+		color: #ffffff;
+		font-size: 1rem;
+	}
+
+	.subtext-card p {
+		margin: 0.3rem 0 0;
+		color: #cbd5e1;
+		font-size: 0.82rem;
+		font-weight: 700;
+		line-height: 1.35;
+	}
+
+	.copy-row {
+		display: flex;
+		align-items: center;
+		gap: 0.7rem;
+		margin-top: auto;
+		padding-top: 0.65rem;
+	}
+
+	.copy-action {
+		flex: 0 0 auto;
+		color: #ffffff;
+		background: #2563eb;
+		border: 1px solid #2563eb;
+	}
+
+	.copy-action:hover {
+		background: #1d4ed8;
+	}
+
+	#copy-feedback {
+		margin: 0;
+		color: #94a3b8;
+		font-size: 0.66rem;
+		line-height: 1.3;
+	}
+
+	.disclaimer {
+		display: flex;
+		align-items: center;
+		gap: 0.3rem;
+		margin-top: 0.5rem;
+		padding-top: 0.45rem;
+		color: #64748b;
+		font-size: 0.69rem;
+		border-top: 1px solid #e2e8f0;
+	}
+
+	.disclaimer strong {
+		color: #334155;
+	}
+
+	@media (max-width: 900px) {
+		.translator-layout {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 680px) {
+		.translator-shell {
+			padding: 1rem;
+			border-radius: 18px;
+		}
+
+		.translator-heading,
+		.panel-meta,
+		.disclaimer,
+		.copy-row {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+
+		.tone-grid,
+		.action-row,
+		.committee-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.copy-action {
+			width: 100%;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.primary-action,
+		.secondary-action,
+		.copy-action {
+			transition: none;
+		}
+
+		.primary-action:hover,
+		.secondary-action:hover,
+		.copy-action:hover {
+			transform: none;
+		}
+	}
+</style>

@@ -1,0 +1,799 @@
+---
+import OffLayout from '../../layouts/OffLayout.astro';
+import OffBackLink from '../../components/off/OffBackLink.astro';
+import OffBadge from '../../components/off/OffBadge.astro';
+---
+
+<OffLayout
+	title="CVSS Bullshit Generator | EN OFF"
+	description="Parce qu’un score sur 10 n’était visiblement pas assez anxiogène."
+>
+	<OffBackLink />
+
+	<section class="cvss-shell">
+		<header class="cvss-heading">
+			<div>
+				<p class="eyebrow">EN OFF · #009</p>
+				<h1>CVSS Bullshit Generator</h1>
+				<p class="lead">
+					Parce qu’un score sur 10 n’était visiblement pas assez anxiogène.
+				</p>
+			</div>
+
+			<OffBadge label="SCIENTIFICALLY QUESTIONABLE" variant="red" />
+		</header>
+
+		<div class="cvss-layout">
+			<form class="input-panel" id="cvss-form">
+				<div class="panel-meta">
+					<span>RISK VARIABLES</span>
+					<span>METHOD · ABSOLUTELY OFFICIAL</span>
+				</div>
+
+				<div class="field-grid">
+					<label class="field">
+						<span>Qui a vu l’alerte ?</span>
+						<select id="viewer">
+							<option value="soc">Le SOC</option>
+							<option value="rssi">Le RSSI</option>
+							<option value="comex">Le COMEX</option>
+							<option value="linkedin">LinkedIn</option>
+							<option value="bfm">BFM</option>
+							<option value="nobody">Personne</option>
+						</select>
+					</label>
+
+					<label class="field">
+						<span>Combien d’utilisateurs ?</span>
+						<select id="users">
+							<option value="1">1 utilisateur</option>
+							<option value="17">17 utilisateurs</option>
+							<option value="500">500 utilisateurs</option>
+							<option value="all">Entreprise</option>
+							<option value="ceo">DG uniquement</option>
+						</select>
+					</label>
+
+					<label class="field">
+						<span>Exploitabilité ?</span>
+						<select id="exploitability">
+							<option value="admin">Être admin</option>
+							<option value="doc">Lire la doc</option>
+							<option value="didier">Connaître Didier</option>
+							<option value="intern">Un stagiaire</option>
+							<option value="press">Journaliste sur place</option>
+						</select>
+					</label>
+
+					<label class="field">
+						<span>Correctif ?</span>
+						<select id="patch">
+							<option value="yes">Disponible</option>
+							<option value="normally">Normalement</option>
+							<option value="preview">Preview</option>
+							<option value="next">Prochaine version</option>
+							<option value="silent">Aucune réponse</option>
+						</select>
+					</label>
+
+					<label class="field field-wide">
+						<span>Visibilité ?</span>
+						<select id="visibility">
+							<option value="ticket">Ticket</option>
+							<option value="teams">Teams</option>
+							<option value="copil">COPIL</option>
+							<option value="comex">COMEX</option>
+							<option value="social">Réseaux sociaux</option>
+						</select>
+					</label>
+				</div>
+
+				<button class="primary-action" type="submit">
+					Calculer la criticité réelle
+					<span aria-hidden="true">→</span>
+				</button>
+			</form>
+
+			<section class="result-panel" aria-live="polite">
+				<div class="panel-meta">
+					<span>CVSS OFFICIAL INTERPRETATION</span>
+					<span id="assessment-id">ASSESSMENT · #001</span>
+				</div>
+
+				<div class="score-grid">
+					<div class="score-card official">
+						<span>CVSS OFFICIEL</span>
+						<div class="score-value">
+							<strong id="official-score">8.2</strong>
+							<small>/ 10</small>
+						</div>
+					</div>
+
+					<div class="score-card real">
+						<span>CVSS RÉEL</span>
+						<div class="score-value">
+							<strong id="real-score">18.7</strong>
+							<small>/ 10</small>
+						</div>
+						<em>NORMALISÉ POUR LE COPIL</em>
+					</div>
+				</div>
+
+				<div class="severity-card">
+					<span>CRITICITÉ</span>
+					<strong id="severity-text">APOCALYPTIQUE MAIS PRÉSENTABLE</strong>
+				</div>
+
+				<div class="aggravating-card">
+					<span>FACTEURS AGGRAVANTS DÉTECTÉS</span>
+
+					<div class="factors-grid">
+						<div class="factor-item" id="factor-1">Le ticket contient le mot URGENT.</div>
+						<div class="factor-item" id="factor-2">Le fournisseur a écrit « should ».</div>
+						<div class="factor-item" id="factor-3">Le rollback existe dans PowerPoint.</div>
+						<div class="factor-item" id="factor-4">Personne ne connaît l’owner.</div>
+					</div>
+				</div>
+
+				<div class="recommendation-card">
+					<span>RECOMMANDATION OFFICIELLE</span>
+					<strong id="recommendation-text">
+					>Créer une exception de sécurité. Le problème deviendra alors conforme.
+					</strong>
+				</div>
+
+				<div class="copy-row">
+					<button class="secondary-action" id="copy-button" type="button">
+						Copier l’évaluation
+					</button>
+					<p id="copy-feedback" aria-live="polite"></p>
+				</div>
+			</section>
+		</div>
+
+		<aside class="disclaimer">
+			<strong>Ce score n’a aucune valeur scientifique.</strong>
+			<span>Il sera néanmoins repris dans le prochain COPIL.</span>
+		</aside>
+
+		<script is:inline>
+			const $ = (selector) => document.querySelector(selector);
+
+			const viewer = $('#viewer');
+			const users = $('#users');
+			const exploitability = $('#exploitability');
+			const patch = $('#patch');
+			const visibility = $('#visibility');
+
+			const officialScore = $('#official-score');
+			const realScore = $('#real-score');
+			const severityText = $('#severity-text');
+			const recommendationText = $('#recommendation-text');
+			const assessmentId = $('#assessment-id');
+			const copyFeedback = $('#copy-feedback');
+
+			const factorSlots = [
+				$('#factor-1'),
+				$('#factor-2'),
+				$('#factor-3'),
+				$('#factor-4'),
+			];
+
+			const severities = [
+				'APOCALYPTIQUE MAIS PRÉSENTABLE',
+				'COSMIQUE AVEC MESURES COMPENSATOIRES',
+				'CRITIQUE, MAIS PAS AVANT LE PROCHAIN COPIL',
+				'INACCEPTABLE SOUS RÉSERVE D’ARBITRAGE',
+				'MAJEUREMENT TRANSVERSE',
+				'STRATÉGIQUEMENT CATASTROPHIQUE',
+				'ROUGE FONCÉ MAIS DANS LA TRAJECTOIRE',
+				'P1 ÉMOTIONNEL',
+				'HAUTEMENT MÉDIATISABLE',
+				'CRITIQUE AVEC UN BEAU POWERPOINT',
+			];
+
+			const recommendations = [
+				'Éteindre le scanner. La vulnérabilité devrait disparaître du dashboard.',
+				'Renommer la CVE en risque accepté.',
+				'Attendre une vulnérabilité plus critique pour relativiser celle-ci.',
+				'Désinstaller le logiciel concerné, ainsi que son serveur.',
+				'Appliquer le patch directement en production. La préproduction pourrait fausser le test.',
+				'Mettre le serveur hors réseau. Définitivement, pour éviter toute récidive.',
+				'Supprimer les utilisateurs vulnérables.',
+				'Bloquer Internet jusqu’à publication d’un correctif.',
+				'Fermer le ticket avant qu’il ne dépasse le SLA.',
+				'Demander au stagiaire de vérifier si l’exploit fonctionne vraiment.',
+				'Ajouter TEMP au nom de la vulnérabilité pour indiquer qu’elle sera traitée plus tard.',
+				'Créer une exception de sécurité. Le problème deviendra alors conforme.',
+				'Redémarrer le SI jusqu’à obtenir un score inférieur.',
+				'Changer le score manuellement. Le dashboard est un outil de pilotage, pas une fatalité.',
+				'Informer le COMEX uniquement si BFM rappelle.',
+				'Ne rien faire avant vendredi 17 h 30 afin de bénéficier du support de l’astreinte.',
+				'Migrer vers le cloud. La vulnérabilité deviendra celle de quelqu’un d’autre.',
+				'Déployer un second antivirus pour surveiller le premier.',
+				'Déclarer le serveur obsolète. Une vulnérabilité legacy est toujours moins urgente.',
+				'Masquer la colonne CVSS dans le prochain export.',
+				'Supprimer la CVE de la présentation. Le risque restera technique.',
+				'Créer une war room sans inviter les personnes qui disposent des accès.',
+				'Accepter officiellement le risque au nom de l’amélioration continue.',
+				'Attendre le prochain audit pour confirmer que le problème existe toujours.',
+				'Installer le correctif précédent. Il a davantage de recul.',
+				'Créer un faux positif. Le problème deviendra statistique.',
+				'Baisser la priorité du serveur. La vulnérabilité suivra naturellement.',
+				'Ajouter une bannière « Maintenance en cours ». Le temps joue maintenant pour nous.',
+				'Documenter que le risque est connu. Il sera donc moins surprenant.',
+				'Changer l’owner de la CVE pour relancer la dynamique.',
+			];
+
+			const randomFactors = [
+				'Le ticket contient le mot URGENT.',
+				'Le correctif nécessite un redémarrage.',
+				'Le fournisseur a écrit « should ».',
+				'Le DG a répondu « ??? ».',
+				'Le RSSI respire plus fort que d’habitude.',
+				'La vulnérabilité possède déjà un logo.',
+				'La CVE est prononçable.',
+				'Le patch est disponible uniquement en anglais.',
+				'Le serveur est probablement critique.',
+				'Le consultant a demandé les logs.',
+				'Personne ne connaît l’owner.',
+				'Le rollback existe dans PowerPoint.',
+				'La documentation commence par « exemple ».',
+				'Le ticket est assigné à une personne en congé.',
+				'La mitigation consiste à surveiller.',
+				'Le scanner a utilisé le mot « exploitable ».',
+				'Le COMEX connaît désormais le numéro de CVE.',
+				'Le patch corrige aussi quelque chose qui fonctionnait.',
+				'La préproduction ressemble beaucoup à la production.',
+				'Le dernier backup est qualifié de récent.',
+				'L’éditeur recommande de tester avant.',
+				'Le serveur porte le nom FINAL.',
+				'Le correctif est compatible sous conditions.',
+				'Le métier demande si cela peut attendre lundi.',
+			];
+
+			const pick = (items) => items[Math.floor(Math.random() * items.length)];
+
+			const pickUnique = (items, count) => {
+				const pool = [...items];
+				const result = [];
+
+				while (pool.length && result.length < count) {
+					const index = Math.floor(Math.random() * pool.length);
+					result.push(pool.splice(index, 1)[0]);
+				}
+
+				return result;
+			};
+
+			const calculate = () => {
+				let official = 5.9;
+				let panic = 2.4;
+				const contextualFactors = [];
+
+				if (viewer.value === 'soc') official += 0.8;
+				if (viewer.value === 'rssi') panic += 1.5;
+				if (viewer.value === 'comex') panic += 3.2;
+				if (viewer.value === 'linkedin') panic += 4.1;
+				if (viewer.value === 'bfm') panic += 7.5;
+				if (viewer.value === 'nobody') official -= 1.1;
+
+				if (users.value === '17') official += 0.5;
+				if (users.value === '500') official += 1.4;
+				if (users.value === 'all') {
+					official += 2.2;
+					panic += 2.2;
+				}
+				if (users.value === 'ceo') panic += 5.8;
+
+				if (exploitability.value === 'admin') official += 0.6;
+				if (exploitability.value === 'doc') panic += 0.9;
+				if (exploitability.value === 'didier') panic += 1.8;
+				if (exploitability.value === 'intern') {
+					official += 1.5;
+					panic += 2.1;
+				}
+				if (exploitability.value === 'press') panic += 7.2;
+
+				if (patch.value === 'normally') panic += 1.8;
+				if (patch.value === 'preview') panic += 2.7;
+				if (patch.value === 'next') panic += 4.1;
+				if (patch.value === 'silent') panic += 6.6;
+
+				if (visibility.value === 'teams') panic += 1.1;
+				if (visibility.value === 'copil') panic += 2.5;
+				if (visibility.value === 'comex') panic += 4.5;
+				if (visibility.value === 'social') panic += 7.8;
+
+				official = Math.max(
+					0.1,
+					Math.min(10, official + (Math.random() * 1.2 - 0.6))
+				);
+
+				const real = Math.max(
+					official + 1,
+					official + panic * 1.45 + (Math.random() * 5.5 - 0.8)
+				);
+
+				if (viewer.value === 'comex' || users.value === 'ceo') {
+					contextualFactors.push('Le DG a répondu « ??? ».');
+				}
+
+				if (viewer.value === 'linkedin') {
+					contextualFactors.push('LinkedIn a déjà proposé trois remédiations.');
+				}
+
+				if (viewer.value === 'bfm') {
+					contextualFactors.push('Le bandeau Breaking News est techniquement prêt.');
+				}
+
+				if (patch.value !== 'yes') {
+					contextualFactors.push('Le correctif existe dans une temporalité stratégique.');
+				}
+
+				if (visibility.value === 'social') {
+					contextualFactors.push('Internet a déjà choisi sa propre criticité.');
+				}
+
+				if (exploitability.value === 'press') {
+					contextualFactors.push('Le journaliste est déjà devant le bâtiment.');
+				}
+
+				const fillers = pickUnique(randomFactors, 8);
+
+				for (const factor of fillers) {
+					if (
+						!contextualFactors.includes(factor) &&
+						contextualFactors.length < 4
+					) {
+						contextualFactors.push(factor);
+					}
+				}
+
+				officialScore.textContent = official.toFixed(1);
+				realScore.textContent = real.toFixed(1);
+				severityText.textContent = pick(severities);
+				recommendationText.textContent = pick(recommendations);
+				assessmentId.textContent =
+					`ASSESSMENT · #${String(Math.floor(1 + Math.random() * 999)).padStart(3, '0')}`;
+
+				factorSlots.forEach((slot, index) => {
+					slot.textContent = contextualFactors[index] ?? pick(randomFactors);
+				});
+
+				copyFeedback.textContent = '';
+			};
+
+			$('#cvss-form').addEventListener('submit', (event) => {
+				event.preventDefault();
+				calculate();
+			});
+
+			$('#copy-button').addEventListener('click', async () => {
+				const factors = factorSlots
+					.map((slot) => `• ${slot.textContent}`)
+					.join('\n');
+
+				const report = [
+					`CVSS OFFICIEL : ${officialScore.textContent}/10`,
+					`CVSS RÉEL : ${realScore.textContent}/10`,
+					`CRITICITÉ : ${severityText.textContent}`,
+					'',
+					'FACTEURS AGGRAVANTS',
+					factors,
+					'',
+					`RECOMMANDATION : ${recommendationText.textContent}`,
+				].join('\n');
+
+				try {
+					await navigator.clipboard.writeText(report);
+					copyFeedback.textContent = 'Évaluation copiée. Le COPIL peut paniquer.';
+				} catch {
+					copyFeedback.textContent = 'Copie impossible. La criticité vient encore d’augmenter.';
+				}
+			});
+		</script>
+	</section>
+</OffLayout>
+
+<style>
+	.cvss-shell {
+		padding: 1rem 1.15rem 0.8rem;
+		background:
+			radial-gradient(circle at 92% 8%, rgba(220, 38, 38, 0.075), transparent 26%),
+			#ffffff;
+		border: 1px solid #dbe4ef;
+		border-radius: 22px;
+		box-shadow: 0 18px 44px rgba(15, 23, 42, 0.065);
+	}
+
+	.cvss-heading {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1.5rem;
+	}
+
+	.eyebrow {
+		margin: 0;
+		color: #2563eb;
+		font-size: 0.64rem;
+		font-weight: 900;
+		letter-spacing: 0.13em;
+		text-transform: uppercase;
+	}
+
+	h1 {
+		margin: 0.28rem 0 0;
+		color: #0f172a;
+		font-size: clamp(2rem, 4vw, 3.65rem);
+		line-height: 0.96;
+		letter-spacing: -0.055em;
+	}
+
+	.lead {
+		margin: 0.42rem 0 0;
+		color: #64748b;
+		font-size: 0.92rem;
+	}
+
+	.cvss-layout {
+		display: grid;
+		grid-template-columns: minmax(0, 0.84fr) minmax(390px, 1.16fr);
+		align-items: start;
+		gap: 0.8rem;
+		margin-top: 0.85rem;
+	}
+
+	.input-panel,
+	.result-panel {
+		padding: 0.8rem;
+		border-radius: 16px;
+	}
+
+	.input-panel {
+		display: flex;
+		flex-direction: column;
+		background: #f8fafc;
+		border: 1px solid #e2e8f0;
+	}
+
+	.result-panel {
+		display: flex;
+		flex-direction: column;
+		color: #e2e8f0;
+		background:
+			linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+			linear-gradient(135deg, #020817 0%, #07142c 100%);
+		background-size: 40px 40px, 40px 40px, auto;
+		border: 1px solid rgba(96, 165, 250, 0.1);
+	}
+
+	.panel-meta {
+		display: flex;
+		justify-content: space-between;
+		gap: 0.75rem;
+		color: #60a5fa;
+		font-size: 0.57rem;
+		font-weight: 900;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.field-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.38rem;
+		margin-top: 0.58rem;
+	}
+
+	.field {
+		display: grid;
+		gap: 0.24rem;
+	}
+
+	.field-wide {
+		grid-column: 1 / -1;
+	}
+
+	.field > span {
+		color: #475569;
+		font-size: 0.58rem;
+		font-weight: 850;
+	}
+
+	.field select {
+		width: 100%;
+		min-height: 38px;
+		padding: 0.48rem 0.62rem;
+		color: #0f172a;
+		font: inherit;
+		font-size: 0.67rem;
+		font-weight: 700;
+		background: #ffffff;
+		border: 1px solid #dbe4ef;
+		border-radius: 9px;
+	}
+
+	.primary-action,
+	.secondary-action {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.4rem;
+		min-height: 42px;
+		padding: 0.65rem 0.9rem;
+		font: inherit;
+		font-size: 0.7rem;
+		font-weight: 850;
+		cursor: pointer;
+		border-radius: 9px;
+		transition:
+			background 0.16s ease,
+			transform 0.16s ease;
+	}
+
+	.primary-action {
+		width: 100%;
+		margin-top: 0.62rem;
+		color: #ffffff;
+		background: #dc2626;
+		border: 1px solid #dc2626;
+	}
+
+	.primary-action:hover {
+		transform: translateY(-1px);
+		background: #b91c1c;
+	}
+
+	.score-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.48rem;
+		margin-top: 0.65rem;
+	}
+
+	.score-card {
+		padding: 0.7rem;
+		background: rgba(15, 31, 59, 0.72);
+		border: 1px solid rgba(148, 163, 184, 0.15);
+		border-radius: 10px;
+	}
+
+	.score-card > span,
+	.severity-card > span,
+	.aggravating-card > span,
+	.recommendation-card > span {
+		display: block;
+		color: #60a5fa;
+		font-family: inherit;
+		font-size: 0.55rem;
+		font-style: normal;
+		font-weight: 900;
+		line-height: 1.2;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.score-value {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 0.4rem;
+		margin-top: 0.32rem;
+	}
+
+	.score-value strong {
+		color: #ffffff;
+		font-family: inherit;
+		font-size: 2.15rem;
+		font-style: normal;
+		font-weight: 900;
+		line-height: 0.92;
+		letter-spacing: -0.05em;
+	}
+
+	.score-value small {
+		padding-bottom: 0.12rem;
+		color: #94a3b8;
+		font-family: inherit;
+		font-size: 0.61rem;
+		font-style: normal;
+		font-weight: 800;
+		line-height: 1;
+	}
+
+	.score-card.real {
+		background: rgba(127, 29, 29, 0.12);
+		border-color: rgba(248, 113, 113, 0.24);
+	}
+
+	.score-card.real > span,
+	.score-card.real em {
+		color: #fca5a5;
+	}
+
+	.score-card.real em {
+		display: block;
+		margin-top: 0.35rem;
+		font-family: inherit;
+		font-size: 0.46rem;
+		font-style: normal;
+		font-weight: 900;
+		line-height: 1.2;
+		letter-spacing: 0.08em;
+	}
+
+	.severity-card,
+	.aggravating-card,
+	.recommendation-card {
+		margin-top: 0.48rem;
+		padding: 0.62rem 0.68rem;
+		border-radius: 10px;
+	}
+
+	.severity-card {
+		background: rgba(220, 38, 38, 0.11);
+		border: 1px solid rgba(248, 113, 113, 0.2);
+	}
+
+	.severity-card strong {
+		display: block;
+		margin-top: 0.3rem;
+		color: #ffffff;
+		font-family: inherit;
+		font-size: 0.84rem;
+		font-style: normal;
+		font-weight: 850;
+		line-height: 1.25;
+		letter-spacing: 0;
+		text-transform: none;
+	}
+
+	.aggravating-card,
+	.recommendation-card {
+		background: rgba(15, 31, 59, 0.72);
+		border: 1px solid rgba(148, 163, 184, 0.15);
+	}
+
+	.factors-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.38rem;
+		margin-top: 0.42rem;
+	}
+
+	.factor-item {
+		position: relative;
+		display: block;
+		min-width: 0;
+		margin: 0;
+		padding: 0.5rem 0.55rem 0.5rem 1rem;
+		color: #e2e8f0;
+		font-family: inherit;
+		font-size: 0.64rem;
+		font-style: normal;
+		font-weight: 700;
+		line-height: 1.28;
+		letter-spacing: 0;
+		text-transform: none;
+		white-space: normal;
+		overflow-wrap: anywhere;
+		background: rgba(2, 8, 23, 0.22);
+		border: 1px solid rgba(148, 163, 184, 0.1);
+		border-radius: 7px;
+	}
+
+	.factor-item::before {
+		content: '';
+		position: absolute;
+		top: 0.72rem;
+		left: 0.55rem;
+		width: 4px;
+		height: 4px;
+		background: #f97316;
+		border-radius: 50%;
+	}
+
+	.recommendation-card strong {
+		display: block;
+		margin-top: 0.3rem;
+		color: #ffffff;
+		font-family: inherit;
+		font-size: 0.7rem;
+		font-style: normal;
+		font-weight: 760;
+		line-height: 1.34;
+		letter-spacing: 0;
+		text-transform: none;
+	}
+
+	.copy-row {
+		display: flex;
+		align-items: center;
+		gap: 0.7rem;
+		margin-top: 0.55rem;
+	}
+
+	.secondary-action {
+		flex: 0 0 auto;
+		color: #dbeafe;
+		background: transparent;
+		border: 1px solid rgba(96, 165, 250, 0.34);
+	}
+
+	.secondary-action:hover {
+		transform: translateY(-1px);
+		background: rgba(37, 99, 235, 0.1);
+	}
+
+	#copy-feedback {
+		margin: 0;
+		color: #94a3b8;
+		font-size: 0.64rem;
+		line-height: 1.3;
+	}
+
+	.disclaimer {
+		display: flex;
+		align-items: center;
+		gap: 0.3rem;
+		margin-top: 0.5rem;
+		padding-top: 0.45rem;
+		color: #64748b;
+		font-size: 0.69rem;
+		border-top: 1px solid #e2e8f0;
+	}
+
+	.disclaimer strong {
+		color: #334155;
+	}
+
+	@media (max-width: 900px) {
+		.cvss-layout {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 680px) {
+		.cvss-shell {
+			padding: 1rem;
+			border-radius: 18px;
+		}
+
+		.cvss-heading,
+		.panel-meta,
+		.disclaimer,
+		.copy-row {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+
+		.field-grid,
+		.score-grid,
+		.factors-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.field-wide {
+			grid-column: auto;
+		}
+
+		.secondary-action {
+			width: 100%;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.primary-action,
+		.secondary-action {
+			transition: none;
+		}
+
+		.primary-action:hover,
+		.secondary-action:hover {
+			transform: none;
+		}
+	}
+</style>

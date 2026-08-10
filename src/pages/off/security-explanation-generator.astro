@@ -1,0 +1,394 @@
+---
+import OffLayout from '../../layouts/OffLayout.astro';
+import OffBadge from '../../components/off/OffBadge.astro';
+import OffBackLink from '../../components/off/OffBackLink.astro';
+import { securityExplanations } from '../../data/security-explanations';
+
+const initialExplanation = securityExplanations[0];
+---
+
+<OffLayout
+	title="Security Explanation Generator | EN OFF"
+	description="Parce qu’il fallait bien une version officielle. Un générateur d’explications cybersécurité courtes, crédibles et parfaitement inutiles."
+>
+	<OffBackLink />
+
+	<section class="generator-shell">
+		<header class="generator-heading">
+			<div>
+				<p class="eyebrow">EN OFF · #005</p>
+				<h1>Security Explanation Generator</h1>
+				<p class="lead">Parce qu’il fallait bien une version officielle.</p>
+			</div>
+
+			<OffBadge label="OFFICIALLY PLAUSIBLE" variant="violet" />
+		</header>
+
+		<section class="output-card" aria-live="polite">
+			<div class="output-meta">
+				<span>OFFICIAL EXPLANATION - INTERNAL USE ONLY</span>
+				<span id="excuse-number">EXPLANATION · 001</span>
+			</div>
+
+			<div class="context-strip">
+				<div class="context-item">
+					<span class="context-label">CATÉGORIE</span>
+					<strong id="excuse-category">{initialExplanation.category}</strong>
+				</div>
+
+				<div class="context-item">
+					<span class="context-label">SITUATION</span>
+					<strong id="excuse-situation">{initialExplanation.situation}</strong>
+				</div>
+			</div>
+
+			<div class="excuse" id="generated-excuse">
+				<p id="first-line">{initialExplanation.firstLine}</p>
+				<p class="punchline" id="second-line">{initialExplanation.secondLine}</p>
+			</div>
+		</section>
+
+		<div class="actions">
+			<button type="button" class="primary-action" id="generate-button">
+				Nouvelle explication
+				<span aria-hidden="true">↻</span>
+			</button>
+
+			<button type="button" class="secondary-action" id="copy-button">
+				Copier la version officielle
+			</button>
+		</div>
+
+		<p class="copy-feedback" id="copy-feedback" aria-live="polite"></p>
+
+		<aside class="disclaimer">
+			<strong>Conforme aux standards internationaux de la langue de bois.</strong>
+			<span>Approbation officielle toujours en attente.</span>
+		</aside>
+
+		<script is:inline define:vars={{ securityExplanations }}>
+			const firstLine = document.querySelector('#first-line');
+			const secondLine = document.querySelector('#second-line');
+			const explanationCategory = document.querySelector('#excuse-category');
+			const explanationSituation = document.querySelector('#excuse-situation');
+			const explanationNumber = document.querySelector('#excuse-number');
+			const generateButton = document.querySelector('#generate-button');
+			const copyButton = document.querySelector('#copy-button');
+			const copyFeedback = document.querySelector('#copy-feedback');
+			const explanationContainer = document.querySelector('#generated-excuse');
+
+			let currentIndex = 0;
+			let previousIndex = 0;
+
+			const pickNextIndex = () => {
+				if (securityExplanations.length < 2) return 0;
+
+				let nextIndex = previousIndex;
+
+				while (nextIndex === previousIndex) {
+					nextIndex = Math.floor(Math.random() * securityExplanations.length);
+				}
+
+				return nextIndex;
+			};
+
+			const renderExcuse = (index) => {
+				const explanation = securityExplanations[index];
+				if (!explanation) return;
+
+				currentIndex = index;
+				previousIndex = index;
+
+				explanationCategory.textContent = explanation.category;
+				explanationSituation.textContent = explanation.situation;
+				firstLine.textContent = explanation.firstLine;
+				secondLine.textContent = explanation.secondLine;
+				explanationNumber.textContent = `EXPLANATION · ${String(index + 1).padStart(3, '0')}`;
+				copyFeedback.textContent = '';
+
+				if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+					explanationContainer.animate(
+						[
+							{ opacity: 0.18, transform: 'translateY(5px)' },
+							{ opacity: 1, transform: 'translateY(0)' },
+						],
+						{ duration: 210, easing: 'ease-out' },
+					);
+				}
+			};
+
+			const getCurrentExcuse = () => {
+				const explanation = securityExplanations[currentIndex];
+				return `[${excuse.category} · ${excuse.situation}]\n\n${explanation.firstLine}\n\n${explanation.secondLine}`;
+			};
+
+			generateButton.addEventListener('click', () => {
+				renderExcuse(pickNextIndex());
+			});
+
+			copyButton.addEventListener('click', async () => {
+				try {
+					await navigator.clipboard.writeText(getCurrentExcuse());
+					copyFeedback.textContent = 'Version officielle copiée. Vous pouvez maintenant lancer le COPIL.';
+				} catch {
+					copyFeedback.textContent = 'Impossible de copier. Une improvisation sera nécessaire.';
+				}
+			});
+		</script>
+	</section>
+</OffLayout>
+
+<style>
+	.generator-shell {
+		padding: clamp(1.25rem, 2.6vw, 2rem);
+		background:
+			radial-gradient(circle at 92% 8%, rgba(124, 58, 237, 0.09), transparent 27%),
+			#ffffff;
+		border: 1px solid #dbe4ef;
+		border-radius: 22px;
+		box-shadow: 0 18px 44px rgba(15, 23, 42, 0.065);
+	}
+
+	.generator-heading {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1.25rem;
+	}
+
+	.eyebrow {
+		margin: 0;
+		color: #2563eb;
+		font-size: 0.66rem;
+		font-weight: 900;
+		letter-spacing: 0.13em;
+		text-transform: uppercase;
+	}
+
+	h1 {
+		margin: 0.35rem 0 0;
+		color: #0f172a;
+		font-size: clamp(2.15rem, 5vw, 4.15rem);
+		line-height: 0.96;
+		letter-spacing: -0.055em;
+	}
+
+	.lead {
+		margin: 0.55rem 0 0;
+		color: #64748b;
+		font-size: 0.94rem;
+	}
+
+	.output-card {
+		margin-top: 1.35rem;
+		padding: clamp(1.15rem, 2.4vw, 1.8rem);
+		color: #e2e8f0;
+		background:
+			linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+			linear-gradient(135deg, #020817 0%, #07142c 100%);
+		background-size: 40px 40px, 40px 40px, auto;
+		border: 1px solid rgba(96, 165, 250, 0.1);
+		border-radius: 16px;
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+	}
+
+	.output-meta {
+		display: flex;
+		justify-content: space-between;
+		gap: 0.75rem;
+		color: #60a5fa;
+		font-size: 0.62rem;
+		font-weight: 900;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.context-strip {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.6rem;
+		margin-top: 0.9rem;
+	}
+
+	.context-item {
+		display: grid;
+		gap: 0.18rem;
+		padding: 0.65rem 0.75rem;
+		background: rgba(37, 99, 235, 0.08);
+		border: 1px solid rgba(96, 165, 250, 0.17);
+		border-radius: 10px;
+	}
+
+	.context-label {
+		color: #60a5fa;
+		font-size: 0.54rem;
+		font-weight: 900;
+		letter-spacing: 0.11em;
+		text-transform: uppercase;
+	}
+
+	.context-item strong {
+		color: #e2e8f0;
+		font-size: 0.8rem;
+		font-weight: 800;
+		line-height: 1.2;
+	}
+
+	.excuse {
+		max-width: 930px;
+		margin-top: 0.95rem;
+	}
+
+	.excuse p {
+		margin: 0;
+		color: #ebe8e8e5;
+		font-size: clamp(1.35rem, 2.7vw, 2rem);
+		font-weight: 800;
+		line-height: 1.18;
+		letter-spacing: -0.035em;
+	}
+
+	.excuse .punchline {
+		margin-top: 0.35rem;
+		color: #ffffff;
+		font-size: clamp(1.35rem, 2.7vw, 2rem);
+		font-weight: 800;
+		line-height: 1.18;
+		letter-spacing: -0.035em;
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.55rem;
+		margin-top: 0.7rem;
+	}
+
+	.actions button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.4rem;
+		min-height: 40px;
+		padding: 0.65rem 0.9rem;
+		font: inherit;
+		font-size: 0.74rem;
+		font-weight: 850;
+		cursor: pointer;
+		border-radius: 9px;
+		transition:
+			transform 0.16s ease,
+			background 0.16s ease,
+			border-color 0.16s ease;
+	}
+
+	.actions button:hover {
+		transform: translateY(-1px);
+	}
+
+	.primary-action {
+		color: #ffffff;
+		background: #2563eb;
+		border: 1px solid #2563eb;
+	}
+
+	.primary-action:hover {
+		background: #1d4ed8;
+		border-color: #1d4ed8;
+	}
+
+	.secondary-action {
+		color: #1d4ed8;
+		background: #ffffff;
+		border: 1px solid #bfdbfe;
+	}
+
+	.secondary-action:hover {
+		background: #eff6ff;
+		border-color: #93c5fd;
+	}
+
+	.copy-feedback {
+		min-height: 0.95rem;
+		margin: 0.35rem 0 0;
+		color: #64748b;
+		font-size: 0.72rem;
+	}
+
+	.disclaimer {
+		display: flex;
+		align-items: center;
+		gap: 0.3rem;
+		margin-top: 0.8rem;
+		padding-top: 0.7rem;
+		color: #64748b;
+		font-size: 0.7rem;
+		border-top: 1px solid #e2e8f0;
+	}
+
+	.disclaimer strong {
+		color: #334155;
+	}
+
+	@media (max-width: 700px) {
+		.generator-shell {
+			padding: 1rem;
+			border-radius: 18px;
+		}
+
+		.generator-heading {
+			display: grid;
+			gap: 0.75rem;
+		}
+
+		h1 {
+			font-size: clamp(2rem, 12vw, 3rem);
+		}
+
+		.output-card {
+			margin-top: 1rem;
+			padding: 1rem;
+		}
+
+		.output-meta {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 0.25rem;
+		}
+
+		.context-strip {
+			grid-template-columns: 1fr;
+			gap: 0.5rem;
+			margin-top: 0.75rem;
+		}
+
+		.excuse {
+			margin-top: 0.8rem;
+		}
+
+		.actions {
+			display: grid;
+			grid-template-columns: 1fr;
+		}
+
+		.actions button {
+			width: 100%;
+		}
+
+		.disclaimer {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.actions button {
+			transition: none;
+		}
+
+		.actions button:hover {
+			transform: none;
+		}
+	}
+</style>

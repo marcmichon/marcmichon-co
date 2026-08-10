@@ -1,0 +1,602 @@
+---
+import OffLayout from '../../layouts/OffLayout.astro';
+import OffBadge from '../../components/off/OffBadge.astro';
+import OffBackLink from '../../components/off/OffBackLink.astro';
+import { cyberGuessSituations } from '../../data/cyber-guess';
+
+const gameLength = 10;
+---
+
+<OffLayout
+	title="Cyber Guess | EN OFF"
+	description="Des situations IT vécues. Aucun mauvais réflexe. Seulement plusieurs façons de survivre."
+>
+	<OffBackLink />
+
+	<section class="game-shell">
+		<header class="game-heading">
+			<div>
+				<p class="eyebrow">EN OFF · #004</p>
+				<h1>Cyber Guess</h1>
+				<p class="lead">
+					Aucune mauvaise réponse. Choisis simplement le réflexe qui te ressemble le plus.
+				</p>
+			</div>
+
+			<OffBadge label="HIGHLY QUESTIONABLE" variant="violet" />
+		</header>
+
+		<section class="game-card" id="game-card">
+			<div class="progress-row">
+				<span id="situation-number">Cas de terrain #01</span>
+				<span id="progress-display">Réflexes révélés · 0 / 10</span>
+			</div>
+
+			<div class="progress-track" aria-hidden="true">
+				<span id="progress-bar"></span>
+			</div>
+
+			<div id="question-view">
+				<div class="context" id="context"></div>
+				<h2 id="question"></h2>
+
+				<div
+					class="answers"
+					id="answers"
+					role="radiogroup"
+					aria-label="Réflexes possibles"
+				></div>
+
+				<div class="post-choice-row">
+					<div class="choice-feedback" id="choice-feedback" hidden aria-live="polite">
+						<p class="verdict-label">EN OFF</p>
+						<p id="feedback-text"></p>
+					</div>
+
+					<button class="primary-action" id="next-button" type="button" hidden>
+						Cas suivant
+						<span aria-hidden="true">→</span>
+					</button>
+				</div>
+			</div>
+
+			<div class="result-view" id="result-view" hidden>
+				<p class="result-label">SESSION TERMINÉE</p>
+				<p class="result-score" id="result-score">10</p>
+				<h2>Réflexes révélés.</h2>
+				<p>
+					Aucun score. Aucun échec. Seulement dix petites preuves que tu travailles bien
+					dans l’IT.
+				</p>
+
+				<button class="primary-action" id="restart-button" type="button">
+					Rejouer avec dix autres cas
+					<span aria-hidden="true">↻</span>
+				</button>
+			</div>
+		</section>
+
+		<aside class="disclaimer">
+			<strong>Tous les réflexes sont acceptés.</strong>
+			<span>Certains sont simplement plus difficiles à avouer.</span>
+		</aside>
+
+		<script is:inline define:vars={{ cyberGuessSituations, gameLength }}>
+			const state = {
+				questions: [],
+				currentIndex: 0,
+				selectedChoiceIndex: null,
+				choiceOrder: [],
+			};
+
+			const situationNumber = document.querySelector('#situation-number');
+			const progressDisplay = document.querySelector('#progress-display');
+			const progressBar = document.querySelector('#progress-bar');
+			const questionView = document.querySelector('#question-view');
+			const contextElement = document.querySelector('#context');
+			const questionElement = document.querySelector('#question');
+			const answersElement = document.querySelector('#answers');
+			const choiceFeedback = document.querySelector('#choice-feedback');
+			const feedbackText = document.querySelector('#feedback-text');
+			const nextButton = document.querySelector('#next-button');
+			const resultView = document.querySelector('#result-view');
+			const resultScore = document.querySelector('#result-score');
+			const restartButton = document.querySelector('#restart-button');
+
+			const shuffle = (items) => {
+				const copy = [...items];
+
+				for (let index = copy.length - 1; index > 0; index -= 1) {
+					const randomIndex = Math.floor(Math.random() * (index + 1));
+					[copy[index], copy[randomIndex]] = [copy[randomIndex], copy[index]];
+				}
+
+				return copy;
+			};
+
+			const selectQuestions = () =>
+				shuffle(cyberGuessSituations).slice(
+					0,
+					Math.min(gameLength, cyberGuessSituations.length),
+				);
+
+			const updateProgress = () => {
+				const total = state.questions.length;
+				const current = Math.min(state.currentIndex + 1, total);
+				const revealed =
+					state.currentIndex + (state.selectedChoiceIndex !== null ? 1 : 0);
+
+				situationNumber.textContent =
+					`Cas de terrain #${String(current).padStart(2, '0')}`;
+				progressDisplay.textContent = `Réflexes révélés · ${revealed} / ${total}`;
+				progressBar.style.width = `${(revealed / total) * 100}%`;
+			};
+
+			const revealChoice = (displayIndex, button) => {
+				const selected = state.choiceOrder[displayIndex];
+				state.selectedChoiceIndex = displayIndex;
+
+				answersElement.querySelectorAll('.answer-button').forEach((item) => {
+					const isSelected = item === button;
+					item.classList.toggle('selected', isSelected);
+					item.setAttribute('aria-checked', isSelected ? 'true' : 'false');
+				});
+
+				feedbackText.textContent = selected.feedback;
+				choiceFeedback.hidden = false;
+				nextButton.hidden = false;
+				updateProgress();
+
+				if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+					choiceFeedback.animate(
+						[
+							{ opacity: 0, transform: 'translateY(4px)' },
+							{ opacity: 1, transform: 'translateY(0)' },
+						],
+						{ duration: 180, easing: 'ease-out' },
+					);
+				}
+			};
+
+			const renderQuestion = () => {
+				const item = state.questions[state.currentIndex];
+
+				state.selectedChoiceIndex = null;
+				questionView.hidden = false;
+				resultView.hidden = true;
+				choiceFeedback.hidden = true;
+				nextButton.hidden = true;
+
+				updateProgress();
+
+				contextElement.replaceChildren(
+					...item.context.map((line) => {
+						const paragraph = document.createElement('p');
+						paragraph.textContent = line;
+						return paragraph;
+					}),
+				);
+
+				questionElement.textContent = item.question;
+				state.choiceOrder = shuffle(item.choices);
+
+				answersElement.replaceChildren(
+					...state.choiceOrder.map((choice, displayIndex) => {
+						const button = document.createElement('button');
+						button.type = 'button';
+						button.className = 'answer-button';
+						button.setAttribute('role', 'radio');
+						button.setAttribute('aria-checked', 'false');
+
+						const marker = document.createElement('span');
+						marker.className = 'answer-marker';
+						marker.textContent = `${String.fromCharCode(65 + displayIndex)} :`;
+
+						const answerText = document.createElement('span');
+						answerText.className = 'answer-text';
+						answerText.textContent = choice.text;
+
+						button.append(marker, answerText);
+						button.addEventListener('click', () =>
+							revealChoice(displayIndex, button),
+						);
+
+						return button;
+					}),
+				);
+
+				nextButton.innerHTML =
+					state.currentIndex === state.questions.length - 1
+						? 'Terminer la session <span aria-hidden="true">→</span>'
+						: 'Cas suivant <span aria-hidden="true">→</span>';
+			};
+
+			const showResult = () => {
+				const total = state.questions.length;
+
+				questionView.hidden = true;
+				resultView.hidden = false;
+				situationNumber.textContent = 'Session terminée';
+				progressDisplay.textContent = `Réflexes révélés · ${total} / ${total}`;
+				progressBar.style.width = '100%';
+				resultScore.textContent = String(total);
+			};
+
+			const nextQuestion = () => {
+				if (state.selectedChoiceIndex === null) return;
+
+				if (state.currentIndex >= state.questions.length - 1) {
+					showResult();
+					return;
+				}
+
+				state.currentIndex += 1;
+				renderQuestion();
+			};
+
+			const startGame = () => {
+				state.questions = selectQuestions();
+				state.currentIndex = 0;
+				state.selectedChoiceIndex = null;
+				renderQuestion();
+			};
+
+			nextButton.addEventListener('click', nextQuestion);
+			restartButton.addEventListener('click', startGame);
+
+			startGame();
+		</script>
+	</section>
+</OffLayout>
+
+<style>
+	.game-shell {
+		padding: clamp(1.05rem, 2.15vw, 1.7rem);
+		background:
+			radial-gradient(circle at 92% 8%, rgba(124, 58, 237, 0.08), transparent 27%),
+			#ffffff;
+		border: 1px solid #dbe4ef;
+		border-radius: 22px;
+		box-shadow: 0 18px 44px rgba(15, 23, 42, 0.065);
+		padding-bottom: 0.8rem;
+	}
+
+	.game-heading {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1.25rem;
+	}
+
+	.eyebrow {
+		margin: 0;
+		color: #2563eb;
+		font-size: 0.64rem;
+		font-weight: 900;
+		letter-spacing: 0.13em;
+		text-transform: uppercase;
+	}
+
+	h1 {
+		margin: 0.3rem 0 0;
+		color: #0f172a;
+		font-size: clamp(2.25rem, 4.7vw, 4.1rem);
+		line-height: 0.96;
+		letter-spacing: -0.055em;
+	}
+
+	.lead {
+		margin: 0.48rem 0 0;
+		color: #64748b;
+		font-size: 0.92rem;
+		line-height: 1.35;
+	}
+
+	.game-card {
+		margin-top: 0.85rem;
+		padding: clamp(1rem, 2vw, 1.45rem);
+		color: #e2e8f0;
+		background:
+			linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+			linear-gradient(135deg, #020817 0%, #07142c 100%);
+		background-size: 40px 40px, 40px 40px, auto;
+		border: 1px solid rgba(96, 165, 250, 0.1);
+		border-radius: 16px;
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+	}
+
+	.progress-row {
+		display: flex;
+		justify-content: space-between;
+		gap: 0.75rem;
+		color: #60a5fa;
+		font-size: 0.61rem;
+		font-weight: 900;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.progress-track {
+		height: 2px;
+		margin-top: 0.6rem;
+		overflow: hidden;
+		background: rgba(148, 163, 184, 0.18);
+		border-radius: 99px;
+	}
+
+	.progress-track span {
+		display: block;
+		width: 0;
+		height: 100%;
+		background: #2563eb;
+		transition: width 0.22s ease;
+	}
+
+	.context {
+		margin-top: 0.72rem;
+		padding: 0.9rem 1rem;
+		background: rgba(37, 99, 235, 0.055);
+		border-left: 3px solid #2563eb;
+		border-radius: 0 12px 12px 0;
+	}
+
+	.context p {
+		margin: 0;
+		color: #d7e0ec;
+		font-size: clamp(0.88rem, 1.5vw, 1.05rem);
+		line-height: 1.38;
+	}
+
+	.context p + p {
+		margin-top: 0.34rem;
+	}
+
+	#question {
+		margin: 0.72rem 0;
+		color: #ffffff;
+		font-size: clamp(1.35rem, 2.75vw, 2rem);
+		font-weight: 850;
+		line-height: 1.05;
+		letter-spacing: -0.035em;
+		text-align: center;
+	}
+
+	.answers {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.5rem;
+	}
+
+	:global(.answer-button) {
+		display: flex;
+		align-items: center;
+		gap: 0.65rem;
+		min-height: 52px;
+		padding: 0.62rem 0.72rem;
+		color: #dbe4ef;
+		font: inherit;
+		text-align: left;
+		cursor: pointer;
+		background: rgba(15, 31, 59, 0.82);
+		border: 1px solid rgba(148, 163, 184, 0.2);
+		border-radius: 10px;
+		transition:
+			transform 0.16s ease,
+			background 0.16s ease,
+			border-color 0.16s ease;
+	}
+
+	:global(.answer-button:hover) {
+		transform: translateY(-1px);
+		background: rgba(23, 46, 83, 0.95);
+		border-color: rgba(96, 165, 250, 0.48);
+	}
+
+	:global(.answer-button.selected) {
+		color: #ffffff;
+		background: rgba(37, 99, 235, 0.18);
+		border-color: #60a5fa;
+	}
+
+	:global(.answer-marker) {
+		display: inline-grid;
+		flex: 0 0 38px;
+		min-height: 34px;
+		place-items: center;
+		color: #93c5fd;
+		font-size: 0.7rem;
+		font-weight: 900;
+		background: rgba(37, 99, 235, 0.13);
+		border: 1px solid rgba(96, 165, 250, 0.28);
+		border-radius: 8px;
+	}
+
+	:global(.answer-button.selected .answer-marker) {
+		color: #ffffff;
+		background: #2563eb;
+		border-color: #2563eb;
+	}
+
+	:global(.answer-text) {
+		font-size: 0.78rem;
+		font-weight: 800;
+		line-height: 1.25;
+	}
+
+	.post-choice-row {
+		display: flex;
+		align-items: stretch;
+		gap: 0.55rem;
+		margin-top: 0.58rem;
+	}
+
+	.choice-feedback {
+		display: grid;
+		flex: 1;
+		grid-template-columns: auto 1fr;
+		align-items: center;
+		gap: 0.55rem;
+		min-height: 40px;
+		padding: 0.52rem 0.68rem;
+		background: rgba(37, 99, 235, 0.09);
+		border: 1px solid rgba(96, 165, 250, 0.24);
+		border-radius: 9px;
+	}
+
+	.choice-feedback[hidden],
+	.primary-action[hidden],
+	.result-view[hidden],
+	#question-view[hidden] {
+		display: none;
+	}
+
+	.verdict-label {
+		margin: 0;
+		color: #60a5fa;
+		font-size: 0.58rem;
+		font-weight: 900;
+		letter-spacing: 0.09em;
+		text-transform: uppercase;
+	}
+
+	#feedback-text {
+		margin: 0;
+		color: #cbd5e1;
+		font-size: 0.74rem;
+		line-height: 1.3;
+	}
+
+	.primary-action {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.4rem;
+		min-height: 40px;
+		padding: 0.64rem 0.86rem;
+		color: #ffffff;
+		font: inherit;
+		font-size: 0.73rem;
+		font-weight: 850;
+		white-space: nowrap;
+		cursor: pointer;
+		background: #2563eb;
+		border: 1px solid #2563eb;
+		border-radius: 9px;
+		transition:
+			transform 0.16s ease,
+			background 0.16s ease;
+	}
+
+	.primary-action:hover {
+		transform: translateY(-1px);
+		background: #1d4ed8;
+	}
+
+	.disclaimer {
+		display: flex;
+		align-items: center;
+		gap: 0.3rem;
+		margin-top: 0.45rem;
+	padding-top: 0.45rem;
+		color: #64748b;
+		font-size: 0.68rem;
+		border-top: 1px solid #e2e8f0;
+	}
+
+	.disclaimer strong {
+		color: #334155;
+	}
+
+	.result-view {
+		padding: 1rem 0 0.35rem;
+		text-align: center;
+	}
+
+	.result-label {
+		margin: 0;
+		color: #60a5fa;
+		font-size: 0.62rem;
+		font-weight: 900;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+	}
+
+	.result-score {
+		margin: 0.3rem 0 0;
+		color: #ffffff;
+		font-size: clamp(2.8rem, 7vw, 4.5rem);
+		font-weight: 900;
+		line-height: 1;
+	}
+
+	.result-view h2 {
+		margin: 0.3rem 0 0;
+		color: #ffffff;
+		font-size: 1.45rem;
+	}
+
+	.result-view > p:not(.result-label, .result-score) {
+		max-width: 620px;
+		margin: 0.4rem auto 0.8rem;
+		color: #cbd5e1;
+		font-size: 0.82rem;
+		line-height: 1.4;
+	}
+
+	@media (max-width: 760px) {
+		.game-shell {
+			padding: 1rem;
+			border-radius: 18px;
+		}
+
+		.game-heading,
+		.progress-row,
+		.disclaimer {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+
+		h1 {
+			font-size: clamp(2.3rem, 13vw, 3.3rem);
+		}
+
+		.game-card {
+			padding: 1rem;
+		}
+
+		.context {
+			padding: 0.8rem;
+		}
+
+		.answers {
+			grid-template-columns: 1fr;
+		}
+
+		.post-choice-row {
+			flex-direction: column;
+		}
+
+		.choice-feedback {
+			grid-template-columns: 1fr;
+			gap: 0.2rem;
+		}
+
+		.primary-action {
+			width: 100%;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.progress-track span,
+		:global(.answer-button),
+		.primary-action {
+			transition: none;
+		}
+
+		:global(.answer-button:hover),
+		.primary-action:hover {
+			transform: none;
+		}
+	}
+</style>
