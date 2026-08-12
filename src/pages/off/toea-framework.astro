@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import toeaCertImage from '../../assets/diamond/toea/toea-certif2.png';
 import OffLayout from '../../layouts/OffLayout.astro';
 import OffBackLink from '../../components/off/OffBackLink.astro';
 import OffBadge from '../../components/off/OffBadge.astro';
@@ -32,12 +34,7 @@ import OffBadge from '../../components/off/OffBadge.astro';
 
 			<figure class="hero-certification">
 				<div class="certification-frame">
-					<img
-						src="/Images/toea-certif2.png"
-						alt="Certification fictive TOEA-P Platinum Elite"
-						loading="eager"
-						decoding="async"
-					/>
+					<Image src={toeaCertImage} alt="Certification fictive TOEA-P Platinum Elite" width={960} quality={82} loading="lazy" decoding="async" />
 				</div>
 
 				<figcaption>

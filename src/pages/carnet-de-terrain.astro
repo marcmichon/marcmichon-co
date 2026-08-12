@@ -3,6 +3,15 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE } from '../consts';
+import { getImage } from 'astro:assets';
+import carnetHeroImage from '../assets/diamond/carnet/carnet-de-terrain.png';
+
+const optimizedCarnetHero = await getImage({
+	src: carnetHeroImage,
+	width: 1440,
+	quality: 82,
+	format: 'webp',
+});
 
 ---
 
@@ -19,7 +28,7 @@ import { SITE_TITLE } from '../consts';
 		<Header />
 
 		<main>
-			<section class="carnet-hero">
+			<section class="carnet-hero" style={`--carnet-hero-image:url('${optimizedCarnetHero.src}')`}>
 				<div class="hero-content">
 					<p class="hero-kicker">LE CARNET DE TERRAIN</p>
 
@@ -282,7 +291,7 @@ import { SITE_TITLE } from '../consts';
 				rgba(2, 8, 23, 0.58) 70%,
 				rgba(2, 8, 23, 0.78) 100%
 			),
-			url('/Images/carnet-de-terrain.png');
+			var(--carnet-hero-image);
 		background-size: cover;
 		background-position: 68% center;
 		background-repeat: no-repeat;

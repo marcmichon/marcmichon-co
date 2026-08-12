@@ -5,6 +5,18 @@ import Header from '../components/Header.astro';
 import HeroPremium from '../components/HeroPremium.astro';
 import StatsBar from '../components/StatsBar.astro';
 
+import { Image } from 'astro:assets';
+
+import vulnerabilityManagementImage from '../assets/home/vulnmngt.png';
+import exposureManagementImage from '../assets/home/exposurmngt.png';
+import threatIntelligenceImage from '../assets/home/cti.png';
+import securityOperationsImage from '../assets/home/secops.png';
+import msspImage from '../assets/home/mssp.png';
+import frozenPlatformImage from '../assets/home/plateforme-figee.png';
+import platformUpToDateImage from '../assets/home/security-platform-engineering-plateforme-a-jour.png';
+import edrAssetsImage from '../assets/home/edr-assets.png';
+import taggingImage from '../assets/home/tagging.png';
+
 import {
 	graphSchema,
 	personSchema,
@@ -43,31 +55,31 @@ const schema = graphSchema([
 
 				<div class="cards">
 					<div class="card">
-						<img src="/Images/vulnmngt.png" alt="" class="card-image" />
+						<Image src={vulnerabilityManagementImage} alt="" class="card-image" width={640} quality={82} loading="lazy" decoding="async" />
 						<h3>Vulnerability Management</h3>
 						<p>Intégration de solutions, structuration, tagging, priorisation et remédiation.</p>
 					</div>
 
 					<div class="card">
-						<img src="/Images/exposurmngt.png" alt="" class="card-image" />
+						<Image src={exposureManagementImage} alt="" class="card-image" width={640} quality={82} loading="lazy" decoding="async" />
 						<h3>Exposure Management</h3>
 						<p>Visibilité, surface d’attaque et contexte de risque.</p>
 					</div>
 
 					<div class="card">
-						<img src="/Images/cti.png" alt="" class="card-image" />
+						<Image src={threatIntelligenceImage} alt="" class="card-image" width={640} quality={82} loading="lazy" decoding="async" />
 						<h3>Threat Intelligence</h3>
 						<p>Enrichissement, IOC, contexte menace et investigation.</p>
 					</div>
 
 					<div class="card">
-						<img src="/Images/secops.png" alt="" class="card-image" />
+						<Image src={securityOperationsImage} alt="" class="card-image" width={640} quality={82} loading="lazy" decoding="async" />
 						<h3>Security Operations</h3>
 						<p>SIEM, SOAR, détection et exploitation opérationnelle.</p>
 					</div>
 
 					<div class="card">
-						<img src="/Images/mssp.png" alt="" class="card-image" />
+						<Image src={msspImage} alt="" class="card-image" width={640} quality={82} loading="lazy" decoding="async" />
 						<h3>MSSP / RUN</h3>
 						<p>Maintien en condition opérationnelle et support client.</p>
 					</div>
@@ -109,10 +121,14 @@ const schema = graphSchema([
 
 <a href="/articles/plateformes-figees-apres-deploiement" class="article-card category-engineering">
 	<div class="article-image">
-		<img
-			src="/Images/plateforme-figee.png"
-			alt="Les plateformes qui se figent après leur déploiement"
-		/>
+		<Image
+            src={frozenPlatformImage}
+            alt="Les plateformes qui se figent après leur déploiement"
+            width={640}
+            quality={82}
+            loading="lazy"
+            decoding="async"
+        />
 	</div>
 
 	<div class="article-content">
@@ -136,7 +152,7 @@ const schema = graphSchema([
 
 					<a href="/articles/pourquoi-plateforme-securite-a-jour-techniquement-en-retard" class="article-card category-engineering">
 						<div class="article-image">
-							<img src="/Images/security-platform-engineering-plateforme-a-jour.png" alt="" />
+							<Image src={platformUpToDateImage} alt="" width={640} quality={82} loading="lazy" decoding="async" />
 						</div>
 
 						<div class="article-content">
@@ -154,7 +170,7 @@ const schema = graphSchema([
 
 					<a href="/articles/ce-que-votre-edr-ne-voit-pas" class="article-card category-endpoint">
 						<div class="article-image">
-							<img src="/Images/edr-assets.png" alt="Votre EDR voit-il vraiment tout ?" />
+							<Image src={edrAssetsImage} alt="Votre EDR voit-il vraiment tout ?" width={640} quality={82} loading="lazy" decoding="async" />
 						</div>
 
 						
@@ -172,7 +188,7 @@ const schema = graphSchema([
 					
 					<a href="/articles/tagging-vulnerability-management" class="article-card category-vm">
 						<div class="article-image">
-							<img src="/Images/tagging.png" alt="" />
+							<Image src={taggingImage} alt="" width={640} quality={82} loading="lazy" decoding="async" />
 						</div>
 
 						<div class="article-content">

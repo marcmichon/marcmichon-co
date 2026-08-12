@@ -546,9 +546,9 @@ function renderRows(): void {
           <span class="context">${escapeHtml(getContextLabel(item))}</span>
           <span><b class="status ${statusClass}">${escapeHtml(getStatusLabel(item.status))}</b></span>
           <span class="row-actions">
-            <button type="button" data-action="copy" title="Copier">□</button>
-            <button type="button" data-action="defang" title="Defang">◇</button>
-            <button type="button" data-action="delete" title="Supprimer">⌫</button>
+            <button type="button" data-action="copy" title="Copier" aria-label="Copier">□</button>
+            <button type="button" data-action="defang" title="Defang" aria-label="Defang">◇</button>
+            <button type="button" data-action="delete" title="Supprimer" aria-label="Supprimer">⌫</button>
           </span>
         </div>
       `;

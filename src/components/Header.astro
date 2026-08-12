@@ -6,7 +6,7 @@ import { SITE_NAME } from '../consts';
 	<nav class="mm-nav" aria-label="Navigation principale">
 		<a class="mm-brand" href="/">{SITE_NAME}</a>
 
-		<button class="mm-menu-button" type="button" aria-expanded="false" aria-controls="mm-menu">
+		<button class="mm-menu-button" type="button" aria-expanded="false" aria-controls="mm-menu" aria-label="Ouvrir le menu">
 			<span></span>
 			<span></span>
 			<span></span>
@@ -35,6 +35,7 @@ import { SITE_NAME } from '../consts';
 		button.addEventListener('click', () => {
 			const isOpen = button.getAttribute('aria-expanded') === 'true';
 			button.setAttribute('aria-expanded', String(!isOpen));
+			button.setAttribute('aria-label', isOpen ? 'Ouvrir le menu' : 'Fermer le menu');
 			menu.classList.toggle('is-open');
 		});
 	}

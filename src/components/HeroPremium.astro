@@ -1,3 +1,8 @@
+---
+import { Image } from 'astro:assets';
+import heroPortrait from '../assets/home/site-moi2.png';
+---
+
 <section class="hero-premium">
 	<div class="hero-grid">
 		<div class="hero-text">
@@ -29,15 +34,14 @@
 		</div>
 
 		<div class="hero-photo">
-			<img
-				src="/Images/site-moi2.png"
-				alt="Marc Michon"
-				width="680"
-				height="840"
-				loading="eager"
-				fetchpriority="high"
-				decoding="async"
-			/>
+			<Image
+                src={heroPortrait}
+                alt="Marc Michon"
+                width={260}
+                densities={[1, 2]}
+                quality={82}
+                priority
+            />
 		</div>
 
 		<div class="hero-domains" aria-label="Domaines d’expertise">

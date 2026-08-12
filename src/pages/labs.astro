@@ -3,6 +3,13 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE } from '../consts';
+import { Image } from 'astro:assets';
+import riskScoreImage from '../assets/diamond/labs/risk-score.png';
+import cvssCalculatorImage from '../assets/diamond/labs/cvss-calculator.png';
+import vulnerabilityExplorerImage from '../assets/diamond/labs/vulnerability-explorer.png';
+import iocAnalyzerImage from '../assets/diamond/labs/ioc-analyzer.png';
+import passwordGeneratorImage from '../assets/diamond/labs/password-generator.png';
+import suiteBrandImage from '../assets/diamond/labs/mm-intelligence-suite-blended.png';
 
 const products = [
 	{
@@ -14,7 +21,7 @@ const products = [
 		statusLabel: 'Released',
 		version: 'v1.2',
 		href: '/labs/risk-matrix',
-		image: '/Images/tools/risk-score.png',
+		image: riskScoreImage,
 	},
 	{
 		name: 'MM CVSS Calculator',
@@ -25,7 +32,7 @@ const products = [
 		statusLabel: 'Released',
 		version: 'v1.2',
 		href: '/labs/cvss-calculator',
-		image: '/Images/tools/cvss-calculator.png',
+		image: cvssCalculatorImage,
 	},
 	{
 		name: 'MM Vulnerability Explorer',
@@ -36,7 +43,7 @@ const products = [
 		statusLabel: 'Released',
 		version: 'v2.0',
 		href: '/labs/vulnerability-explorer',
-		image: '/Images/tools/vulnerability-explorer.png',
+		image: vulnerabilityExplorerImage,
 	},
 	{
 		name: 'MM IOC Analyzer',
@@ -47,7 +54,7 @@ const products = [
 		statusLabel: 'Released',
 		version: 'v1.0',
 		href: '/labs/ioc-analyzer',
-		image: '/Images/tools/ioc-analyzer.png',
+		image: iocAnalyzerImage,
 	},
 	{
 		name: 'MM Password Generator',
@@ -58,7 +65,7 @@ const products = [
 		statusLabel: 'Released',
 		version: 'v1.0',
 		href: '/labs/password-generator',
-		image: '/Images/tools/password-generator.png',
+		image: passwordGeneratorImage,
 	},
 	{
 		name: 'MM Exposure Analyzer',
@@ -117,11 +124,12 @@ const statusLegend = [
 					<p class="eyebrow">Boîte à outils de cybersécurité</p>
 
 					<div class="suite-brand-visual">
-						<img
-							src="/Images/tools/mm-intelligence-suite-blended.png"
+						<Image
+							src={suiteBrandImage}
 							alt="Identité visuelle MM Intelligence Suite"
-							loading="eager"
-							decoding="async"
+							width={760}
+							quality={82}
+							priority
 						/>
 					</div>
 
@@ -258,7 +266,7 @@ const statusLegend = [
 									{
 										product.image ? (
 											<div class="product-visual">
-												<img src={product.image} alt="" loading="lazy" decoding="async" />
+												<Image src={product.image} alt="" width={720} quality={82} loading="lazy" decoding="async" />
 											</div>
 										) : (
 											<div class="roadmap-visual released-visual" aria-hidden="true">

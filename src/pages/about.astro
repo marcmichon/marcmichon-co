@@ -1,8 +1,25 @@
 ---
+import { Image, getImage } from 'astro:assets';
+import aboutWorkspaceImage from '../assets/diamond/about/about-workspace-secondary.png';
+import aboutNetworkImage from '../assets/diamond/about/about-network.png';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE } from '../consts';
+
+const optimizedAboutNetwork = await getImage({
+	src: aboutNetworkImage,
+	width: 1320,
+	quality: 82,
+	format: 'webp',
+});
+
+const optimizedAboutWorkspace = await getImage({
+	src: aboutWorkspaceImage,
+	width: 960,
+	quality: 82,
+	format: 'webp',
+});
 
 const foundItems = [
 	'Des Notes de terrain issues d’expériences concrètes',
@@ -136,7 +153,7 @@ const principles = [
 				</article>
 			</section>
 
-			<section class="quote-band">
+			<section class="quote-band" style={`--about-network-image:url('${optimizedAboutNetwork.src}')`}>
 				<div class="quote-mark">“</div>
 				<p>
 					La technologie change vite.<br />
@@ -169,7 +186,7 @@ const principles = [
 					</p>
 				</article>
 
-				<div class="image-card secondary-image" aria-label="Espace de travail cybersécurité"></div>
+				<div class="image-card secondary-image" aria-label="Espace de travail cybersécurité" style={`--about-workspace-image:url('${optimizedAboutWorkspace.src}')`}></div>
 			</section>
 
 			<section class="three-cards">
@@ -478,7 +495,7 @@ const principles = [
 		color: white;
 		background:
 			linear-gradient(90deg, rgba(2,8,23,.98), rgba(2,8,23,.78)),
-			url('/Images/about-network.png');
+			var(--about-network-image);
 		background-size: cover;
 		background-position: center;
 		box-shadow: 0 25px 60px rgba(2,8,23,.18);
@@ -532,7 +549,7 @@ const principles = [
 	.image-card {
 		min-height: 380px;
 		border-radius: 28px;
-		background: url('/Images/about-workspace-secondary.png');
+		background: var(--about-workspace-image);
 		background-size: cover;
 		background-position: center;
 		box-shadow: 0 18px 45px rgba(15,23,42,.08);

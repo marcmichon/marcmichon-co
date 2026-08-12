@@ -122,6 +122,21 @@ hr {
 	}
 }
 
+
+/* =========================================================
+   ACCESSIBILITY — KEYBOARD FOCUS
+   ========================================================= */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:not([tabindex="-1"]):focus-visible {
+	outline: 3px solid #60a5fa;
+	outline-offset: 3px;
+}
+
 .sr-only {
 	border: 0;
 	padding: 0;
