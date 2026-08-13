@@ -1,10 +1,46 @@
 # Changelog
 
+
+
+
 Toutes les évolutions importantes de **marcmichon.co** sont documentées dans ce fichier.
 
 Au fil de son évolution, le projet est passé d'un simple carnet de notes techniques à une plateforme de cybersécurité réunissant des **Field Notes** et la **MM Security Intelligence Suite**.
 
 Ce projet suit le principe du **Semantic Versioning** et ce changelog s'inspire du format **Keep a Changelog**.
+
+---
+
+# 🚀 v1.7.0 — MM Attack Path Explorer
+
+## ✨ Nouveautés
+
+- Official release of **MM Attack Path Explorer**.
+- Interactive attack path exploration across assets, identities, privileges and critical targets.
+- Three predefined attack path scenarios.
+- **Guided Attack Path Builder** for rapid scenario construction.
+- **Custom Attack Path Builder** with free node labels, structured node types and relationships.
+- Dynamic attack path scoring.
+- Automatic identification of recommended choke points.
+- Remediation simulation and impact visualization.
+- Professional multi-page **PDF Attack Path Assessment** export.
+
+## 🎨 MM Labs
+
+- **MM Attack Path Explorer** added to the released product catalog.
+- MM Labs hero and product roadmap updated.
+- New dedicated artwork for Attack Path Explorer.
+- New generic **Research** and **Planned** roadmap visuals.
+- **MM Exposure Analyzer** moved to Research status.
+- **MM Patch Planner** retained as Planned.
+- Product cards and roadmap visuals harmonized with the MM Security Intelligence Suite design language.
+
+## ⚙️ Technical
+
+- Attack path builder implemented with structured node and relationship models.
+- PDF reporting integrated into the Attack Path Explorer workflow.
+- Roadmap artwork served directly for consistent rendering.
+- Labs asset organization and image rendering refined.
 
 ---
 

@@ -65,8 +65,9 @@ L'objectif n'est pas de créer des démonstrateurs mais des applications réelle
 |---------|--------|-------------|
 | 🟢 MM Vulnerability Explorer | Disponible | Qualification opérationnelle des vulnérabilités |
 | 🟢 MM IOC Analyzer | Disponible | Extraction, normalisation et investigation d'IOC |
-| 🟡 MM Exposure Analyzer | En préparation | Analyse d'exposition et surface d'attaque |
-| 🟡 MM Patch Planner | En préparation | Priorisation intelligente des remédiations |
+| 🟢 MM Attack Path Explorer | Disponible | Exploration des chemins d'attaque entre actifs, identités et privilèges |
+| 🟣 MM Exposure Analyzer | Research | Analyse d'exposition et surface d'attaque |
+| 🔵 MM Patch Planner | Planned | Priorisation intelligente des remédiations |
 
 ---
 
@@ -111,21 +112,22 @@ Chaque article, chaque fonctionnalité et chaque outil répond à un besoin conc
 
 # Dernière version
 
-## 🚀 v1.6.0 — Carnet de Terrain Platform
+## 🚀 v1.7.0 — MM Attack Path Explorer
 
-Cette version marque une nouvelle étape dans l'évolution de **marcmichon.co**.
+Cette version enrichit la **MM Security Intelligence Suite** avec un nouvel outil dédié à l'analyse des chemins d'attaque.
 
-Le projet devient une véritable plateforme éditoriale intégrant un système complet d'abonnement au **Carnet de Terrain**, une diffusion automatisée via Brevo, un workflow Double Opt-In conforme au RGPD et une nouvelle expérience utilisateur dédiée.
+**MM Attack Path Explorer** permet d'explorer les relations entre actifs, identités, privilèges et cibles critiques, de construire ses propres scénarios en mode Guided ou Custom, d'identifier les choke points et de simuler l'impact des remédiations.
 
 ### Nouveautés
 
-- 📬 Lancement officiel du Carnet de Terrain
-- 🤖 Intégration complète de Brevo
-- ✅ Workflow Double Opt-In
-- ⚖️ Conformité RGPD
-- 📄 Pages légales
-- 🎨 Refonte de l'expérience éditoriale
-- ✨ Nouvelle page de confirmation premium
+- 🛡️ Lancement officiel de MM Attack Path Explorer
+- 🧭 Scénarios d'attaque prédéfinis
+- 🧩 Guided Attack Path Builder
+- 🛠️ Custom Attack Path Builder
+- 📊 Scoring dynamique et identification des choke points
+- 🔧 Simulation de remédiation
+- 📄 Export PDF Attack Path Assessment
+- 🎨 Mise à jour de MM Labs et de sa roadmap
 
 Consultez le détail dans le **CHANGELOG.md**.
 
@@ -149,12 +151,14 @@ Consultez le détail dans le **CHANGELOG.md**.
 
 ✅ MM Password Generator
 
+✅ MM Attack Path Explorer
+
 ---
 
 ## En préparation
 
-- MM Exposure Analyzer
-- MM Patch Planner
+- MM Exposure Analyzer — Research
+- MM Patch Planner — Planned
 - Nouveaux utilitaires cybersécurité
 - Évolution des moteurs d'analyse
 - Nouveaux rapports décisionnels
