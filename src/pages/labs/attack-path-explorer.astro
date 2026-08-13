@@ -1,0 +1,50 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import AttackPathExplorer from '../../components/labs/attack-path/AttackPathExplorer.astro';
+import { SITE_TITLE } from '../../consts';
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`MM Attack Path Explorer | ${SITE_TITLE}`}
+			description="Explorez les relations entre actifs, identités, privilèges et chemins d’attaque potentiels, puis simulez l’impact d’une remédiation."
+		/>
+	</head>
+
+	<body>
+		<Header />
+s
+		<main class="attack-path-page">
+			<AttackPathExplorer />
+		</main>
+
+		<Footer />
+	</body>
+</html>
+
+<style>
+	:global(body) {
+		margin: 0;
+		background:
+			radial-gradient(circle at 18% 0%, rgba(37, 99, 235, .08), transparent 30rem),
+			linear-gradient(180deg, #030712 0%, #020611 100%);
+		color: white;
+	}
+
+	.attack-path-page {
+		width: min(1440px, calc(100% - 3rem));
+		margin: 0 auto;
+		padding: 3rem 0 6rem;
+	}
+
+	@media (max-width: 700px) {
+		.attack-path-page {
+			width: calc(100% - 1rem);
+			padding-top: 1rem;
+		}
+	}
+</style>
