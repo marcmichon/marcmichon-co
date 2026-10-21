@@ -13,7 +13,7 @@ import threatIntelligenceImage from '../assets/home/cti.png';
 import securityOperationsImage from '../assets/home/secops.png';
 import msspImage from '../assets/home/mssp.png';
 import frozenPlatformImage from '../assets/home/plateforme-figee.png';
-import platformUpToDateImage from '../assets/home/security-platform-engineering-plateforme-a-jour.png';
+import bastionImage from '../assets/home/bastion-acces-privilegies.png';
 import edrAssetsImage from '../assets/home/edr-assets.png';
 import taggingImage from '../assets/home/tagging.png';
 
@@ -119,6 +119,19 @@ const schema = graphSchema([
 
 				<div class="articles-grid">
 
+					<a href="/articles/acces-privilegies-bastion-contournement" class="article-card category-engineering">
+						<div class="article-image">
+							<Image src={bastionImage} alt="Bastion d’administration et chemins d’accès privilégiés" width={640} quality={82} loading="lazy" decoding="async" />
+						</div>
+
+						<div class="article-content">
+							<p class="article-category">SECURITY PLATFORM ENGINEERING</p>
+							<h3>Un bastion ne sécurise pas les accès qu'on peut contourner</h3>
+							<p>Un bastion opérationnel ne suffit pas si les anciennes règles réseau permettent toujours des connexions directes aux serveurs.</p>
+							<span>⏱ 6 min de lecture</span>
+						</div>
+					</a>
+
 <a href="/articles/plateformes-figees-apres-deploiement" class="article-card category-engineering">
 	<div class="article-image">
 		<Image
@@ -150,20 +163,7 @@ const schema = graphSchema([
 </a>
 
 
-					<a href="/articles/pourquoi-plateforme-securite-a-jour-techniquement-en-retard" class="article-card category-engineering">
-						<div class="article-image">
-							<Image src={platformUpToDateImage} alt="" width={640} quality={82} loading="lazy" decoding="async" />
-						</div>
 
-						<div class="article-content">
-							<p class="article-category">SECURITY PLATFORM ENGINEERING</p>
-							<h3>Une plateforme à jour, mais ... techniquement en retard</h3>
-							<p>
-								Une plateforme maintenue n’est pas forcément une plateforme qui continue d’évoluer. Retour d’expérience sur une confusion que je rencontre régulièrement lors des revues techniques.
-							</p>
-							<span>⏱ 7 min de lecture</span>
-						</div>
-					</a>
 
 
 

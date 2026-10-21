@@ -1,0 +1,210 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ArticleHero from '../../components/article/ArticleHero.astro';
+import ArticleLayout from '../../components/article/ArticleLayout.astro';
+import Callout from '../../components/article/Callout.astro';
+import RelatedArticles from '../../components/article/RelatedArticles.astro';
+import ArticleQuote from '../../components/article/ArticleQuote.astro';
+import TerrainNote from '../../components/article/TerrainNote.astro';
+import CarnetCTA from '../../components/article/CarnetCTA.astro';
+import { SITE_TITLE } from '../../consts';
+
+// Illustration à créer dans public/Images/ avant publication.
+const articleImage = '/Images/bastion-acces-privilegies.png';
+
+const toc = [
+  { id: 'bastion-operationnel', label: 'Un bastion opérationnel, mais des accès directs toujours présents' },
+  { id: 'exceptions-explication', label: 'Des exceptions qui ont souvent une explication' },
+  { id: 'filtrage-reseau', label: 'Le filtrage réseau fait aussi partie du dispositif' },
+  { id: 'fermeture-acces', label: 'La fermeture des accès directs se prépare' },
+  { id: 'controle-obligatoire', label: 'Déployer un contrôle ne suffit pas à le rendre obligatoire' },
+  { id: 'conclusion', label: 'Conclusion' },
+];
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <BaseHead
+      title={`Un bastion ne sécurise pas les accès qu'on peut contourner | ${SITE_TITLE}`}
+      description="Un bastion peut être opérationnel tandis que des règles de pare-feu autorisent encore des accès directs. Retour terrain sur les accès privilégiés et le filtrage réseau."
+      image={articleImage}
+      ogType="article"
+    />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <ArticleHero
+        tag="SECURITY PLATFORM ENGINEERING"
+        badgeColor="#7C3AED"
+        badgeBackground="rgba(124,58,237,.12)"
+        title="Un bastion ne sécurise pas les accès qu'on peut contourner"
+        subtitle="Un bastion d'administration permet de centraliser et de contrôler les accès privilégiés. Mais lorsqu'il reste possible de se connecter directement aux serveurs, une partie des contrôles mis en place peut être contournée."
+        image={articleImage}
+        readTime="6 min de lecture"
+        level="Intermédiaire"
+        updated="Publié : octobre 2026"
+        technologies={['Security Platform Engineering', 'Privileged Access', 'Bastion', 'Network Security', 'Architecture']}
+      />
+
+      <aside class="series-intro" aria-label="Présentation de la série Security Platform Engineering">
+        <span class="series-intro__eyebrow">SECURITY PLATFORM ENGINEERING</span>
+        <p>
+          Cette série s'intéresse à la mise en place et à l'exploitation des contrôles de sécurité :
+          de leur configuration technique à leur application réelle sur le terrain.
+        </p>
+      </aside>
+
+      <ArticleLayout toc={toc}>
+        <h2 id="bastion-operationnel">Un bastion opérationnel, mais des accès directs toujours présents</h2>
+        <p>Le bastion est en place. Les serveurs sont intégrés, les comptes privilégiés sont configurés et les connexions fonctionnent correctement.</p>
+        <p>Les administrateurs peuvent accéder à leurs environnements, les sessions peuvent être tracées et les mécanismes de contrôle prévus sont opérationnels.</p>
+        <p>Jusque-là, tout va bien.</p>
+        <p>Sauf qu'en vérifiant les règles de filtrage, on constate que certains serveurs restent accessibles directement depuis les réseaux d'administration.</p>
+        <p>Il est donc possible d'atteindre les mêmes ressources de deux manières : en passant par le bastion ou en utilisant les accès réseau historiques.</p>
+        <p>Dans le premier cas, les connexions bénéficient des contrôles configurés sur le bastion. Dans le second, ces contrôles ne s'appliquent pas nécessairement.</p>
+        <ArticleQuote>Le problème n'est pas que le bastion fonctionne mal. C'est qu'il reste possible de ne pas l'utiliser.</ArticleQuote>
+
+        <h2 id="exceptions-explication">Des exceptions qui ont souvent une explication</h2>
+        <p>Ce type de situation n'est pas forcément lié à une mauvaise configuration.</p>
+        <p>Avant le déploiement d'un bastion, les administrateurs avaient besoin d'accéder directement aux serveurs. Des règles de pare-feu ont donc été créées pour autoriser ces connexions.</p>
+        <p>Certaines concernent des équipes internes, d'autres des prestataires ou des besoins d'exploitation particuliers.</p>
+        <p>Lorsque le bastion arrive, les ressources sont intégrées progressivement. Les comptes sont configurés et les utilisateurs commencent à utiliser les nouveaux accès.</p>
+        <p>Mais les anciennes règles ne sont pas toujours supprimées immédiatement.</p>
+        <p>Elles peuvent être conservées pendant la migration, pour éviter de bloquer une intervention ou parce qu'il reste des usages à vérifier.</p>
+        <p>Et parfois, une fois la migration terminée, personne ne revient dessus.</p>
+        <p>On se retrouve alors avec un dispositif de contrôle des accès privilégiés opérationnel, mais des exceptions réseau qui permettent toujours de le contourner.</p>
+        <TerrainNote context="Security Platform Engineering • Bastion • Accès privilégiés">
+          <p>Intégrer un serveur dans un bastion ne signifie pas que ses anciens accès ont été supprimés. Ce sont deux opérations différentes, qui doivent être prises en compte dans la démarche de sécurisation.</p>
+        </TerrainNote>
+
+        <h2 id="filtrage-reseau">Le filtrage réseau fait aussi partie du dispositif</h2>
+        <p>On a tendance à se concentrer sur la configuration du bastion : les ressources déclarées, les comptes, les habilitations ou encore l'enregistrement des sessions.</p>
+        <p>Tout cela est indispensable, mais ne suffit pas.</p>
+        <p>Un bastion ne peut contrôler que les connexions qui passent effectivement par lui.</p>
+        <p>Si une règle de pare-feu autorise toujours un administrateur à se connecter directement à un serveur, le bastion n'a aucun moyen d'appliquer ses contrôles à cette session.</p>
+        <p>Le filtrage réseau doit donc être cohérent avec l'utilisation attendue du bastion.</p>
+        <p>Pour les accès d'administration concernés, les connexions doivent être autorisées depuis le bastion et les accès directs qui ne sont plus nécessaires doivent être supprimés.</p>
+        <p>Cela ne signifie pas qu'il faut bloquer tous les flux utilisant des ports d'administration.</p>
+        <p>Certains outils de supervision, mécanismes automatisés ou traitements techniques peuvent utiliser des protocoles similaires sans relever d'une session d'administration interactive.</p>
+        <p>Il faut donc identifier précisément les usages avant de modifier les règles.</p>
+        <Callout type="field"><p><strong>Note terrain :</strong> le bastion et le pare-feu ont des rôles complémentaires. Le premier contrôle les accès et les sessions qu'il prend en charge. Le second permet de limiter les chemins réseau autorisés vers les ressources.</p></Callout>
+
+        <h2 id="fermeture-acces">La fermeture des accès directs se prépare</h2>
+        <p>Sur le principe, supprimer une ancienne règle de filtrage n'a rien de compliqué.</p>
+        <p>Mais en production, il vaut mieux éviter de supprimer une autorisation sans avoir vérifié ce qui en dépend.</p>
+        <p>La première étape consiste à s'assurer que les accès via le bastion sont réellement fonctionnels.</p>
+        <p>Les comptes doivent être correctement configurés, les utilisateurs doivent disposer des droits nécessaires et les opérations d'administration habituelles doivent pouvoir être réalisées.</p>
+        <p>Il faut ensuite identifier les équipes concernées et les informer du changement.</p>
+        <p>Une période de transition permet de vérifier que les nouveaux accès sont utilisés et de traiter les éventuels problèmes avant la suppression des exceptions.</p>
+        <p>L'analyse des logs de pare-feu peut également aider à identifier les dernières utilisations des règles historiques.</p>
+        <p>Mais il faut rester prudent : une règle qui ne présente aucun trafic pendant plusieurs jours n'est pas nécessairement inutile.</p>
+        <p>Certaines connexions sont utilisées uniquement lors de maintenances ponctuelles ou d'interventions exceptionnelles.</p>
+        <p>L'observation des flux doit donc être complétée par une vérification des besoins auprès des équipes concernées.</p>
+        <p>Une fois ces éléments validés, les accès directs peuvent être supprimés, avec un retour arrière prévu si nécessaire.</p>
+        <p>Il faut également prendre en compte les situations où le bastion serait indisponible. Les procédures d'accès de secours doivent être définies et encadrées, sans recréer une exception permanente qui annulerait les contrôles mis en place.</p>
+
+        <h2 id="controle-obligatoire">Déployer un contrôle ne suffit pas à le rendre obligatoire</h2>
+        <p>Ce type de situation montre une différence importante entre le déploiement d'une solution de sécurité et son application réelle.</p>
+        <p>Un bastion peut être correctement installé, configuré et utilisé quotidiennement sans que tous les accès privilégiés concernés soient effectivement maîtrisés.</p>
+        <p>Tant que les anciens chemins restent disponibles, une partie du dispositif repose encore sur le choix des utilisateurs de passer ou non par le bastion.</p>
+        <p>C'est pour cette raison que la sécurisation des accès privilégiés ne doit pas se limiter à la configuration de la solution PAM.</p>
+        <p>Elle nécessite également de revoir les règles réseau existantes, d'identifier les exceptions et de vérifier que les accès autorisés correspondent bien à l'architecture attendue.</p>
+        <p>Ce travail est parfois moins visible que le déploiement du bastion lui-même, mais il fait partie intégrante de la démarche.</p>
+
+        <h2 id="conclusion">Conclusion</h2>
+        <p>La mise en place d'un bastion constitue une étape importante pour sécuriser les accès privilégiés.</p>
+        <p>Mais pour que les contrôles soient réellement appliqués, encore faut-il que les connexions d'administration concernées passent effectivement par lui.</p>
+        <p>Cela implique de vérifier les accès historiques, de préparer leur migration et de supprimer les exceptions réseau devenues inutiles.</p>
+        <p>L'objectif n'est pas de faire passer tous les flux techniques par le bastion, mais de s'assurer qu'il constitue bien le point de passage imposé pour les accès privilégiés qu'il est censé contrôler.</p>
+        <ArticleQuote>Un bastion opérationnel, c'est bien. Un bastion qu'on ne peut pas contourner pour les accès concernés, c'est mieux.</ArticleQuote>
+        <Callout type="warning"><p>Cette note s'appuie sur des situations rencontrées dans des environnements professionnels. Les exemples sont volontairement généralisés afin de ne pas exposer d'informations internes.</p></Callout>
+        <CarnetCTA />
+        <RelatedArticles articles={[
+          {
+            href: '/articles/plateformes-figees-apres-deploiement',
+            category: 'SECURITY PLATFORM ENGINEERING',
+            title: 'Les plateformes qui se figent après leur déploiement',
+            description: 'Pourquoi un dispositif de sécurité peut perdre de sa pertinence lorsque son exploitation n’évolue plus.',
+          },
+          {
+            href: '/articles/pourquoi-plateforme-securite-a-jour-techniquement-en-retard',
+            category: 'SECURITY PLATFORM ENGINEERING',
+            title: 'Pourquoi une plateforme à jour peut être techniquement en retard',
+            description: 'Une plateforme maintenue n’est pas forcément une plateforme dont les usages continuent d’évoluer.',
+          },
+        ]} />
+      </ArticleLayout>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+	body {
+		background: #f8fafc;
+	}
+
+	main {
+		width: min(1320px, calc(100% - 4rem));
+		margin: 0 auto;
+		padding: 3rem 0 5rem;
+	}
+
+	.series-intro {
+		position: relative;
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin: 1.5rem 0 2rem;
+		padding: 1rem 1.25rem;
+		border: 1px solid rgba(124, 58, 237, 0.2);
+		border-radius: 1rem;
+		background:
+			linear-gradient(
+				135deg,
+				rgba(124, 58, 237, 0.09),
+				rgba(37, 99, 235, 0.04)
+			),
+			#ffffff;
+		box-shadow: 0 14px 35px rgba(76, 29, 149, 0.07);
+	}
+
+	.series-intro::before {
+		content: '';
+		position: absolute;
+		inset: 0 auto 0 0;
+		width: 4px;
+		background: linear-gradient(180deg, #7c3aed, #4f46e5);
+	}
+
+	.series-intro__eyebrow {
+		flex: 0 0 auto;
+		font-size: 0.72rem;
+		font-weight: 800;
+		letter-spacing: 0.12em;
+		color: #6d28d9;
+	}
+
+	.series-intro p {
+		margin: 0;
+		color: #334155;
+		line-height: 1.65;
+	}
+
+	@media (max-width: 640px) {
+		main {
+			width: min(100% - 2rem, 1320px);
+		}
+
+		.series-intro {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 0.45rem;
+		}
+	}
+</style>

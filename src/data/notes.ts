@@ -61,6 +61,16 @@ export const collections: NoteCollection[] = [
 
 export const notes: TerrainNote[] = [
 	{
+		id: 'NT-012',
+		href: '/articles/acces-privilegies-bastion-contournement',
+		title: 'Un bastion ne sécurise pas les accès qu’on peut contourner',
+		description:
+			'Un bastion opérationnel ne suffit pas si des accès directs aux serveurs restent autorisés.',
+		readTime: '6 min',
+		date: 'Octobre 2026',
+		collectionId: 'security-platform-engineering',
+	},
+	{
 		id: 'NT-011',
 		href: '/articles/plateformes-figees-apres-deploiement',
 		title: 'Les plateformes qui se figent après leur déploiement',
