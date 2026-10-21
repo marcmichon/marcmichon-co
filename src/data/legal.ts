@@ -4,7 +4,7 @@ export const LEGAL = {
 
 	// Éditeur non professionnel.
 	publisherName: 'Marc Michon',
-	publisherEmail: 'michon.marc@gmail.com',
+	publisherEmail: 'contact@marcmichon.co',
 	publicationDirector: 'Marc Michon',
 
 	host: {
