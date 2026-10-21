@@ -27,7 +27,34 @@ import { offTools } from '../../data/off';
 		</div>
 
 		<div class="tools-grid">
-			{offTools.map((tool) => <OffToolCard tool={tool} />)}
+			{offTools.map((tool, index) => (
+				<>
+					{/* Les outils #001 à #006 précèdent #008 dans la collection. */}
+					{index === 6 && (
+						<div class="bond-card" aria-label="EN OFF numéro 007 réservé à James Bond">
+							<div class="bond-card-top">
+								<span class="bond-number">EN OFF #007</span>
+								<span class="bond-lock" aria-hidden="true">🔒</span>
+							</div>
+							<p class="bond-classified">CLASSIFIED — MI6</p>
+							<h3>INTROUVABLE</h3>
+							<p>James Bond nous a envoyé une mise en demeure. Apparemment, il aurait déposé le numéro avant nous.</p>
+							<p>On ne négocie pas avec un mec qui possède un permis de tuer.</p>
+						</div>
+					)}
+					<OffToolCard tool={tool} />
+				</>
+			))}
+			{/* Garde-fou si la collection ne comporte pas encore d'élément après #006. */}
+			{offTools.length === 6 && (
+				<div class="bond-card" aria-label="EN OFF numéro 007 réservé à James Bond">
+					<div class="bond-card-top"><span class="bond-number">EN OFF #007</span><span class="bond-lock" aria-hidden="true">🔒</span></div>
+					<p class="bond-classified">CLASSIFIED — MI6</p>
+					<h3>INTROUVABLE</h3>
+					<p>James Bond nous a envoyé une mise en demeure. Apparemment, il aurait déposé le numéro avant nous.</p>
+					<p>On ne négocie pas avec un mec qui possède un permis de tuer.</p>
+				</div>
+			)}
 		</div>
 	</section>
 </OffLayout>
@@ -143,6 +170,36 @@ import { offTools } from '../../data/off';
 	gap: 0.65rem;
 	margin-top: 0.7rem;
 }
+
+
+	/* #007 : mêmes proportions que les autres cartes de la collection */
+	.bond-card {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+		padding: 0.65rem;
+		color: #e2e8f0;
+		background: linear-gradient(145deg, #111827 0%, #1e293b 100%);
+		border: 1px dashed rgba(212, 175, 55, 0.55);
+		border-radius: 12px;
+	}
+	.bond-card-top { display: flex; justify-content: space-between; align-items: center; gap: 0.4rem; }
+	.bond-number { font-size: 0.56rem; font-weight: 900; letter-spacing: 0.07em; }
+	.bond-lock { font-size: 0.8rem; line-height: 1; }
+	.bond-classified {
+		margin: 0.3rem 0 0.15rem;
+		color: #d4af37;
+		font-size: 0.56rem;
+		font-weight: 900;
+		letter-spacing: 0.08em;
+	}
+	.bond-card h3 { margin: 0 0 0.3rem; color: #fff; font-size: 0.91rem; line-height: 1.1; letter-spacing: -0.02em; }
+	.bond-card > p:not(.bond-classified) {
+		margin: 0 0 0.24rem;
+		color: #cbd5e1;
+		font-size: 0.73rem;
+		line-height: 1.25;
+	}
 
 	@media (max-width: 980px) {
 		.off-hero {
