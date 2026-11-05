@@ -16,7 +16,7 @@ const publications = [
 		number: 'II',
 		title: 'Je crée un ticket, donc je suis.',
 		subtitle: 'Descartes et la démonstration ontologique de Jira.',
-		status: 'À PARAÎTRE',
+		status: 'PUBLIÉ',
 		href: '/off/universite-de-doubaille/je-cree-un-ticket-donc-je-suis/',
 	},
 	{
@@ -78,15 +78,101 @@ const publications = [
 		</div>
 	</section>
 
-	<section class="faculty" aria-labelledby="faculty-title">
-		<div class="faculty-symbol" aria-hidden="true"><span>Pr</span><strong>TCP/IP</strong></div>
-		<div class="faculty-text">
-			<p class="kicker">DIRECTION SCIENTIFIQUE</p>
-			<h2 id="faculty-title">Professeur Jean-Michel TCP/IP</h2>
-			<p class="faculty-role">Titulaire de la chaire de métaphysique des réseaux et de philosophie du changement non approuvé.</p>
-			<p>Docteur <i>honoris causa</i> en tickets sans réponse, il dirige le Laboratoire d’Études sur l’Existence des Flux Non Autorisés (LEEFNA). Ses travaux ont été salués à l’unanimité par ses deux collègues, dont l’un était absent.</p>
+	<section class="academic-institution" aria-labelledby="institution-title">
+		<div class="institution-heading">
+			<div>
+				<p class="kicker">GOUVERNANCE ACADÉMIQUE · ORGANIGRAMME OFFICIEL</p>
+				<h2 id="institution-title">Une institution.<br /><span>Deux autorités incontestables.</span></h2>
+			</div>
+			<p>La gouvernance de l’Université de Doubaille repose sur une organisation volontairement resserrée. Ce choix garantit une prise de décision rapide et limite considérablement les risques de contradiction.</p>
 		</div>
-		<div class="faculty-stamp">HABILITATION<br />NON RENOUVELÉE</div>
+
+		<div class="org-chart" aria-label="Organigramme de l’Université de Doubaille">
+			<article class="org-person org-dean">
+				<div class="org-mark" aria-hidden="true">RD</div>
+				<div class="org-description">
+					<p class="org-rank">01 · AUTORITÉ SUPRÊME DE RÉSOLUTION</p>
+					<h3>Robert-Louis Dehainesse</h3>
+					<p class="org-position">Doyen de la Faculté des Sciences Inutiles et de Métaphysique Informatique</p>
+					<p class="org-detail">Responsable de l’orientation scientifique, de la propagation institutionnelle et des décisions qui ne nécessitent aucun consensus.</p>
+				</div>
+				<div class="org-label" aria-hidden="true">DOYEN</div>
+			</article>
+			<p class="org-subheading">SOUS L’AUTORITÉ DU DÉCANAT</p>
+			<div class="org-lower">
+				<article class="org-person org-professor">
+					<div class="org-mark" aria-hidden="true">JM</div>
+					<div class="org-description">
+						<p class="org-rank">02 · DIRECTION DES TRAVAUX INUTILES</p>
+						<h3>Jean-Michel Técépai-Hipet</h3>
+						<p class="org-position">Professeur titulaire de la chaire de métaphysique des réseaux et de philosophie du changement non approuvé</p>
+						<p class="org-detail">Auteur des traités fondamentaux et spécialiste des libertés conditionnées par les politiques de filtrage.</p>
+					</div>
+				</article>
+				<article class="org-laboratory">
+					<p class="org-rank">STRUCTURE RATTACHÉE À LA CHAIRE</p>
+					<div class="lab-acronym">LEEFNA</div>
+					<h3>Laboratoire d’Études sur l’Existence des Flux Non Autorisés</h3>
+					<p>Unité de recherche fondamentale. Ses travaux portent sur les paquets disparus, les permissions révoquées et les questions auxquelles les logs refusent de répondre.</p>
+					<span>Statut : scientifiquement invérifiable</span>
+				</article>
+			</div>
+		</div>
+
+		<div class="biography-heading">
+			<div>
+				<p class="kicker">ANNUAIRE DU CORPS PROFESSORAL</p>
+				<h2>Les autorités intellectuelles.</h2>
+			</div>
+			<p>Deux parcours exemplaires. Une réputation internationale dont les sources demeurent indisponibles.</p>
+		</div>
+
+		<div class="biographies">
+			<article class="biography-card" aria-labelledby="bio-dehainesse">
+				<div class="bio-topline"><span>BIOGRAPHIE OFFICIELLE 001</span><span>DOYEN</span></div>
+				<h3 id="bio-dehainesse">Robert-Louis Dehainesse</h3>
+				<p class="bio-subtitle">Doyen · Docteur en ontologie du nom mal propagé</p>
+				<p>Robert-Louis Dehainesse dirige la Faculté des Sciences Inutiles avec une exigence intellectuelle unanimement reconnue, quoique difficilement mesurable. Spécialiste des problèmes d’identité, de résolution et de propagation institutionnelle, il a consacré l’essentiel de sa carrière à cette interrogation : <strong>une entité peut-elle réellement exister si personne ne parvient à résoudre son nom ?</strong></p>
+				<p>Docteur en épistémologie des systèmes distribués, il défend une conception rigoureuse de la recherche : la méthode doit rester irréprochable, même lorsque l’objet d’étude ne présente aucun intérêt. Sous son autorité, Doubaille a développé un enseignement supérieur qui ne dépend d’aucune reconnaissance extérieure, celle-ci ayant régulièrement échoué à trouver l’établissement.</p>
+				<div class="bio-works">
+					<p>TRAVAUX DE RÉFÉRENCE</p>
+					<ul>
+						<li><cite>Qui suis-je, où suis-je, et pourquoi personne ne me résout ?</cite></li>
+						<li><cite>Être joignable : une illusion propagée</cite></li>
+						<li><cite>De la dignité d’un établissement sans reconnaissance officielle</cite></li>
+					</ul>
+				</div>
+				<p class="bio-quote">« Une institution peut exister sans être résolue. Elle sera simplement très difficile à joindre. »</p>
+			</article>
+
+			<article class="biography-card" aria-labelledby="bio-tecepai">
+				<div class="bio-topline"><span>BIOGRAPHIE OFFICIELLE 002</span><span>PROFESSEUR TITULAIRE</span></div>
+				<h3 id="bio-tecepai">Jean-Michel Técépai-Hipet</h3>
+				<p class="bio-subtitle">Chaire de métaphysique des réseaux · Docteur <em>honoris causa</em> en tickets sans réponse</p>
+				<p>Jean-Michel Técépai-Hipet est l’un des principaux représentants de la philosophie informatique contemporaine non sollicitée. Ses travaux explorent les conditions d’existence de l’individu au sein d’environnements techniques contraints : filtrage, contrôle d’accès, journalisation et validation managériale.</p>
+				<p>À la tête du LEEFNA, il a démontré que <strong>l’homme peut être libre de penser sans nécessairement être libre de sortir</strong>. Il poursuit également ses recherches sur l’existence statistique des incidents non déclarés, un domaine dans lequel les directions informatiques lui témoignent un intérêt qu’elles contestent formellement.</p>
+				<div class="bio-works">
+					<p>PUBLICATIONS MAJEURES</p>
+					<ul>
+						<li><cite>Le libre arbitre existe-t-il derrière un proxy ?</cite></li>
+						<li><cite>Je crée un ticket, donc je suis.</cite></li>
+						<li><cite>Critique de la raison filtrante</cite></li>
+					</ul>
+				</div>
+				<p class="bio-quote">« L’existence précède l’authentification. Sauf dans Active Directory. »</p>
+			</article>
+		</div>
+
+		<aside class="academic-council" aria-labelledby="council-title">
+			<div class="council-icon" aria-hidden="true">§</div>
+			<div>
+				<p class="kicker">PROCÈS-VERBAL Nº 127.0.0.1 · INSTANCE PERMANENTE</p>
+				<h3 id="council-title">Le Conseil académique</h3>
+				<p>Composé du doyen, du professeur titulaire et, lorsque sa messagerie fonctionne, d’un membre extérieur non identifié, le Conseil académique garantit l’indépendance des recherches de Doubaille. Ses dernières délibérations ont abouti à une décision unanime, prise en l’absence de tout quorum clairement défini.</p>
+				<p class="council-footnote">Prochaine séance : dès réception de la convocation. Envoi suspendu pour erreur DNS.</p>
+			</div>
+			<div class="council-stamp" aria-hidden="true">AVIS<br />FAVORABLE*</div>
+		</aside>
 	</section>
 
 	<section class="publications" aria-labelledby="publications-title">
@@ -142,24 +228,63 @@ const publications = [
 	.hero-dot { width:3px; height:3px; border-radius:50%; background:#a5b4fc; }
 	.seal-area { display:flex; align-items:center; justify-content:center; min-width:0; }
 	.university-seal { display:block; width:min(100%,340px); height:auto; filter:drop-shadow(0 12px 24px rgba(2,8,23,.28)); }
-	.manifesto { display:grid; grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr); gap:clamp(1.5rem,4vw,4rem); padding:clamp(1.7rem,4vw,3.5rem) .5rem; }
+	.manifesto { display:grid; grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr); gap:clamp(1.25rem,3vw,2.8rem); padding:clamp(1.4rem,2.8vw,2.3rem) .5rem; }
 	.manifesto h2,.publications h2,.faculty h2,.disclaimer h2 { margin:.5rem 0 0; color:#0f172a; letter-spacing:-.045em; line-height:1.12; }
 	.manifesto h2 { font-size:clamp(1.65rem,3vw,2.7rem); }
 	.manifesto h2 span { color:#6355ae; }
-	.manifesto-copy p { margin:0 0 1rem; color:#475569; font-size:.98rem; line-height:1.75; }
+	.manifesto-copy p { margin:0 0 .8rem; color:#475569; font-size:.98rem; line-height:1.68; }
 	.manifesto-copy strong { color:#0f172a; }
-	.manifesto-copy .manifesto-quote { margin:1.25rem 0 0; color:#4338ca; font-family:Georgia,serif; font-size:1.08rem; font-style:italic; font-weight:700; }
-	.faculty { position:relative; display:grid; grid-template-columns:126px minmax(0,1fr); align-items:center; gap:1.5rem; padding:1.65rem 2rem; border:1px solid #ddd6fe; border-radius:18px; background:linear-gradient(125deg,#f5f3ff,#eff6ff); overflow:hidden; }
-	.faculty-symbol { display:grid; align-content:center; justify-items:center; width:114px; height:114px; border:2px solid #c4b5fd; border-radius:50%; color:#4c1d95; background:#fff; font-family:Georgia,serif; transform:rotate(-7deg); }
-	.faculty-symbol span { font-size:2.1rem; line-height:1; } .faculty-symbol strong { font:800 .8rem Arial,sans-serif; letter-spacing:.05em; }
-	.faculty h2 { font-size:clamp(1.4rem,2.2vw,2rem); } .faculty-text > p:last-child {max-width:750px; margin:.65rem 0 0; color:#475569; font-size:.87rem; line-height:1.6; }
-	.faculty .faculty-role { margin:.45rem 0 0; color:#4c1d95; font-weight:750; line-height:1.55; font-size:.9rem; }
-	.faculty-stamp { position:absolute; right:-8px; bottom:10px; color:rgba(124,58,237,.21); border:2px solid currentColor; transform:rotate(-13deg); padding:.32rem .65rem; font-size:.64rem; font-weight:900; line-height:1.15; text-align:center; letter-spacing:.08em; pointer-events:none; }
-	.publications { padding:clamp(2rem,4vw,3.5rem) 0; }
-	.publication-intro {display:flex; justify-content:space-between; align-items:end; gap:2rem; padding:0 .5rem 1.25rem;}
+	.manifesto-copy .manifesto-quote { margin:1rem 0 0; color:#4338ca; font-family:Georgia,serif; font-size:1.08rem; font-style:italic; font-weight:700; }
+	.academic-institution { padding:clamp(1rem,2.2vw,1.8rem) 0; }
+	.institution-heading,.biography-heading {display:flex;justify-content:space-between;align-items:end;gap:1.5rem;margin-bottom:1.1rem;padding:0 .5rem;}
+	.institution-heading h2,.biography-heading h2 {margin:.6rem 0 0;color:#0f172a;font-size:clamp(1.65rem,3vw,2.6rem);line-height:1.15;letter-spacing:-.045em;}
+	.institution-heading h2 span {color:#6153ad;}
+	.institution-heading > p,.biography-heading > p {width:min(100%,410px);margin:0;color:#64748b;font-size:.88rem;line-height:1.65;}
+	.org-chart {padding:1.25rem;background:linear-gradient(125deg,#f5f3ff 0%,#eef4ff 100%);border:1px solid #ddd6fe;border-radius:21px;}
+	.org-person {position:relative;display:grid;grid-template-columns:82px 1fr;align-items:center;gap:1.1rem;padding:1.2rem 1.4rem;background:#fff;border:1px solid #e2e8f0;border-radius:15px;box-shadow:0 8px 30px rgba(15,23,42,.04);}
+	.org-dean {width:min(100%,800px);margin:0 auto;border-color:#c4b5fd;box-shadow:0 12px 28px rgba(99,102,241,.075);}
+	.org-mark {display:grid;place-items:center;width:77px;height:77px;border-radius:50%;background:#f5f3ff;border:2px solid #ddd6fe;color:#4c1d95;font:700 1.65rem Georgia,serif;}
+	.org-rank {margin:0 0 .45rem;color:#7c3aed;font-size:.62rem;font-weight:900;letter-spacing:.13em;}
+	.org-person h3 {margin:0;color:#0f172a;font-size:clamp(1.25rem,2vw,1.8rem);letter-spacing:-.04em;line-height:1.18;}
+	.org-position {margin:.45rem 0 0;color:#4c1d95;font-size:.87rem;line-height:1.5;font-weight:800;}
+	.org-detail {margin:.6rem 0 0;color:#475569;font-size:.85rem;line-height:1.6;}
+	.org-label {position:absolute;right:1.1rem;top:1.1rem;color:#a78bfa;font-weight:900;font-size:.62rem;letter-spacing:.1em;}
+	.org-subheading {margin:.95rem 0 .65rem;text-align:center;color:#7565b1;font-size:.61rem;font-weight:900;letter-spacing:.14em;}
+	.org-lower {display:grid;grid-template-columns:1fr 1fr;gap:.85rem;}
+	.org-professor {align-items:start;grid-template-columns:64px minmax(0,1fr);gap:.9rem;}
+	.org-professor .org-mark {width:60px;height:60px;font-size:1.25rem;}
+	.org-laboratory {padding:1.2rem 1.4rem;background:#101a37;color:#e0e7ff;border-radius:15px;min-width:0;}
+	.org-laboratory .org-rank {color:#c4b5fd;}
+	.lab-acronym {margin:.5rem 0;color:#f5f3ff;font:700 clamp(1.7rem,3vw,2.4rem) Georgia,serif;letter-spacing:.04em;}
+	.org-laboratory h3 {margin:0;color:#fff;font-size:1.01rem;line-height:1.4;}
+	.org-laboratory > p:not(.org-rank) {color:#cbd5e1;margin:.65rem 0;font-size:.84rem;line-height:1.6;}
+	.org-laboratory > span {display:inline-block;margin-top:.4rem;padding:.4rem .65rem;border:1px solid rgba(196,181,253,.35);border-radius:99px;color:#ddd6fe;font-size:.7rem;}
+	.biography-heading {margin-top:2rem;}
+	.biographies {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.85rem;}
+	.biography-card {display:flex;flex-direction:column;min-width:0;padding:clamp(1.2rem,2.2vw,1.55rem);background:#fff;border:1px solid #e2e8f0;border-radius:18px;box-shadow:0 10px 32px rgba(15,23,42,.035);}
+	.bio-topline {display:flex;justify-content:space-between;gap:1rem;margin-bottom:.75rem;color:#7c3aed;font-size:.61rem;font-weight:900;letter-spacing:.11em;}
+	.bio-topline span:last-child {color:#64748b;text-align:right;}
+	.biography-card h3 {margin:0;color:#0f172a;font-size:clamp(1.45rem,2.3vw,2rem);letter-spacing:-.045em;line-height:1.16;}
+	.bio-subtitle {margin:.4rem 0 .85rem!important;color:#5b42a3!important;font-weight:800;font-size:.86rem!important;line-height:1.5!important;}
+	.biography-card > p:not(.bio-subtitle):not(.bio-quote) {margin:0 0 .75rem;color:#475569;font-size:.86rem;line-height:1.65;}
+	.biography-card strong {color:#0f172a;}
+	.bio-works {margin-top:auto;padding:.8rem 0 .55rem;border-top:1px solid #e2e8f0;}
+	.bio-works > p {margin:0 0 .6rem;color:#6d28d9;font-size:.62rem;font-weight:900;letter-spacing:.12em;}
+	.bio-works ul {margin:0;padding-left:1.1rem;color:#334155;font-size:.83rem;line-height:1.65;}
+	.bio-works li+li {margin-top:.2rem;}
+	.bio-quote {margin:.8rem 0 0!important;padding:.8rem;border-radius:10px;background:#f5f3ff;color:#4c1d95;font:italic 700 1rem/1.6 Georgia,serif;}
+	.academic-council {position:relative;display:grid;grid-template-columns:66px minmax(0,1fr);gap:1rem;align-items:start;overflow:hidden;margin-top:.85rem;padding:1.2rem 1.5rem;border:1px solid #ddd6fe;border-radius:16px;background:#f8f7ff;}
+	.council-icon {font:3.3rem Georgia,serif;line-height:1;color:#8b5cf6;}
+	.academic-council h3 {margin:.5rem 0;color:#0f172a;font-size:1.45rem;letter-spacing:-.03em;}
+	.academic-council p:not(.kicker) {max-width:850px;margin:.4rem 0 0;color:#475569;font-size:.87rem;line-height:1.65;}
+	.academic-council .council-footnote {margin-top:.6rem!important;color:#6d28d9!important;font-weight:700;}
+	.council-stamp {position:absolute;right:-8px;bottom:14px;padding:.3rem .7rem;transform:rotate(-12deg);border:2px solid rgba(124,58,237,.19);color:rgba(124,58,237,.22);font-size:.68rem;font-weight:900;letter-spacing:.1em;line-height:1.15;text-align:center;pointer-events:none;}
+
+	.publications { padding:clamp(1.4rem,2.5vw,2.2rem) 0; }
+	.publication-intro {display:flex; justify-content:space-between; align-items:end; gap:1.5rem; padding:0 .5rem .95rem;}
 	.publication-intro h2 {font-size:clamp(1.7rem,3vw,2.5rem);} .publication-intro > p {max-width:370px; margin:0; color:#64748b; font-size:.81rem; line-height:1.55;}
-	.publications-list { display:grid; gap:.55rem; }
-	.publication {display:grid; grid-template-columns:100px minmax(0,1fr) auto; align-items:center; gap:1.4rem; padding:1.3rem 1.5rem; border:1px solid #e2e8f0; border-radius:14px; background:white; box-shadow:0 6px 20px rgba(15,23,42,.025);}
+	.publications-list { display:grid; gap:.5rem; }
+	.publication {display:grid; grid-template-columns:100px minmax(0,1fr) auto; align-items:center; gap:1.1rem; padding:1rem 1.25rem; border:1px solid #e2e8f0; border-radius:14px; background:white; box-shadow:0 6px 20px rgba(15,23,42,.025);}
 	.publication:first-child {border-color:#c4b5fd; box-shadow:0 8px 24px rgba(99,102,241,.075);}
 	.publication-number {padding-right:1rem; border-right:1px solid #e2e8f0; color:#64748b; font-size:.58rem; font-weight:900; letter-spacing:.1em; text-align:center;}
 	.publication-number strong {display:block; color:#4c1d95; font-family:Georgia,serif; font-size:2.5rem; font-weight:500; letter-spacing:0; line-height:1.2;}
@@ -170,10 +295,10 @@ const publications = [
 	.publication-link:hover {background:#312e81;transform:translateY(-2px);}
 	.publication-link span {font-size:1rem;}
 	.publication-pending {align-self:center; color:#94a3b8; font-size:.75rem; font-style:italic; white-space:nowrap;}
-	.disclaimer {display:grid; grid-template-columns:75px 1fr; gap:1.1rem; align-items:start; margin-bottom:2rem; padding:1.4rem 1.6rem; background:#f1f5f9; border-left:4px solid #a78bfa; border-radius:0 12px 12px 0;}
+	.disclaimer {display:grid; grid-template-columns:75px 1fr; gap:1.1rem; align-items:start; margin-bottom:1.4rem; padding:1.15rem 1.4rem; background:#f1f5f9; border-left:4px solid #a78bfa; border-radius:0 12px 12px 0;}
 	.disclaimer-icon {font:4rem Georgia,serif; line-height:.9; color:#a78bfa;}
 	.disclaimer h2 {font-size:1.2rem;} .disclaimer p:last-child {margin:.55rem 0 0; color:#64748b; font-size:.83rem; line-height:1.6;}
-	@media (max-width:850px){.university-hero{grid-template-columns:minmax(0,1fr) 215px;gap:1rem}.university-seal{width:215px}.manifesto{grid-template-columns:1fr}.faculty-stamp{display:none}}
-	@media (max-width:680px){.university-hero{grid-template-columns:1fr;padding:1.65rem;border-radius:18px}.seal-area{display:flex;margin-top:.6rem}.university-seal{width:min(65vw,225px)}.hero-bottom{margin-top:1.5rem}.manifesto{padding:2rem .25rem}.faculty{grid-template-columns:1fr;padding:1.25rem;gap:1rem}.faculty-symbol{width:70px;height:70px}.faculty-symbol span{font-size:1.4rem}.faculty-symbol strong{font-size:.6rem}.publication-intro{display:block}.publication-intro>p{margin-top:.85rem}.publication{grid-template-columns:55px 1fr;gap:.9rem;padding:1rem}.publication-number {padding-right:.5rem;font-size:.47rem}.publication-number strong{font-size:1.95rem}.publication-link,.publication-pending {grid-column:2;justify-self:start}.publication h3{font-size:1.03rem}.disclaimer{grid-template-columns:1fr;padding:1rem}.disclaimer-icon{display:none}}
+	@media (max-width:850px){.university-hero{grid-template-columns:minmax(0,1fr) 215px;gap:1rem}.university-seal{width:215px}.manifesto{grid-template-columns:1fr}.institution-heading,.biography-heading{align-items:start;flex-direction:column;gap:.75rem}.org-lower,.biographies{grid-template-columns:1fr}.org-person{grid-template-columns:65px 1fr}.org-mark{width:60px;height:60px;font-size:1.25rem}}
+	@media (max-width:680px){.university-hero{grid-template-columns:1fr;padding:1.65rem;border-radius:18px}.seal-area{display:flex;margin-top:.6rem}.university-seal{width:min(65vw,225px)}.hero-bottom{margin-top:1.5rem}.manifesto{padding:1.5rem .25rem}.org-chart{padding:.85rem}.org-person{grid-template-columns:1fr;padding:1.1rem}.org-label{top:1.3rem}.org-professor{grid-template-columns:1fr}.org-laboratory{padding:1.1rem}.biography-heading{margin-top:1.5rem}.biography-card{padding:1.1rem}.academic-council{grid-template-columns:1fr;padding:1.1rem}.council-icon,.council-stamp{display:none}.publication-intro{display:block}.publication-intro>p{margin-top:.85rem}.publication{grid-template-columns:55px 1fr;gap:.9rem;padding:1rem}.publication-number {padding-right:.5rem;font-size:.47rem}.publication-number strong{font-size:1.95rem}.publication-link,.publication-pending {grid-column:2;justify-self:start}.publication h3{font-size:1.03rem}.disclaimer{grid-template-columns:1fr;padding:1rem}.disclaimer-icon{display:none}}
 	@media (prefers-reduced-motion:reduce){.publication-link{transition:none}.publication-link:hover{transform:none}}
 </style>
