@@ -4,9 +4,7 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import HeroPremium from '../components/HeroPremium.astro';
 import StatsBar from '../components/StatsBar.astro';
-
 import { Image } from 'astro:assets';
-
 import vulnerabilityManagementImage from '../assets/home/vulnmngt.png';
 import exposureManagementImage from '../assets/home/exposurmngt.png';
 import threatIntelligenceImage from '../assets/home/cti.png';
@@ -16,991 +14,949 @@ import bastionImage from '../assets/home/bastion-acces-privilegies.png';
 import note013Image from '../assets/home/note-013-outils-qui-nous-protegent.webp';
 import edrAssetsImage from '../assets/home/edr-assets.png';
 import taggingImage from '../assets/home/tagging.png';
-
 import {
-	graphSchema,
-	personSchema,
-	websiteSchema,
-	suiteSchema,
+    graphSchema,
+    personSchema,
+    websiteSchema,
+    suiteSchema,
 } from '../lib/seo/schema';
-
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-
 const schema = graphSchema([
-	personSchema(),
-	websiteSchema(),
+    personSchema(),
+    websiteSchema(),
 ]);
 ---
-
 <!doctype html>
 <html lang="fr">
-	<head>
+    <head>
 <BaseHead
-			title={SITE_TITLE}
-			description={SITE_DESCRIPTION}
-			schema={schema}
-		/>
-	</head>
-
-	<body>
-		<Header />
-
-		<HeroPremium />
-
-		<StatsBar />
-
-		<main>
-			<section>
-				<h2>Domaines d’intervention</h2>
-
-				<div class="cards">
-					<div class="card">
-						<Image src={vulnerabilityManagementImage} alt="" class="card-image" width={640} quality={82} loading="lazy" decoding="async" />
-						<h3>Vulnerability Management</h3>
-						<p>Intégration de solutions, structuration, tagging, priorisation et remédiation.</p>
-					</div>
-
-					<div class="card">
-						<Image src={exposureManagementImage} alt="" class="card-image" width={640} quality={82} loading="lazy" decoding="async" />
-						<h3>Exposure Management</h3>
-						<p>Visibilité, surface d’attaque et contexte de risque.</p>
-					</div>
-
-					<div class="card">
-						<Image src={threatIntelligenceImage} alt="" class="card-image" width={640} quality={82} loading="lazy" decoding="async" />
-						<h3>Threat Intelligence</h3>
-						<p>Enrichissement, IOC, contexte menace et investigation.</p>
-					</div>
-
-					<div class="card">
-						<Image src={securityOperationsImage} alt="" class="card-image" width={640} quality={82} loading="lazy" decoding="async" />
-						<h3>Security Operations</h3>
-						<p>SIEM, SOAR, détection et exploitation opérationnelle.</p>
-					</div>
-
-					<div class="card">
-						<Image src={msspImage} alt="" class="card-image" width={640} quality={82} loading="lazy" decoding="async" />
-						<h3>MSSP / RUN</h3>
-						<p>Maintien en condition opérationnelle et support client.</p>
-					</div>
-				</div>
-			</section>
-
-			<section class="articles-section">
-				<div class="section-header">
-					<div>
-						<p class="section-tag"></p>
-						<h2>Retours d’expérience sur le terrain</h2>
-
-							<p class="section-intro">
-			Des retours d'expérience organisés par domaine d'expertise.
-		</p>
-
-	<div class="editorial-pillars">
-	<a href="/notes-de-terrain/vulnerability-management/" class="pillar vm">
-		Vulnerability Management
-	</a>
-
-	<a href="/notes-de-terrain/endpoint-security/" class="pillar endpoint">
-		Endpoint Security
-	</a>
-
-	<a href="/notes-de-terrain/security-platform-engineering/" class="pillar engineering">
-		Security Platform Engineering
-	</a>
+            title={SITE_TITLE}
+            description={SITE_DESCRIPTION}
+            schema={schema}
+        />
+    </head>
+    <body>
+        <Header />
+        <HeroPremium />
+        <StatsBar />
+        <main>
+            <section>
+                <h2>Domaines d’intervention</h2>
+                <div class="cards">
+                    <div class="card">
+                        <Image src={vulnerabilityManagementImage} alt="" class="card-image" width={640} quality={82} loading="lazy" decoding="async" />
+                        <h3>Vulnerability Management</h3>
+                        <p>Intégration de solutions, structuration, tagging, priorisation et remédiation.</p>
+                    </div>
+                    <div class="card">
+                        <Image src={exposureManagementImage} alt="" class="card-image" width={640} quality={82} loading="lazy" decoding="async" />
+                        <h3>Exposure Management</h3>
+                        <p>Visibilité, surface d’attaque et contexte de risque.</p>
+                    </div>
+                    <div class="card">
+                        <Image src={threatIntelligenceImage} alt="" class="card-image" width={640} quality={82} loading="lazy" decoding="async" />
+                        <h3>Threat Intelligence</h3>
+                        <p>Enrichissement, IOC, contexte menace et investigation.</p>
+                    </div>
+                    <div class="card">
+                        <Image src={securityOperationsImage} alt="" class="card-image" width={640} quality={82} loading="lazy" decoding="async" />
+                        <h3>Security Operations</h3>
+                        <p>SIEM, SOAR, détection et exploitation opérationnelle.</p>
+                    </div>
+                    <div class="card">
+                        <Image src={msspImage} alt="" class="card-image" width={640} quality={82} loading="lazy" decoding="async" />
+                        <h3>MSSP / RUN</h3>
+                        <p>Maintien en condition opérationnelle et support client.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="articles-section">
+                <div class="section-header">
+                    <div>
+                        <p class="section-tag"></p>
+                        <h2>Retours d’expérience sur le terrain</h2>
+                            <p class="section-intro">
+            Des retours d'expérience organisés par domaine d'expertise.
+        </p>
+    <div class="editorial-pillars">
+    <a href="/notes-de-terrain/vulnerability-management/" class="pillar vm">
+        Vulnerability Management
+    </a>
+    <a href="/notes-de-terrain/endpoint-security/" class="pillar endpoint">
+        Endpoint Security
+    </a>
+    <a href="/notes-de-terrain/security-platform-engineering/" class="pillar engineering">
+        Security Platform Engineering
+    </a>
 </div>
-	
+                    </div>
+                    <a href="/notes-de-terrain" class="see-all">Voir tous les articles →</a>
+                </div>
+                <div class="articles-grid">
+                    <a href="/articles/qui-securise-outils-qui-nous-protegent" class="article-card category-engineering">
+                        <div class="article-image">
+                            <Image src={note013Image} alt="Outils de cybersécurité et protection de leurs accès d’administration" width={640} quality={82} loading="lazy" decoding="async" />
+                        </div>
+                        <div class="article-content">
+                            <p class="article-category">SECURITY PLATFORM ENGINEERING</p>
+                            <h3>Qui sécurise les outils qui nous protègent ?</h3>
+                            <p>Migration de comptes, accès historiques et privilèges : qui peut encore administrer nos plateformes de cybersécurité ?</p>
+                            <span>⏱ 6 min de lecture</span>
+                        </div>
+                    </a>
+                    <a href="/articles/acces-privilegies-bastion-contournement" class="article-card category-engineering">
+                        <div class="article-image">
+                            <Image src={bastionImage} alt="Bastion d’administration et chemins d’accès privilégiés" width={640} quality={82} loading="lazy" decoding="async" />
+                        </div>
+                        <div class="article-content">
+                            <p class="article-category">SECURITY PLATFORM ENGINEERING</p>
+                            <h3>Un bastion ne sécurise pas les accès qu'on peut contourner</h3>
+                            <p>Un bastion opérationnel ne suffit pas si les anciennes règles réseau permettent toujours des connexions directes aux serveurs.</p>
+                            <span>⏱ 6 min de lecture</span>
+                        </div>
+                    </a>
 
-	
-					</div>
-
-					<a href="/notes-de-terrain" class="see-all">Voir tous les articles →</a>
+<a href="/articles/ce-que-votre-edr-ne-voit-pas" class="article-card category-endpoint">
+                        <div class="article-image">
+                            <Image src={edrAssetsImage} alt="Votre EDR voit-il vraiment tout ?" width={640} quality={82} loading="lazy" decoding="async" />
+                        </div>
+                        <div class="article-content">
+                            <p class="article-category">ENDPOINT SECURITY</p>
+                            <h3>Votre EDR voit-il vraiment tout ?</h3>
+                            <p>
+                                Un EDR protège uniquement les équipements qu'il connaît.
+                                Les équipements absents de la console constituent souvent des angles morts de sécurité.
+                            </p>
+                            <span>⏱ 3 min de lecture</span>
+                        </div>
+                    </a>
+                    <a href="/articles/tagging-vulnerability-management" class="article-card category-vm">
+                        <div class="article-image">
+                            <Image src={taggingImage} alt="" width={640} quality={82} loading="lazy" decoding="async" />
+                        </div>
+                        <div class="article-content">
+                            <p class="article-category">VM FUNDAMENTALS</p>
+                            <h3>Pourquoi le tagging est une fonctionnalité sous-estimée</h3>
+                            <p>Transformer une donnée brute en contexte exploitable.</p>
+                            <span>⏱ 4 min de lecture</span>
+                        </div>
+                    </a>
+                </div>
+            </section>
+            <section class="tools-section">
+                <div class="tools-shell">
+                    <div class="tools-sidebar">
+                        <p class="tools-kicker">Boîte à outils cybersécurité</p>
+                        <h2>MM Security Intelligence</h2>
+                        <p class="tools-intro">
+                            Des outils développés à partir de problématiques rencontrées sur le terrain
+                            pour aider les équipes sécurité à analyser, prioriser et prendre de meilleures décisions.
+                        </p>
+                    </div>
+                    <div class="tools-list">
+                        <a href="/labs/risk-matrix" class="tool-row">
+                            <div class="tool-banner-wrap">
+                                <img
+                                    src="/Images/tools/home/risk-score-home.png"
+                                    class="tool-banner"
+                                    alt=""
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <div class="tool-body">
+                                <p class="tool-category">Risk Management</p>
+                                <h3>MM Risk Score</h3>
+                                <p>Le risque métier, pas uniquement le risque technique.</p>
+                            </div>
+                            <span class="tool-arrow" aria-hidden="true">↗</span>
+                        </a>
+                        <a href="/labs/cvss-calculator" class="tool-row">
+                            <div class="tool-banner-wrap">
+                                <img
+                                    src="/Images/tools/home/cvss-calculator-home.png"
+                                    class="tool-banner"
+                                    alt=""
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <div class="tool-body">
+                                <p class="tool-category">Vulnerability Management</p>
+                                <h3>CVSS Calculator</h3>
+                                <p>Calcul CVSS v4 conforme au standard FIRST.</p>
+                            </div>
+                            <span class="tool-arrow" aria-hidden="true">↗</span>
+                        </a>
+                        <a href="/labs/vulnerability-explorer" class="tool-row">
+                            <div class="tool-banner-wrap">
+                                <img
+                                    src="/Images/tools/home/vulnerability-explorer-home.png"
+                                    class="tool-banner"
+                                    alt=""
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+                            <div class="tool-body">
+                                <p class="tool-category">Vulnerability Intelligence</p>
+                                <h3>Vulnerability Explorer</h3>
+                                <p>Corrélation CVE • KEV • EPSS • CISA et bien plus.</p>
+                            </div>
+                            <span class="tool-arrow" aria-hidden="true">↗</span>
+                        </a>
+                        <div class="tools-footer">
+                            <a href="/labs" class="tools-button">Explorer tous les outils →</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            			<section class="reflexions-teaser" aria-labelledby="reflexions-teaser-title">
+				<div class="reflexions-teaser-intro">
+					<p class="reflexions-teaser-kicker">RÉFLEXIONS · IT, CYBERSÉCURITÉ & IA</p>
+					<h2 id="reflexions-teaser-title">Prendre le temps de creuser.</h2>
+					<p>
+						Au-delà des situations de terrain, des essais personnels sur le numérique,
+						la cybersécurité, l'IA et nos façons de travailler.
+					</p>
+					<p class="reflexions-teaser-signature">Des convictions, des questions et le droit de se tromper.</p>
+					<a href="/reflexions/" class="reflexions-teaser-button">
+						Explorer Réflexions <span aria-hidden="true">↗</span>
+					</a>
 				</div>
-
-				<div class="articles-grid">
-
-					<a href="/articles/qui-securise-outils-qui-nous-protegent" class="article-card category-engineering">
-					    <div class="article-image">
-					        <Image src={note013Image} alt="Outils de cybersécurité et protection de leurs accès d’administration" width={640} quality={82} loading="lazy" decoding="async" />
-					    </div>
-					    <div class="article-content">
-					        <p class="article-category">SECURITY PLATFORM ENGINEERING</p>
-					        <h3>Qui sécurise les outils qui nous protègent ?</h3>
-					        <p>Migration de comptes, accès historiques et privilèges : qui peut encore administrer nos plateformes de cybersécurité ?</p>
-					        <span>⏱ 6 min de lecture</span>
-					    </div>
-					</a>
-
-					<a href="/articles/acces-privilegies-bastion-contournement" class="article-card category-engineering">
-						<div class="article-image">
-							<Image src={bastionImage} alt="Bastion d’administration et chemins d’accès privilégiés" width={640} quality={82} loading="lazy" decoding="async" />
-						</div>
-
-						<div class="article-content">
-							<p class="article-category">SECURITY PLATFORM ENGINEERING</p>
-							<h3>Un bastion ne sécurise pas les accès qu'on peut contourner</h3>
-							<p>Un bastion opérationnel ne suffit pas si les anciennes règles réseau permettent toujours des connexions directes aux serveurs.</p>
-							<span>⏱ 6 min de lecture</span>
-						</div>
-					</a>
-
-
-
-
-
-
-
-
-
-					<a href="/articles/ce-que-votre-edr-ne-voit-pas" class="article-card category-endpoint">
-						<div class="article-image">
-							<Image src={edrAssetsImage} alt="Votre EDR voit-il vraiment tout ?" width={640} quality={82} loading="lazy" decoding="async" />
-						</div>
-
-						
-						<div class="article-content">
-							<p class="article-category">ENDPOINT SECURITY</p>
-							<h3>Votre EDR voit-il vraiment tout ?</h3>
-							<p>
-								Un EDR protège uniquement les équipements qu'il connaît.
-								Les équipements absents de la console constituent souvent des angles morts de sécurité.
-							</p>
-							<span>⏱ 3 min de lecture</span>
-						</div>
-					</a>
-
-					
-					<a href="/articles/tagging-vulnerability-management" class="article-card category-vm">
-						<div class="article-image">
-							<Image src={taggingImage} alt="" width={640} quality={82} loading="lazy" decoding="async" />
-						</div>
-
-						<div class="article-content">
-							<p class="article-category">VM FUNDAMENTALS</p>
-							<h3>Pourquoi le tagging est une fonctionnalité sous-estimée</h3>
-							<p>Transformer une donnée brute en contexte exploitable.</p>
-							<span>⏱ 4 min de lecture</span>
-						</div>
-					</a>
-
-			
-				</div>
-			</section>
-
-
-			
-
-			<section class="tools-section">
-				<div class="tools-shell">
-					<div class="tools-sidebar">
-						<p class="tools-kicker">Boîte à outils cybersécurité</p>
-						<h2>MM Security Intelligence</h2>
-
-						<p class="tools-intro">
-							Des outils développés à partir de problématiques rencontrées sur le terrain
-							pour aider les équipes sécurité à analyser, prioriser et prendre de meilleures décisions.
-						</p>
-					</div>
-
-					<div class="tools-list">
-						<a href="/labs/risk-matrix" class="tool-row">
-							<div class="tool-banner-wrap">
-								<img
-									src="/Images/tools/home/risk-score-home.png"
-									class="tool-banner"
-									alt=""
-									loading="lazy"
-									decoding="async"
-								/>
-							</div>
-
-							<div class="tool-body">
-								<p class="tool-category">Risk Management</p>
-								<h3>MM Risk Score</h3>
-								<p>Le risque métier, pas uniquement le risque technique.</p>
-							</div>
-
-							<span class="tool-arrow" aria-hidden="true">↗</span>
+				<div class="reflexions-teaser-article">
+					<p class="reflexions-teaser-article-label">PREMIER ESSAI</p>
+					<h3>
+						<a href="/reflexions/travailler-avec-son-ia/">
+							On n’apprend pas seulement à utiliser une IA.<br />
+							On apprend à travailler avec la sienne.
 						</a>
-
-						<a href="/labs/cvss-calculator" class="tool-row">
-							<div class="tool-banner-wrap">
-								<img
-									src="/Images/tools/home/cvss-calculator-home.png"
-									class="tool-banner"
-									alt=""
-									loading="lazy"
-									decoding="async"
-								/>
-							</div>
-
-							<div class="tool-body">
-								<p class="tool-category">Vulnerability Management</p>
-								<h3>CVSS Calculator</h3>
-								<p>Calcul CVSS v4 conforme au standard FIRST.</p>
-							</div>
-
-							<span class="tool-arrow" aria-hidden="true">↗</span>
-						</a>
-
-						<a href="/labs/vulnerability-explorer" class="tool-row">
-							<div class="tool-banner-wrap">
-								<img
-									src="/Images/tools/home/vulnerability-explorer-home.png"
-									class="tool-banner"
-									alt=""
-									loading="lazy"
-									decoding="async"
-								/>
-							</div>
-
-							<div class="tool-body">
-								<p class="tool-category">Vulnerability Intelligence</p>
-								<h3>Vulnerability Explorer</h3>
-								<p>Corrélation CVE • KEV • EPSS • CISA et bien plus.</p>
-							</div>
-
-							<span class="tool-arrow" aria-hidden="true">↗</span>
-						</a>
-
-						<div class="tools-footer">
-							<a href="/labs" class="tools-button">Explorer tous les outils →</a>
-						</div>
-					</div>
+					</h3>
+					<p>
+						La relation que l’on construit avec une IA change aussi notre manière
+						de réfléchir, de vérifier et de décider.
+					</p>
+					<a class="reflexions-teaser-read" href="/reflexions/travailler-avec-son-ia/">Lire l’essai →</a>
 				</div>
 			</section>
-
 
 			<section class="off-teaser" aria-labelledby="off-teaser-title">
-				<div class="off-teaser-copy">
-					<p class="off-teaser-kicker">EN OFF · CYBER & SECOND DEGRÉ</p>
-					<h2 id="off-teaser-title">La cybersécurité, avec un peu moins de sérieux.</h2>
-					<p>Des générateurs absurdes, du bullshit cyber, des prédictions de déploiement du vendredi et quelques outils dont l'utilité reste franchement discutable.</p>
-					<p class="off-teaser-signature">Parce qu'on peut prendre la sécurité au sérieux sans se prendre au sérieux.</p>
-				</div>
-				<a href="/off/" class="off-teaser-link">Explorer EN OFF <span aria-hidden="true">↗</span></a>
-			</section>
-
-			
-		</main>
-
-		<Footer />
-	</body>
+                <div class="off-teaser-copy">
+                    <p class="off-teaser-kicker">EN OFF · CYBER & SECOND DEGRÉ</p>
+                    <h2 id="off-teaser-title">La cybersécurité, avec un peu moins de sérieux.</h2>
+                    <p>Des générateurs absurdes, du bullshit cyber, des prédictions de déploiement du vendredi et quelques outils dont l'utilité reste franchement discutable.</p>
+                    <p class="off-teaser-signature">Parce qu'on peut prendre la sécurité au sérieux sans se prendre au sérieux.</p>
+                </div>
+                <a href="/off/" class="off-teaser-link">Explorer EN OFF <span aria-hidden="true">↗</span></a>
+            </section>
+        </main>
+        <Footer />
+    </body>
 </html>
-
-
 <style>
-	:global(body) {
-		margin: 0;
-		background: #ffffff;
-	}
-
-	main {
-		width: min(1320px, calc(100% - 4rem));
-		margin: 0 auto;
-		padding: 2rem 0 3rem;
-	}
-
-	section {
-		margin-bottom: 3rem;
-	}
-
-	section:last-child {
-		margin-bottom: 1rem;
-	}
-
-	h1 {
-		font-size: 5rem;
-	}
-
-	h2 {
-		margin: 0 0 1.5rem;
-		font-size: 2.5rem;
-		font-weight: 900;
-		line-height: 1.1;
-	}
-
-	.hero-grid {
-		grid-template-columns: 1.35fr 0.75fr 0.65fr;
-	}
-
-	.stats-bar {
-		margin: -3rem auto 1.5rem;
-	}
-
-	/* Domaines d'intervention */
-
-	.cards {
-		display: grid;
-		grid-template-columns: repeat(5, minmax(0, 1fr));
-		gap: 1rem;
-		width: 100%;
-	}
-
-	.card {
-		min-width: 0;
-		min-height: 305px;
-		overflow: hidden;
-		background: white;
-		border: 1px solid #e5e7eb;
-		border-radius: 20px;
-		box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
-		transition:
-			transform 0.25s ease,
-			box-shadow 0.25s ease;
-	}
-
-	.card:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 20px 50px rgba(15, 23, 42, 0.1);
-	}
-
-	.card-image {
-		display: block;
-		width: 100%;
-		height: 160px;
-		object-fit: cover;
-	}
-
-	.card h3 {
-		margin: 0;
-		padding: 1.25rem 1.25rem 0;
-		color: #0f172a;
-		font-size: 1rem;
-		font-weight: 800;
-		line-height: 1.35;
-	}
-
-	.card p {
-		margin: 0;
-		padding: 0.85rem 1.25rem 1.5rem;
-		color: #475569;
-		font-size: 0.86rem;
-		line-height: 1.5;
-	}
-
-	/* Retours d'expérience */
-
-
-	.section-intro {
-	margin: .75rem 0 1.25rem;
-	color: #64748b;
-	font-size: 1.1rem;
+    :global(body) {
+        margin: 0;
+        background: #ffffff;
+    }
+    main {
+        width: min(1320px, calc(100% - 4rem));
+        margin: 0 auto;
+        padding: 2rem 0 3rem;
+    }
+    section {
+        margin-bottom: 3rem;
+    }
+    section:last-child {
+        margin-bottom: 1rem;
+    }
+    h1 {
+        font-size: 5rem;
+    }
+    h2 {
+        margin: 0 0 1.5rem;
+        font-size: 2.5rem;
+        font-weight: 900;
+        line-height: 1.1;
+    }
+    .hero-grid {
+        grid-template-columns: 1.35fr 0.75fr 0.65fr;
+    }
+    .stats-bar {
+        margin: -3rem auto 1.5rem;
+    }
+    /* Domaines d'intervention */
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 1rem;
+        width: 100%;
+    }
+    .card {
+        min-width: 0;
+        min-height: 305px;
+        overflow: hidden;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+        transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease;
+    }
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 50px rgba(15, 23, 42, 0.1);
+    }
+    .card-image {
+        display: block;
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+    }
+    .card h3 {
+        margin: 0;
+        padding: 1.25rem 1.25rem 0;
+        color: #0f172a;
+        font-size: 1rem;
+        font-weight: 800;
+        line-height: 1.35;
+    }
+    .card p {
+        margin: 0;
+        padding: 0.85rem 1.25rem 1.5rem;
+        color: #475569;
+        font-size: 0.86rem;
+        line-height: 1.5;
+    }
+    /* Retours d'expérience */
+    .section-intro {
+    margin: .75rem 0 1.25rem;
+    color: #64748b;
+    font-size: 1.1rem;
 }
-
 .editorial-pillars {
-	display: flex;
-	gap: 1rem !important;
-	flex-wrap: wrap;
-	align-items: center;
-	column-gap: 1rem;
-	row-gap: 0.75rem;
-	margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem !important;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 1rem;
+    row-gap: 0.75rem;
+    margin-top: 1.5rem;
 }
-
 .pillar {
-	display: inline-flex;
-	align-items: center;
-	padding: 0.55rem 1rem;
-	border-radius: 999px;
-	font-size: 0.82rem;
-	font-weight: 800;
-	letter-spacing: 0.04em;
-	text-decoration: none;
-	cursor: pointer;
-	transition: transform 0.18s ease, opacity 0.18s ease;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.18s ease, opacity 0.18s ease;
 }
-
 .pillar:hover {
-	text-decoration: none;
-	transform: translateY(-1px);
-	opacity: 0.95;
+    text-decoration: none;
+    transform: translateY(-1px);
+    opacity: 0.95;
 }
-
 .pillar:link,
 .pillar:visited {
-	text-decoration: none;
+    text-decoration: none;
 }
-
 .pillar {
-	cursor: pointer;
+    cursor: pointer;
 }
-
-
-
 .vm {
-	color: #2563EB;
-	background: rgba(37,99,235,.10);
-	border: 1px solid rgba(37,99,235,.22);
+    color: #2563EB;
+    background: rgba(37,99,235,.10);
+    border: 1px solid rgba(37,99,235,.22);
 }
-
 .endpoint {
-	color: #DC2626;
-	background: rgba(220,38,38,.10);
-	border: 1px solid rgba(220,38,38,.22);
+    color: #DC2626;
+    background: rgba(220,38,38,.10);
+    border: 1px solid rgba(220,38,38,.22);
 }
-
 .engineering {
-	color: #7C3AED;
-	background: rgba(124,58,237,.10);
-	border: 1px solid rgba(124,58,237,.22);
+    color: #7C3AED;
+    background: rgba(124,58,237,.10);
+    border: 1px solid rgba(124,58,237,.22);
 }
-
 .exposure {
-	color: #F97316;
-	background: rgba(249,115,22,.10);
-	border: 1px solid rgba(249,115,22,.22);
+    color: #F97316;
+    background: rgba(249,115,22,.10);
+    border: 1px solid rgba(249,115,22,.22);
 }
-	.articles-section {
-		margin-top: 3.5rem;
-	}
-
-	.section-header {
-		display: flex;
-		align-items: flex-end;
-		justify-content: space-between;
-		gap: 1rem;
-		margin-bottom: 1.15rem;
-	}
-
-	.section-header h2 {
-		margin-bottom: 0;
-	}
-
-	.section-tag {
-		margin: 0;
-	}
-
-	.see-all {
-		color: #2563eb;
-		font-weight: 700;
-		text-decoration: none;
-		white-space: nowrap;
-	}
-
-	.articles-grid {
-		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
-		gap: 1.25rem;
-	}
-
-	.article-card {
-		display: flex;
-		min-width: 0;
-		min-height: 305px;
-		flex-direction: column;
-		overflow: hidden;
-		color: inherit;
-		text-decoration: none;
-		background: white;
-		border: 1px solid #e5e7eb;
-		border-radius: 24px;
-		box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
-		transition:
-			transform 0.25s ease,
-			box-shadow 0.25s ease;
-	}
-
-	.category-vm {
-	--category-color: #2563eb;
-	--category-background: rgba(37, 99, 235, 0.1);
-	--category-border: rgba(37, 99, 235, 0.24);
-	--category-shadow: rgba(37, 99, 235, 0.18);
+    .articles-section {
+        margin-top: 3.5rem;
+    }
+    .section-header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1.15rem;
+    }
+    .section-header h2 {
+        margin-bottom: 0;
+    }
+    .section-tag {
+        margin: 0;
+    }
+    .see-all {
+        color: #2563eb;
+        font-weight: 700;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+    .articles-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1.25rem;
+    }
+    .article-card {
+        display: flex;
+        min-width: 0;
+        min-height: 305px;
+        flex-direction: column;
+        overflow: hidden;
+        color: inherit;
+        text-decoration: none;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 24px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+        transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease;
+    }
+    .category-vm {
+    --category-color: #2563eb;
+    --category-background: rgba(37, 99, 235, 0.1);
+    --category-border: rgba(37, 99, 235, 0.24);
+    --category-shadow: rgba(37, 99, 235, 0.18);
 }
-
 .category-endpoint {
-	--category-color: #dc2626;
-	--category-background: rgba(220, 38, 38, 0.1);
-	--category-border: rgba(220, 38, 38, 0.24);
-	--category-shadow: rgba(220, 38, 38, 0.18);
+    --category-color: #dc2626;
+    --category-background: rgba(220, 38, 38, 0.1);
+    --category-border: rgba(220, 38, 38, 0.24);
+    --category-shadow: rgba(220, 38, 38, 0.18);
 }
-
 .category-engineering {
-	--category-color: #7c3aed;
-	--category-background: rgba(124, 58, 237, 0.1);
-	--category-border: rgba(124, 58, 237, 0.24);
-	--category-shadow: rgba(124, 58, 237, 0.18);
+    --category-color: #7c3aed;
+    --category-background: rgba(124, 58, 237, 0.1);
+    --category-border: rgba(124, 58, 237, 0.24);
+    --category-shadow: rgba(124, 58, 237, 0.18);
 }
-
 .category-exposure {
-	--category-color: #f97316;
-	--category-background: rgba(249, 115, 22, 0.1);
-	--category-border: rgba(249, 115, 22, 0.24);
-	--category-shadow: rgba(249, 115, 22, 0.18);
+    --category-color: #f97316;
+    --category-background: rgba(249, 115, 22, 0.1);
+    --category-border: rgba(249, 115, 22, 0.24);
+    --category-shadow: rgba(249, 115, 22, 0.18);
 }
-
-
-	.article-card:hover {
-	transform: translateY(-4px);
-
-	border-color: var(--category-border);
-
-	box-shadow:
-		0 20px 50px rgba(15,23,42,.12),
-		0 12px 30px var(--category-shadow);
+    .article-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--category-border);
+    box-shadow:
+        0 20px 50px rgba(15,23,42,.12),
+        0 12px 30px var(--category-shadow);
 }
-
-	.article-image {
-		width: 100%;
-		height: 112px;
-		flex: 0 0 112px;
-		overflow: hidden;
-	}
-
-	.article-image img {
-		display: block;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		transition: transform 0.35s ease;
-	}
-
-	.article-card:hover .article-image img {
-		transform: scale(1.035);
-	}
-
-	.article-content {
-		display: flex;
-		flex: 1;
-		flex-direction: column;
-		padding: 1rem;
-	}
-
-	.article-category {
-	display: inline-flex;
-	align-items: center;
-	width: fit-content;
-
-	padding: .4rem .75rem;
-
-	margin: 0 auto 1rem;
-
-	border-radius: 999px;
-
-	font-size: .72rem;
-	font-weight: 900;
-	letter-spacing: .1em;
-	text-transform: uppercase;
-
-	color: var(--category-color);
-	background: var(--category-background);
-	border: 1px solid var(--category-border);
+    .article-image {
+        width: 100%;
+        height: 112px;
+        flex: 0 0 112px;
+        overflow: hidden;
+    }
+    .article-image img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.35s ease;
+    }
+    .article-card:hover .article-image img {
+        transform: scale(1.035);
+    }
+    .article-content {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        padding: 1rem;
+    }
+    .article-category {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: .4rem .75rem;
+    margin: 0 auto 1rem;
+    border-radius: 999px;
+    font-size: .72rem;
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--category-color);
+    background: var(--category-background);
+    border: 1px solid var(--category-border);
 }
-
-	.article-card h3 {
-		margin: 0 0 0.7rem;
-		color: #0f172a;
-		font-size: 0.98rem;
-		line-height: 1.35;
-	}
-
-	.article-content p:not(.article-category) {
-		flex: 1;
-		margin: 0 0 0.65rem;
-		color: #475569;
-		font-size: 0.82rem;
-		line-height: 1.45;
-	}
-
-	.article-content span {
-		margin-top: auto;
-		color: #64748b;
-		font-size: 0.72rem;
-		font-weight: 600;
-	}
-
-	/* MM Security Intelligence */
-
-	.tools-section {
-		margin-top: 3.5rem;
-	}
-
-	.tools-shell {
+    .article-card h3 {
+        margin: 0 0 0.7rem;
+        color: #0f172a;
+        font-size: 0.98rem;
+        line-height: 1.35;
+    }
+    .article-content p:not(.article-category) {
+        flex: 1;
+        margin: 0 0 0.65rem;
+        color: #475569;
+        font-size: 0.82rem;
+        line-height: 1.45;
+    }
+    .article-content span {
+        margin-top: auto;
+        color: #64748b;
+        font-size: 0.72rem;
+        font-weight: 600;
+    }
+    /* MM Security Intelligence */
+    .tools-section {
+        margin-top: 3.5rem;
+    }
+    .tools-shell {
+        display: grid;
+        grid-template-columns: 280px minmax(0, 1fr);
+        gap: 2rem;
+        padding: 1.75rem;
+        overflow: hidden;
+        background:
+            radial-gradient(
+                circle at 88% 8%,
+                rgba(37, 99, 235, 0.18),
+                transparent 24rem
+            ),
+            linear-gradient(135deg, #020817 0%, #06142d 58%, #031b4d 100%);
+        border-radius: 22px;
+        box-shadow: 0 20px 50px rgba(2, 8, 23, 0.17);
+    }
+    .tools-sidebar {
+        min-width: 0;
+    }
+    .tools-kicker {
+        margin: 0 0 0.45rem;
+        color: #60a5fa;
+        font-size: 0.68rem;
+        font-weight: 900;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+    .tools-sidebar h2 {
+        margin: 0 0 0.9rem;
+        color: white;
+        font-size: 1.9rem;
+        line-height: 1.05;
+    }
+    .tools-intro {
+        margin: 0;
+        color: #cbd5e1;
+        font-size: 0.84rem;
+        line-height: 1.65;
+    }
+    .tools-list {
+        display: flex;
+        min-width: 0;
+        flex-direction: column;
+    }
+    .tool-row {
+        display: grid;
+        grid-template-columns: 270px minmax(0, 1fr) 28px;
+        align-items: center;
+        gap: 1.15rem;
+        min-width: 0;
+        padding: 0.8rem 0;
+        color: inherit;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        transition: transform 0.2s ease;
+    }
+    .tool-row:first-child {
+        padding-top: 0;
+    }
+    .tool-row:last-of-type {
+        border-bottom: 0;
+    }
+    .tool-row:hover {
+        transform: translateX(4px);
+    }
+    .tool-banner-wrap {
+        width: 270px;
+        height: 90px;
+        overflow: hidden;
+        background: #020817;
+        border-radius: 12px;
+    }
+    .tool-banner {
+        display: block;
+        width: 270px;
+        height: 90px;
+        object-fit: cover;
+        object-position: center;
+        transform: none;
+        filter: none;
+    }
+    .tool-body {
+        min-width: 0;
+    }
+    .tool-category {
+        margin: 0 0 0.22rem;
+        color: #60a5fa;
+        font-size: 0.62rem;
+        font-weight: 900;
+        letter-spacing: 0.1em;
+        line-height: 1.3;
+        text-transform: uppercase;
+    }
+    .tool-body h3 {
+        margin: 0 0 0.28rem;
+        color: white;
+        font-size: 1.05rem;
+        line-height: 1.15;
+        letter-spacing: -0.025em;
+    }
+    .tool-body > p:not(.tool-category) {
+        margin: 0;
+        color: #cbd5e1;
+        font-size: 0.78rem;
+        line-height: 1.45;
+    }
+    .tool-arrow {
+        color: #60a5fa;
+        font-size: 1.05rem;
+        font-weight: 800;
+        transition: transform 0.2s ease;
+    }
+    .tool-row:hover .tool-arrow {
+        transform: translate(2px, -2px);
+    }
+    .tools-footer {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 1rem;
+    }
+    .tools-button {
+        display: inline-flex;
+        min-height: 36px;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 0.9rem;
+        color: white;
+        font-size: 0.78rem;
+        font-weight: 850;
+        text-decoration: none;
+        background: #2563eb;
+        border-radius: 999px;
+        box-shadow: 0 10px 22px rgba(37, 99, 235, 0.22);
+        transition:
+            transform 0.2s ease,
+background 0.2s ease;
+    }
+    .tools-button:hover {
+        transform: translateY(-2px);
+        background: #1d4ed8;
+    }
+    /* Réflexions — aperçu éditorial sur l'accueil */
+	.reflexions-teaser {
 		display: grid;
-		grid-template-columns: 280px minmax(0, 1fr);
-		gap: 2rem;
-		padding: 1.75rem;
-		overflow: hidden;
-		background:
-			radial-gradient(
-				circle at 88% 8%,
-				rgba(37, 99, 235, 0.18),
-				transparent 24rem
-			),
-			linear-gradient(135deg, #020817 0%, #06142d 58%, #031b4d 100%);
-		border-radius: 22px;
-		box-shadow: 0 20px 50px rgba(2, 8, 23, 0.17);
-	}
-
-	.tools-sidebar {
-		min-width: 0;
-	}
-
-	.tools-kicker {
-		margin: 0 0 0.45rem;
-		color: #60a5fa;
-		font-size: 0.68rem;
-		font-weight: 900;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-	}
-
-	.tools-sidebar h2 {
-		margin: 0 0 0.9rem;
-		color: white;
-		font-size: 1.9rem;
-		line-height: 1.05;
-	}
-
-	.tools-intro {
-		margin: 0;
-		color: #cbd5e1;
-		font-size: 0.84rem;
-		line-height: 1.65;
-	}
-
-	.tools-list {
-		display: flex;
-		min-width: 0;
-		flex-direction: column;
-	}
-
-	.tool-row {
-		display: grid;
-		grid-template-columns: 270px minmax(0, 1fr) 28px;
-		align-items: center;
-		gap: 1.15rem;
-		min-width: 0;
-		padding: 0.8rem 0;
-		color: inherit;
-		text-decoration: none;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-		transition: transform 0.2s ease;
-	}
-
-	.tool-row:first-child {
-		padding-top: 0;
-	}
-
-	.tool-row:last-of-type {
-		border-bottom: 0;
-	}
-
-	.tool-row:hover {
-		transform: translateX(4px);
-	}
-
-	.tool-banner-wrap {
-		width: 270px;
-		height: 90px;
-		overflow: hidden;
-		background: #020817;
-		border-radius: 12px;
-	}
-
-	.tool-banner {
-		display: block;
-		width: 270px;
-		height: 90px;
-		object-fit: cover;
-		object-position: center;
-		transform: none;
-		filter: none;
-	}
-
-	.tool-body {
-		min-width: 0;
-	}
-
-	.tool-category {
-		margin: 0 0 0.22rem;
-		color: #60a5fa;
-		font-size: 0.62rem;
-		font-weight: 900;
-		letter-spacing: 0.1em;
-		line-height: 1.3;
-		text-transform: uppercase;
-	}
-
-	.tool-body h3 {
-		margin: 0 0 0.28rem;
-		color: white;
-		font-size: 1.05rem;
-		line-height: 1.15;
-		letter-spacing: -0.025em;
-	}
-
-	.tool-body > p:not(.tool-category) {
-		margin: 0;
-		color: #cbd5e1;
-		font-size: 0.78rem;
-		line-height: 1.45;
-	}
-
-	.tool-arrow {
-		color: #60a5fa;
-		font-size: 1.05rem;
-		font-weight: 800;
-		transition: transform 0.2s ease;
-	}
-
-	.tool-row:hover .tool-arrow {
-		transform: translate(2px, -2px);
-	}
-
-	.tools-footer {
-		display: flex;
-		justify-content: flex-start;
-		margin-top: 1rem;
-	}
-
-	.tools-button {
-		display: inline-flex;
-		min-height: 36px;
-		align-items: center;
-		justify-content: center;
-		padding: 0.5rem 0.9rem;
-		color: white;
-		font-size: 0.78rem;
-		font-weight: 850;
-		text-decoration: none;
-		background: #2563eb;
-		border-radius: 999px;
-		box-shadow: 0 10px 22px rgba(37, 99, 235, 0.22);
-		transition:
-			transform 0.2s ease,
-			background 0.2s ease;
-	}
-
-	.tools-button:hover {
-		transform: translateY(-2px);
-		background: #1d4ed8;
-	}
-
-
-	/* EN OFF — aperçu sur l'accueil */
-	.off-teaser {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 2rem;
-		margin-top: 3rem;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		align-items: stretch;
+		gap: clamp(1.5rem, 4vw, 3.5rem);
 		padding: clamp(1.5rem, 3vw, 2.5rem);
-		color: #ffffff;
-		background:
-			radial-gradient(circle at 82% 15%, rgba(124, 58, 237, 0.25), transparent 35%),
-			linear-gradient(135deg, #020817 0%, #07142c 58%, #11113a 100%);
-		border: 1px solid rgba(167, 139, 250, 0.19);
+		margin-top: 3rem;
+		background: linear-gradient(125deg, #eef2ff 0%, #e8edff 53%, #eee6ff 100%);
+		border: 1px solid #dce5ff;
 		border-radius: 22px;
-		box-shadow: 0 20px 50px rgba(2, 8, 23, 0.15);
+		box-shadow: 0 16px 42px rgba(45, 55, 110, 0.08);
 	}
-	.off-teaser-copy { max-width: 790px; }
-	.off-teaser-kicker {
-		margin: 0 0 0.7rem;
-		color: #c4b5fd;
+	.reflexions-teaser-intro { min-width: 0; }
+	.reflexions-teaser-kicker,
+	.reflexions-teaser-article-label {
+		margin: 0 0 0.8rem;
+		color: #5b48c8;
 		font-size: 0.7rem;
 		font-weight: 900;
 		letter-spacing: 0.13em;
 	}
-	.off-teaser h2 {
+	.reflexions-teaser h2 {
 		margin: 0 0 0.9rem;
-		color: #ffffff;
-		font-size: clamp(1.7rem, 2.7vw, 2.35rem);
-		line-height: 1.14;
+		color: #101d3d;
+		font-size: clamp(1.9rem, 3vw, 2.65rem);
+		line-height: 1.13;
 	}
-	.off-teaser-copy > p:not(.off-teaser-kicker) {
+	.reflexions-teaser-intro > p:not(.reflexions-teaser-kicker) {
+		max-width: 43rem;
 		margin: 0;
-		color: #cbd5e1;
+		color: #40516c;
 		font-size: 0.95rem;
 		line-height: 1.7;
 	}
-	.off-teaser-copy .off-teaser-signature {
-		margin-top: 0.85rem !important;
-		color: #c4b5fd !important;
-		font-weight: 750;
+	.reflexions-teaser-intro .reflexions-teaser-signature {
+		margin-top: 0.9rem !important;
+		color: #5346a9 !important;
+		font-weight: 800;
 	}
-	.off-teaser-link {
+	.reflexions-teaser-button {
 		display: inline-flex;
-		flex: 0 0 auto;
 		align-items: center;
 		justify-content: center;
 		gap: 0.65rem;
+		margin-top: 1.6rem;
 		padding: 0.85rem 1.2rem;
-		color: #ffffff;
-		font-size: 0.87rem;
+		color: #fff;
+		background: #4f46e5;
+		border-radius: 12px;
+		font-size: 0.86rem;
 		font-weight: 850;
 		text-decoration: none;
-		background: #7c3aed;
-		border-radius: 12px;
 		transition: background 0.2s ease, transform 0.2s ease;
 	}
-	.off-teaser-link:hover { background: #6d28d9; transform: translateY(-2px); }
-	@media (max-width: 768px) {
-		.off-teaser { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
-		.off-teaser-link { width: 100%; }
-	}
-	@media (prefers-reduced-motion: reduce) {
-		.off-teaser-link { transition: none; }
-		.off-teaser-link:hover { transform: none; }
-	}
-
-	/* Certifications */
-
-	.certifications-grid {
-		display: grid;
-		grid-template-columns: repeat(5, minmax(0, 1fr));
-		gap: 1rem;
-		margin-top: 1.5rem;
-	}
-
-	.cert-card {
+	.reflexions-teaser-button:hover { background: #4338ca; transform: translateY(-2px); }
+	.reflexions-teaser-article {
 		display: flex;
-		min-height: 220px;
 		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		padding: 1.2rem;
-		text-align: center;
-		background: white;
-		border: 1px solid #e5e7eb;
+		align-items: flex-start;
+		min-width: 0;
+		padding: clamp(1.3rem, 2.4vw, 2rem);
+		background: rgba(255, 255, 255, 0.85);
+		border: 1px solid rgba(99, 102, 241, 0.15);
 		border-radius: 16px;
-		transition:
-			transform 0.25s ease,
-			box-shadow 0.25s ease;
 	}
-
-	.cert-card:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+	.reflexions-teaser-article h3 {
+		margin: 0 0 1rem;
+		font-size: clamp(1.25rem, 2vw, 1.6rem);
+		line-height: 1.3;
+		letter-spacing: -0.03em;
 	}
-
-	.cert-card img {
-		width: auto;
-		height: auto;
-		max-width: 120px;
-		max-height: 80px;
-		margin-bottom: 1rem;
-		object-fit: contain;
+	.reflexions-teaser-article h3 a { color: #101d3d; text-decoration: none; }
+	.reflexions-teaser-article h3 a:hover { color: #4f46e5; }
+	.reflexions-teaser-article > p:not(.reflexions-teaser-article-label) {
+		margin: 0 0 1rem;
+		color: #475569;
+		font-size: 0.9rem;
+		line-height: 1.65;
 	}
-
-	.cert-card h3 {
-		margin: 0;
-		font-size: 1rem;
-		font-weight: 700;
-		line-height: 1.4;
+	.reflexions-teaser-read {
+		margin-top: auto;
+		color: #4f46e5;
+		font-size: 0.86rem;
+		font-weight: 850;
+		text-decoration: none;
 	}
-
-	@media (max-width: 1200px) {
-		.cards {
-			grid-template-columns: repeat(3, minmax(0, 1fr));
-		}
-
-		.articles-grid {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-		}
-
-		.tools-shell {
-			grid-template-columns: 1fr;
-		}
-
-		.tool-row {
-			grid-template-columns: 270px minmax(0, 1fr) 28px;
-		}
-
-		.certifications-grid {
-			grid-template-columns: repeat(3, minmax(0, 1fr));
-		}
+	.reflexions-teaser-read:hover { text-decoration: underline; }
+	@media (max-width: 850px) {
+		.reflexions-teaser { grid-template-columns: 1fr; gap: 1.5rem; }
 	}
-
-	@media (max-width: 768px) {
-		main {
-			width: min(100% - 2rem, 1320px);
-			padding: 1.5rem 0 3rem;
-		}
-
-		.cards,
-		.articles-grid,
-		.certifications-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.section-header {
-			display: block;
-		}
-
-		.see-all {
-			display: inline-block;
-			margin-top: 0.75rem;
-		}
-
-		h2 {
-			font-size: 2rem;
-		}
-
-		.tools-shell {
-			grid-template-columns: 1fr;
-			gap: 1.25rem;
-			padding: 1.2rem;
-			border-radius: 18px;
-		}
-
-		.tools-sidebar h2 {
-			font-size: 1.6rem;
-		}
-
-		.tool-row {
-			grid-template-columns: minmax(0, 1fr) 24px;
-			gap: 0.75rem;
-			padding: 0.85rem 0;
-		}
-
-		.tool-banner-wrap {
-			grid-column: 1 / -1;
-			width: 100%;
-			height: auto;
-			aspect-ratio: 3 / 1;
-		}
-
-		.tool-banner {
-			width: 100%;
-			height: 100%;
-		}
-
-		.tool-body {
-			grid-column: 1;
-		}
-
-		.tool-arrow {
-			grid-column: 2;
-			grid-row: 2;
-		}
-
-		.certifications-section {
-			display: none;
-		}
+	@media (max-width: 480px) {
+		.reflexions-teaser-button { width: 100%; }
 	}
-
 	@media (prefers-reduced-motion: reduce) {
-		.card,
-		.article-card,
-		.article-image img,
-		.tool-row,
-		.tool-arrow,
-		.tools-button,
-		.cert-card {
-			transition: none;
-		}
-
-		.card:hover,
-		.article-card:hover,
-		.tool-row:hover,
-		.tools-button:hover,
-		.cert-card:hover {
-			transform: none;
-		}
-
-		.article-card:hover .article-image img {
-			transform: none;
-		}
+		.reflexions-teaser-button { transition: none; }
+		.reflexions-teaser-button:hover { transform: none; }
 	}
+
+	/* EN OFF — aperçu sur l'accueil */
+    .off-teaser {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        margin-top: 3rem;
+        padding: clamp(1.5rem, 3vw, 2.5rem);
+        color: #ffffff;
+        background:
+            radial-gradient(circle at 82% 15%, rgba(124, 58, 237, 0.25), transparent 35%),
+            linear-gradient(135deg, #020817 0%, #07142c 58%, #11113a 100%);
+        border: 1px solid rgba(167, 139, 250, 0.19);
+        border-radius: 22px;
+        box-shadow: 0 20px 50px rgba(2, 8, 23, 0.15);
+    }
+    .off-teaser-copy { max-width: 790px; }
+    .off-teaser-kicker {
+        margin: 0 0 0.7rem;
+        color: #c4b5fd;
+        font-size: 0.7rem;
+        font-weight: 900;
+        letter-spacing: 0.13em;
+    }
+    .off-teaser h2 {
+        margin: 0 0 0.9rem;
+        color: #ffffff;
+        font-size: clamp(1.7rem, 2.7vw, 2.35rem);
+        line-height: 1.14;
+    }
+    .off-teaser-copy > p:not(.off-teaser-kicker) {
+        margin: 0;
+        color: #cbd5e1;
+        font-size: 0.95rem;
+        line-height: 1.7;
+    }
+    .off-teaser-copy .off-teaser-signature {
+        margin-top: 0.85rem !important;
+        color: #c4b5fd !important;
+        font-weight: 750;
+    }
+    .off-teaser-link {
+        display: inline-flex;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: center;
+        gap: 0.65rem;
+        padding: 0.85rem 1.2rem;
+        color: #ffffff;
+        font-size: 0.87rem;
+        font-weight: 850;
+        text-decoration: none;
+        background: #7c3aed;
+        border-radius: 12px;
+        transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .off-teaser-link:hover { background: #6d28d9; transform: translateY(-2px); }
+    @media (max-width: 768px) {
+        .off-teaser { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+        .off-teaser-link { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .off-teaser-link { transition: none; }
+        .off-teaser-link:hover { transform: none; }
+    }
+    /* Certifications */
+    .certifications-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+    .cert-card {
+        display: flex;
+        min-height: 220px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1.2rem;
+        text-align: center;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease;
+    }
+    .cert-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+    .cert-card img {
+        width: auto;
+        height: auto;
+        max-width: 120px;
+        max-height: 80px;
+        margin-bottom: 1rem;
+        object-fit: contain;
+    }
+    .cert-card h3 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 700;
+        line-height: 1.4;
+    }
+    @media (max-width: 1200px) {
+        .cards {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        .articles-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .tools-shell {
+            grid-template-columns: 1fr;
+        }
+        .tool-row {
+            grid-template-columns: 270px minmax(0, 1fr) 28px;
+        }
+        .certifications-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+    @media (max-width: 768px) {
+        main {
+            width: min(100% - 2rem, 1320px);
+            padding: 1.5rem 0 3rem;
+        }
+        .cards,
+        .articles-grid,
+        .certifications-grid {
+            grid-template-columns: 1fr;
+        }
+        .section-header {
+            display: block;
+        }
+        .see-all {
+            display: inline-block;
+            margin-top: 0.75rem;
+        }
+        h2 {
+            font-size: 2rem;
+        }
+        .tools-shell {
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+            padding: 1.2rem;
+            border-radius: 18px;
+        }
+        .tools-sidebar h2 {
+            font-size: 1.6rem;
+        }
+        .tool-row {
+            grid-template-columns: minmax(0, 1fr) 24px;
+            gap: 0.75rem;
+            padding: 0.85rem 0;
+        }
+        .tool-banner-wrap {
+            grid-column: 1 / -1;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 3 / 1;
+        }
+        .tool-banner {
+            width: 100%;
+            height: 100%;
+        }
+        .tool-body {
+            grid-column: 1;
+        }
+        .tool-arrow {
+            grid-column: 2;
+            grid-row: 2;
+        }
+        .certifications-section {
+            display: none;
+        }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .card,
+        .article-card,
+        .article-image img,
+        .tool-row,
+        .tool-arrow,
+        .tools-button,
+        .cert-card {
+            transition: none;
+        }
+        .card:hover,
+        .article-card:hover,
+        .tool-row:hover,
+        .tools-button:hover,
+        .cert-card:hover {
+            transform: none;
+        }
+        .article-card:hover .article-image img {
+            transform: none;
+        }
+    }
 </style>
