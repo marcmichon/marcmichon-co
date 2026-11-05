@@ -1,0 +1,322 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ArticleHero from '../../components/article/ArticleHero.astro';
+import ArticleLayout from '../../components/article/ArticleLayout.astro';
+import Callout from '../../components/article/Callout.astro';
+import RelatedArticles from '../../components/article/RelatedArticles.astro';
+import ArticleQuote from '../../components/article/ArticleQuote.astro';
+import TerrainNote from '../../components/article/TerrainNote.astro';
+import CarnetCTA from '../../components/article/CarnetCTA.astro';
+
+import { SITE_TITLE } from '../../consts';
+
+const toc = [
+  { id: 'comptes-historiques', label: 'Une plateforme qui fonctionne. Et des comptes qu’on ne regarde plus vraiment.' },
+  { id: 'privileges-sensibles', label: 'Des droits qui permettent bien plus que consulter des alertes' },
+  { id: 'migrer-identites', label: 'Migrer les comptes, ce n’est pas simplement changer les adresses' },
+  { id: 'acces-externes', label: 'Et les accès externes dans tout ça ?' },
+  { id: 'valider-migration', label: 'Une migration terminée ne se résume pas à une connexion réussie' },
+  { id: 'conclusion', label: 'Conclusion' },
+];
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <BaseHead
+      title={`Qui sécurise les outils qui nous protègent ? | ${SITE_TITLE}`}
+      description="Lors d’une migration de comptes, la liste des administrateurs d’une plateforme de cybersécurité mérite parfois une revue approfondie. Retour terrain sur les accès historiques et les habilitations."
+      image="/Images/note-013-outils-qui-nous-protegent.png"
+      ogType="article"
+    />
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <ArticleHero
+        tag="SECURITY PLATFORM ENGINEERING"
+        badgeColor="#7C3AED"
+        badgeBackground="rgba(124,58,237,.12)"
+        title="Qui sécurise les outils qui nous protègent ?"
+        subtitle="Une plateforme de cybersécurité peut disposer de privilèges considérables. Mais lors d’une migration, ses propres accès d’administration méritent parfois d’être regardés de plus près."
+        image="/Images/note-013-outils-qui-nous-protegent.png"
+        readTime="6 min de lecture"
+        level="Intermédiaire"
+        updated="Publié : novembre 2026"
+        technologies={[
+          'Security Platform Engineering',
+          'Privileged Access',
+          'Identity Management',
+          'MFA',
+          'Platform Security',
+        ]}
+      />
+
+      <aside class="series-intro" aria-label="Présentation de la série Security Platform Engineering">
+        <span class="series-intro__eyebrow">SECURITY PLATFORM ENGINEERING</span>
+        <p>
+          Cette série s’intéresse à la mise en place et à l’exploitation des contrôles de sécurité :
+          de leur configuration technique à leur application réelle sur le terrain.
+        </p>
+      </aside>
+
+      <ArticleLayout toc={toc}>
+        <h2 id="comptes-historiques">Une plateforme qui fonctionne. Et des comptes qu’on ne regarde plus vraiment.</h2>
+
+        <p>
+          Lorsqu’on administre une plateforme de cybersécurité au quotidien, on se concentre
+          naturellement sur son fonctionnement. Les équipements sont protégés, les politiques
+          sont appliquées, les remontées d’événements fonctionnent et les administrateurs
+          accèdent à leurs consoles.
+        </p>
+        <p>Tout semble en ordre.</p>
+        <p>
+          Puis arrive une opération de migration des comptes utilisateurs. On reprend les
+          identités, les habilitations et les mécanismes d’authentification. Et c’est souvent
+          l’occasion de regarder un peu plus attentivement quelque chose qu’on ne consulte pas
+          forcément tous les jours : <strong>la liste des utilisateurs de la plateforme.</strong>
+        </p>
+        <p>
+          Des administrateurs internes, des prestataires, des comptes techniques et parfois
+          des identités liées à d’anciennes organisations. Certaines présences sont parfaitement
+          justifiées. D’autres méritent quelques vérifications.
+        </p>
+        <p>
+          Qui utilise encore ce compte ? Pourquoi a-t-il été créé ? Quels privilèges possède-t-il
+          réellement ?
+        </p>
+        <p>
+          La présence d’un compte ne signifie pas nécessairement qu’il est encore actif ou utilisable.
+          Mais lorsqu’on ne sait plus expliquer pourquoi une identité est toujours là, il devient
+          intéressant de creuser.
+        </p>
+
+        <ArticleQuote>
+          On surveille les systèmes à travers nos plateformes de sécurité. Mais à quelle fréquence
+          surveille-t-on les accès à ces mêmes plateformes ?
+        </ArticleQuote>
+
+        <h2 id="privileges-sensibles">Des droits qui permettent bien plus que consulter des alertes</h2>
+
+        <p>C’est probablement ce qui rend le sujet important.</p>
+        <p>Une console de cybersécurité n’est pas une application comme les autres.</p>
+        <p>
+          Selon les produits et les habilitations, un administrateur EDR peut modifier des politiques
+          de protection, créer des exclusions ou déclencher des actions à distance sur les équipements.
+          Sur un bastion, les privilèges peuvent permettre d’administrer des ressources sensibles ou
+          de gérer des comptes disposant de droits élevés. Dans une plateforme de supervision, certains
+          utilisateurs peuvent modifier les mécanismes de détection ou les sources de collecte.
+        </p>
+        <p>
+          Ces capacités sont indispensables à l’exploitation. Mais elles impliquent aussi que les
+          accès soient correctement maîtrisés.
+        </p>
+        <p>
+          Un compte disposant de droits d’administration ne devrait pas conserver ces privilèges
+          simplement parce qu’ils lui ont été attribués plusieurs années auparavant.
+        </p>
+
+        <TerrainNote context="Security Platform Engineering • Administration • Habilitations">
+          <p>
+            Une habilitation légitime au moment de sa création ne l’est pas nécessairement
+            indéfiniment. Les équipes, les responsabilités et les besoins évoluent.
+            Les droits doivent pouvoir évoluer avec eux.
+          </p>
+        </TerrainNote>
+
+        <h2 id="migrer-identites">Migrer les comptes, ce n’est pas simplement changer les adresses</h2>
+
+        <p>
+          Une migration d’identités paraît parfois assez simple. On crée les nouveaux utilisateurs,
+          on leur attribue les rôles nécessaires, puis on vérifie qu’ils peuvent se connecter.
+        </p>
+        <p>
+          Mais dans une plateforme de sécurité, je considère que le travail ne s’arrête pas là.
+          Il faut également s’assurer que les mécanismes d’authentification fonctionnent correctement,
+          notamment le MFA lorsqu’il est disponible.
+        </p>
+        <p>
+          Les administrateurs doivent retrouver les fonctionnalités dont ils ont besoin, sans récupérer
+          automatiquement des privilèges qui ne seraient plus justifiés. Et surtout, il faut penser
+          aux anciennes identités.
+        </p>
+        <p>
+          Pendant une migration, la coexistence de deux comptes pour un même utilisateur peut être
+          nécessaire. Mais une fois les nouveaux accès validés, les anciens comptes doivent être
+          réexaminés puis désactivés ou supprimés lorsque leur maintien n’est plus justifié.
+        </p>
+        <p>Ce sont deux opérations différentes.</p>
+        <p>
+          <strong>Créer un nouvel accès permet d’assurer la continuité. Retirer l’ancien permet
+          d’éviter de conserver inutilement plusieurs chemins d’administration.</strong>
+        </p>
+
+        <h2 id="acces-externes">Et les accès externes dans tout ça ?</h2>
+
+        <p>
+          Les plateformes de sécurité sont régulièrement exploitées avec l’appui de prestataires
+          ou d’éditeurs. Ces interventions sont souvent nécessaires.
+        </p>
+        <p>Le problème n’est donc pas d’avoir des comptes externes.</p>
+        <p>Il apparaît lorsqu’on ne sait plus précisément à quoi ils correspondent.</p>
+        <p>
+          Un compte créé pour accompagner un déploiement peut encore apparaître plusieurs années
+          plus tard. Est-il toujours nécessaire ? Son propriétaire intervient-il encore ? Ses droits
+          correspondent-ils à la prestation actuelle ?
+        </p>
+        <p>
+          Avant toute suppression, ces éléments doivent évidemment être vérifiés. Certains accès
+          sont liés à des contrats toujours actifs, d’autres à des intégrations ou à des dispositifs
+          de support particuliers.
+        </p>
+        <p>
+          L’objectif n’est pas de faire le ménage aveuglément. Il est de pouvoir justifier
+          chaque accès conservé.
+        </p>
+
+        <Callout type="field">
+          <p>
+            <strong>Note terrain :</strong> un compte historique n’est pas nécessairement un problème
+            de sécurité. Un compte dont le propriétaire, l’utilité ou les privilèges ne sont plus
+            clairement identifiés mérite en revanche une vérification.
+          </p>
+        </Callout>
+
+        <h2 id="valider-migration">Une migration terminée ne se résume pas à une connexion réussie</h2>
+
+        <p>C’est finalement le point que je retiens de ce type d’opération.</p>
+        <p>
+          Quand tous les utilisateurs parviennent à se connecter avec leur nouvelle identité,
+          on pourrait considérer la migration comme terminée. Fonctionnellement, c’est une étape
+          importante.
+        </p>
+        <p>Mais il reste quelques vérifications.</p>
+        <p>
+          Les droits sont-ils corrects ? Les anciens comptes ont-ils été traités ? Les accès
+          externes ont-ils été réévalués ? Les comptes techniques ont-ils été correctement identifiés ?
+        </p>
+        <p>Et les opérations sensibles réalisées dans la console sont-elles bien tracées ?</p>
+        <p>
+          Ce sont parfois des vérifications assez simples. Elles permettent pourtant d’éviter
+          qu’une évolution technique laisse derrière elle des accès devenus inutiles.
+        </p>
+
+        <h2 id="conclusion">Conclusion</h2>
+
+        <p>
+          Lorsqu’on parle de sécurisation d’une plateforme, on pense généralement à ses politiques,
+          ses fonctionnalités ou sa capacité à protéger les équipements. Mais sa propre administration
+          fait aussi partie du sujet.
+        </p>
+        <p>
+          Une migration de comptes peut être une excellente occasion de reprendre les habilitations,
+          de vérifier les accès externes et de supprimer les identités qui n’ont plus de raison d’être.
+        </p>
+        <p>
+          Il ne s’agit pas de remettre systématiquement en cause les choix passés.
+          Il s’agit de s’assurer qu’ils correspondent toujours aux besoins actuels.
+        </p>
+
+        <ArticleQuote>
+          Nous demandons à nos plateformes de sécurité de contrôler les accès à nos systèmes.
+          Il serait dommage de ne pas appliquer la même exigence aux accès de ces plateformes.
+        </ArticleQuote>
+
+        <Callout type="warning">
+          <p>
+            Cette Note de terrain s’inspire de situations rencontrées dans l’exploitation de
+            plateformes de cybersécurité. Les exemples ont été volontairement généralisés afin
+            de préserver la confidentialité des environnements concernés.
+          </p>
+        </Callout>
+
+        <CarnetCTA />
+
+        <RelatedArticles
+          articles={[
+            {
+              href: '/articles/acces-privilegies-bastion-contournement',
+              category: 'SECURITY PLATFORM ENGINEERING',
+              title: 'Un bastion ne sécurise pas les accès qu’on peut contourner',
+              description: 'Pourquoi des accès directs historiques peuvent contourner les contrôles d’un bastion pourtant opérationnel.',
+            },
+            {
+              href: '/articles/plateformes-figees-apres-deploiement',
+              category: 'SECURITY PLATFORM ENGINEERING',
+              title: 'Les plateformes qui se figent après leur déploiement',
+              description: 'Pourquoi une plateforme peut perdre de sa pertinence lorsque son exploitation n’évolue plus.',
+            },
+          ]}
+        />
+      </ArticleLayout>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  body {
+    background: #f8fafc;
+  }
+
+  main {
+    width: min(1320px, calc(100% - 4rem));
+    margin: 0 auto;
+    padding: 3rem 0 5rem;
+  }
+
+  .series-intro {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0 2rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    border-radius: 1rem;
+    background:
+      linear-gradient(135deg, rgba(124, 58, 237, 0.09), rgba(37, 99, 235, 0.04)),
+      #ffffff;
+    box-shadow: 0 14px 35px rgba(76, 29, 149, 0.07);
+  }
+
+  .series-intro::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: linear-gradient(180deg, #7c3aed, #4f46e5);
+  }
+
+  .series-intro__eyebrow {
+    flex: 0 0 auto;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: #6d28d9;
+  }
+
+  .series-intro p {
+    margin: 0;
+    color: #334155;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 640px) {
+    main {
+      width: min(100% - 2rem, 1320px);
+    }
+
+    .series-intro {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+  }
+</style>

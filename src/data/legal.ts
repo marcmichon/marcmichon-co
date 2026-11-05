@@ -15,9 +15,9 @@ export const LEGAL = {
 
 	// À renseigner lorsque Brevo (ou un autre prestataire) est définitivement choisi.
 	newsletterProvider: {
-		name: 'À compléter avant mise en production',
-		country: 'À compléter',
-		privacyUrl: '',
+		name: 'Brevo SAS',
+		country: 'France',
+		privacyUrl: 'https://www.brevo.com/fr/legal/privacypolicy/',
 	},
 
 	analytics: {

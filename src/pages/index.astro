@@ -12,8 +12,8 @@ import exposureManagementImage from '../assets/home/exposurmngt.png';
 import threatIntelligenceImage from '../assets/home/cti.png';
 import securityOperationsImage from '../assets/home/secops.png';
 import msspImage from '../assets/home/mssp.png';
-import frozenPlatformImage from '../assets/home/plateforme-figee.png';
 import bastionImage from '../assets/home/bastion-acces-privilegies.png';
+import note013Image from '../assets/home/note-013-outils-qui-nous-protegent.webp';
 import edrAssetsImage from '../assets/home/edr-assets.png';
 import taggingImage from '../assets/home/tagging.png';
 
@@ -119,6 +119,18 @@ const schema = graphSchema([
 
 				<div class="articles-grid">
 
+					<a href="/articles/qui-securise-outils-qui-nous-protegent" class="article-card category-engineering">
+					    <div class="article-image">
+					        <Image src={note013Image} alt="Outils de cybersécurité et protection de leurs accès d’administration" width={640} quality={82} loading="lazy" decoding="async" />
+					    </div>
+					    <div class="article-content">
+					        <p class="article-category">SECURITY PLATFORM ENGINEERING</p>
+					        <h3>Qui sécurise les outils qui nous protègent ?</h3>
+					        <p>Migration de comptes, accès historiques et privilèges : qui peut encore administrer nos plateformes de cybersécurité ?</p>
+					        <span>⏱ 6 min de lecture</span>
+					    </div>
+					</a>
+
 					<a href="/articles/acces-privilegies-bastion-contournement" class="article-card category-engineering">
 						<div class="article-image">
 							<Image src={bastionImage} alt="Bastion d’administration et chemins d’accès privilégiés" width={640} quality={82} loading="lazy" decoding="async" />
@@ -132,35 +144,7 @@ const schema = graphSchema([
 						</div>
 					</a>
 
-<a href="/articles/plateformes-figees-apres-deploiement" class="article-card category-engineering">
-	<div class="article-image">
-		<Image
-            src={frozenPlatformImage}
-            alt="Les plateformes qui se figent après leur déploiement"
-            width={640}
-            quality={82}
-            loading="lazy"
-            decoding="async"
-        />
-	</div>
 
-	<div class="article-content">
-		<p class="article-category">
-			SECURITY PLATFORM ENGINEERING
-		</p>
-
-		<h3>
-			Les plateformes qui se figent après leur déploiement
-		</h3>
-
-		<p>
-			Le projet d’intégration est terminé. Le projet de la plateforme, lui, ne fait que commencer.
-
-		</p>
-
-		<span>⏱ 7 min de lecture</span>
-	</div>
-</a>
 
 
 

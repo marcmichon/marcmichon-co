@@ -1,0 +1,293 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const title = 'On n’apprend pas seulement à utiliser une IA. On apprend à travailler avec la sienne.';
+const description = 'De la vie quotidienne à l’ingénierie et à la cybersécurité : familiarité, esprit critique, vérification et responsabilité dans la collaboration avec l’IA.';
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <BaseHead title={`${title} | Réflexions | Marc Michon`} description={description} />
+    <!-- Brouillon local : ne pas indexer avant validation éditoriale et publication. -->
+  </head>
+  <body>
+    <Header />
+
+    <main class="article-page">
+      <nav class="fil" aria-label="Fil d’Ariane">
+        <a href="/reflexions/">Réflexions</a>
+        <span aria-hidden="true">/</span>
+        <span>Intelligence artificielle · Humain</span>
+      </nav>
+
+      <!-- Bandeau de titre : cohérent avec le bandeau bleu de /reflexions/. -->
+      <header class="article-head">
+        <p class="rubrique">RÉFLEXION 001 <span aria-hidden="true">·</span> INTELLIGENCE ARTIFICIELLE & HUMAIN</p>
+        <h1>{title}</h1>
+        <p class="chapo">De nos échanges du quotidien aux décisions techniques : que change notre collaboration avec une IA dans notre manière de réfléchir, de travailler et de vérifier ?</p>
+        <div class="meta">
+          <span>Marc Michon</span>
+          <span aria-hidden="true">·</span>
+          <span>Lecture : environ 16 min</span>
+          <span aria-hidden="true">·</span>
+          <span class="brouillon">Brouillon éditorial</span>
+        </div>
+      </header>
+
+      <div class="article-layout">
+        <article class="prose">
+          <p class="lead">Dans un même foyer, deux personnes utilisent exactement la même intelligence artificielle. L’une échange avec patience, formule une demande, affine une proposition. L’autre contredit, demande des preuves, reprend un raisonnement qui ne tient pas et, parfois, préfère recommencer de zéro.</p>
+
+          <p>La technologie est la même. Le dialogue, lui, ne l’est pas. Cette observation est née d’une discussion ordinaire. Elle m’a pourtant amené à une question beaucoup moins banale : quand nous utilisons régulièrement une IA conversationnelle, apprenons-nous seulement à mieux lui parler, ou changeons-nous aussi notre manière de réfléchir avec elle ?</p>
+
+          <p>Je parle ici autant de la vie quotidienne que du travail. Parce que, pour moi, la frontière est poreuse : le même outil peut servir à organiser un projet personnel, examiner un argument, comprendre une notion technique ou préparer une décision de cybersécurité. Mais ce qui est une approximation acceptable dans un échange informel peut devenir une erreur lourde de conséquences dans un environnement de production.</p>
+
+          <p>Ma conviction est simple : <strong>on n’apprend pas seulement à utiliser une IA. On apprend à travailler avec la sienne.</strong> Le mot « sienne » ne désigne ni une personne ni une machine qui nous appartiendrait au sens affectif. Il désigne cette manière singulière de composer avec un outil qui répond, s’adapte, propose, se trompe et nous oblige, si l’on fait correctement le travail, à rester aux commandes.</p>
+
+          <h2 id="meme-ia">La même IA, mais pas la même expérience</h2>
+
+          <p>Avec un logiciel classique, nous apprenons ses fonctionnalités. Nous découvrons où cliquer, quel paramètre modifier, quel résultat attendre. Avec une IA conversationnelle, l’interface semble presque disparaître : on écrit, on parle, on réagit. Ce caractère naturel est trompeur, car il laisse une place immense à nos habitudes.</p>
+
+          <p>Certains utilisateurs veulent une réponse rapide. D’autres préfèrent une conversation où la solution se construit par étapes. D’autres encore demandent à l’outil de défendre le point de vue opposé, de chercher une faille ou de remettre en question ce qui paraît évident.</p>
+
+          <p>Je ne crois pas une seconde que le style le plus brutal soit nécessairement le plus pertinent, ni que la politesse produise des raisonnements moins exigeants. Une personne très posée peut procéder à des vérifications redoutables. Une autre peut multiplier les objections pour finalement n’écouter que ce qui confirme son opinion. <strong>La qualité d’une réflexion ne se mesure ni au ton, ni au nombre de questions posées.</strong></p>
+
+          <p>En revanche, ces façons de dialoguer orientent l’expérience. Dans un cas, l’IA devient surtout une source de propositions. Dans un autre, elle sert à formuler, reformuler et confronter. La différence n’est pas seulement dans le prompt initial : elle apparaît dans tout ce qui suit la première réponse.</p>
+
+          <blockquote>Ce qui compte n’est pas uniquement ce que l’IA répond. C’est aussi ce que l’humain décide de faire de cette réponse.</blockquote>
+
+          <h2 id="sienne">Que signifie vraiment « travailler avec la sienne » ?</h2>
+
+          <p>Il faut être précis sur les mots. Je peux parler de « mon IA » par commodité, comme je parle de « mon navigateur » ou de « mon environnement de travail ». Mais il serait absurde d’en déduire une relation d’amitié ou une compréhension réciproque au sens humain du terme.</p>
+
+          <p>Un système conversationnel ne partage pas ma vie. Il ne possède pas une expérience personnelle de nos échanges. Il génère des réponses à partir des informations dont il dispose : le dialogue en cours, ses instructions, les éventuels éléments de personnalisation et de mémoire mis à sa disposition par le service. Cette continuité peut être utile, mais elle dépend aussi de ce qui est effectivement conservé et accessible.</p>
+
+          <p>De mon côté, en revanche, j’accumule une expérience bien réelle. Je sais progressivement mieux ce qui fonctionne, ce qui doit être reformulé, dans quels domaines une réponse mérite une vérification systématique. Je peux développer des habitudes et même une certaine intuition sur les erreurs récurrentes.</p>
+
+          <p>Cette asymétrie me paraît fondamentale. <strong>Le système ajuste ses réponses ; l’humain, lui, peut faire évoluer sa méthode.</strong> Ce ne sont pas deux personnes qui apprennent à se connaître. C’est un usage qui se construit, au croisement des capacités de l’outil et des exigences de l’utilisateur.</p>
+
+          <p>Et cette nuance n’enlève rien à l’intérêt de la familiarité. Au contraire : elle permet de l’apprécier pour ce qu’elle est, sans lui inventer une dimension humaine qu’elle n’a pas.</p>
+
+          <h2 id="changer-methode">Au début, on demande une réponse. Ensuite, on peut apprendre à poser un problème.</h2>
+
+          <p>Je trouve que c’est ici que l’expérience devient passionnante. Dans un premier temps, on sollicite l’IA pour gagner du temps : obtenir une définition, une synthèse, un brouillon. Très vite, on découvre qu’elle peut également servir à travailler sur la question elle-même.</p>
+
+          <p>Lorsque je lui expose une idée, je peux lui demander non pas de la rédiger élégamment, mais de m’indiquer ce qui manque, de séparer les faits des hypothèses, de rechercher une contradiction ou de me proposer une autre grille de lecture. Parfois, la réponse la plus utile n’est pas celle qui clôt le débat : c’est celle qui m’oblige à préciser ce que je voulais réellement dire.</p>
+
+          <p>Cela ne prouve pas que je deviens plus intelligent. Et je me méfie des discours trop enthousiastes sur une supposée « augmentation » de nos capacités. Il se peut simplement que je réalise plus vite un travail que je faisais déjà. Il se peut aussi que certaines habitudes de vérification se renforcent. Les deux phénomènes peuvent coexister.</p>
+
+          <p>Une étude présentée à la conférence CHI 2025 a interrogé 319 professionnels sur 936 exemples d’utilisation de l’IA générative dans leur travail. Elle montre notamment un déplacement <em>perçu</em> de l’effort critique : moins de temps consacré à rechercher ou produire certaines informations, davantage d’attention portée à la vérification, à l’intégration et au pilotage des réponses. Les données sont déclaratives : elles éclairent des pratiques, elles ne mesurent pas directement une transformation durable des facultés intellectuelles. <a href="https://doi.org/10.1145/3706598.3713778" target="_blank" rel="noopener noreferrer">Voir l’étude de Lee et ses collègues (2025)</a>.</p>
+
+          <p>J’y vois une piste plus intéressante que l’obsession du « prompt parfait » : apprendre à formuler un problème, à tester les réponses et à reconnaître ce qu’on ne sait pas encore vérifier.</p>
+
+          <h2 id="metier-technique">Quand l’IA devient un interlocuteur technique</h2>
+
+          <p>Dans l’informatique et la cybersécurité, cette question prend une dimension supplémentaire. Parce que, dans ces métiers, une réponse plausible ne suffit pas. Une configuration peut paraître correcte tout en ouvrant une exposition. Un script peut s’exécuter tout en produisant un résultat incomplet. Une recommandation peut être techniquement cohérente mais incompatible avec les contraintes d’un système réel.</p>
+
+          <p>Je peux demander à une IA de m’aider à examiner un script, d’identifier les angles morts d’une architecture, de comparer deux mécanismes d’authentification, de clarifier les conditions d’exploitation d’une vulnérabilité ou de remettre en question une règle de filtrage. Dans ces situations, elle peut jouer le rôle d’un interlocuteur technique disponible à la demande : quelqu’un à qui soumettre une hypothèse, à qui demander une objection, avec qui explorer plusieurs scénarios.</p>
+
+          <p>Mais il ne faut pas confondre ce rôle conversationnel avec une expertise indépendante. Une IA peut produire une objection très pertinente et, quelques lignes plus loin, inventer une option de configuration qui n’existe pas. Elle peut exposer correctement un principe réseau tout en se trompant sur la syntaxe précise d’un constructeur ou sur la portée d’un correctif.</p>
+
+          <p>Le point décisif n’est donc pas de savoir si l’IA « connaît » la cybersécurité. C’est de savoir <strong>comment je confronte ce qu’elle propose à la réalité technique que j’ai la responsabilité de maîtriser.</strong></p>
+
+          <p>Et il existe un paradoxe : plus je maîtrise un domaine, plus je peux exploiter intelligemment certaines réponses de l’IA. Je sais quelles questions poser, quels cas limites examiner et quelles sources consulter. À l’inverse, lorsque je découvre un sujet, je peux avoir davantage besoin de l’outil tout en étant moins bien équipé pour repérer ses erreurs.</p>
+
+          <p>Ce n’est pas une raison pour réserver l’IA aux experts. C’est une raison pour distinguer l’apprentissage accompagné de la validation technique.</p>
+
+          <h2 id="verifier">Une objection pertinente n’est pas une validation</h2>
+
+          <p>Prenons une situation imaginaire, mais familière dans l’IT. Une équipe souhaite modifier une politique d’accès sur une infrastructure sensible. Elle soumet à une IA son approche générale et lui demande d’identifier les risques. Le système relève plusieurs points utiles : dépendances, comptes techniques, conditions de retour arrière, cas d’usage oubliés.</p>
+
+          <p>Excellent. L’IA a aidé à élargir le raisonnement.</p>
+
+          <p>Mais si elle conclut ensuite « la configuration est sécurisée », sur quoi repose cette affirmation ? A-t-elle vu la configuration réellement déployée ? Les flux observés ? Les versions logicielles ? Les exceptions historiques ? A-t-elle exécuté des tests ? Dans la majorité des échanges purement conversationnels, non.</p>
+
+          <p>Elle peut analyser les éléments que je lui fournis. Elle ne peut pas déduire automatiquement les faits que je ne lui ai pas donnés. Elle peut raisonner sur une configuration déclarée, pas attester seule de l’état d’un système qu’elle n’a pas observé.</p>
+
+          <p>La distinction me paraît essentielle en sécurité : <strong>une recommandation argumentée n’est ni un test, ni une preuve, ni une validation de changement.</strong></p>
+
+          <p>J’en ai eu un aperçu dans un autre contexte, sur un prototype de mon propre site. À force de demander des corrections successives à l’IA, le projet devenait de plus en plus compliqué alors que je cherchais précisément quelque chose de simple. Chaque proposition prise isolément paraissait défendable ; leur accumulation, beaucoup moins. J’ai fini par interrompre le chantier. Ce n’était pas uniquement un problème de code. C’était aussi une leçon sur ma manière de piloter l’assistance : savoir demander une nouvelle solution ne dispense pas de savoir dire stop.</p>
+
+          <p>C’est pourquoi je préfère une réponse qui explicite ses hypothèses et ses limites à une conclusion péremptoire. « Voici trois risques possibles, voici ce que je ne peux pas confirmer, voici comment les vérifier » : cette formulation est moins spectaculaire. Elle est infiniment plus exploitable.</p>
+
+          <p>La vérification doit ensuite passer par les bonnes sources : documentation constructeur, référentiels, données issues des outils, revues entre pairs, tests en environnement approprié et procédures de validation. Demander à une deuxième IA de confirmer la première peut nourrir la réflexion ; ce n’est pas une preuve indépendante si les deux raisonnent sur les mêmes hypothèses erronées.</p>
+
+          <h2 id="cyber-particulier">La cybersécurité ajoute d’autres limites à la conversation</h2>
+
+          <p>Une IA utilisée pour des besoins personnels n’a pas toujours accès à des informations particulièrement sensibles. Dans un contexte professionnel, surtout en cybersécurité, ce qui entre dans la conversation peut compter autant que ce qui en sort.</p>
+
+          <p>Une architecture détaillée, des journaux bruts, un inventaire d’actifs, des comptes, des règles de sécurité ou des éléments relatifs à un incident ne sont pas des données anodines. Même si l’objectif est légitime, leur transmission à un service externe doit être compatible avec les règles de l’organisation, ses contrats, sa classification des données et le cadre applicable. L’envie d’obtenir rapidement une réponse ne constitue pas une autorisation de divulguer ces informations.</p>
+
+          <p>Il faut aussi regarder ce qui change lorsqu’on passe de la conversation à l’IA connectée aux outils. Lire un rapport et proposer une analyse ne présente pas le même risque que pouvoir interroger directement une console, modifier une règle, déclencher un déploiement ou exécuter une action sur des systèmes de production.</p>
+
+          <p>Dans ce second cas, les questions classiques de cybersécurité reviennent immédiatement : quelles permissions sont accordées ? Quelles données sont dignes de confiance ? Quelles actions doivent être approuvées ? Comment tracer et annuler une opération ? Que se passe-t-il si une source consultée contient des instructions malveillantes destinées au modèle ?</p>
+
+          <p>L’<a href="https://genai.owasp.org/llm-top-10/" target="_blank" rel="noopener noreferrer">OWASP Top 10 pour les applications fondées sur les grands modèles de langage</a> répertorie notamment l’injection d’instructions, la divulgation d’informations sensibles et l’excès d’autonomie. Ce ne sont pas des détails accessoires : ils montrent qu’un système qui semble « discuter » peut aussi devenir un composant d’une chaîne technique avec ses propres surfaces d’attaque.</p>
+
+          <p>Le <a href="https://doi.org/10.6028/NIST.AI.600-1" target="_blank" rel="noopener noreferrer">profil du NIST consacré aux risques de l’IA générative</a> rappelle par ailleurs le problème des contenus erronés présentés avec assurance. En milieu technique, cette assurance peut être particulièrement trompeuse : un jargon juste ne garantit pas une conclusion juste.</p>
+
+          <p>Pour moi, la règle est claire : plus l’IA se rapproche des données sensibles et de la capacité d’action, plus les contrôles doivent être explicites, indépendants du modèle et proportionnés aux conséquences possibles.</p>
+
+          <h2 id="familiarite">La familiarité est un avantage. Elle peut aussi devenir un angle mort.</h2>
+
+          <p>Il y a quelque chose de très confortable à retrouver un outil qui semble connaître nos habitudes. Il peut adopter le niveau de détail attendu, éviter certaines répétitions, comprendre une référence précédente ou suivre le fil d’un projet. Ce confort a une vraie valeur.</p>
+
+          <p>Mais il crée une tentation : confondre « il me répond comme j’aime » avec « il me répond juste ».</p>
+
+          <p>Je peux me retrouver devant une analyse très bien écrite, avec les bons termes, le bon ton, une structure irréprochable et une conclusion rassurante. Le risque n’est pas seulement que l’IA commette une erreur ; c’est qu’elle m’aide à <em>ne pas voir</em> cette erreur, parce que la réponse paraît familière.</p>
+
+          <p>Une recherche publiée dans <em>Science</em> en mars 2026 a étudié les réponses excessivement approbatrices, parfois appelées <em>sycophancy</em>. Dans les situations expérimentales examinées, ces réponses pouvaient renforcer la conviction des participants d’avoir raison et étaient néanmoins appréciées. Ces travaux portent notamment sur des jugements interpersonnels ; ils ne permettent pas d’affirmer que les mêmes effets se produisent avec la même intensité dans toute analyse technique. Mais ils donnent une raison sérieuse de se méfier de la flatterie automatisée. <a href="https://doi.org/10.1126/science.aec8352" target="_blank" rel="noopener noreferrer">Consulter l’étude de Cheng et ses collègues (2026)</a>.</p>
+
+          <p>Et je ne pense pas qu’il suffise de demander à l’IA « contredis-moi ». La contradiction mécanique peut être tout aussi artificielle que l’approbation automatique. Ce qui m’intéresse, c’est une objection fondée sur des faits, sur une hypothèse identifiée ou sur une incertitude que j’aurais négligée.</p>
+
+          <div class="point-cle">
+            <span>LE PARADOXE CENTRAL</span>
+            <strong>Plus une IA devient agréable à utiliser, plus il peut devenir nécessaire de distinguer la qualité de l’échange de la fiabilité de ce qu’elle affirme.</strong>
+          </div>
+
+          <h2 id="productivite">Gagner du temps… ou déplacer le travail ?</h2>
+
+          <p>Il serait tentant de résumer toute cette collaboration à un gain de productivité. L’IA écrit vite, propose vite, reformule vite. Mais le temps économisé à produire une première réponse n’est pas nécessairement du temps gagné sur l’ensemble du travail.</p>
+
+          <p>En ingénierie, il faut lire, comprendre, vérifier, tester, corriger, documenter et parfois revenir sur une mauvaise piste. Une réponse rapide peut accélérer ces étapes. Elle peut aussi créer une dette de vérification si elle est longue, approximative ou difficile à intégrer.</p>
+
+          <p>Une étude expérimentale de l’organisation METR, réalisée avec 16 développeurs open source expérimentés sur 246 tâches dans des projets qu’ils connaissaient, a trouvé qu’avec les outils d’IA utilisés au premier semestre 2025, les tâches prenaient en moyenne 19 % de temps supplémentaire. Les participants pensaient pourtant avoir été accélérés. Le résultat ne signifie pas que l’IA ralentit tous les développeurs : il décrit un échantillon, des tâches et des outils précis. <a href="https://arxiv.org/abs/2507.09089" target="_blank" rel="noopener noreferrer">Lire l’étude METR (2025)</a>.</p>
+
+          <p>Et il faut garder cette lecture à jour. Dans un <a href="https://metr.org/blog/2026-02-24-uplift-update/" target="_blank" rel="noopener noreferrer">point méthodologique publié en février 2026</a>, METR indique que ses nouvelles observations laissent envisager des gains plus favorables avec des outils récents, tout en soulignant que les biais de sélection empêchent une estimation robuste de leur ampleur. Autrement dit, les performances évoluent et les slogans définitifs vieillissent très vite.</p>
+
+          <p>Ce qui m’intéresse davantage que le nombre de lignes de code ou de paragraphes produits, c’est le résultat final : est-il correct, maintenable, compris par celui qui l’utilise ? Et à quel coût de contrôle ?</p>
+
+          <h2 id="competence">Devenir plus efficace, est-ce devenir plus compétent ?</h2>
+
+          <p>Cette question me paraît incontournable, même si elle mériterait à elle seule une autre réflexion.</p>
+
+          <p>Si une IA me permet de réaliser plus vite un travail, j’ai peut-être gagné en efficacité. Si, à force de l’utiliser, je comprends mieux pourquoi une approche fonctionne, si je reconnais plus tôt une anomalie ou si je sais poser un diagnostic sans elle, alors j’ai peut-être aussi progressé en compétence.</p>
+
+          <p>Mais si je ne sais plus expliquer le script que j’exécute, la règle que j’applique ou l’architecture que je recommande, le bénéfice devient plus ambigu. Un résultat satisfaisant peut masquer une compréhension fragile. Dans les métiers techniques, cette fragilité se révèle souvent au pire moment : lorsque quelque chose se comporte autrement que prévu.</p>
+
+          <p>Je n’en conclus pas qu’il faudrait tout faire à la main pour conserver sa légitimité. Les ingénieurs travaillent depuis toujours avec des outils qui étendent leurs capacités. La documentation, les moteurs de recherche, les environnements de développement ou l’automatisation ont déjà changé notre façon de travailler. Ce qui distingue l’IA conversationnelle, c’est sa capacité à produire une explication apparemment cohérente en même temps que le résultat.</p>
+
+          <p>Le danger ne réside donc pas seulement dans la délégation du travail. Il réside dans la possibilité de déléguer aussi, sans s’en apercevoir, une partie de l’effort de compréhension.</p>
+
+          <h2 id="methode">Ma manière de concevoir une collaboration utile</h2>
+
+          <p>Je ne cherche pas une méthode magique, encore moins une liste de « prompts ultimes ». Je préfère quelques principes simples, qui s’appliquent aussi bien à une réflexion personnelle qu’à une tâche technique, avec une intensité de contrôle adaptée aux enjeux.</p>
+
+          <p>D’abord, formuler ce que je sais et ce que je suppose. Une IA ne peut pas rendre solide une hypothèse que je lui présente comme une certitude. Ensuite, lui demander d’expliciter ses propres conditions de validité : de quelles informations dépend sa proposition ? Quelles alternatives existent ? Qu’est-ce qui permettrait de la réfuter ?</p>
+
+          <p>Puis faire intervenir la réalité. Quand il s’agit d’un fait, je cherche une source fiable. Quand il s’agit d’un système, je consulte les informations techniques appropriées. Quand il s’agit d’une modification, je veux un test, une validation et, si nécessaire, un retour arrière possible. Enfin, je garde la capacité d’expliquer la décision sans m’abriter derrière « l’IA me l’a dit ».</p>
+
+          <p>Et j’accepte qu’il y ait des moments où l’IA ne soit pas le bon outil : par manque de contexte, pour des raisons de confidentialité ou parce que l’effort nécessaire à vérifier sa réponse annulerait l’intérêt de la solliciter.</p>
+
+          <blockquote>Collaborer avec une IA ne consiste pas à partager la responsabilité. Cela consiste à utiliser une assistance sans renoncer à la sienne.</blockquote>
+
+          <h2 id="conclusion">Qui évolue réellement dans cette collaboration ?</h2>
+
+          <p>Je reviens finalement à la scène de départ : deux personnes, la même IA, des échanges différents. Ce qui semblait n’être qu’une différence de ton ouvre une question plus large sur nos habitudes intellectuelles et professionnelles.</p>
+
+          <p>Le modèle ne devient pas une personne à force de conversations. Le service peut être mis à jour, personnalisé, enrichi de contexte ou de mémoire ; cela ne constitue pas une expérience vécue partagée. De notre côté, nous pouvons développer des réflexes durables, apprendre à mieux questionner, parfois à mieux vérifier — ou, au contraire, prendre l’habitude d’accepter des résultats que nous ne comprenons plus vraiment.</p>
+
+          <p>Et entre les deux, c’est peut-être l’organisation même de certaines activités qui change. Nous passons plus de temps à orienter, confronter, sélectionner et valider des propositions. Ce déplacement peut être extrêmement fécond. Il peut aussi nous rendre dépendants d’un outil dont nous n’avons pas toujours la capacité d’évaluer les limites.</p>
+
+          <p>Je ne crois ni au fantasme d’une intelligence artificielle devenue notre amie, ni à l’idée qu’elle ne serait qu’un traitement de texte un peu sophistiqué. Je vois un outil d’un genre particulier : suffisamment souple pour s’insérer dans de très nombreux moments de nos vies, suffisamment convaincant pour exiger une vigilance particulière.</p>
+
+          <p class="finale">Alors, quand nous apprenons à travailler avec une IA, qui évolue réellement ? Le système dans ses réponses, nous dans nos pratiques, et probablement notre manière d’organiser le travail. Mais si je devais défendre une seule conviction, ce serait celle-ci : la meilleure collaboration n’est pas celle qui me donne raison le plus souvent. C’est celle qui me permet de rester capable de comprendre, de contredire et de décider.</p>
+        </article>
+
+        <aside class="aside" aria-label="À propos de cette réflexion">
+          <div class="aside-card">
+            <p class="aside-label">LE POINT DE DÉPART</p>
+            <p>Une discussion spontanée sur deux usages d’une même IA, prolongée par une interrogation sur l’expertise technique, la confiance et la responsabilité.</p>
+          </div>
+          <div class="aside-card aside-card--light">
+            <p class="aside-label">CE TEXTE</p>
+            <p>Un essai personnel nourri d’exemples, de recherches et d’objections. Les situations hypothétiques sont présentées comme telles ; elles ne constituent pas des incidents réels.</p>
+          </div>
+        </aside>
+      </div>
+
+      <section class="references" aria-labelledby="references-title">
+        <p class="references-kicker">POUR PROLONGER LA RÉFLEXION</p>
+        <h2 id="references-title">Sources et lectures</h2>
+        <ol>
+          <li><a href="https://doi.org/10.1145/3706598.3713778" target="_blank" rel="noopener noreferrer">Lee et al. (2025), <em>The Impact of Generative AI on Critical Thinking</em></a> — enquête déclarative auprès de 319 professionnels, CHI 2025.</li>
+          <li><a href="https://doi.org/10.1126/science.aec8352" target="_blank" rel="noopener noreferrer">Cheng et al. (2026), <em>Sycophantic AI decreases prosocial intentions and promotes dependence</em></a> — étude expérimentale publiée dans <em>Science</em>.</li>
+          <li><a href="https://doi.org/10.6028/NIST.AI.600-1" target="_blank" rel="noopener noreferrer">NIST (2024), <em>Generative Artificial Intelligence Profile</em></a> — risques et mesures de gestion des systèmes d’IA générative.</li>
+          <li><a href="https://genai.owasp.org/llm-top-10/" target="_blank" rel="noopener noreferrer">OWASP (2025), <em>Top 10 for LLM Applications</em></a> — risques applicatifs, dont injection d’instructions, fuite de données et autonomie excessive.</li>
+          <li><a href="https://arxiv.org/abs/2507.09089" target="_blank" rel="noopener noreferrer">Becker et al. / METR (2025), <em>Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity</em></a>, et <a href="https://metr.org/blog/2026-02-24-uplift-update/" target="_blank" rel="noopener noreferrer">mise à jour méthodologique de février 2026</a> — résultats contextualisés, non généralisables à tous les développeurs.</li>
+        </ol>
+      </section>
+
+      <nav class="retour" aria-label="Retour aux réflexions"><a href="/reflexions/">← Revenir à toutes les réflexions</a></nav>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  :global(body) { background: #f8fafc; }
+  .article-page { width: min(1140px, calc(100% - 3rem)); margin: 0 auto; padding: 3rem 0 5rem; }
+  .fil { display: flex; gap: .65rem; align-items: center; flex-wrap: wrap; color: #64748b; font-size: .82rem; margin-bottom: 2.25rem; }
+  .fil a, .retour a { color: #2563eb; text-decoration: none; font-weight: 750; }
+  .fil a:hover, .retour a:hover { text-decoration: underline; }
+  /* Même bandeau bleu nuit que l'introduction de la rubrique Réflexions. */
+  .article-head {
+    width: 100%;
+    margin: 0 0 3rem;
+    padding: clamp(2rem, 5vw, 4.3rem);
+    border-radius: 26px;
+    background:
+      radial-gradient(circle at 100% 0%, rgba(37, 99, 235, .28), transparent 47%),
+      linear-gradient(125deg, #020817, #0d244a);
+    box-shadow: 0 24px 55px rgba(2, 8, 23, .12);
+  }
+  .rubrique { margin: 0 0 1rem; font-size: .73rem; font-weight: 850; letter-spacing: .10em; color: #93c5fd; }
+  .rubrique span { color: #93c5fd; padding: 0 .25rem; }
+  .article-head h1 { margin: 0 0 1.4rem; font-size: clamp(2.25rem, 5.8vw, 4.25rem); line-height: 1.12; letter-spacing: -.055em; color: #fff; max-width: 980px; font-weight: 900; }
+  .chapo { margin: 0; color: #cbd5e1; max-width: 800px; font-size: clamp(1.05rem, 2.1vw, 1.26rem); line-height: 1.65; }
+  .meta { display: flex; align-items: center; flex-wrap: wrap; gap: .65rem; margin-top: 1.45rem; font-size: .79rem; color: #a8b9d1; }
+  .brouillon { color: #bfdbfe; background: rgba(147, 197, 253, .14); border: 1px solid rgba(147, 197, 253, .28); padding: .27rem .6rem; border-radius: 999px; font-weight: 700; }
+  .article-layout { display: grid; grid-template-columns: minmax(0, 735px) minmax(180px, 1fr); gap: clamp(2rem, 4.5vw, 5rem); align-items: start; }
+  .prose { min-width: 0; color: #253246; font-size: 1.035rem; line-height: 1.84; }
+  .prose p { margin: 0 0 1.35rem; }
+  .prose .lead { font-size: 1.25rem; line-height: 1.7; font-weight: 700; color: #0f172a; }
+  /* Intertitres de l’essai : des repères légers, sans rivaliser avec le bandeau principal. */
+  .prose h2 {
+    scroll-margin-top: 1.5rem;
+    font-size: clamp(1.22rem, 2vw, 1.52rem);
+    line-height: 1.3;
+    letter-spacing: -.032em;
+    font-weight: 800;
+    color: #12243f;
+    margin: 2.9rem 0 1.35rem;
+    padding: .9rem 1.15rem;
+    background: linear-gradient(110deg, #eff6ff 0%, #f8fbff 72%, #ffffff 100%);
+    border: 1px solid #e0eaf6;
+    border-left: 4px solid #4a83d4;
+    border-radius: 12px;
+  }
+  .prose blockquote { margin: 2rem 0; padding: 1.15rem 1.45rem; border-left: 4px solid #2563eb; border-radius: 0 12px 12px 0; background: #eff6ff; color: #173b73; font-size: 1.14rem; font-weight: 750; line-height: 1.65; }
+  .prose a, .references a { color: #1d4ed8; text-underline-offset: 3px; }
+  .prose a:hover, .references a:hover { color: #1e40af; }
+  .point-cle { margin: 2.3rem 0; padding: 1.5rem 1.65rem; border-radius: 16px; background: linear-gradient(125deg, #07152c, #15356a); color: white; }
+  .point-cle span { display: block; color: #93c5fd; letter-spacing: .11em; font-size: .72rem; font-weight: 800; margin-bottom: .6rem; }
+  .point-cle strong { display: block; line-height: 1.5; font-size: clamp(1.15rem, 2vw, 1.45rem); }
+  .finale { font-weight: 720; color: #0f172a; }
+  .aside { display: grid; gap: 1rem; position: sticky; top: 2rem; }
+  .aside-card { border-radius: 15px; background: #e9f1ff; padding: 1.35rem; border: 1px solid #d6e6ff; color: #29415c; font-size: .86rem; line-height: 1.6; }
+  .aside-card--light { background: #fff; border-color: #e2e8f0; }
+  .aside-card p { margin: 0; }
+  .aside-label { font-size: .68rem; font-weight: 850; letter-spacing: .095em; color: #2563eb; margin-bottom: .7rem !important; }
+  .references { margin-top: 3rem; max-width: 735px; border-top: 1px solid #dbe3ee; padding-top: 2rem; }
+  .references-kicker { margin: 0 0 .5rem; font-size: .69rem; letter-spacing: .1em; font-weight: 850; color: #2563eb; }
+  .references h2 { margin: 0 0 1rem; font-size: 1.35rem; color: #0f172a; }
+  .references ol { padding-left: 1.35rem; margin: 0; color: #475569; font-size: .9rem; line-height: 1.75; }
+  .references li { margin-bottom: .7rem; }
+  .retour { margin-top: 2.7rem; }
+  @media (max-width: 840px) { .article-layout { grid-template-columns: 1fr; } .aside { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 620px) { .article-page { width: calc(100% - 2rem); padding: 2rem 0 3rem; } .article-head { padding: 1.6rem; border-radius: 20px; margin-bottom: 2rem; } .aside { grid-template-columns: 1fr; } .prose { font-size: 1rem; line-height: 1.78; } .prose h2 { padding: .85rem 1rem; margin-top: 2.4rem; border-radius: 10px; } .point-cle { padding: 1.2rem; } }
+</style>

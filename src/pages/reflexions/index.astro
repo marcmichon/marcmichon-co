@@ -1,0 +1,273 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const pistes = [
+  {
+    categorie: 'Intelligence artificielle · Humain',
+    theme: 'ia-humain',
+    titre: 'On n’apprend pas seulement à utiliser une IA. On apprend à travailler avec la sienne.',
+    description: 'Deux personnes, une même technologie, des manières différentes d’interagir : et si l’IA changeait aussi notre façon de réfléchir ?',
+    statut: 'Lire la réflexion →',
+  },
+  {
+    categorie: 'Cybersécurité',
+    theme: 'cyber',
+    titre: 'La cybersécurité est-elle devenue trop compliquée pour être efficace ?',
+    description: 'Quand la multiplication des outils et des contrôles finit par compliquer la sécurité elle-même.',
+    statut: 'Sujet envisagé',
+  },
+  {
+    categorie: 'IT & organisations',
+    theme: 'organisation',
+    titre: 'Nous avons des outils pour tout. Pourquoi avons-nous encore autant de mal à travailler ensemble ?',
+    description: 'Une question sur la technologie, les méthodes de travail et la place de l’humain.',
+    statut: 'Sujet envisagé',
+  },
+  {
+    categorie: 'IA & compétences',
+    theme: 'competences',
+    titre: 'L’IA nous rend-elle plus compétents ou simplement plus rapides ?',
+    description: 'Assistance, apprentissage et délégation : qu’est-ce qui change vraiment ?',
+    statut: 'Sujet envisagé',
+  },
+  {
+    categorie: 'Automatisation',
+    theme: 'automatisation',
+    titre: 'À force d’automatiser, savons-nous encore comment fonctionnent nos outils ?',
+    description: 'Le confort de l’automatisation face au besoin de comprendre et de garder la maîtrise.',
+    statut: 'Sujet envisagé',
+  },
+  {
+    categorie: 'IA & confiance',
+    theme: 'confiance',
+    titre: 'Pourquoi accordons-nous parfois davantage de crédit à une machine qui nous donne raison ?',
+    description: 'Familiarité, biais de confirmation et esprit critique face aux réponses de l’IA.',
+    statut: 'Sujet envisagé',
+  },
+];
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <BaseHead
+      title="Réflexions | Marc Michon"
+      description="Des réflexions personnelles sur l’IT, la cybersécurité, l’intelligence artificielle et notre rapport au numérique."
+    />
+    <!-- Prototype non publié : retirer cette balise lors de la mise en production. -->
+  </head>
+  <body>
+    <Header />
+
+    <main class="reflexions-page">
+      <!-- En-tête de rubrique : le bleu présente « Réflexions », pas un article. -->
+      <section class="intro" aria-labelledby="reflexions-title">
+        <p class="eyebrow">UN AUTRE REGARD SUR LE NUMÉRIQUE</p>
+        <h1 id="reflexions-title">Réflexions<span>.</span></h1>
+        <p class="signature">Des convictions, des questions et le droit de se tromper.</p>
+        <p class="presentation">
+          L’informatique, la cybersécurité et l’intelligence artificielle ne sont pas
+          seulement des histoires d’outils. Elles changent aussi nos habitudes, nos
+          décisions et nos manières de travailler. Ici, je prends le temps de les questionner,
+          avec mon expérience, mes convictions et la liberté de me tromper.
+        </p>
+      </section>
+
+      <section class="autres" aria-labelledby="autres-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">LES QUESTIONS QUI M’INTÉRESSENT</p>
+            <h2 id="autres-title">À creuser<span>.</span></h2>
+          </div>
+          <p>Des pistes de réflexion, pas un calendrier éditorial.</p>
+        </div>
+
+        <div class="pistes-grid">
+          {pistes.map((piste, index) => (
+            <article class={`piste piste--${piste.theme}`}>
+              <div class="piste-top">
+                <span class="numero">{String(index + 1).padStart(2, '0')}</span>
+                <span class="categorie">{piste.categorie}</span>
+              </div>
+              {index === 0 ? (
+                <a class="piste-lien" href="/reflexions/travailler-avec-son-ia/" aria-label={`Lire la réflexion : ${piste.titre}`}>
+                  <h3>{piste.titre}</h3>
+                  <p>{piste.description}</p>
+                  <span class="piste-statut">{piste.statut}</span>
+                </a>
+              ) : (
+                <>
+                  <h3>{piste.titre}</h3>
+                  <p>{piste.description}</p>
+                  <span class="piste-statut">{piste.statut}</span>
+                </>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <aside class="manifesto">
+        <p>Mon intention</p>
+        <strong>Ne pas avoir réponse à tout. Mais ne pas s’interdire de poser les questions.</strong>
+      </aside>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  :global(body) {
+    background: #f8fafc;
+  }
+  .reflexions-page {
+    width: min(1160px, calc(100% - 3rem));
+    max-width: none;
+    padding: 4.5rem 0 5rem;
+    margin: 0 auto;
+  }
+  .eyebrow {
+    margin: 0;
+    color: #2563eb;
+    font-size: .7rem;
+    font-weight: 900;
+    letter-spacing: .16em;
+    line-height: 1.5;
+  }
+  /* Bandeau d'introduction : mêmes codes bleu nuit que les pages éditoriales. */
+  .intro {
+    width: 100%;
+    margin: 0 0 3.3rem;
+    padding: clamp(2rem, 5vw, 4.3rem);
+    border-radius: 26px;
+    background:
+      radial-gradient(circle at 100% 0%, rgba(37, 99, 235, .28), transparent 47%),
+      linear-gradient(125deg, #020817, #0d244a);
+    box-shadow: 0 24px 55px rgba(2, 8, 23, .12);
+  }
+  .intro .eyebrow { color: #93c5fd; }
+  .intro h1 {
+    margin: .7rem 0 .7rem;
+    color: #fff;
+    font-size: clamp(3rem, 7vw, 5.6rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -.065em;
+  }
+  .intro h1 span { color: #93c5fd; }
+  .section-heading h2 span { color: #2563eb; }
+  .signature {
+    margin: 0 0 1.35rem;
+    color: #e2e8f0;
+    font-size: clamp(1.08rem, 2.3vw, 1.45rem);
+    font-weight: 750;
+    line-height: 1.4;
+  }
+  .presentation {
+    max-width: 780px;
+    margin: 0;
+    color: #bdcbe0;
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+  .section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.3rem;
+  }
+  .section-heading h2 {
+    margin: .3rem 0 0;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    letter-spacing: -.04em;
+  }
+  .section-heading > p {
+    max-width: 280px;
+    margin: 0 0 .25rem;
+    color: #64748b;
+    font-size: .82rem;
+    line-height: 1.5;
+    text-align: right;
+  }
+  .pistes-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem; }
+  .piste {
+    display: flex;
+    flex-direction: column;
+    min-height: 255px;
+    padding: 1.65rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 10px 32px rgba(15, 23, 42, .035);
+    /* Accent uniquement sur la carte et l'étiquette : tout le reste reste uniforme. */
+    border-top: 3px solid var(--piste-accent);
+  }
+  .piste--ia-humain     { --piste-accent: #2563eb; --piste-fond: #eff6ff; }
+  .piste--cyber         { --piste-accent: #047857; --piste-fond: #ecfdf5; }
+  .piste--organisation  { --piste-accent: #b45309; --piste-fond: #fffbeb; }
+  .piste--competences   { --piste-accent: #6d28d9; --piste-fond: #f5f3ff; }
+  .piste--automatisation { --piste-accent: #0e7490; --piste-fond: #ecfeff; }
+  .piste--confiance     { --piste-accent: #be185d; --piste-fond: #fdf2f8; }
+  .piste-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .numero { color: var(--piste-accent); font-size: .85rem; font-weight: 800; }
+  .categorie {
+    display: inline-block;
+    max-width: 82%;
+    padding: .36rem .65rem;
+    border-radius: 999px;
+    background: var(--piste-fond);
+    color: var(--piste-accent);
+    font-size: .65rem;
+    font-weight: 850;
+    letter-spacing: .045em;
+    line-height: 1.4;
+    text-transform: uppercase;
+    text-align: right;
+  }
+  .piste-lien { display: flex; flex-direction: column; flex: 1; color: inherit; text-decoration: none; border-radius: 5px; }
+  .piste-lien:focus-visible { outline: 3px solid #2563eb; outline-offset: 5px; }
+  .piste-lien:hover h3 { color: #1d4ed8; }
+  .piste-lien .piste-statut { color: #2563eb; }
+  .piste h3 {
+    margin: 1.2rem 0 .75rem;
+    color: #0f172a;
+    font-size: 1.13rem;
+    font-weight: 900;
+    line-height: 1.32;
+  }
+  .piste p { margin: 0 0 1.2rem; color: #64748b; font-size: .84rem; line-height: 1.6; }
+  .piste-statut {
+    margin-top: auto;
+    color: #94a3b8;
+    font-size: .7rem;
+    font-weight: 800;
+  }
+  .manifesto {
+    margin-top: 2.8rem;
+    padding: 1.5rem 1.9rem;
+    border-left: 4px solid #2563eb;
+    background: #eff6ff;
+    border-radius: 0 16px 16px 0;
+  }
+  .manifesto p {
+    margin: 0 0 .4rem;
+    color: #2563eb;
+    font-size: .68rem;
+    font-weight: 850;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  .manifesto strong { color: #1e293b; font-size: 1rem; line-height: 1.5; }
+  @media (max-width: 760px) {
+    .reflexions-page { width: calc(100% - 2rem); padding: 2.8rem 0 3rem; }
+    .intro { margin-bottom: 2.5rem; padding: 2rem 1.35rem; border-radius: 18px; }
+    .pistes-grid { grid-template-columns: 1fr; }
+    .piste { min-height: unset; }
+    .section-heading { align-items: start; flex-direction: column; }
+    .section-heading > p { max-width: none; text-align: left; }
+  }
+</style>

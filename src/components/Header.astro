@@ -1,182 +1,369 @@
 ---
 import { SITE_NAME } from '../consts';
+
+const pathname = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+const aboutActive = isActive('/about') || isActive('/certifications');
 ---
 
 <header class="mm-header">
-	<nav class="mm-nav" aria-label="Navigation principale">
-		<a class="mm-brand" href="/">{SITE_NAME}</a>
+  <nav class="mm-nav" aria-label="Navigation principale">
+    <a class="mm-brand" href="/" aria-label={`${SITE_NAME} — Accueil`}>{SITE_NAME}</a>
 
-		<button class="mm-menu-button" type="button" aria-expanded="false" aria-controls="mm-menu" aria-label="Ouvrir le menu">
-			<span></span>
-			<span></span>
-			<span></span>
-		</button>
+    <button
+      class="mm-menu-button"
+      type="button"
+      aria-expanded="false"
+      aria-controls="mm-menu"
+      aria-label="Ouvrir le menu"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
 
-		<div id="mm-menu" class="mm-menu">
-			<a href="/">Accueil</a>
-			<a href="/notes-de-terrain">Notes de terrain</a>
-			<a href="/expertise">Expertise</a>
-			<a href="/certifications">Certifications</a>
-			<a href="/labs">MM Security Intelligence</a>
-			<a href="/about">À propos</a>
-			<a href="/contact">Contact</a>
-			<a href="/off">En Off</a>
-			<a class="mm-linkedin" href="https://www.linkedin.com/in/michonmarc" target="_blank" rel="noopener noreferrer">
-				Mon profil LinkedIn →
-			</a>
-		</div>
-	</nav>
+    <div id="mm-menu" class="mm-menu">
+      <a href="/notes-de-terrain/" aria-current={isActive('/notes-de-terrain') ? 'page' : undefined}>
+        Notes de terrain
+      </a>
+      <a href="/reflexions/" aria-current={isActive('/reflexions') ? 'page' : undefined}>
+        Réflexions
+      </a>
+      <a href="/expertise/" aria-current={isActive('/expertise') ? 'page' : undefined}>
+        Expertise
+      </a>
+      <a href="/labs/" aria-current={isActive('/labs') ? 'page' : undefined}>
+        MM Security Intelligence
+      </a>
+      <a href="/off/" aria-current={isActive('/off') ? 'page' : undefined}>
+        En Off
+      </a>
+
+      <details class="mm-subnav">
+        <summary class="mm-subnav-trigger" data-active={aboutActive ? 'true' : undefined}>
+          À propos
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+        </summary>
+        <div class="mm-submenu">
+          <a href="/about/" aria-current={isActive('/about') ? 'page' : undefined}>
+            Présentation
+          </a>
+          <a href="/certifications/" aria-current={isActive('/certifications') ? 'page' : undefined}>
+            Certifications
+          </a>
+        </div>
+      </details>
+
+      <a href="/contact/" aria-current={isActive('/contact') ? 'page' : undefined}>
+        Contact
+      </a>
+      <a
+        class="mm-linkedin"
+        href="https://www.linkedin.com/in/michonmarc"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Mon profil LinkedIn (nouvel onglet)"
+        title="Mon profil LinkedIn"
+      >
+        <img src="/Images/linkedin-nav.png" alt="" width="30" height="30" decoding="async" />
+        <span class="mm-linkedin-label">LinkedIn</span>
+      </a>
+    </div>
+  </nav>
 </header>
 
 <script is:inline>
-	const button = document.querySelector('.mm-menu-button');
-	const menu = document.querySelector('#mm-menu');
+  (() => {
+    const nav = document.querySelector('.mm-nav');
+    const button = nav?.querySelector('.mm-menu-button');
+    const menu = nav?.querySelector('#mm-menu');
+    const subnav = nav?.querySelector('.mm-subnav');
 
-	if (button && menu) {
-		button.addEventListener('click', () => {
-			const isOpen = button.getAttribute('aria-expanded') === 'true';
-			button.setAttribute('aria-expanded', String(!isOpen));
-			button.setAttribute('aria-label', isOpen ? 'Ouvrir le menu' : 'Fermer le menu');
-			menu.classList.toggle('is-open');
-		});
-	}
+    if (!nav || !button || !menu) return;
+
+    function closeMenu() {
+      button.setAttribute('aria-expanded', 'false');
+      button.setAttribute('aria-label', 'Ouvrir le menu');
+      menu.classList.remove('is-open');
+      if (subnav) subnav.open = false;
+    }
+
+    button.addEventListener('click', () => {
+      const nextOpen = button.getAttribute('aria-expanded') !== 'true';
+      button.setAttribute('aria-expanded', String(nextOpen));
+      button.setAttribute('aria-label', nextOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+      menu.classList.toggle('is-open', nextOpen);
+      if (!nextOpen && subnav) subnav.open = false;
+    });
+
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        if (window.matchMedia('(max-width: 1420px)').matches) closeMenu();
+      });
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!nav.contains(event.target)) {
+        closeMenu();
+      } else if (subnav?.open && !subnav.contains(event.target)) {
+        subnav.open = false;
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        const wasOpen = menu.classList.contains('is-open');
+        closeMenu();
+        if (wasOpen) button.focus();
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 1420 && menu.classList.contains('is-open')) closeMenu();
+    });
+  })();
 </script>
 
 <style is:global>
-	.mm-header {
-		position: sticky;
-		top: 0;
-		z-index: 1000;
-		background: rgba(255, 255, 255, 0.96);
-		backdrop-filter: blur(18px);
-		border-bottom: 1px solid #e5e7eb;
-	}
+  .mm-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid #e5e7eb;
+  }
 
-	.mm-nav {
-		width: min(1320px, calc(100% - 4rem));
-		min-height: 82px;
-		margin: 0 auto;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 2rem;
-	}
+  .mm-nav {
+    width: min(1320px, calc(100% - 4rem));
+    min-height: 82px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 1rem;
+  }
 
-	.mm-brand {
-		color: #0f172a;
-		font-size: 1.75rem;
-		font-weight: 900;
-		line-height: 1;
-		letter-spacing: -0.05em;
-		text-decoration: none;
-		white-space: nowrap;
-	}
+  .mm-brand {
+    color: #0f172a;
+    font-size: 1.75rem;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    grid-column: 1;
+    justify-self: start;
+  }
 
-	.mm-menu {
-		display: flex;
-		align-items: center;
-		gap: 0.35rem;
-	}
+  .mm-menu {
+    grid-column: 2;
+    justify-self: center;
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+    white-space: nowrap;
+  }
 
-	.mm-menu a {
-		color: #0f172a;
-		font-size: 0.95rem;
-		font-weight: 800;
-		text-decoration: none;
-		padding: 0.75rem 0.85rem;
-		border-radius: 999px;
-		transition: background 0.2s ease, color 0.2s ease;
-	}
+  .mm-menu > a,
+  .mm-subnav-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    min-height: 44px;
+    color: #0f172a;
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1.3;
+    text-decoration: none;
+    padding: 0.65rem 0.62rem;
+    border-radius: 999px;
+    transition: background 0.2s ease, color 0.2s ease;
+    text-align: center;
+    cursor: pointer;
+  }
 
-	.mm-menu a:hover,
-	.mm-menu a[aria-current='page'] {
-		color: #2563eb;
-		background: #eff6ff;
-	}
+  .mm-menu > a:hover,
+  .mm-menu > a[aria-current='page'],
+  .mm-subnav-trigger:hover,
+  .mm-subnav-trigger[data-active='true'],
+  .mm-subnav[open] > .mm-subnav-trigger,
+  .mm-submenu a:hover,
+  .mm-submenu a[aria-current='page'] {
+    color: #2563eb;
+    background: #eff6ff;
+  }
 
-	.mm-linkedin {
-		color: #2563eb !important;
-		white-space: nowrap;
-	}
+  .mm-subnav {
+    position: relative;
+    flex-shrink: 0;
+  }
 
-	.mm-menu-button {
-		display: none;
-	}
+  .mm-subnav-trigger {
+    list-style: none;
+    user-select: none;
+  }
 
-	@media (max-width: 980px) {
-		.mm-nav {
-			width: min(100% - 2rem, 1320px);
-			min-height: 74px;
-			position: relative;
-		}
+  .mm-subnav-trigger::-webkit-details-marker { display: none; }
+  .mm-subnav-trigger::marker { content: ''; }
+  .mm-subnav[open] .mm-subnav-trigger svg { transform: rotate(180deg); }
 
-		.mm-brand {
-			font-size: 1.45rem;
-		}
+  .mm-submenu {
+    position: absolute;
+    top: calc(100% + 0.4rem);
+    right: 0;
+    display: grid;
+    gap: 0.25rem;
+    min-width: 190px;
+    padding: 0.5rem;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.15);
+  }
 
-		.mm-menu-button {
-			width: 46px;
-			height: 46px;
-			border: 1px solid #e5e7eb;
-			border-radius: 14px;
-			background: #f8fafc;
-			display: grid;
-			place-content: center;
-			gap: 5px;
-			cursor: pointer;
-		}
+  .mm-submenu a {
+    display: block;
+    padding: 0.8rem 0.9rem;
+    color: #0f172a;
+    font-size: 0.94rem;
+    font-weight: 750;
+    text-decoration: none;
+    border-radius: 10px;
+  }
 
-		.mm-menu-button span {
-			display: block;
-			width: 20px;
-			height: 2px;
-			border-radius: 999px;
-			background: #0f172a;
-			transition: transform 0.2s ease, opacity 0.2s ease;
-		}
+  .mm-menu > a.mm-linkedin {
+    color: #2563eb;
+    padding: 0.45rem;
+    margin-left: 0.25rem;
+    flex-shrink: 0;
+  }
 
-		.mm-menu-button[aria-expanded='true'] span:nth-child(1) {
-			transform: translateY(7px) rotate(45deg);
-		}
+  .mm-linkedin img {
+    display: block;
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    object-fit: contain;
+  }
+  .mm-linkedin-label { display: none; }
 
-		.mm-menu-button[aria-expanded='true'] span:nth-child(2) {
-			opacity: 0;
-		}
+  .mm-nav a:focus-visible,
+  .mm-nav summary:focus-visible,
+  .mm-menu-button:focus-visible {
+    outline: 3px solid #93c5fd;
+    outline-offset: 2px;
+  }
 
-		.mm-menu-button[aria-expanded='true'] span:nth-child(3) {
-			transform: translateY(-7px) rotate(-45deg);
-		}
+  .mm-menu-button { display: none; }
 
-		.mm-menu {
-			position: absolute;
-			top: calc(100% + 0.75rem);
-			left: 0;
-			right: 0;
-			display: none;
-			grid-template-columns: 1fr;
-			gap: 0.35rem;
-			padding: 1rem;
-			border-radius: 22px;
-			background: white;
-			border: 1px solid #e5e7eb;
-			box-shadow: 0 24px 60px rgba(15, 23, 42, 0.16);
-		}
+  @media (max-width: 1420px) {
+    .mm-nav {
+      width: min(100% - 2rem, 1320px);
+      min-height: 74px;
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+    }
 
-		.mm-menu.is-open {
-			display: grid;
-		}
+    .mm-brand { font-size: 1.45rem; }
 
-		.mm-menu a {
-			display: block;
-			padding: 0.95rem 1rem;
-			border-radius: 14px;
-			font-size: 1rem;
-		}
+    .mm-menu-button {
+      width: 46px;
+      height: 46px;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      background: #f8fafc;
+      display: grid;
+      place-content: center;
+      gap: 5px;
+      cursor: pointer;
+    }
 
-		.mm-linkedin {
-			margin-top: 0.5rem;
-			text-align: center;
-			background: #eff6ff;
-		}
-	}
+    .mm-menu-button span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      border-radius: 999px;
+      background: #0f172a;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .mm-menu-button[aria-expanded='true'] span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .mm-menu-button[aria-expanded='true'] span:nth-child(2) { opacity: 0; }
+
+    .mm-menu-button[aria-expanded='true'] span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .mm-menu {
+      position: absolute;
+      top: calc(100% + 0.75rem);
+      left: 0;
+      right: 0;
+      max-height: calc(100dvh - 100px);
+      overflow-y: auto;
+      display: none;
+      grid-template-columns: 1fr;
+      white-space: normal;
+      gap: 0.2rem;
+      padding: 0.8rem;
+      border-radius: 20px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.16);
+    }
+
+    .mm-menu.is-open { display: grid; }
+
+    .mm-menu > a,
+    .mm-subnav-trigger {
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
+      min-height: 46px;
+      padding: 0.82rem 1rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      text-align: left;
+    }
+
+    .mm-subnav-trigger { justify-content: space-between; }
+
+    .mm-submenu {
+      position: static;
+      min-width: 0;
+      margin: 0.15rem 0 0.4rem 0.75rem;
+      padding: 0.2rem 0 0.2rem 0.7rem;
+      border: 0;
+      border-left: 2px solid #dbeafe;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .mm-submenu a { padding: 0.75rem 0.9rem; }
+
+    .mm-menu > a.mm-linkedin {
+      justify-content: center;
+      gap: 0.6rem;
+      margin-top: 0.35rem;
+      color: #2563eb;
+      background: #eff6ff;
+    }
+
+    .mm-linkedin-label { display: inline; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mm-menu-button span,
+    .mm-menu > a,
+    .mm-subnav-trigger { transition: none; }
+  }
 </style>

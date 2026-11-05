@@ -61,6 +61,17 @@ export const collections: NoteCollection[] = [
 
 export const notes: TerrainNote[] = [
 	{
+		id: 'NT-013',
+		href: '/articles/qui-securise-outils-qui-nous-protegent',
+		title: 'Qui sécurise les outils qui nous protègent ?',
+		description:
+			'Une plateforme de cybersécurité peut disposer de privilèges considérables. Mais lors d’une migration, ses propres accès d’administration méritent parfois d’être regardés de plus près.',
+		readTime: '6 min',
+		date: 'Novembre 2026',
+		collectionId: 'security-platform-engineering',
+	},
+	
+	{
 		id: 'NT-012',
 		href: '/articles/acces-privilegies-bastion-contournement',
 		title: 'Un bastion ne sécurise pas les accès qu’on peut contourner',
