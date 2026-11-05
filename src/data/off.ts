@@ -9,8 +9,8 @@ export interface OffTool {
 	status: OffToolStatus;
 	accent: 'blue' | 'violet' | 'orange' | 'green' | 'red';
 	external?: boolean;
+	actionLabel?: string;
 }
-
 export const offTools: OffTool[] = [
 	{
 		number: '001',
@@ -49,48 +49,54 @@ export const offTools: OffTool[] = [
 		accent: 'green',
 	},
 	{
-
-	number: '005',
-	title: 'Security Explanation Generator',
-	description: 'Parce qu’il fallait bien une version officielle.',
-	href: '/off/security-explanation-generator/',
-	badge: 'OFFICIALLY PLAUSIBLE',
-	status: 'available',
-	accent: 'violet',
-},
-
-{
-	number: '006',
-	title: 'Build Your Incident',
-	description: 'Construisez une catastrophe informatique en moins de dix secondes.',
-	href: '/off/build-your-incident/',
-	badge: 'CHAOS ENGINE',
-	status: 'available',
-	accent: 'red',
-	external: false,
-},
-
-{
-	number: '008',
-	title: 'Firewall Rule Fortune Cookie',
-	description: 'Parce que parfois, le firewall essaie juste de te parler.',
-	href: '/off/firewall-rule-fortune-cookie/',
-	badge: 'OFFICIALLY SPIRITUAL',
-	status: 'available',
-	accent: 'orange',
-	external: false,
-},
-
-{
-	number: '009',
-	title: 'CVSS Bullshit Generator',
-	description: 'Parce qu’un score sur 10 n’était visiblement pas assez anxiogène.',
-	href: '/off/cvss-bullshit-generator/',
-	badge: 'SCIENTIFICALLY QUESTIONABLE',
-	status: 'available',
-	accent: 'red',
-	external: false,
-},
+		number: '005',
+		title: 'Security Explanation Generator',
+		description: 'Parce qu’il fallait bien une version officielle.',
+		href: '/off/security-explanation-generator/',
+		badge: 'OFFICIALLY PLAUSIBLE',
+		status: 'available',
+		accent: 'violet',
+	},
+	{
+		number: '006',
+		title: 'Build Your Incident',
+		description: 'Construisez une catastrophe informatique en moins de dix secondes.',
+		href: '/off/build-your-incident/',
+		badge: 'CHAOS ENGINE',
+		status: 'available',
+		accent: 'red',
+		external: false,
+	},
+	{
+		number: '008',
+		title: 'Firewall Rule Fortune Cookie',
+		description: 'Parce que parfois, le firewall essaie juste de te parler.',
+		href: '/off/firewall-rule-fortune-cookie/',
+		badge: 'OFFICIALLY SPIRITUAL',
+		status: 'available',
+		accent: 'orange',
+		external: false,
+	},
+	{
+		number: '009',
+		title: 'CVSS Bullshit Generator',
+		description: 'Parce qu’un score sur 10 n’était visiblement pas assez anxiogène.',
+		href: '/off/cvss-bullshit-generator/',
+		badge: 'SCIENTIFICALLY QUESTIONABLE',
+		status: 'available',
+		accent: 'red',
+		external: false,
+	},
+	{
+		number: '010',
+		title: 'Les grandes pensées de l’informatique',
+		description: 'Université de Doubaille : la philosophie rencontre les incidents de production.',
+		href: '/off/universite-de-doubaille/',
+		badge: 'ACADEMICALLY ABSURD',
+		actionLabel: 'Lire les chroniques',
+		status: 'available',
+		accent: 'violet',
+	},
 	{
 		number: 'ESCAPED',
 		title: 'TOEA Framework',

@@ -18,7 +18,6 @@ const linkRel = tool.external ? 'noreferrer' : undefined;
 			<span>EN OFF</span>
 			<strong>{tool.number}</strong>
 		</p>
-
 		<OffBadge
 			label={tool.badge}
 			variant={tool.accent}
@@ -42,13 +41,12 @@ const linkRel = tool.external ? 'noreferrer' : undefined;
 				target={linkTarget}
 				rel={linkRel}
 			>
-				{tool.external ? 'Découvrir le projet' : 'Lancer l’outil'}
+				{tool.actionLabel ?? (tool.external ? 'Découvrir le projet' : 'Lancer l’outil')}
 				<span aria-hidden="true">→</span>
 			</a>
 		)
 	}
 </article>
-
 <style>
 	.off-card {
 		position: relative;
@@ -67,7 +65,6 @@ const linkRel = tool.external ? 'noreferrer' : undefined;
 			border-color 0.18s ease,
 			box-shadow 0.18s ease;
 	}
-
 	.off-card::before {
 		content: '';
 		position: absolute;
@@ -101,7 +98,6 @@ const linkRel = tool.external ? 'noreferrer' : undefined;
 	.red {
 		--card-accent: #dc2626;
 	}
-
 	.disabled {
 		background: #fbfdff;
 	}
@@ -134,7 +130,6 @@ const linkRel = tool.external ? 'noreferrer' : undefined;
 		margin-top: 0.42rem;
 		margin-bottom: 0;
 	}
-
 	h2 {
 		margin: 0;
 		color: #0f172a;
@@ -166,7 +161,6 @@ const linkRel = tool.external ? 'noreferrer' : undefined;
 	.card-link:hover {
 		color: #1e40af;
 	}
-
 	.disabled-link {
 		color: #94a3b8;
 		cursor: default;

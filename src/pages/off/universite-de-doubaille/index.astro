@@ -1,0 +1,179 @@
+---
+import OffLayout from '../../../layouts/OffLayout.astro';
+
+const title = 'Université de Doubaille — Les grandes pensées de l’informatique';
+const description = 'Les grandes pensées de l’informatique : des traités philosophiques très sérieux sur des problèmes informatiques qui ne le sont pas.';
+
+const publications = [
+	{
+		number: 'I',
+		title: 'Le libre arbitre existe-t-il derrière un proxy ?',
+		subtitle: 'Spinoza, Sartre et la tragédie de l’URL bloquée.',
+		status: 'PUBLIÉ',
+		href: '/off/universite-de-doubaille/libre-arbitre-proxy/',
+	},
+	{
+		number: 'II',
+		title: 'Je crée un ticket, donc je suis.',
+		subtitle: 'Descartes et la démonstration ontologique de Jira.',
+		status: 'À PARAÎTRE',
+		href: null,
+	},
+	{
+		number: 'III',
+		title: 'L’enfer, c’est les autres VLAN.',
+		subtitle: 'Jean-Paul Sartre et la solitude du réseau segmenté.',
+		status: 'À PARAÎTRE',
+		href: null,
+	},
+	{
+		number: 'IV',
+		title: 'Le serveur de production a-t-il une âme ?',
+		subtitle: 'Heidegger et l’angoisse du redémarrage obligatoire.',
+		status: 'À PARAÎTRE',
+		href: null,
+	},
+];
+---
+
+<OffLayout title={title} description={description}>
+	<nav class="breadcrumbs" aria-label="Fil d’Ariane">
+		<a href="/off/">En Off</a>
+		<span aria-hidden="true">/</span>
+		<span>Université de Doubaille</span>
+	</nav>
+
+	<header class="university-hero">
+		<div class="hero-main">
+			<p class="eyebrow">EN OFF 010 <span>·</span> ÉTABLISSEMENT D’ENSEIGNEMENT SUPÉRIEUREMENT INUTILE</p>
+			<h1>Les grandes pensées <em>de l’informatique.</em></h1>
+			<p class="hero-description">Des réflexions complètement absurdes, présentées avec le sérieux académique d’un colloque de philosophie à la Sorbonne.</p>
+			<div class="hero-bottom">
+				<span>Revue de métaphysique appliquée aux infrastructures numériques</span>
+				<span class="hero-dot" aria-hidden="true"></span>
+				<span>ISSN : 127.0.0.1</span>
+			</div>
+		</div>
+		<div class="seal-area">
+			<img
+				class="university-seal"
+				src="/Images/off/universite-doubaille-sceau.webp"
+				alt="Sceau de l’Université de Doubaille — Cogito ergo ping, fondée en 127.0.0.1"
+				width="1254"
+				height="1254"
+				decoding="async"
+			/>
+		</div>
+	</header>
+
+	<section class="manifesto" aria-label="Présentation de la faculté">
+		<div class="manifesto-heading">
+			<p class="kicker">ÉDITORIAL DU DÉPARTEMENT</p>
+			<h2>Penser l’impensable.<br /><span>Et surtout l’inutile.</span></h2>
+		</div>
+		<div class="manifesto-copy">
+			<p>Depuis des siècles, les philosophes interrogent l’être, la liberté et la condition humaine. Pourtant, aucune grande école de pensée n’a sérieusement répondu à cette question : <strong>un paquet rejeté par le firewall a-t-il néanmoins existé ?</strong></p>
+			<p>L’Université de Doubaille se propose de combler cette lacune. Nos chercheurs analysent les grandes tragédies informatiques avec une méthode éprouvée : des références prestigieuses, une assurance absolue et une compréhension généralement approximative du problème.</p>
+			<p class="manifesto-quote">« La rigueur de la forme ne saurait être compromise par l’absurdité du fond. »</p>
+		</div>
+	</section>
+
+	<section class="faculty" aria-labelledby="faculty-title">
+		<div class="faculty-symbol" aria-hidden="true"><span>Pr</span><strong>TCP/IP</strong></div>
+		<div class="faculty-text">
+			<p class="kicker">DIRECTION SCIENTIFIQUE</p>
+			<h2 id="faculty-title">Professeur Jean-Michel TCP/IP</h2>
+			<p class="faculty-role">Titulaire de la chaire de métaphysique des réseaux et de philosophie du changement non approuvé.</p>
+			<p>Docteur <i>honoris causa</i> en tickets sans réponse, il dirige le Laboratoire d’Études sur l’Existence des Flux Non Autorisés (LEEFNA). Ses travaux ont été salués à l’unanimité par ses deux collègues, dont l’un était absent.</p>
+		</div>
+		<div class="faculty-stamp">HABILITATION<br />NON RENOUVELÉE</div>
+	</section>
+
+	<section class="publications" aria-labelledby="publications-title">
+		<div class="publication-intro">
+			<div>
+				<p class="kicker">ANNALES DE LA FACULTÉ · VOLUME 01</p>
+				<h2 id="publications-title">Les traités fondamentaux</h2>
+			</div>
+			<p>Une publication rigoureusement évaluée par un comité scientifique dont la composition demeure confidentielle, essentiellement faute de membres.</p>
+		</div>
+		<div class="publications-list">
+			{publications.map((publication) => (
+				<article class:list={['publication', { forthcoming: !publication.href }]}>
+					<div class="publication-number">TRAITÉ <strong>{publication.number}</strong></div>
+					<div class="publication-content">
+						<p class="publication-status">{publication.status}</p>
+						<h3>{publication.title}</h3>
+						<p>{publication.subtitle}</p>
+					</div>
+					{publication.href ? (
+						<a class="publication-link" href={publication.href} aria-label={`Lire : ${publication.title}`}>Lire le traité <span aria-hidden="true">↗</span></a>
+					) : (
+						<span class="publication-pending" aria-label="À paraître">En expertise</span>
+					)}
+				</article>
+			))}
+		</div>
+	</section>
+
+	<section class="disclaimer" aria-label="Avis du comité scientifique">
+		<div class="disclaimer-icon" aria-hidden="true">§</div>
+		<div>
+			<p class="kicker">AVIS DU COMITÉ SCIENTIFIQUE</p>
+			<h2>Une pensée irréfutable, faute de contradicteurs habilités.</h2>
+			<p>Les publications de cette faculté sont fictives, satiriques et formellement déconseillées pour la rédaction d’un dossier d’architecture. Toute ressemblance avec un comité de validation existant serait regrettable mais statistiquement plausible.</p>
+		</div>
+	</section>
+</OffLayout>
+
+<style>
+	.breadcrumbs { display:flex; align-items:center; gap:.65rem; margin: .35rem 0 1rem; color:#64748b; font-size:.78rem; font-weight:700; }
+	.breadcrumbs a { color:#4f46e5; text-decoration:none; }
+	.breadcrumbs a:hover { text-decoration:underline; }
+	.university-hero { display:grid; grid-template-columns:minmax(0, 1.24fr) minmax(340px, .76fr); gap:2rem; align-items:center; position:relative; overflow:hidden; min-height:395px; padding:clamp(1.5rem, 4vw, 3.5rem); background:radial-gradient(circle at 85% 18%,rgba(129,140,248,.21),transparent 26rem),linear-gradient(125deg,#050a1b 0%,#111c3a 52%,#24174e 100%); color:white; border-radius:24px; box-shadow:0 24px 70px rgba(14,17,46,.19); }
+	.university-hero::before { content:''; pointer-events:none; position:absolute; inset:0; opacity:.17; background-image:linear-gradient(rgba(255,255,255,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.14) 1px,transparent 1px); background-size:38px 38px; mask-image:linear-gradient(90deg, transparent, black); }
+	.hero-main,.seal-area { position:relative; z-index:1; }
+	.eyebrow,.kicker { margin:0; color:#6366f1; font-weight:900; font-size:.65rem; letter-spacing:.16em; line-height:1.55; }
+	.eyebrow {color:#a5b4fc;} .eyebrow span {padding:0 .25rem; color:#94a3b8;}
+	.university-hero h1 { max-width:750px; margin:1rem 0 1.2rem; color:white; font-size:clamp(2.25rem,4.65vw,4.4rem); letter-spacing:-.065em; line-height:1.02; }
+	.university-hero h1 em { color:#c4b5fd; font-style:normal; }
+	.hero-description { max-width:610px; margin:0; color:#dbeafe; font-size:clamp(.98rem,1.4vw,1.18rem); line-height:1.65; }
+	.hero-bottom { display:flex; flex-wrap:wrap; align-items:center; gap:.6rem; margin-top:2.1rem; color:#a5b4fc; font-size:.72rem; letter-spacing:.02em; }
+	.hero-dot { width:3px; height:3px; border-radius:50%; background:#a5b4fc; }
+	.seal-area { display:flex; align-items:center; justify-content:center; min-width:0; }
+	.university-seal { display:block; width:min(100%,340px); height:auto; filter:drop-shadow(0 12px 24px rgba(2,8,23,.28)); }
+	.manifesto { display:grid; grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr); gap:clamp(1.5rem,4vw,4rem); padding:clamp(1.7rem,4vw,3.5rem) .5rem; }
+	.manifesto h2,.publications h2,.faculty h2,.disclaimer h2 { margin:.5rem 0 0; color:#0f172a; letter-spacing:-.045em; line-height:1.12; }
+	.manifesto h2 { font-size:clamp(1.65rem,3vw,2.7rem); }
+	.manifesto h2 span { color:#6355ae; }
+	.manifesto-copy p { margin:0 0 1rem; color:#475569; font-size:.98rem; line-height:1.75; }
+	.manifesto-copy strong { color:#0f172a; }
+	.manifesto-copy .manifesto-quote { margin:1.25rem 0 0; color:#4338ca; font-family:Georgia,serif; font-size:1.08rem; font-style:italic; font-weight:700; }
+	.faculty { position:relative; display:grid; grid-template-columns:126px minmax(0,1fr); align-items:center; gap:1.5rem; padding:1.65rem 2rem; border:1px solid #ddd6fe; border-radius:18px; background:linear-gradient(125deg,#f5f3ff,#eff6ff); overflow:hidden; }
+	.faculty-symbol { display:grid; align-content:center; justify-items:center; width:114px; height:114px; border:2px solid #c4b5fd; border-radius:50%; color:#4c1d95; background:#fff; font-family:Georgia,serif; transform:rotate(-7deg); }
+	.faculty-symbol span { font-size:2.1rem; line-height:1; } .faculty-symbol strong { font:800 .8rem Arial,sans-serif; letter-spacing:.05em; }
+	.faculty h2 { font-size:clamp(1.4rem,2.2vw,2rem); } .faculty-text > p:last-child {max-width:750px; margin:.65rem 0 0; color:#475569; font-size:.87rem; line-height:1.6; }
+	.faculty .faculty-role { margin:.45rem 0 0; color:#4c1d95; font-weight:750; line-height:1.55; font-size:.9rem; }
+	.faculty-stamp { position:absolute; right:-8px; bottom:10px; color:rgba(124,58,237,.21); border:2px solid currentColor; transform:rotate(-13deg); padding:.32rem .65rem; font-size:.64rem; font-weight:900; line-height:1.15; text-align:center; letter-spacing:.08em; pointer-events:none; }
+	.publications { padding:clamp(2rem,4vw,3.5rem) 0; }
+	.publication-intro {display:flex; justify-content:space-between; align-items:end; gap:2rem; padding:0 .5rem 1.25rem;}
+	.publication-intro h2 {font-size:clamp(1.7rem,3vw,2.5rem);} .publication-intro > p {max-width:370px; margin:0; color:#64748b; font-size:.81rem; line-height:1.55;}
+	.publications-list { display:grid; gap:.55rem; }
+	.publication {display:grid; grid-template-columns:100px minmax(0,1fr) auto; align-items:center; gap:1.4rem; padding:1.3rem 1.5rem; border:1px solid #e2e8f0; border-radius:14px; background:white; box-shadow:0 6px 20px rgba(15,23,42,.025);}
+	.publication:first-child {border-color:#c4b5fd; box-shadow:0 8px 24px rgba(99,102,241,.075);}
+	.publication-number {padding-right:1rem; border-right:1px solid #e2e8f0; color:#64748b; font-size:.58rem; font-weight:900; letter-spacing:.1em; text-align:center;}
+	.publication-number strong {display:block; color:#4c1d95; font-family:Georgia,serif; font-size:2.5rem; font-weight:500; letter-spacing:0; line-height:1.2;}
+	.publication-status {margin:0 0 .35rem!important; color:#7c3aed!important; font-size:.6rem!important; font-weight:900; letter-spacing:.1em;}
+	.publication h3 {margin:0; color:#0f172a; font-size:1.22rem; line-height:1.25; letter-spacing:-.025em;}
+	.publication-content > p:last-child {margin:.3rem 0 0; color:#64748b; font-size:.84rem; line-height:1.4;}
+	.publication-link {align-self:center; display:inline-flex; justify-content:center; align-items:center; gap:.6rem; padding:.75rem 1rem; border-radius:9px; background:#4338ca; color:white; white-space:nowrap; text-decoration:none; font-size:.76rem; font-weight:800; transition:background .2s ease,transform .2s ease;}
+	.publication-link:hover {background:#312e81;transform:translateY(-2px);}
+	.publication-link span {font-size:1rem;}
+	.publication-pending {align-self:center; color:#94a3b8; font-size:.75rem; font-style:italic; white-space:nowrap;}
+	.disclaimer {display:grid; grid-template-columns:75px 1fr; gap:1.1rem; align-items:start; margin-bottom:2rem; padding:1.4rem 1.6rem; background:#f1f5f9; border-left:4px solid #a78bfa; border-radius:0 12px 12px 0;}
+	.disclaimer-icon {font:4rem Georgia,serif; line-height:.9; color:#a78bfa;}
+	.disclaimer h2 {font-size:1.2rem;} .disclaimer p:last-child {margin:.55rem 0 0; color:#64748b; font-size:.83rem; line-height:1.6;}
+	@media (max-width:850px){.university-hero{grid-template-columns:minmax(0,1fr) 215px;gap:1rem}.university-seal{width:215px}.manifesto{grid-template-columns:1fr}.faculty-stamp{display:none}}
+	@media (max-width:680px){.university-hero{grid-template-columns:1fr;padding:1.65rem;border-radius:18px}.seal-area{display:flex;margin-top:.6rem}.university-seal{width:min(65vw,225px)}.hero-bottom{margin-top:1.5rem}.manifesto{padding:2rem .25rem}.faculty{grid-template-columns:1fr;padding:1.25rem;gap:1rem}.faculty-symbol{width:70px;height:70px}.faculty-symbol span{font-size:1.4rem}.faculty-symbol strong{font-size:.6rem}.publication-intro{display:block}.publication-intro>p{margin-top:.85rem}.publication{grid-template-columns:55px 1fr;gap:.9rem;padding:1rem}.publication-number {padding-right:.5rem;font-size:.47rem}.publication-number strong{font-size:1.95rem}.publication-link,.publication-pending {grid-column:2;justify-self:start}.publication h3{font-size:1.03rem}.disclaimer{grid-template-columns:1fr;padding:1rem}.disclaimer-icon{display:none}}
+	@media (prefers-reduced-motion:reduce){.publication-link{transition:none}.publication-link:hover{transform:none}}
+</style>
