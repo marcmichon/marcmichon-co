@@ -1,0 +1,179 @@
+---
+import OffLayout from '../../../../layouts/OffLayout.astro';
+
+const title = 'Corps professoral — Université de Doubaille';
+const description = 'Annuaire officiel des huit autorités intellectuelles de l’Université de Doubaille. Un doyen, sept professeurs et aucune accréditation connue.';
+---
+
+<OffLayout title={title} description={description}>
+  <nav class="crumbs" aria-label="Fil d’Ariane">
+    <a href="/off/">En Off</a><span aria-hidden="true">/</span>
+    <a href="/off/universite-de-doubaille/">Université de Doubaille</a><span aria-hidden="true">/</span>
+    <span aria-current="page">Corps professoral</span>
+  </nav>
+
+  <header class="faculty-hero">
+    <div class="hero-copy">
+      <p class="eyebrow">UNIVERSITÉ DE DOUBAILLE · ANNUAIRE ACADÉMIQUE 127.0.0.1</p>
+      <h1>Le corps <em>professoral.</em></h1>
+      <p>Huit autorités intellectuelles. Sept chaires fondamentales. Une légitimité administrative dont la vérification est actuellement suspendue.</p>
+      <div class="hero-motto">« Cogito ergo ping. » <span>· Fondée en 127.0.0.1</span></div>
+    </div>
+    <img class="seal" src="/Images/off/universite-doubaille-sceau.webp" alt="Sceau de l'Université de Doubaille" width="1254" height="1254" decoding="async" />
+  </header>
+
+  <section class="stats" aria-label="L’Université en chiffres">
+    <div><strong>01</strong><span>Doyen incontestable*</span></div>
+    <div><strong>07</strong><span>Professeurs titulaires</span></div>
+    <div><strong>00</strong><span>Étudiant recensé</span></div>
+    <div><strong>127.0.0.1</strong><span>Adresse du rectorat</span></div>
+  </section>
+
+  <section class="department" aria-labelledby="gouvernance">
+    <div class="section-heading">
+      <div><p class="kicker">ORGANIGRAMME · VERSION HOMOLOGUÉE NON SIGNÉE</p><h2 id="gouvernance">La gouvernance académique</h2></div>
+      <p>Une hiérarchie parfaitement lisible. Sa légitimité, en revanche, reste soumise à la propagation DNS.</p>
+    </div>
+    <div class="org-panel">
+      <a href="#dehainesse" class="dean">
+        <span class="dean-ident"><img class="org-photo" src="/Images/off/professeurs/robert-louis-dehainesse.webp" alt="" width="78" height="78" decoding="async" /><span class="monogram" aria-hidden="true">RD</span></span>
+        <span class="person-text"><span class="overline">DIRECTION · AUTORITÉ SUPRÊME DE RÉSOLUTION</span><strong>Robert-Louis Dehainesse</strong><small>Doyen de la Faculté des Sciences Inutiles et de Métaphysique Informatique</small></span>
+        <span class="small-tag">DOYEN</span>
+      </a>
+      <p class="under-dean">SOUS L’AUTORITÉ DU DÉCANAT</p>
+      <div class="org-grid">
+        <a href="#tecepai"><span class="org-person"><img class="org-photo" src="/Images/off/professeurs/jean-michel-tecepai-hipet.webp" alt="" width="76" height="76" loading="lazy" decoding="async" /><span class="org-initial" aria-hidden="true">JT</span></span><span class="org-details"><strong>Jean-Michel Técépai-Hipet</strong><small>Métaphysique des réseaux</small></span></a>
+        <a href="#deachessepet"><span class="org-person"><img class="org-photo" src="/Images/off/professeurs/roger-albert-deachessepet.webp" alt="" width="76" height="76" loading="lazy" decoding="async" /><span class="org-initial" aria-hidden="true">RD</span></span><span class="org-details"><strong>Roger-Albert Déachessépet</strong><small>Identités dynamiques</small></span></a>
+        <a href="#velane"><span class="org-person"><img class="org-photo" src="/Images/off/professeurs/jean-eude-velane.webp" alt="" width="76" height="76" loading="lazy" decoding="async" /><span class="org-initial" aria-hidden="true">JV</span></span><span class="org-details"><strong>Jean-Eude Vélane</strong><small>Philosophie de la segmentation</small></span></a>
+        <a href="#seguelane"><span class="org-person"><img class="org-photo" src="/Images/off/professeurs/emmanuelle-seguelane.webp" alt="" width="76" height="76" loading="lazy" decoding="async" /><span class="org-initial" aria-hidden="true">ES</span></span><span class="org-details"><strong>Emmanuelle Séguelane</strong><small>Métaphysique relationnelle</small></span></a>
+        <a href="#pequahi"><span class="org-person"><img class="org-photo" src="/Images/off/professeurs/valerie-pequahi.webp" alt="" width="76" height="76" loading="lazy" decoding="async" /><span class="org-initial" aria-hidden="true">VP</span></span><span class="org-details"><strong>Valérie Péquahi</strong><small>Cryptographie existentielle</small></span></a>
+        <a href="#hausi"><span class="org-person"><img class="org-photo" src="/Images/off/professeurs/charles-hausi.webp" alt="" width="76" height="76" loading="lazy" decoding="async" /><span class="org-initial" aria-hidden="true">CH</span></span><span class="org-details"><strong>Charles Hausi</strong><small>Philosophie des sept couches</small></span></a>
+        <a href="#achete-taipe"><span class="org-person"><img class="org-photo" src="/Images/off/professeurs/augustin-achete-taipe.webp" alt="" width="76" height="76" loading="lazy" decoding="async" /><span class="org-initial" aria-hidden="true">AA</span></span><span class="org-details"><strong>Augustin Acheté-Taipé</strong><small>Métaphysique des réponses HTTP</small></span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="portraits" aria-labelledby="portraits-heading">
+    <div class="section-heading">
+      <div><p class="kicker">DOSSIERS INDIVIDUELS · CONSULTATION PUBLIQUE</p><h2 id="portraits-heading">Les biographies officielles</h2></div>
+      <p>Des carrières remarquables, des publications unanimement citées par leurs auteurs et une disponibilité administrative variable.</p>
+    </div>
+
+    <div class="bio-grid">
+      <article class="bio" id="dehainesse">
+        <div class="bio-meta"><span>DOSSIER 001</span><span>DOYEN</span></div>
+        <div class="bio-heading"><img class="bio-photo" src="/Images/off/professeurs/robert-louis-dehainesse.webp" alt="Portrait fictif de Robert-Louis Dehainesse" width="112" height="112" loading="lazy" decoding="async" /><div><h3>Robert-Louis Dehainesse</h3><p class="chair">Chaire honoraire de résolution ontologique des noms et de propagation institutionnelle</p></div></div>
+        <p>Robert-Louis Dehainesse dirige la Faculté des Sciences Inutiles avec une rigueur qui force le respect, essentiellement parce que personne ne parvient à vérifier ses diplômes. Docteur en ontologie du nom mal propagé, il étudie depuis trente ans les conditions d’existence des organisations dont l’adresse reste introuvable.</p>
+        <p>Il soutient qu’une institution n’a nul besoin d’être connue pour être prestigieuse. La disparition de l’Université de Doubaille des principaux annuaires académiques constituerait, selon lui, non pas un dysfonctionnement, mais une démonstration de cette théorie.</p>
+        <div class="works"><span>OUVRAGES DE RÉFÉRENCE</span><ul><li><cite>Qui suis-je, où suis-je, et pourquoi personne ne me résout ?</cite></li><li><cite>Être joignable : une illusion propagée</cite></li><li><cite>De la dignité d’un établissement sans reconnaissance officielle</cite></li></ul></div>
+        <blockquote>« Je suis le doyen. Si personne ne me trouve, c’est un problème de résolution. »</blockquote>
+      </article>
+
+      <article class="bio" id="tecepai">
+        <div class="bio-meta"><span>DOSSIER 002</span><span>PROFESSEUR TITULAIRE</span></div>
+        <div class="bio-heading"><img class="bio-photo" src="/Images/off/professeurs/jean-michel-tecepai-hipet.webp" alt="Portrait fictif de Jean-Michel Técépai-Hipet" width="112" height="112" loading="lazy" decoding="async" /><div><h3>Jean-Michel Técépai-Hipet</h3><p class="chair">Chaire de métaphysique des réseaux et de philosophie du changement non approuvé</p></div></div>
+        <p>Jean-Michel Técépai-Hipet est l’un des représentants les plus insistants de la philosophie informatique contemporaine non sollicitée. Docteur <em>honoris causa</em> en tickets sans réponse, il explore les rapports entre liberté individuelle, filtrage des accès et validation managériale.</p>
+        <p>À la tête du LEEFNA, il a établi que l’homme pouvait demeurer libre de penser tout en étant techniquement incapable de sortir. Ses recherches sur les incidents non déclarés ont par ailleurs mis en évidence une forme d’existence paradoxale : la panne peut être réelle, mais statistiquement inexistante.</p>
+        <div class="works"><span>TRAITÉS ET PUBLICATIONS</span><ul><li><cite>Le libre arbitre existe-t-il derrière un proxy ?</cite></li><li><cite>Je crée un ticket, donc je suis.</cite></li><li><cite>Critique de la raison filtrante</cite></li></ul></div>
+        <blockquote>« L’existence précède l’authentification. Sauf dans Active Directory. »</blockquote>
+      </article>
+
+      <article class="bio" id="deachessepet">
+        <div class="bio-meta"><span>DOSSIER 003</span><span>PROFESSEUR TITULAIRE</span></div>
+        <div class="bio-heading"><img class="bio-photo" src="/Images/off/professeurs/roger-albert-deachessepet.webp" alt="Portrait fictif de Roger-Albert Déachessépet" width="112" height="112" loading="lazy" decoding="async" /><div><h3>Roger-Albert Déachessépet</h3><p class="chair">Chaire d’attribution dynamique des identités et de précarité existentielle des adresses IP</p></div></div>
+        <p>Roger-Albert Déachessépet s’intéresse à la propriété temporaire, à l’identité conditionnelle et aux conséquences spirituelles de l’expiration des baux. Ses recherches sont fondées sur une interrogation demeurée sans réponse depuis l’Antiquité : peut-on véritablement se connaître soi-même lorsqu’une autorité extérieure nous attribue une adresse provisoire ?</p>
+        <p>En 2024, il a tenté de constituer une cohorte longitudinale de chercheurs. L’étude a échoué lorsqu’il a renouvelé les identités de l’ensemble des participants sans conserver la correspondance initiale. Le comité scientifique a néanmoins salué la disparition presque complète des données personnelles.</p>
+        <div class="works"><span>OUVRAGES DE RÉFÉRENCE</span><ul><li><cite>Je suis, mais pour combien de temps ?</cite></li><li><cite>La liberté commence-t-elle à l’expiration du bail ?</cite></li><li><cite>Critique de la raison statique</cite></li></ul></div>
+        <blockquote>« Votre identité vous appartient. Jusqu’au prochain renouvellement. »</blockquote>
+      </article>
+
+      <article class="bio" id="velane">
+        <div class="bio-meta"><span>DOSSIER 004</span><span>PROFESSEUR TITULAIRE</span></div>
+        <div class="bio-heading"><img class="bio-photo" src="/Images/off/professeurs/jean-eude-velane.webp" alt="Portrait fictif de Jean-Eude Vélane" width="112" height="112" loading="lazy" decoding="async" /><div><h3>Jean-Eude Vélane</h3><p class="chair">Chaire de philosophie de la segmentation, de l’isolement social et des frontières invisibles</p></div></div>
+        <p>Jean-Eude Vélane étudie la difficulté de vivre ensemble dans une société fondée sur l’appartenance à des segments distincts. Selon lui, la coexistence humaine ne suppose nullement la communication : celle-ci introduirait au contraire des risques de mouvements latéraux, tant informatiques qu’émotionnels.</p>
+        <p>Sa doctrine a profondément marqué l’Université de Doubaille. En divisant le conseil académique en quatre VLAN séparés, il est parvenu à réduire les conflits entre professeurs à zéro. Il a également réduit les réunions à zéro. Le doyen hésite encore à lui décerner un prix.</p>
+        <div class="works"><span>OUVRAGES DE RÉFÉRENCE</span><ul><li><cite>L’enfer, c’est les autres VLAN</cite></li><li><cite>Du vivre-ensemble à la segmentation</cite></li><li><cite>La solitude du VLAN 4094</cite></li></ul></div>
+        <blockquote>« Le dialogue est essentiel. Sous réserve d’une règle inter-VLAN. »</blockquote>
+      </article>
+
+      <article class="bio" id="seguelane">
+        <div class="bio-meta"><span>DOSSIER 005</span><span>PROFESSEURE TITULAIRE</span></div>
+        <div class="bio-heading"><img class="bio-photo" src="/Images/off/professeurs/emmanuelle-seguelane.webp" alt="Portrait fictif de Emmanuelle Séguelane" width="112" height="112" loading="lazy" decoding="async" /><div><h3>Emmanuelle Séguelane</h3><p class="chair">Chaire de philosophie relationnelle, d’intégrité référentielle et d’ontologie des bases de données</p></div></div>
+        <p>Emmanuelle Séguelane aborde les relations humaines comme un ensemble de dépendances dont la cohérence doit pouvoir être démontrée. Toute relation, selon elle, repose sur une clé primaire, une clé étrangère et, dans les situations les plus délicates, une transaction susceptible d’être annulée.</p>
+        <p>Ses travaux ont renouvelé l’étude des conflits conjugaux, qu’elle interprète comme autant de violations de contraintes d’unicité. Elle refuse de reconnaître les individus non enregistrés dans l’annuaire de l’université et exige qu’aucune réunion ne débute avant une sauvegarde complète de la table des participants.</p>
+        <div class="works"><span>OUVRAGES DE RÉFÉRENCE</span><ul><li><cite>L’amour est-il une jointure interne ?</cite></li><li><cite>La solitude des enregistrements orphelins</cite></li><li><cite>TRUNCATE TABLE : une approche radicale de l’oubli</cite></li></ul></div>
+        <blockquote>« Sans clé étrangère, les liens humains ne sont que des hypothèses. »</blockquote>
+      </article>
+
+      <article class="bio" id="pequahi">
+        <div class="bio-meta"><span>DOSSIER 006</span><span>PROFESSEURE TITULAIRE</span></div>
+        <div class="bio-heading"><img class="bio-photo" src="/Images/off/professeurs/valerie-pequahi.webp" alt="Portrait fictif de Valérie Péquahi" width="112" height="112" loading="lazy" decoding="async" /><div><h3>Valérie Péquahi</h3><p class="chair">Chaire de cryptographie existentielle, de certification des vérités et de révocation des relations humaines</p></div></div>
+        <p>Valérie Péquahi est une spécialiste de la confiance institutionnelle conditionnelle. Elle considère qu’une affirmation non signée ne possède aucune valeur, qu’une promesse doit être authentifiée et qu’une relation arrivée à échéance devrait faire l’objet d’une révocation formelle, idéalement accompagnée d’un horodatage.</p>
+        <p>À son arrivée à Doubaille, elle a demandé le certificat d’accréditation du doyen. Celui-ci n’a pu en produire aucun. Depuis cet incident, Robert-Louis Dehainesse conserve sa fonction dans l’organigramme, mais sa légitimité fait l’objet d’une validation cryptographique toujours en cours.</p>
+        <div class="works"><span>OUVRAGES DE RÉFÉRENCE</span><ul><li><cite>Critique de la raison certifiée</cite></li><li><cite>L’amour à l’épreuve de la chaîne de confiance</cite></li><li><cite>Dieu est-il une autorité de certification racine ?</cite></li></ul></div>
+        <blockquote>« Je vous fais confiance. Veuillez présenter votre chaîne de certification. »</blockquote>
+      </article>
+
+      <article class="bio" id="hausi">
+        <div class="bio-meta"><span>DOSSIER 007</span><span>PROFESSEUR TITULAIRE</span></div>
+        <div class="bio-heading"><img class="bio-photo" src="/Images/off/professeurs/charles-hausi.webp" alt="Portrait fictif de Charles Hausi" width="112" height="112" loading="lazy" decoding="async" /><div><h3>Charles Hausi</h3><p class="chair">Chaire de philosophie des architectures en couches et de stratification des relations humaines</p></div></div>
+        <p>Charles Hausi défend depuis quatre décennies une interprétation stratifiée de la condition humaine. Selon lui, tout conflit est le symptôme d’un désaccord entre deux couches qui s’ignorent. Son modèle conceptuel repose sur sept niveaux distincts, du contact physique à l’application des bonnes intentions.</p>
+        <p>À Doubaille, il a proposé de réorganiser les échanges entre professeurs par couches successives. L’expérience a été interrompue lorsque le doyen a demandé une réunion transverse : personne ne savait si elle relevait de la couche Session ou Présentation. Hausi estime que ce différend démontre précisément la pertinence de son approche.</p>
+        <div class="works"><span>OUVRAGES DE RÉFÉRENCE</span><ul><li><cite>Les sept couches de la solitude</cite></li><li><cite>Critique de la raison encapsulée</cite></li><li><cite>Pourquoi l’amour échoue-t-il en couche 3 ?</cite></li></ul></div>
+        <blockquote>« L’homme est une superposition de sept couches qui refusent de se parler. »</blockquote>
+      </article>
+
+      <article class="bio" id="achete-taipe">
+        <div class="bio-meta"><span>DOSSIER 008</span><span>PROFESSEUR TITULAIRE</span></div>
+        <div class="bio-heading"><img class="bio-photo" src="/Images/off/professeurs/augustin-achete-taipe.webp" alt="Portrait fictif d’Augustin Acheté-Taipé" width="112" height="112" loading="lazy" decoding="async" /><div><h3>Augustin Acheté-Taipé</h3><p class="chair">Chaire de philosophie des requêtes, d’ontologie des ressources introuvables et de métaphysique HTTP</p></div></div>
+        <p>Augustin Acheté-Taipé est spécialiste des questions existentielles auxquelles les serveurs répondent par un code à trois chiffres. Sa thèse, soutenue devant un jury incapable de rejoindre la visioconférence, portait sur une interrogation décisive : l’absence de réponse constitue-t-elle, en elle-même, une réponse ?</p>
+        <p>Il a consacré ses premières années à démontrer qu’une erreur 404 ne prouve pas nécessairement l’inexistence d’un objet. Plus récemment, il a entrepris une recherche comparative sur les émotions humaines, dont les résultats suggèrent que le bonheur est un état 200 OK particulièrement instable. Son recrutement a été enregistré en 201 Created, puis contesté en 409 Conflict.</p>
+        <div class="works"><span>OUVRAGES DE RÉFÉRENCE</span><ul><li><cite>404 — L’être et le néant</cite></li><li><cite>200 OK — Une conception naïve du bonheur</cite></li><li><cite>301 — La fuite permanente de soi</cite></li></ul></div>
+        <blockquote>« Toute existence est une requête. Toute mort est un timeout. »</blockquote>
+      </article>
+    </div>
+  </section>
+
+  <section class="laboratory" aria-labelledby="leefna">
+    <div class="lab-emblem" aria-hidden="true">LEEFNA</div>
+    <div><p class="kicker">UNITÉ DE RECHERCHE RATTACHÉE À LA FACULTÉ</p><h2 id="leefna">Laboratoire d’Études sur l’Existence des Flux Non Autorisés</h2><p>Dirigé par le Pr Técépai-Hipet. Ses équipes travaillent notamment sur l’existence des paquets rejetés, la mémoire des sessions expirées et les raisons pour lesquelles les logs sont toujours conservés, mais jamais retrouvés.</p></div>
+    <span class="lab-status">ACCÈS NON AUTORISÉ</span>
+  </section>
+
+  <section class="council" aria-labelledby="conseil">
+    <div class="council-icon" aria-hidden="true">§</div>
+    <div><p class="kicker">PROCÈS-VERBAL EXTRAORDINAIRE · 05/11/2026</p><h2 id="conseil">Le Conseil académique</h2><p>Le conseil se compose désormais de huit membres. Sa première séance plénière a été suspendue : le doyen n’était pas résolu par le DNS, Déachessépet avait changé d’adresse, Vélane refusait les communications inter-VLAN, Séguelane ne reconnaissait pas les participants non inscrits en base et Péquahi exigeait une signature électronique valide, Hausi demandait de choisir la bonne couche et Acheté-Taipé répondait systématiquement « 503 Service Unavailable ».</p><p>Le Pr Técépai-Hipet a proposé d’ouvrir un ticket. Cette proposition a été rejetée à l’unanimité des membres joignables, soit aucun.</p><strong>Délibération officielle : le conseil confirme son existence, sous réserve de pouvoir en apporter la preuve.</strong></div>
+  </section>
+
+  <div class="return-link"><a href="/off/universite-de-doubaille/">← Retour aux grandes pensées de l’informatique</a><span>Document satirique. Aucun diplôme ne sera reconnu, y compris par son titulaire.</span></div>
+</OffLayout>
+
+<style>
+  .crumbs{display:flex;flex-wrap:wrap;gap:.65rem;align-items:center;margin:.4rem 0 1rem;color:#64748b;font-size:.78rem;font-weight:700}.crumbs a{color:#4f46e5;text-decoration:none}.crumbs a:hover{text-decoration:underline}
+  .faculty-hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 215px;align-items:center;gap:1.5rem;overflow:hidden;padding:2rem clamp(1.4rem,4vw,3rem);border-radius:23px;color:#fff;background:radial-gradient(circle at 88% 5%,rgba(167,139,250,.2),transparent 24rem),linear-gradient(125deg,#050a1b,#111c3a 60%,#24174e);box-shadow:0 18px 52px rgba(14,17,46,.13)}
+  .faculty-hero::before{content:'';position:absolute;inset:0;opacity:.13;background-image:linear-gradient(rgba(255,255,255,.15) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.15) 1px,transparent 1px);background-size:38px 38px;pointer-events:none}.faculty-hero>*{position:relative;z-index:1}.eyebrow,.kicker{margin:0;color:#6956b8;font-size:.62rem;font-weight:900;letter-spacing:.16em;line-height:1.6}.eyebrow{color:#c4b5fd}.faculty-hero h1{color:#fff;margin:.7rem 0 .8rem;font:700 clamp(2.5rem,4.8vw,4.3rem)/1.05 Georgia,serif;letter-spacing:-.04em}.faculty-hero h1 em{font-style:normal;color:#c4b5fd}.faculty-hero .hero-copy>p:not(.eyebrow){margin:0;max-width:710px;color:#dbeafe;line-height:1.65;font-size:1rem}.hero-motto{margin-top:1.2rem;color:#ddd6fe;font:italic 1rem Georgia,serif}.hero-motto span{font:normal .75rem Arial,sans-serif;color:#a5b4fc}.seal{display:block;width:min(100%,215px);height:auto;filter:drop-shadow(0 10px 20px rgba(2,8,23,.27))}
+  .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.65rem;margin:1rem 0 2rem}.stats>div{padding:1rem;border:1px solid #e2e8f0;border-radius:12px;background:white}.stats strong{display:block;font:700 1.55rem/1.2 Georgia,serif;color:#32246f}.stats span{display:block;margin-top:.4rem;color:#64748b;font-size:.72rem;font-weight:700}.stats>div:last-child strong{font-size:1.22rem}
+  .department,.portraits{margin:0 0 2.25rem}.section-heading{display:flex;justify-content:space-between;align-items:end;gap:1.5rem;margin:0 .3rem 1rem}.section-heading h2{margin:.45rem 0 0;color:#0f172a;font-size:clamp(1.75rem,2.9vw,2.45rem);line-height:1.14;letter-spacing:-.05em}.section-heading>p{max-width:390px;margin:0;color:#64748b;font-size:.85rem;line-height:1.55}
+  .org-panel{padding:1.2rem;background:linear-gradient(125deg,#f5f3ff,#eef4ff);border:1px solid #ddd6fe;border-radius:18px}.dean{position:relative;display:flex;align-items:center;gap:1rem;max-width:790px;margin:auto;padding:1rem 1.2rem;border:1px solid #c4b5fd;border-radius:13px;background:white;text-decoration:none;box-shadow:0 8px 24px rgba(99,102,241,.06)}.monogram,.org-initial{flex:none;display:grid;place-items:center;border-radius:50%;background:#f5f3ff;border:1px solid #ddd6fe;color:#4c1d95;font:700 1.3rem Georgia,serif}.monogram{width:65px;height:65px}.person-text{display:grid;gap:.2rem}.overline{color:#7c3aed;font-size:.6rem;font-weight:900;letter-spacing:.12em}.person-text strong{color:#0f172a;font-size:1.34rem;letter-spacing:-.03em}.person-text small{color:#475569;font-size:.82rem;line-height:1.4}.small-tag{margin-left:auto;color:#8b5cf6;font-size:.62rem;font-weight:900;letter-spacing:.08em}.under-dean{margin:.95rem 0 .65rem;text-align:center;color:#7565b1;font-size:.63rem;letter-spacing:.14em;font-weight:900}.org-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem}.org-grid>a{display:flex;flex-direction:column;align-items:flex-start;gap:.45rem;padding:1rem;border:1px solid #e2e8f0;border-radius:12px;background:white;text-decoration:none;min-width:0;transition:border .2s ease,transform .2s ease}.org-grid>a:hover,.dean:hover{border-color:#a78bfa;transform:translateY(-2px)}.org-initial{width:43px;height:43px;font-size:.96rem}.org-grid strong{font-size:.95rem;color:#111827;line-height:1.25}.org-grid small{color:#64748b;font-size:.75rem;line-height:1.4}
+  .bio-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem}.bio{scroll-margin-top:85px;display:flex;flex-direction:column;min-width:0;padding:clamp(1.2rem,2.3vw,1.6rem);border:1px solid #e2e8f0;border-radius:16px;background:white;box-shadow:0 8px 28px rgba(15,23,42,.028)}.bio-meta{display:flex;justify-content:space-between;gap:1rem;color:#7c3aed;font-size:.6rem;font-weight:900;letter-spacing:.1em}.bio-meta span:last-child{color:#64748b;text-align:right}.bio h3{margin:.8rem 0 .2rem;color:#101828;font:700 clamp(1.5rem,2.25vw,1.95rem)/1.12 Georgia,serif;letter-spacing:-.035em}.chair{margin:.35rem 0 .95rem!important;color:#5b42a3!important;font-size:.85rem!important;line-height:1.45!important;font-weight:800}.bio>p:not(.chair){margin:0 0 .7rem;font-size:.87rem;line-height:1.65;color:#475569}.works{margin-top:auto;border-top:1px solid #e2e8f0;padding-top:.8rem}.works>span{color:#6d28d9;font-size:.63rem;font-weight:900;letter-spacing:.1em}.works ul{margin:.55rem 0 0;padding-left:1.2rem;color:#334155;font-size:.83rem;line-height:1.65}.works li+li{margin-top:.2rem}.bio blockquote{margin:.9rem 0 0;padding:.85rem .95rem;background:#f5f3ff;border-radius:10px;color:#4c1d95;font:italic 700 1.04rem/1.55 Georgia,serif}
+  .laboratory{display:grid;grid-template-columns:140px minmax(0,1fr) auto;gap:1.5rem;align-items:center;margin-bottom:1rem;padding:1.45rem 1.65rem;border-radius:17px;background:linear-gradient(125deg,#0a1230,#1c1646);color:#e0e7ff}.lab-emblem{display:grid;place-items:center;width:120px;height:120px;border:1px solid rgba(196,181,253,.45);border-radius:50%;color:#f5f3ff;font:700 1.2rem Georgia,serif;letter-spacing:.08em}.laboratory .kicker{color:#c4b5fd}.laboratory h2{margin:.35rem 0 .55rem;color:white;font-size:1.35rem;line-height:1.25;letter-spacing:-.025em}.laboratory p:not(.kicker){margin:0;color:#cbd5e1;font-size:.87rem;line-height:1.6}.lab-status{align-self:start;white-space:nowrap;border:1px solid rgba(196,181,253,.4);border-radius:99px;padding:.5rem .75rem;color:#ddd6fe;font-size:.62rem;font-weight:900;letter-spacing:.04em}
+  .council{display:grid;grid-template-columns:55px minmax(0,1fr);gap:.85rem;align-items:start;margin-bottom:1.4rem;padding:1.5rem;border:1px solid #ddd6fe;border-radius:16px;background:#f8f7ff}.council-icon{color:#8b5cf6;font:3rem Georgia,serif;line-height:.95}.council h2{margin:.35rem 0 .5rem;color:#0f172a;font-size:1.55rem}.council p:not(.kicker){margin:.4rem 0;color:#475569;font-size:.9rem;line-height:1.65}.council strong{display:block;margin-top:1rem;color:#4c1d95;font:italic 700 1.04rem/1.55 Georgia,serif}
+  .return-link{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 0 2rem}.return-link a{color:#4338ca;font-weight:800;font-size:.9rem;text-decoration:none}.return-link a:hover{text-decoration:underline}.return-link span{max-width:450px;text-align:right;color:#94a3b8;font-size:.7rem}
+  /* Photos officielles : visages entiers, sans recadrage CSS */
+  .dean-ident{display:flex;align-items:center;gap:.65rem;flex-shrink:0}
+  .org-photo{display:block;width:74px;height:74px;object-fit:cover;background:#eae6e0;border-radius:11px;border:1px solid #ddd6fe}
+  .org-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .org-person{display:flex;align-items:center;gap:.4rem;flex-shrink:0}
+  .org-person .org-initial{width:30px;height:30px;font-size:.73rem}
+  .org-grid>a{flex-direction:row;align-items:center;padding:.7rem;gap:.65rem}
+  .org-details{display:grid;gap:.25rem;min-width:0}
+  .bio-heading{display:flex;align-items:center;gap:1rem;margin:.9rem 0 .85rem}
+  .bio-heading>div{min-width:0}
+  .bio-photo{display:block;width:112px;height:112px;object-fit:cover;background:#eae6e0;border-radius:13px;border:1px solid #ddd6fe;flex:none}
+  .bio-heading h3{margin:0 0 .4rem}
+  .bio-heading .chair{margin:0!important}
+  @media(max-width:930px){.org-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.laboratory{grid-template-columns:100px 1fr}.lab-emblem{width:90px;height:90px;font-size:.9rem}.lab-status{grid-column:2;justify-self:start}.section-heading{flex-direction:column;align-items:start;gap:.5rem}.section-heading>p{max-width:650px}}
+  @media(max-width:680px){.bio-photo{width:92px;height:92px}.bio-heading{gap:.75rem}.org-grid>a{min-height:82px}.dean-ident .org-photo{width:64px;height:64px}}
+  @media(max-width:680px){.faculty-hero{grid-template-columns:1fr;padding:1.55rem}.faculty-hero h1{font-size:2.45rem}.seal{width:150px;margin:0 auto}.hero-motto span{display:block;margin-top:.4rem}.stats{grid-template-columns:repeat(2,minmax(0,1fr));margin-bottom:1.5rem}.org-panel{padding:.75rem}.dean{align-items:flex-start;flex-wrap:wrap;padding:1rem}.small-tag{margin-left:0}.monogram{width:50px;height:50px;font-size:1rem}.person-text{flex:1 1 175px}.org-grid{grid-template-columns:1fr}.bio-grid{grid-template-columns:1fr}.bio{padding:1.25rem}.laboratory{grid-template-columns:1fr;gap:1rem;padding:1.25rem}.lab-emblem{width:82px;height:82px}.lab-status{grid-column:1}.council{grid-template-columns:1fr;padding:1.1rem}.council-icon{display:none}.return-link{flex-direction:column;align-items:flex-start}.return-link span{text-align:left}}
+  @media(prefers-reduced-motion:reduce){.org-grid>a{transition:none}.org-grid>a:hover,.dean:hover{transform:none}}
+</style>

@@ -2,242 +2,301 @@
 import OffLayout from '../../layouts/OffLayout.astro';
 import OffToolCard from '../../components/off/OffToolCard.astro';
 import { offTools } from '../../data/off';
+
+// TOEA et Doubaille restent dans le catalogue, mais disposent de leurs propres bandeaux.
+// Les huit outils numérotés + le #007 fictif forment la collection de neuf cartes.
+const collectionTools = offTools.filter((tool) => tool.number !== '010' && tool.number !== 'ESCAPED');
 ---
 
 <OffLayout
-	title="EN OFF"
-	description="Parce qu’il n’y a pas que les projets sérieux. Bienvenue dans le reste."
+  title="EN OFF"
+  description="Parce qu’il n’y a pas que les projets sérieux. Bienvenue dans le reste."
 >
-	<section class="off-hero">
-		<div class="hero-copy">
-			<p class="eyebrow">UNE AUTRE PARTIE DU SITE</p>
-			<h1>EN OFF</h1>
-		</div>
+  <section class="off-hero">
+    <div class="hero-copy">
+      <p class="eyebrow">UNE AUTRE PARTIE DU SITE</p>
+      <h1>EN OFF</h1>
+    </div>
+    <div class="hero-message">
+      <p>Parce qu’il n’y a pas que les projets sérieux.</p>
+      <strong>Bienvenue dans le reste ...</strong>
+    </div>
+  </section>
 
-		<div class="hero-message">
-			<p>Parce qu’il n’y a pas que les projets sérieux.</p>
-			<strong>Bienvenue dans le reste ...</strong>
-		</div>
-	</section>
+  <section class="tools-section" aria-labelledby="tools-title">
+    <div class="section-heading">
+      <p class="section-kicker">LA COLLECTION</p>
+      <h2 id="tools-title">Le laboratoire du grand n'importe quoi...</h2>
+    </div>
 
-	<section class="tools-section" aria-labelledby="tools-title">
-		<div class="section-heading">
-			<p class="section-kicker">LA COLLECTION</p>
-			<h2 id="tools-title">Le laboratoire du grand n'importe quoi...</h2>
-		</div>
+    <div class="tools-grid">
+      {collectionTools.map((tool) => (
+        <>
+          {tool.number === '008' && (
+            <div class="bond-card" aria-label="EN OFF numéro 007 réservé à James Bond">
+              <div class="bond-card-top">
+                <span class="bond-number">EN OFF #007</span>
+                <span class="bond-lock" aria-hidden="true">🔒</span>
+              </div>
+              <p class="bond-classified">CLASSIFIED — MI6</p>
+              <h3>INTROUVABLE</h3>
+              <p>James Bond nous a envoyé une mise en demeure. Apparemment, il aurait déposé le numéro avant nous.</p>
+              <p>On ne négocie pas avec un mec qui possède un permis de tuer.</p>
+            </div>
+          )}
+          <OffToolCard tool={tool} />
+        </>
+      ))}
+    </div>
+  </section>
 
-		<div class="tools-grid">
-			{offTools.map((tool, index) => (
-				<>
-					{/* Les outils #001 à #006 précèdent #008 dans la collection. */}
-					{index === 6 && (
-						<div class="bond-card" aria-label="EN OFF numéro 007 réservé à James Bond">
-							<div class="bond-card-top">
-								<span class="bond-number">EN OFF #007</span>
-								<span class="bond-lock" aria-hidden="true">🔒</span>
-							</div>
-							<p class="bond-classified">CLASSIFIED — MI6</p>
-							<h3>INTROUVABLE</h3>
-							<p>James Bond nous a envoyé une mise en demeure. Apparemment, il aurait déposé le numéro avant nous.</p>
-							<p>On ne négocie pas avec un mec qui possède un permis de tuer.</p>
-						</div>
-					)}
-					<OffToolCard tool={tool} />
-				</>
-			))}
-			{/* Garde-fou si la collection ne comporte pas encore d'élément après #006. */}
-			{offTools.length === 6 && (
-				<div class="bond-card" aria-label="EN OFF numéro 007 réservé à James Bond">
-					<div class="bond-card-top"><span class="bond-number">EN OFF #007</span><span class="bond-lock" aria-hidden="true">🔒</span></div>
-					<p class="bond-classified">CLASSIFIED — MI6</p>
-					<h3>INTROUVABLE</h3>
-					<p>James Bond nous a envoyé une mise en demeure. Apparemment, il aurait déposé le numéro avant nous.</p>
-					<p>On ne négocie pas avec un mec qui possède un permis de tuer.</p>
-				</div>
-			)}
-		</div>
-	</section>
+  <section class="projects-section" aria-labelledby="projects-title">
+    <div class="projects-heading">
+      <div>
+        <p class="section-kicker">LES PROJETS QUI ONT ÉCHAPPÉ AU LABORATOIRE</p>
+        <h2 id="projects-title">Certaines mauvaises idées prennent de l'ampleur.</h2>
+      </div>
+      <p>Deux aventures indépendantes, nées d'une plaisanterie qui aurait dû s'arrêter là.</p>
+    </div>
+
+    <div class="projects-list">
+      <article class="project-banner toea-banner" aria-labelledby="toea-title">
+        <div class="project-copy">
+          <p class="project-kicker">EN OFF · ESCAPED · RÉFÉRENTIEL NON RECONNU</p>
+          <h3 id="toea-title">TOEA Framework</h3>
+          <p class="project-lead">À l'origine, c'était une blague. Puis quelqu'un a rédigé la documentation.</p>
+          <p class="project-description">
+            Un faux framework, un vrai Body of Knowledge et une gouvernance suffisamment
+            complexe pour rendre une mauvaise idée parfaitement officielle.
+            Opportunity Eggs, modèles de maturité et certifications imaginaires : le tout
+            avec beaucoup trop de sérieux.
+          </p>
+          <p class="project-motto">Transforming Imperfection into Opportunity.</p>
+          <a class="project-button toea-button" href="/off/toea-framework/">
+            Explorer TOEA Framework <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <div class="project-art toea-art">
+          <img
+            src="/Images/toea-certif2.png"
+            alt="Certification fictive TOEA-P Platinum Elite"
+            width="280"
+            height="280"
+            loading="lazy"
+            decoding="async"
+          />
+          <p>INTERNATIONAL TOEA INSTITUTE · OFFICIALLY UNRECOGNIZED</p>
+        </div>
+      </article>
+
+      <article class="project-banner doubaille-banner" aria-labelledby="doubaille-title">
+        <div class="project-copy">
+          <p class="project-kicker">EN OFF · ÉTABLISSEMENT D'ENSEIGNEMENT SUPÉRIEUREMENT INUTILE</p>
+          <h3 id="doubaille-title">Université de Doubaille</h3>
+          <p class="project-lead">L'excellence académique à l'état parfaitement inutile.</p>
+          <p class="project-description">
+            Fondée en 127.0.0.1, l'Université de Doubaille rassemble huit universitaires,
+            deux administratifs et absolument aucun étudiant. Traités philosophiques,
+            métaphysique informatique et gouvernance dont personne ne peut vérifier
+            la légitimité.
+          </p>
+          <p class="project-motto">« Cogito ergo ping. »</p>
+          <a class="project-button doubaille-button" href="/off/universite-de-doubaille/">
+            Découvrir l'Université <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <div class="project-art doubaille-art">
+          <img
+            src="/Images/off/universite-doubaille-sceau.webp"
+            alt="Sceau officiel de l'Université de Doubaille, fondée en 127.0.0.1"
+            width="350"
+            height="350"
+            loading="lazy"
+            decoding="async"
+          />
+          <p>UNIVERSITÉ DE DOUBAILLE · FONDÉE EN 127.0.0.1</p>
+        </div>
+      </article>
+    </div>
+  </section>
 </OffLayout>
 
 <style>
-	.off-hero {
-		position: relative;
-		display: grid;
-		grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
-		align-items: end;
-		gap: clamp(2rem, 5vw, 5rem);
-		min-height: 230px;
-		padding: clamp(1.65rem, 4vw, 3rem);
-		overflow: hidden;
-		color: #ffffff;
-		background:
-			radial-gradient(circle at 78% 22%, rgba(124, 58, 237, 0.18), transparent 28%),
-			radial-gradient(circle at 96% 92%, rgba(37, 99, 235, 0.2), transparent 28%),
-			linear-gradient(135deg, #020817 0%, #07142c 58%, #11113a 100%);
-		border-radius: 24px;
-		box-shadow: 0 20px 48px rgba(2, 8, 23, 0.16);
-	}
+  /* Bandeau principal EN OFF : conservé dans son esprit et ses proportions. */
+  .off-hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, .9fr) minmax(320px, 1.1fr);
+    align-items: end;
+    gap: clamp(2rem, 5vw, 5rem);
+    min-height: 230px;
+    padding: clamp(1.65rem, 4vw, 3rem);
+    overflow: hidden;
+    color: #fff;
+    background: radial-gradient(circle at 78% 22%,rgba(124,58,237,.18),transparent 28%),
+      radial-gradient(circle at 96% 92%,rgba(37,99,235,.2),transparent 28%),
+      linear-gradient(135deg,#020817 0%,#07142c 58%,#11113a 100%);
+    border-radius: 24px;
+    box-shadow: 0 20px 48px rgba(2,8,23,.16);
+  }
+  .off-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+    background-size: 44px 44px;
+    pointer-events: none;
+  }
+  .off-hero > * {position:relative;z-index:1}
+  .eyebrow {margin:0;color:#60a5fa;font-size:.64rem;font-weight:900;letter-spacing:.14em}
+  .off-hero h1 {margin:.48rem 0 0;color:#fff;font-size:clamp(3.6rem,8vw,6.8rem);line-height:.86;letter-spacing:-.075em}
+  .hero-message {padding-bottom:.15rem}
+  .hero-message p {margin:0;color:#cbd5e1;font-size:clamp(1rem,1.8vw,1.28rem);font-weight:720;line-height:1.3}
+  .hero-message strong {display:block;margin-top:.3rem;color:#fff;font-size:clamp(1.35rem,2.6vw,2rem);font-weight:860;line-height:1.12;letter-spacing:-.03em}
 
-	.off-hero::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background:
-			linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
-		background-size: 44px 44px;
-		mask-image: linear-gradient(to right, transparent, black);
-		pointer-events: none;
-	}
+  /* Neuf cartes historiques : huit outils et le #007 du MI6. */
+  .tools-section {margin-top:1.35rem}
+  .section-heading {display:flex;align-items:flex-end;justify-content:space-between;gap:1rem}
+  .section-kicker {margin:0 0 .25rem;color:#2563eb;font-size:.62rem;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
+  .section-heading h2, .projects-heading h2 {margin:0;color:#0f172a;font-size:clamp(1.55rem,2.8vw,2.2rem);line-height:1.08;letter-spacing:-.04em}
+  .tools-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;gap:.65rem;margin-top:.7rem}
+  .bond-card {display:flex;flex-direction:column;min-width:0;padding:.65rem;color:#e2e8f0;background:linear-gradient(145deg,#111827,#1e293b);border:1px dashed rgba(212,175,55,.55);border-radius:12px}
+  .bond-card-top {display:flex;justify-content:space-between;align-items:center;gap:.4rem}
+  .bond-number {font-size:.56rem;font-weight:900;letter-spacing:.07em}
+  .bond-lock {font-size:.8rem;line-height:1}
+  .bond-classified {margin:.3rem 0 .15rem;color:#d4af37;font-size:.56rem;font-weight:900;letter-spacing:.08em}
+  .bond-card h3 {margin:0 0 .3rem;color:#fff;font-size:.91rem;line-height:1.1;letter-spacing:-.02em}
+  .bond-card > p:not(.bond-classified) {margin:0 0 .24rem;color:#cbd5e1;font-size:.73rem;line-height:1.25}
 
-	.off-hero > * {
-		position: relative;
-		z-index: 1;
-	}
+  /* Les deux projets majeurs, volontairement dans un format commun. */
+  .projects-section {margin-top:2.4rem}
+  .projects-heading {display:flex;justify-content:space-between;align-items:end;gap:1.5rem;margin:0 .2rem 1rem}
+  .projects-heading > div {min-width:0}
+  .projects-heading > p {max-width:360px;margin:0;color:#64748b;font-size:.86rem;line-height:1.5}
+  .projects-list {display:grid;gap:1.1rem}
+  .project-banner {
+    position:relative;
+    display:grid;
+    grid-template-columns:minmax(0,1.45fr) minmax(235px,.75fr);
+    align-items:center;
+    gap:clamp(1.2rem,3vw,3rem);
+    min-height:335px;
+    padding:clamp(1.45rem,3.5vw,2.75rem);
+    overflow:hidden;
+    border-radius:23px;
+    isolation:isolate;
+    box-shadow:0 16px 39px rgba(2,8,23,.10);
+  }
+  .project-banner::before {
+    content:'';
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    opacity:.16;
+    background-image:linear-gradient(rgba(255,255,255,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.18) 1px,transparent 1px);
+    background-size:46px 46px;
+    pointer-events:none;
+  }
+  .toea-banner {background:radial-gradient(circle at 90% 12%,rgba(245,158,11,.22),transparent 38%),linear-gradient(120deg,#0c1527,#15243b 67%,#2c2531)}
+  .doubaille-banner {background:radial-gradient(circle at 90% 18%,rgba(167,139,250,.23),transparent 37%),linear-gradient(120deg,#060c21,#101c3d 63%,#291a53)}
+  .project-copy {min-width:0;position:relative;z-index:1}
+  .project-kicker {margin:0 0 .8rem;font-size:.62rem;font-weight:900;letter-spacing:.135em;line-height:1.5}
+  .toea-banner .project-kicker {color:#f6c78c}
+  .doubaille-banner .project-kicker {color:#c4b5fd}
+  .project-copy h3 {margin:0;color:#fff;font-size:clamp(2rem,4.1vw,3.2rem);line-height:1.05;letter-spacing:-.05em}
+  .project-lead {margin:1rem 0 .65rem;font-size:clamp(1rem,1.7vw,1.2rem);font-weight:800;line-height:1.32}
+  .toea-banner .project-lead {color:#f9d5a2}
+  .doubaille-banner .project-lead {color:#d9c8ff}
+  .project-description {max-width:680px;margin:0;color:#dce5f5;font-size:.92rem;line-height:1.62}
+  .project-motto {margin:1rem 0 1.25rem;font:italic 1rem/1.45 Georgia,serif}
+  .toea-banner .project-motto {color:#f7dcb5}
+  .doubaille-banner .project-motto {color:#eadbb6}
+  .project-button {display:inline-flex;align-items:center;justify-content:center;gap:.7rem;min-height:44px;padding:.78rem 1.15rem;border-radius:11px;color:#fff;font-size:.83rem;font-weight:850;line-height:1.2;text-decoration:none;transition:transform .2s ease,filter .2s ease}
+  .project-button:hover {transform:translateY(-2px);filter:brightness(1.08)}
+  .project-button:focus-visible {outline:3px solid #fff;outline-offset:3px}
+  .toea-button {background:#b96e27}
+  .doubaille-button {background:#6346d7}
+  .project-art {display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;position:relative;z-index:1}
+  .project-art img {display:block;width:min(100%,265px);height:250px;object-fit:contain;filter:drop-shadow(0 14px 18px rgba(0,0,0,.22))}
+  .doubaille-art img {width:min(100%,300px);height:285px}
+  .project-art p {margin:.35rem 0 0;color:#c5cee4;text-align:center;font-size:.54rem;font-weight:900;line-height:1.5;letter-spacing:.12em}
+  .doubaille-art p {color:#ded1fb}
 
-	.eyebrow {
-		margin: 0;
-		color: #60a5fa;
-		font-size: 0.64rem;
-		font-weight: 900;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-	}
+  @media(max-width:980px) {
+    .off-hero {grid-template-columns:1fr;align-items:start;gap:1rem;min-height:0}
+    .tools-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+    .projects-heading {align-items:start;flex-direction:column;gap:.5rem}
+    .projects-heading > p {max-width:650px}
+    .project-banner {grid-template-columns:minmax(0,1fr) 210px}
+    .project-art img {height:210px}
+    .doubaille-art img {height:230px}
+  }
+  @media(max-width:680px) {
+    .off-hero {padding:1.25rem;border-radius:20px}
+    .off-hero h1 {font-size:clamp(3.4rem,20vw,5rem)}
+    .tools-section {margin-top:1rem}
+    .section-heading {align-items:flex-start;flex-direction:column;gap:.2rem}
+    .tools-grid {grid-template-columns:1fr;gap:.65rem;margin-top:.75rem}
+    .projects-section {margin-top:1.8rem}
+    .project-banner {grid-template-columns:1fr;gap:.7rem;min-height:0;padding:1.4rem;border-radius:18px}
+    .project-art {margin-top:.5rem}
+    .project-art img {width:min(100%,200px);height:180px}
+    .doubaille-art img {width:min(100%,205px);height:205px}
+    .project-description {font-size:.88rem}
+    .project-button {width:100%}
+  }
+  @media(prefers-reduced-motion:reduce) {.project-button{transition:none}.project-button:hover{transform:none}}
 
-	h1 {
-		margin: 0.48rem 0 0;
-		color: #ffffff;
-		font-size: clamp(3.6rem, 8vw, 6.8rem);
-		line-height: 0.86;
-		letter-spacing: -0.075em;
-	}
+  /* TOEA — Harmonisation visuelle avec le sceau Doubaille */
 
-	.hero-message {
-		padding-bottom: 0.15rem;
-	}
-
-	.hero-message p {
-		margin: 0;
-		color: #cbd5e1;
-		font-size: clamp(1rem, 1.8vw, 1.28rem);
-		font-weight: 720;
-		line-height: 1.3;
-	}
-
-	.hero-message strong {
-		display: block;
-		margin-top: 0.3rem;
-		color: #ffffff;
-		font-size: clamp(1.35rem, 2.6vw, 2rem);
-		font-weight: 860;
-		line-height: 1.12;
-		letter-spacing: -0.03em;
-	}
-
-	.tools-section {
-		margin-top: 1.35rem;
-	}
-
-	.section-heading {
-		display: flex;
-		align-items: flex-end;
-		justify-content: space-between;
-		gap: 1rem;
-	}
-
-	.section-kicker {
-		margin: 0 0 0.25rem;
-		color: #2563eb;
-		font-size: 0.62rem;
-		font-weight: 900;
-		letter-spacing: 0.13em;
-		text-transform: uppercase;
-	}
-
-	.section-heading h2 {
-	max-width: 650px;
-	margin: 0;
-	color: #0f172a;
-	font-size: clamp(1.55rem, 2.8vw, 2.2rem);
-	line-height: 1.05;
-	letter-spacing: -0.04em;
+.toea-art img {
+  width: min(100%, 300px);
+  height: 285px;
+  object-fit: contain;
+  transform: scale(1.18);
+  transform-origin: center;
 }
 
-	.tools-grid {
-	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	align-items: stretch;
-	gap: 0.65rem;
-	margin-top: 0.7rem;
+/* Tablette */
+@media (max-width: 980px) {
+  .toea-art img {
+    height: 230px;
+  }
 }
 
+/* Mobile */
+@media (max-width: 680px) {
+  .toea-art img {
+    width: min(100%, 205px);
+    height: 205px;
+  }
+}
 
-	/* #007 : mêmes proportions que les autres cartes de la collection */
-	.bond-card {
-		display: flex;
-		flex-direction: column;
-		min-width: 0;
-		padding: 0.65rem;
-		color: #e2e8f0;
-		background: linear-gradient(145deg, #111827 0%, #1e293b 100%);
-		border: 1px dashed rgba(212, 175, 55, 0.55);
-		border-radius: 12px;
-	}
-	.bond-card-top { display: flex; justify-content: space-between; align-items: center; gap: 0.4rem; }
-	.bond-number { font-size: 0.56rem; font-weight: 900; letter-spacing: 0.07em; }
-	.bond-lock { font-size: 0.8rem; line-height: 1; }
-	.bond-classified {
-		margin: 0.3rem 0 0.15rem;
-		color: #d4af37;
-		font-size: 0.56rem;
-		font-weight: 900;
-		letter-spacing: 0.08em;
-	}
-	.bond-card h3 { margin: 0 0 0.3rem; color: #fff; font-size: 0.91rem; line-height: 1.1; letter-spacing: -0.02em; }
-	.bond-card > p:not(.bond-classified) {
-		margin: 0 0 0.24rem;
-		color: #cbd5e1;
-		font-size: 0.73rem;
-		line-height: 1.25;
-	}
+/* TOEA : agrandir le badge sans toucher à Doubaille */
 
-	@media (max-width: 980px) {
-		.off-hero {
-			grid-template-columns: 1fr;
-			align-items: start;
-			gap: 1rem;
-			min-height: 0;
-		}
+.toea-art img {
+  width: min(100%, 300px);
+  height: 285px;
+  object-fit: contain;
+  transform: scale(1.4);
+  transform-origin: center;
+}
 
-		.tools-grid {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-		}
-	}
+/* Tablette */
+@media (max-width: 980px) {
+  .toea-art img {
+    height: 230px;
+    transform: scale(1.25);
+  }
+}
 
-	@media (max-width: 680px) {
-		.off-hero {
-			padding: 1.25rem;
-			border-radius: 20px;
-		}
-
-		h1 {
-			font-size: clamp(3.4rem, 20vw, 5rem);
-		}
-
-		.tools-section {
-			margin-top: 1rem;
-		}
-
-		.section-heading {
-			align-items: flex-start;
-			flex-direction: column;
-			gap: 0.2rem;
-		}
-
-		.tools-grid {
-			grid-template-columns: 1fr;
-			gap: 0.65rem;
-			margin-top: 0.75rem;
-		}
-	}
+/* Mobile */
+@media (max-width: 680px) {
+  .toea-art img {
+    width: min(100%, 205px);
+    height: 205px;
+    transform: scale(1.12);
+  }
+}
 </style>

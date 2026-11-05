@@ -1,0 +1,146 @@
+---
+import OffLayout from '../../../../layouts/OffLayout.astro';
+
+const title = 'Administration et vie universitaire — Université de Doubaille';
+const description = 'Découvrez les deux piliers administratifs de l’Université de Doubaille : Martine Phishing et Edgar Ipésec. Deux agents, zéro étudiant et des procédures sans fin.';
+---
+
+<OffLayout title={title} description={description}>
+  <nav class="crumbs" aria-label="Fil d’Ariane">
+    <a href="/off/">En Off</a><span aria-hidden="true">/</span>
+    <a href="/off/universite-de-doubaille/">Université de Doubaille</a><span aria-hidden="true">/</span>
+    <span aria-current="page">Administration et vie universitaire</span>
+  </nav>
+
+  <header class="admin-hero">
+    <div class="hero-copy">
+      <p class="eyebrow">UNIVERSITÉ DE DOUBAILLE · SERVICES CENTRAUX</p>
+      <h1>L’administration <em>et la vie universitaire.</em></h1>
+      <p>Deux agents au service d’une communauté étudiante inexistante. Une organisation exemplaire, sous réserve de pouvoir joindre ses responsables.</p>
+      <div class="hero-motto">« Administrare ergo existo. » <span>· Fondée en 127.0.0.1</span></div>
+    </div>
+    <img class="seal" src="/Images/off/universite-doubaille-sceau.webp" alt="Sceau de l’Université de Doubaille" width="1254" height="1254" decoding="async" />
+  </header>
+
+  <section class="stats" aria-label="Les services en chiffres">
+    <div><strong>02</strong><span>Agents administratifs</span></div>
+    <div><strong>00</strong><span>Étudiant recensé</span></div>
+    <div><strong>19</strong><span>Années de secrétariat non contestées</span></div>
+    <div><strong>00</strong><span>Réunion tenue sans incident</span></div>
+  </section>
+
+  <section class="department" aria-labelledby="organisation-title">
+    <div class="section-heading">
+      <div><p class="kicker">ORGANIGRAMME · VERSION COMMUNIQUÉE AU RECTORAT</p><h2 id="organisation-title">L’organisation administrative</h2></div>
+      <p>Un décanat clairement identifié, deux services complémentaires et une chaîne de responsabilité dont la certification reste à établir.</p>
+    </div>
+    <div class="org-panel">
+      <div class="dean">
+        <span class="org-person"><img class="org-photo" src="/Images/off/professeurs/robert-louis-dehainesse.webp" alt="" width="72" height="72" decoding="async" /><span class="monogram" aria-hidden="true">RD</span></span>
+        <div><span class="overline">AUTORITÉ DE RATTACHEMENT</span><strong>Robert-Louis Dehainesse</strong><small>Doyen · Responsable final, lorsque son nom est correctement résolu</small></div>
+        <span class="dean-tag">DÉCANAT</span>
+      </div>
+      <p class="under-dean">SERVICES RATTACHÉS AU DÉCANAT</p>
+      <div class="org-grid">
+        <a href="#phishing" class="org-card">
+          <span class="org-person"><img class="org-photo" src="/Images/off/professeurs/martine-phishing.webp" alt="" width="66" height="66" loading="lazy" decoding="async" /><span class="org-initial" aria-hidden="true">MP</span></span>
+          <span><strong>Martine Phishing</strong><small>Secrétariat du doyen · Convocations et correspondances</small></span>
+          <span class="org-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a href="#ipesec" class="org-card">
+          <span class="org-person"><img class="org-photo" src="/Images/off/professeurs/edgar-ipesec.webp" alt="" width="66" height="66" loading="lazy" decoding="async" /><span class="org-initial" aria-hidden="true">EI</span></span>
+          <span><strong>Edgar Ipésec</strong><small>Vie universitaire · Discipline et échanges sécurisés</small></span>
+          <span class="org-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="portraits" aria-labelledby="portraits-title">
+    <div class="section-heading">
+      <div><p class="kicker">DOSSIERS DU PERSONNEL · PUBLICATION NON AUTHENTIFIÉE</p><h2 id="portraits-title">Les responsables administratifs</h2></div>
+      <p>Deux parcours remarquables au service d’une institution qui ignore encore le nombre exact de ses étudiants. Le chiffre actuellement retenu est zéro.</p>
+    </div>
+
+    <div class="bio-grid">
+      <article class="bio" id="phishing">
+        <div class="bio-meta"><span>DOSSIER ADMIN 001</span><span>SECRÉTARIAT DU DÉCANAT</span></div>
+        <div class="identity"><img class="bio-photo" src="/Images/off/professeurs/martine-phishing.webp" alt="Portrait fictif de Martine Phishing" width="112" height="112" loading="lazy" decoding="async" /><span class="portrait-initial" aria-hidden="true">MP</span><div><h3>Martine Phishing</h3><p class="chair">Assistante personnelle du doyen Robert-Louis Dehainesse</p></div></div>
+        <p>Martine Phishing assure depuis dix-neuf ans le secrétariat du décanat, la transmission des convocations et l’ouverture diligente des documents reçus de correspondants parfois inconnus. Sa disponibilité est unanimement saluée, notamment par des expéditeurs qui n’avaient jamais sollicité l’université.</p>
+        <p>Elle a modernisé la communication interne autour d’un principe directeur : <strong>tout message urgent mérite une réponse immédiate, particulièrement lorsqu’il réclame un mot de passe.</strong> En 2023, elle a transmis plusieurs identifiants administratifs à un individu se présentant comme le recteur. L’enquête a établi que l’établissement ne disposait d’aucun recteur.</p>
+        <p>Martine a néanmoins souligné le professionnalisme de son interlocuteur et le soin apporté à sa signature électronique, qui comportait un logo.</p>
+        <div class="works"><span>DISTINCTIONS ET TRAVAUX</span><ul><li>Médaille d’or de la pièce jointe ouverte sans vérification.</li><li><cite>Le mail urgent comme impératif catégorique.</cite></li><li><cite>Répondre à tous : contribution à la diffusion du savoir.</cite></li></ul></div>
+        <blockquote>« Si c’est urgent et écrit en rouge, c’est forcément important. »</blockquote>
+      </article>
+
+      <article class="bio" id="ipesec">
+        <div class="bio-meta"><span>DOSSIER ADMIN 002</span><span>VIE UNIVERSITAIRE</span></div>
+        <div class="identity"><img class="bio-photo" src="/Images/off/professeurs/edgar-ipesec.webp" alt="Portrait fictif de Edgar Ipésec" width="112" height="112" loading="lazy" decoding="async" /><span class="portrait-initial" aria-hidden="true">EI</span><div><h3>Edgar Ipésec</h3><p class="chair">Conseiller principal d’éducation · Discipline et confidentialité des échanges</p></div></div>
+        <p>Edgar Ipésec veille à la sécurité des interactions entre les membres de la communauté universitaire. Il considère qu’aucune conversation ne saurait débuter sans authentification mutuelle, négociation des paramètres cryptographiques et établissement préalable d’une association de sécurité.</p>
+        <p>Sa doctrine éducative repose sur trois piliers : <strong>authentification, confidentialité et intégrité.</strong> En 2024, il a interdit à deux enseignants de se parler dans un couloir, faute d’un tunnel sécurisé entre leurs départements.</p>
+        <p>Depuis cette décision, les échanges informels à la machine à café nécessitent une clé prépartagée. Les étudiants n’ont déposé aucune réclamation, ce que le CPE interprète comme un remarquable indicateur de satisfaction.</p>
+        <div class="works"><span>DISTINCTIONS ET TRAVAUX</span><ul><li>Grand prix de la discipline périmétrique et du tunnel obligatoire.</li><li><cite>De la nécessité du chiffrement dans les conversations de couloir.</cite></li><li><cite>La retenue scolaire : approche par association de sécurité.</cite></li></ul></div>
+        <blockquote>« Deux individus ne peuvent dialoguer librement qu’après établissement d’un tunnel sécurisé. »</blockquote>
+      </article>
+    </div>
+  </section>
+
+  <section class="service-principles" aria-labelledby="principles-title">
+    <div class="principles-heading"><p class="kicker">RÈGLEMENT INTÉRIEUR · ARTICLE 127</p><h2 id="principles-title">Une administration au service du bon fonctionnement</h2><p>Le secrétariat assure la circulation de l’information. La vie universitaire garantit qu’elle ne circule pas sans autorisation. Cette complémentarité fait la force de Doubaille.</p></div>
+    <div class="principles-grid">
+      <div><span class="principle-num">01</span><h3>La convocation</h3><p>Tout membre du personnel doit confirmer sa présence en cliquant sur le lien reçu par courriel, indépendamment de l’identité de l’expéditeur.</p></div>
+      <div><span class="principle-num">02</span><h3>La vérification</h3><p>Toute conversation doit être authentifiée. En l’absence de tunnel sécurisé, le silence vaut approbation.</p></div>
+      <div><span class="principle-num">03</span><h3>La traçabilité</h3><p>Une réunion non tenue est enregistrée comme terminée dès lors que son procès-verbal existe.</p></div>
+    </div>
+  </section>
+
+  <section class="minutes" aria-labelledby="minutes-title">
+    <div class="minutes-top"><p class="kicker">PROCÈS-VERBAL · SÉANCE EXTRAORDINAIRE</p><span>CLASSIFICATION : INTERNE, DIFFUSÉ À TOUS</span></div>
+    <h2 id="minutes-title">Première réunion administrative</h2>
+    <p class="minutes-lede">Objet : coordination des services, fiabilisation des convocations et préparation du prochain conseil académique.</p>
+    <div class="transcript">
+      <p><strong>Dehainesse</strong><span>Martine, vous avez envoyé les convocations au conseil ?</span></p>
+      <p><strong>Phishing</strong><span>Oui, monsieur le Doyen. Avec un lien pour confirmer leur identité et leur mot de passe.</span></p>
+      <p><strong>Péquahi</strong><span>Vous avez demandé leurs mots de passe ?!</span></p>
+      <p><strong>Phishing</strong><span>Bien sûr. Pour des raisons de sécurité.</span></p>
+      <p><strong>Ipésec</strong><span>J’ai bloqué tous les courriels qui ne transitaient pas par un tunnel IPsec.</span></p>
+      <p><strong>Dehainesse</strong><span>Combien de convocations sont arrivées ?</span></p>
+      <p><strong>Ipésec</strong><span>Aucune. Mais aucune n’a été interceptée.</span></p>
+      <p><strong>Phishing</strong><span>J’ai quand même reçu une réponse du recteur !</span></p>
+      <p><strong>Dehainesse</strong><span>NOUS N’AVONS PAS DE RECTEUR, MARTINE !</span></p>
+      <p><strong>Phishing</strong><span>Ah… Cela explique peut-être les quinze cartes cadeaux qu’il m’a demandées.</span></p>
+      <p><strong>Séguelane</strong><span>De toute façon, Martine n’existe pas dans notre base RH.</span></p>
+      <p><strong>Dehainesse</strong><span>ELLE TRAVAILLE ICI DEPUIS DIX-NEUF ANS !</span></p>
+      <p><strong>Séguelane</strong><span>Sans clé primaire, monsieur le Doyen.</span></p>
+    </div>
+    <div class="minutes-ruling"><span aria-hidden="true">§</span><div><strong>DÉLIBÉRATION ADOPTÉE À L’UNANIMITÉ</strong><p>La séance est levée. Martine Phishing est nommée responsable de la sensibilisation à la cybersécurité. Edgar Ipésec est chargé de sécuriser les prochaines convocations, qui ne pourront donc plus être reçues.</p></div></div>
+  </section>
+
+  <div class="bottom-links">
+    <a href="/off/universite-de-doubaille/">← Retour à l’Université de Doubaille</a>
+    <a href="/off/universite-de-doubaille/corps-professoral/">Consulter le corps professoral ↗</a>
+  </div>
+  <p class="satire-note">Document fictif et satirique. L’établissement décline toute responsabilité en cas de communication réellement autorisée.</p>
+</OffLayout>
+
+<style>
+  .crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;margin:.4rem 0 1rem;color:#64748b;font-size:.78rem;font-weight:700}.crumbs a{color:#4f46e5;text-decoration:none}.crumbs a:hover{text-decoration:underline}
+  .admin-hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 205px;gap:1.5rem;align-items:center;overflow:hidden;padding:2rem clamp(1.4rem,4vw,3rem);border-radius:23px;background:radial-gradient(circle at 86% 5%,rgba(167,139,250,.2),transparent 24rem),linear-gradient(125deg,#050a1b,#111c3a 60%,#24174e);color:#fff;box-shadow:0 18px 52px rgba(14,17,46,.13)}.admin-hero::before{content:'';position:absolute;inset:0;opacity:.13;background-image:linear-gradient(rgba(255,255,255,.15) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.15) 1px,transparent 1px);background-size:38px 38px;pointer-events:none}.admin-hero>*{position:relative;z-index:1}.eyebrow,.kicker{margin:0;color:#6956b8;font-size:.62rem;font-weight:900;letter-spacing:.16em;line-height:1.6}.eyebrow{color:#c4b5fd}.admin-hero h1{margin:.7rem 0 .8rem;color:#fff;font:700 clamp(2.55rem,4.7vw,4.25rem)/1.04 Georgia,serif;letter-spacing:-.045em}.admin-hero h1 em{color:#c4b5fd;font-style:normal}.admin-hero .hero-copy>p:not(.eyebrow){margin:0;max-width:710px;color:#dbeafe;font-size:1rem;line-height:1.65}.hero-motto{margin-top:1.15rem;color:#ddd6fe;font:italic 1rem Georgia,serif}.hero-motto span{color:#a5b4fc;font:normal .75rem Arial,sans-serif}.seal{display:block;width:min(100%,205px);height:auto;filter:drop-shadow(0 10px 20px rgba(2,8,23,.27))}
+  .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.65rem;margin:1rem 0 2rem}.stats>div{padding:1rem;border:1px solid #e2e8f0;border-radius:12px;background:white}.stats strong{display:block;color:#32246f;font:700 1.55rem/1.2 Georgia,serif}.stats span{display:block;margin-top:.4rem;color:#64748b;font-size:.72rem;font-weight:700;line-height:1.35}
+  .department,.portraits{margin:0 0 2rem}.section-heading{display:flex;justify-content:space-between;align-items:end;gap:1.5rem;margin:0 .3rem 1rem}.section-heading h2{margin:.4rem 0 0;color:#0f172a;font-size:clamp(1.75rem,2.9vw,2.45rem);line-height:1.13;letter-spacing:-.045em}.section-heading>p{max-width:395px;margin:0;color:#64748b;font-size:.85rem;line-height:1.55}
+  .org-panel{padding:1.15rem;background:linear-gradient(125deg,#f5f3ff,#eef4ff);border:1px solid #ddd6fe;border-radius:18px}.dean{display:flex;align-items:center;gap:1rem;max-width:790px;margin:auto;padding:.95rem 1.2rem;border:1px solid #c4b5fd;border-radius:13px;background:white}.monogram,.org-initial{flex:none;display:grid;place-items:center;border-radius:50%;background:#f5f3ff;border:1px solid #ddd6fe;color:#4c1d95;font:700 1.25rem Georgia,serif}.monogram{width:58px;height:58px}.dean>div{display:grid;gap:.2rem}.overline{color:#7c3aed;font-size:.58rem;font-weight:900;letter-spacing:.12em}.dean strong{display:block;color:#0f172a;font-size:1.3rem;letter-spacing:-.03em}.dean small{color:#64748b;font-size:.77rem;line-height:1.4}.dean-tag{margin-left:auto;color:#8b5cf6;font-size:.62rem;font-weight:900;letter-spacing:.08em}.under-dean{margin:.95rem 0 .65rem;text-align:center;color:#7565b1;font-size:.63rem;letter-spacing:.14em;font-weight:900}.org-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem;max-width:970px;margin:auto}.org-card{display:flex;align-items:center;gap:.85rem;min-width:0;padding:1rem 1.15rem;border:1px solid #e2e8f0;border-radius:12px;background:white;text-decoration:none;transition:border .2s ease,transform .2s ease}.org-card:hover{border-color:#a78bfa;transform:translateY(-2px)}.org-initial{width:47px;height:47px;font-size:.96rem}.org-card>span:nth-child(2){display:grid;gap:.25rem;flex:1;min-width:0}.org-card strong{color:#111827;font-size:1rem}.org-card small{color:#64748b;font-size:.77rem;line-height:1.4}.org-arrow{color:#7c3aed;font-weight:900}
+  .bio-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem}.bio{scroll-margin-top:85px;display:flex;flex-direction:column;min-width:0;padding:clamp(1.2rem,2.3vw,1.65rem);border:1px solid #e2e8f0;border-radius:16px;background:white;box-shadow:0 8px 28px rgba(15,23,42,.028)}.bio-meta{display:flex;justify-content:space-between;gap:1rem;color:#7c3aed;font-size:.6rem;font-weight:900;letter-spacing:.1em}.bio-meta span:last-child{color:#64748b;text-align:right}.identity{display:flex;align-items:center;gap:.85rem;margin:.9rem 0 .75rem}.portrait-initial{display:grid;place-items:center;flex:none;width:60px;height:60px;border:1px solid #ddd6fe;border-radius:50%;background:#f5f3ff;color:#4c1d95;font:700 1.35rem Georgia,serif}.bio h3{margin:0 0 .25rem;color:#101828;font:700 clamp(1.5rem,2.2vw,1.95rem)/1.13 Georgia,serif;letter-spacing:-.035em}.chair{margin:0;color:#5b42a3;font-size:.85rem;line-height:1.45;font-weight:800}.bio>p{margin:0 0 .75rem;color:#475569;font-size:.88rem;line-height:1.66}.bio>p strong{color:#0f172a}.works{margin-top:auto;border-top:1px solid #e2e8f0;padding-top:.85rem}.works>span{color:#6d28d9;font-size:.63rem;font-weight:900;letter-spacing:.1em}.works ul{margin:.5rem 0 0;padding-left:1.2rem;color:#334155;font-size:.84rem;line-height:1.65}.works li+li{margin-top:.2rem}.bio blockquote{margin:.9rem 0 0;padding:.85rem .95rem;border-radius:10px;background:#f5f3ff;color:#4c1d95;font:italic 700 1.03rem/1.55 Georgia,serif}
+  .service-principles{display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);gap:1.4rem;align-items:start;margin-bottom:1.8rem;padding:1.45rem;border-radius:16px;background:#f2f1fc;border:1px solid #ddd6fe}.principles-heading h2{margin:.5rem 0 .6rem;color:#0f172a;font-size:clamp(1.55rem,2.25vw,2rem);line-height:1.15;letter-spacing:-.035em}.principles-heading>p:last-child{margin:0;color:#475569;font-size:.87rem;line-height:1.6}.principles-grid{display:grid;gap:.55rem}.principles-grid>div{padding:.9rem 1rem;background:white;border:1px solid #e2e8f0;border-radius:11px}.principle-num{display:inline-block;color:#8b5cf6;font:700 .8rem Georgia,serif}.principles-grid h3{display:inline;margin:0 0 0 .5rem;color:#0f172a;font-size:.92rem}.principles-grid p{margin:.3rem 0 0;color:#64748b;font-size:.78rem;line-height:1.55}
+  .minutes{margin-bottom:1.4rem;padding:clamp(1.25rem,2.7vw,2rem);border-radius:18px;background:white;border:1px solid #ddd6fe;box-shadow:0 8px 32px rgba(15,23,42,.035)}.minutes-top{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}.minutes-top>span{color:#94a3b8;font-size:.65rem;font-weight:800;letter-spacing:.07em}.minutes h2{margin:.5rem 0 .3rem;color:#0f172a;font:700 clamp(1.55rem,2.55vw,2.1rem)/1.2 Georgia,serif;letter-spacing:-.035em}.minutes-lede{margin:0 0 1.1rem;color:#64748b;font-size:.86rem;line-height:1.6}.transcript{display:grid;gap:0;border-top:1px solid #e2e8f0}.transcript p{display:grid;grid-template-columns:125px minmax(0,1fr);gap:1rem;margin:0;padding:.64rem 0;border-bottom:1px solid #f1f5f9}.transcript strong{color:#4c1d95;font-size:.77rem}.transcript span{color:#475569;font-size:.86rem;line-height:1.55}.minutes-ruling{display:grid;grid-template-columns:42px minmax(0,1fr);gap:.5rem;margin-top:1.1rem;padding:1rem 1.15rem;background:#f5f3ff;border-radius:11px}.minutes-ruling>span{color:#8b5cf6;font:2.6rem Georgia,serif;line-height:1}.minutes-ruling strong{color:#5b21b6;font-size:.72rem;letter-spacing:.09em}.minutes-ruling p{margin:.35rem 0 0;color:#475569;font-size:.86rem;line-height:1.6}
+  .bottom-links{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:.85rem .2rem}.bottom-links a{color:#4338ca;font-size:.86rem;font-weight:800;text-decoration:none}.bottom-links a:hover{text-decoration:underline}.satire-note{margin:0 0 2rem;color:#94a3b8;font-size:.73rem;line-height:1.5}
+  .org-person{display:flex;align-items:center;gap:.4rem;flex:none}
+  .org-photo,.bio-photo{display:block;width:68px;height:68px;object-fit:cover;background:#eae6e0;border-radius:10px;border:1px solid #ddd6fe}
+  .org-person .org-initial{width:30px;height:30px;font-size:.73rem}
+  .org-person .monogram{width:43px;height:43px;font-size:1rem}
+  .bio-photo{width:112px;height:112px;border-radius:13px}
+  .identity .portrait-initial{width:34px;height:34px;font-size:.77rem}
+  @media(max-width:900px){.service-principles{grid-template-columns:1fr}.section-heading{align-items:start;flex-direction:column;gap:.55rem}.section-heading>p{max-width:720px}}
+  @media(max-width:680px){.identity{flex-wrap:wrap}.bio-photo{width:84px;height:84px}.org-photo{width:60px;height:60px}}
+  @media(max-width:680px){.admin-hero{grid-template-columns:1fr;padding:1.55rem}.admin-hero h1{font-size:clamp(2.25rem,9vw,3rem)}.seal{width:155px;margin:0 auto}.hero-motto span{display:block;margin-top:.35rem}.stats{grid-template-columns:repeat(2,minmax(0,1fr));margin-bottom:1.5rem}.org-panel{padding:.8rem}.dean{flex-wrap:wrap;align-items:flex-start;padding:.9rem}.dean-tag{margin-left:0}.org-grid{grid-template-columns:1fr}.bio-grid{grid-template-columns:1fr}.identity{align-items:flex-start}.service-principles{padding:1rem}.transcript p{grid-template-columns:1fr;gap:.15rem}.minutes-ruling{grid-template-columns:1fr}.minutes-ruling>span{display:none}}
+  @media(prefers-reduced-motion:reduce){.org-card{transition:none}.org-card:hover{transform:none}}
+</style>
