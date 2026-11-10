@@ -95,22 +95,34 @@ const collectionTools = offTools.filter((tool) => tool.number !== '010' && tool.
           <h3 id="doubaille-title">Université de Doubaille</h3>
           <p class="project-lead">L'excellence académique à l'état parfaitement inutile.</p>
           <p class="project-description">
-            Fondée en 127.0.0.1, l'Université de Doubaille rassemble huit universitaires,
-            deux administratifs et absolument aucun étudiant. Traités philosophiques,
-            métaphysique informatique et gouvernance dont personne ne peut vérifier
-            la légitimité.
+            Fondée en 127.0.0.1, Doubaille réunit neuf universitaires, deux administratifs
+            et toujours aucun étudiant. Une faculté de haute pensée informatique :
+            cursus improbables, recherches métaphysiques et gouvernance rigoureusement discutable.
           </p>
+          <div class="doubaille-facts" aria-label="L'Université de Doubaille en chiffres">
+            <span><strong>09</strong> universitaires</span>
+            <span><strong>04</strong> cursus</span>
+            <span><strong>09</strong> publications</span>
+            <span><strong>00</strong> étudiant</span>
+          </div>
           <p class="project-motto">« Cogito ergo ping. »</p>
-          <a class="project-button doubaille-button" href="/off/universite-de-doubaille/">
-            Découvrir l'Université <span aria-hidden="true">↗</span>
-          </a>
+          <div class="doubaille-actions">
+            <a class="project-button doubaille-button" href="/off/universite-de-doubaille/">
+              Découvrir l'Université <span aria-hidden="true">↗</span>
+            </a>
+            <nav class="doubaille-shortcuts" aria-label="Accès directs à Doubaille University">
+              <a href="https://doubaille-university.com/corps-professoral/">Professeurs</a>
+              <a href="https://doubaille-university.com/publications/">Publications</a>
+              <a href="https://doubaille-university.com/vie-universitaire/">Campus</a>
+            </nav>
+          </div>
         </div>
         <div class="project-art doubaille-art">
           <img
             src="/Images/off/universite-doubaille-sceau.webp"
             alt="Sceau officiel de l'Université de Doubaille, fondée en 127.0.0.1"
-            width="350"
-            height="350"
+            width="260"
+            height="260"
             loading="lazy"
             decoding="async"
           />
@@ -199,15 +211,15 @@ const collectionTools = offTools.filter((tool) => tool.number !== '010' && tool.
     pointer-events:none;
   }
   .toea-banner {background:radial-gradient(circle at 90% 12%,rgba(245,158,11,.22),transparent 38%),linear-gradient(120deg,#0c1527,#15243b 67%,#2c2531)}
-  .doubaille-banner {background:radial-gradient(circle at 90% 18%,rgba(167,139,250,.23),transparent 37%),linear-gradient(120deg,#060c21,#101c3d 63%,#291a53)}
+  .doubaille-banner {min-height:335px;padding-block:clamp(1.35rem,2.35vw,2rem);background:radial-gradient(circle at 90% 18%,rgba(200,165,107,.16),transparent 37%),linear-gradient(120deg,#071327,#102740 63%,#173653)}
   .project-copy {min-width:0;position:relative;z-index:1}
   .project-kicker {margin:0 0 .8rem;font-size:.62rem;font-weight:900;letter-spacing:.135em;line-height:1.5}
   .toea-banner .project-kicker {color:#f6c78c}
-  .doubaille-banner .project-kicker {color:#c4b5fd}
+  .doubaille-banner .project-kicker {color:#e4c890}
   .project-copy h3 {margin:0;color:#fff;font-size:clamp(2rem,4.1vw,3.2rem);line-height:1.05;letter-spacing:-.05em}
   .project-lead {margin:1rem 0 .65rem;font-size:clamp(1rem,1.7vw,1.2rem);font-weight:800;line-height:1.32}
   .toea-banner .project-lead {color:#f9d5a2}
-  .doubaille-banner .project-lead {color:#d9c8ff}
+  .doubaille-banner .project-lead {color:#eed4a5}
   .project-description {max-width:680px;margin:0;color:#dce5f5;font-size:.92rem;line-height:1.62}
   .project-motto {margin:1rem 0 1.25rem;font:italic 1rem/1.45 Georgia,serif}
   .toea-banner .project-motto {color:#f7dcb5}
@@ -216,12 +228,27 @@ const collectionTools = offTools.filter((tool) => tool.number !== '010' && tool.
   .project-button:hover {transform:translateY(-2px);filter:brightness(1.08)}
   .project-button:focus-visible {outline:3px solid #fff;outline-offset:3px}
   .toea-button {background:#b96e27}
-  .doubaille-button {background:#6346d7}
+  .doubaille-button {background:#c8a56b;color:#09182d}
   .project-art {display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;position:relative;z-index:1}
   .project-art img {display:block;width:min(100%,265px);height:250px;object-fit:contain;filter:drop-shadow(0 14px 18px rgba(0,0,0,.22))}
-  .doubaille-art img {width:min(100%,300px);height:285px}
+  .doubaille-art img {width:min(100%,250px);height:240px}
   .project-art p {margin:.35rem 0 0;color:#c5cee4;text-align:center;font-size:.54rem;font-weight:900;line-height:1.5;letter-spacing:.12em}
-  .doubaille-art p {color:#ded1fb}
+  .doubaille-art p {color:#e6d2ae}
+  /* Doubaille : densité éditoriale comparable à TOEA, sans agrandir le bandeau. */
+  .doubaille-banner .project-kicker {margin-bottom:.5rem}
+  .doubaille-banner .project-copy h3 {font-size:clamp(1.9rem,3.65vw,2.95rem)}
+  .doubaille-banner .project-lead {margin:.65rem 0 .42rem}
+  .doubaille-banner .project-description {font-size:.89rem;line-height:1.5}
+  .doubaille-banner .project-motto {margin:.56rem 0 .72rem;font-size:.96rem}
+  .doubaille-facts {display:flex;align-items:center;flex-wrap:wrap;gap:.3rem .72rem;margin:.68rem 0 .55rem;color:#d8c6a8;font-size:.72rem;font-weight:650;line-height:1.45}
+  .doubaille-facts span {display:inline-flex;align-items:baseline;gap:.25rem;white-space:nowrap}
+  .doubaille-facts span:not(:last-child)::after {content:'·';padding-left:.68rem;color:#bfa276}
+  .doubaille-facts strong {color:#f1d49c;font-size:.84rem;letter-spacing:.02em;font-weight:900;font-variant-numeric:tabular-nums}
+  .doubaille-actions {display:flex;align-items:center;flex-wrap:wrap;gap:.65rem 1.1rem}
+  .doubaille-shortcuts {display:flex;align-items:center;flex-wrap:wrap;gap:.4rem .78rem}
+  .doubaille-shortcuts a {color:#dcd8cd;font-size:.73rem;font-weight:700;text-decoration:none;text-underline-offset:3px;border-bottom:1px solid rgba(218,193,147,.55);padding-bottom:.2rem;transition:color .2s ease}
+  .doubaille-shortcuts a:hover {color:#ffe0a4;border-bottom-color:#ffe0a4}
+  .doubaille-shortcuts a:focus-visible {outline:2px solid #eac88a;outline-offset:4px}
 
   @media(max-width:980px) {
     .off-hero {grid-template-columns:1fr;align-items:start;gap:1rem;min-height:0}
@@ -230,7 +257,7 @@ const collectionTools = offTools.filter((tool) => tool.number !== '010' && tool.
     .projects-heading > p {max-width:650px}
     .project-banner {grid-template-columns:minmax(0,1fr) 210px}
     .project-art img {height:210px}
-    .doubaille-art img {height:230px}
+    .doubaille-art img {height:208px}
   }
   @media(max-width:680px) {
     .off-hero {padding:1.25rem;border-radius:20px}
@@ -242,61 +269,14 @@ const collectionTools = offTools.filter((tool) => tool.number !== '010' && tool.
     .project-banner {grid-template-columns:1fr;gap:.7rem;min-height:0;padding:1.4rem;border-radius:18px}
     .project-art {margin-top:.5rem}
     .project-art img {width:min(100%,200px);height:180px}
-    .doubaille-art img {width:min(100%,205px);height:205px}
+    .doubaille-art img {width:min(100%,170px);height:170px}
+    .doubaille-banner {padding:1.3rem}
+    .doubaille-facts {gap:.28rem .55rem}
+    .doubaille-facts span:not(:last-child)::after {padding-left:.5rem}
+    .doubaille-actions {gap:.85rem}
+    .doubaille-shortcuts {justify-content:center;width:100%;gap:.6rem .95rem}
     .project-description {font-size:.88rem}
     .project-button {width:100%}
   }
   @media(prefers-reduced-motion:reduce) {.project-button{transition:none}.project-button:hover{transform:none}}
-
-  /* TOEA — Harmonisation visuelle avec le sceau Doubaille */
-
-.toea-art img {
-  width: min(100%, 300px);
-  height: 285px;
-  object-fit: contain;
-  transform: scale(1.18);
-  transform-origin: center;
-}
-
-/* Tablette */
-@media (max-width: 980px) {
-  .toea-art img {
-    height: 230px;
-  }
-}
-
-/* Mobile */
-@media (max-width: 680px) {
-  .toea-art img {
-    width: min(100%, 205px);
-    height: 205px;
-  }
-}
-
-/* TOEA : agrandir le badge sans toucher à Doubaille */
-
-.toea-art img {
-  width: min(100%, 300px);
-  height: 285px;
-  object-fit: contain;
-  transform: scale(1.4);
-  transform-origin: center;
-}
-
-/* Tablette */
-@media (max-width: 980px) {
-  .toea-art img {
-    height: 230px;
-    transform: scale(1.25);
-  }
-}
-
-/* Mobile */
-@media (max-width: 680px) {
-  .toea-art img {
-    width: min(100%, 205px);
-    height: 205px;
-    transform: scale(1.12);
-  }
-}
 </style>
