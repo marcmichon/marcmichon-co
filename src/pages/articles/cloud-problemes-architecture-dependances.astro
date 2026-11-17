@@ -1,0 +1,413 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ArticleHero from '../../components/article/ArticleHero.astro';
+import ArticleLayout from '../../components/article/ArticleLayout.astro';
+import Callout from '../../components/article/Callout.astro';
+import RelatedArticles from '../../components/article/RelatedArticles.astro';
+import ArticleQuote from '../../components/article/ArticleQuote.astro';
+import TerrainNote from '../../components/article/TerrainNote.astro';
+import CarnetCTA from '../../components/article/CarnetCTA.astro';
+import { SITE_TITLE } from '../../consts';
+
+// Visuel générique déjà utilisé par l'identité du site ; aucune nouvelle image requise.
+const articleImage = '/Images/fondsite.png';
+
+const title = "Le cloud n'a pas fait disparaître les problèmes d'architecture. Il a parfois changé l'endroit où il faut aller les chercher.";
+const description = "Même répartie sur plusieurs zones, une application cloud peut dépendre d'un service d'identité, de DNS ou d'administration commun. Les points à vérifier lors d'une revue d'architecture.";
+
+const toc = [
+  { id: 'deux-zones', label: 'Deux zones disponibles, mais un accès qui ne fonctionne plus' },
+  { id: 'dependances', label: 'Des dépendances qui ne figurent pas toujours sur le premier schéma' },
+  { id: 'administration', label: 'Et pour administrer l’infrastructure ?' },
+  { id: 'cloud-architecture', label: 'Le cloud ne signifie pas qu’on n’a plus à s’occuper de l’architecture' },
+  { id: 'verifier', label: 'Vérifier ce qui est réellement indépendant' },
+  { id: 'conclusion', label: 'Conclusion' },
+];
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <BaseHead
+      title={`${title} | ${SITE_TITLE}`}
+      description={description}
+      image={articleImage}
+      ogType="article"
+    />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <ArticleHero
+        tag="SECURITY PLATFORM ENGINEERING"
+        badgeColor="#7C3AED"
+        badgeBackground="rgba(124,58,237,.12)"
+        title={title}
+        subtitle="NDLR : Petit clin d'œil à la panne Microsoft…"
+        image={articleImage}
+        readTime="8 min de lecture"
+        level="Intermédiaire"
+        updated="Publié : novembre 2026"
+        technologies={[
+          'Security Platform Engineering',
+          'Cloud Architecture',
+          'High Availability',
+          'Identity & Access',
+          'Résilience',
+        ]}
+      />
+
+      <aside class="series-intro" aria-label="Présentation de la série Security Platform Engineering">
+        <span class="series-intro__eyebrow">SECURITY PLATFORM ENGINEERING</span>
+        <p>
+          Cette série s'intéresse à la mise en place et à l'exploitation des contrôles de sécurité :
+          de leur configuration technique à leur application réelle sur le terrain.
+        </p>
+      </aside>
+
+      <ArticleLayout toc={toc}>
+        <p>
+          Une application est hébergée dans le cloud, sur deux zones de disponibilité.
+          Les serveurs sont redondés, les données répliquées et les connexions réparties par un load balancer.
+        </p>
+        <p>Une zone devient indisponible ? L'autre est censée prendre le relais.</p>
+        <p>Jusque-là, tout va bien.</p>
+        <p>
+          Sauf qu'en regardant un peu plus loin dans l'architecture, on constate que les deux environnements
+          utilisent le même service d'authentification, la même plateforme d'administration ou certaines ressources communes.
+        </p>
+        <p>
+          On dispose donc de deux environnements distincts, mais pas nécessairement de deux chaînes de fonctionnement indépendantes.
+        </p>
+        <p>Et c'est là que le sujet devient intéressant.</p>
+        <p>
+          Les incidents récents de Microsoft 365 rappellent d'ailleurs que des infrastructures largement distribuées
+          peuvent rencontrer des défaillances communes difficiles à contenir.
+        </p>
+        <p>
+          Le rapport préliminaire sur la panne des 12 et 13 novembre 2026 décrit notamment un défaut logiciel latent
+          ayant affecté une infrastructure de passerelle réseau, avec des mécanismes de répartition de charge
+          qui ont contribué à propager le problème.
+        </p>
+        <p>
+          Ce n'est pas le scénario que nous allons étudier ici, mais il donne une bonne raison de regarder
+          ce qui se cache derrière nos architectures redondantes.
+        </p>
+
+        <h2 id="deux-zones">Deux zones disponibles, mais un accès qui ne fonctionne plus</h2>
+        <p>Prenons une application métier dont les utilisateurs s'authentifient avec Microsoft Entra ID.</p>
+        <p>
+          L'application est répartie sur plusieurs instances, dans deux zones de disponibilité.
+          Les mécanismes de bascule sont configurés et l'infrastructure applicative fonctionne correctement.
+        </p>
+        <p>Mais les deux environnements utilisent le même fournisseur d'identité.</p>
+        <p>
+          Si celui-ci rencontre une indisponibilité, les serveurs applicatifs peuvent continuer à fonctionner normalement.
+        </p>
+        <p>Le load balancer répond, les bases de données restent accessibles et les applications sont toujours démarrées.</p>
+        <p>
+          Pour autant, les utilisateurs qui doivent effectuer une nouvelle authentification peuvent se retrouver bloqués.
+        </p>
+        <p>
+          Les sessions déjà établies peuvent continuer à fonctionner, selon leur durée de validité et les mécanismes utilisés.
+          Mais les nouvelles connexions, ou certaines opérations nécessitant une réauthentification, peuvent échouer.
+        </p>
+        <p>Ce n'est pas la haute disponibilité des serveurs qui est en cause.</p>
+        <p>C'est une dépendance commune, située ailleurs dans l'architecture.</p>
+        <ArticleQuote>
+          Le problème n'est pas que les deux environnements fonctionnent mal.
+          C'est qu'ils dépendent tous les deux d'un service qui peut les rendre inaccessibles.
+        </ArticleQuote>
+        <p>Et ajouter une troisième zone de disponibilité ne corrigera pas cette dépendance.</p>
+
+        <h2 id="dependances">Des dépendances qui ne figurent pas toujours sur le premier schéma</h2>
+        <p>
+          Lorsqu'on présente une architecture cloud, on retrouve généralement les instances applicatives,
+          les réseaux, les bases de données et les mécanismes de répartition de charge.
+        </p>
+        <p>Les éléments sont répartis entre plusieurs zones, parfois plusieurs régions.</p>
+        <p>Mais il faut aussi regarder les services nécessaires au fonctionnement de l'ensemble.</p>
+        <p>L'authentification en fait partie, mais ce n'est pas la seule dépendance possible.</p>
+        <p>Prenons la résolution DNS.</p>
+        <p>
+          Une application peut fonctionner parfaitement sur plusieurs infrastructures. Si le service DNS nécessaire
+          pour y accéder devient indisponible, certaines connexions peuvent échouer, notamment lorsque les
+          informations ne sont plus présentes dans les caches ou arrivent à expiration.
+        </p>
+        <p>Même chose pour les applications qui récupèrent leurs secrets auprès d'un service centralisé.</p>
+        <p>Une instance déjà démarrée peut continuer à fonctionner avec des informations qu'elle possède en mémoire.</p>
+        <p>
+          En revanche, le redémarrage de l'application ou le déploiement d'une nouvelle instance peut échouer
+          si elle doit récupérer un secret devenu inaccessible.
+        </p>
+        <p>
+          Et c'est là qu'on découvre parfois une dépendance qui ne posait aucun problème lorsque tout fonctionnait normalement.
+        </p>
+        <p>
+          On a prévu le redémarrage automatique des serveurs, mais pas forcément l'indisponibilité du service
+          dont ils ont besoin pour redémarrer correctement.
+        </p>
+        <TerrainNote context="Security Platform Engineering • Cloud • Architecture">
+          <p>
+            La redondance des ressources applicatives ne garantit pas celle des services dont elles dépendent.
+            Lors d'une revue d'architecture, il faut regarder le chemin complet nécessaire au fonctionnement
+            du service, et pas uniquement les composants qui l'hébergent.
+          </p>
+        </TerrainNote>
+
+        <h2 id="administration">Et pour administrer l'infrastructure ?</h2>
+        <p>Il y a un autre point qui mérite d'être vérifié : les accès d'administration.</p>
+        <p>
+          Une organisation peut disposer de plusieurs environnements, avec une segmentation réseau cohérente
+          et des accès privilégiés correctement contrôlés.
+        </p>
+        <p>
+          Les administrateurs utilisent une plateforme centralisée pour s'authentifier, obtenir leurs privilèges
+          et accéder aux consoles de gestion.
+        </p>
+        <p>C'est une bonne pratique.</p>
+        <p>Mais que se passe-t-il si cette plateforme devient indisponible ?</p>
+        <p>Les équipements et les serveurs peuvent continuer à fonctionner.</p>
+        <p>En revanche, certaines opérations d'administration peuvent devenir impossibles.</p>
+        <p>Et c'est généralement le genre de difficulté dont on se passerait bien pendant un incident.</p>
+        <p>
+          Il faut donc prévoir les conditions dans lesquelles les équipes pourront intervenir lorsque
+          les mécanismes habituels ne sont plus accessibles.
+        </p>
+        <p>
+          C'est notamment l'intérêt des comptes d'accès d'urgence, ou <em>break-glass</em>,
+          lorsqu'ils sont adaptés à l'environnement concerné.
+        </p>
+        <p>Encore faut-il qu'ils soient réellement utilisables dans les scénarios prévus.</p>
+        <p>
+          Un compte de secours qui dépend du même fournisseur d'identité externe ou des mêmes mécanismes
+          d'authentification que l'accès principal peut présenter un intérêt limité en cas d'indisponibilité de ces composants.
+        </p>
+        <p>
+          À l'inverse, un compte local au fournisseur cloud peut permettre de contourner une panne de fédération
+          d'identité, sans pour autant résoudre une indisponibilité complète du service d'identité lui-même.
+        </p>
+        <p>Il faut donc être précis sur ce que l'accès de secours permet réellement de couvrir.</p>
+        <p>
+          Et créer des accès directs permanents pour anticiper toutes les pannes possibles n'est pas non plus une bonne solution.
+        </p>
+        <p>On finirait par contourner les contrôles de sécurité mis en place.</p>
+        <p>Les accès de secours doivent être limités, protégés, surveillés et testés.</p>
+        <p>
+          L'objectif n'est pas de créer un deuxième chemin d'administration ouvert en permanence à tout le monde.
+        </p>
+        <p>Il est de pouvoir intervenir dans des situations particulières, sans annuler les mécanismes de sécurité habituels.</p>
+
+        <h2 id="cloud-architecture">Le cloud ne signifie pas qu'on n'a plus à s'occuper de l'architecture</h2>
+        <p>C'est peut-être l'une des confusions que l'on rencontre parfois avec les services cloud.</p>
+        <p>
+          Le fournisseur prend en charge une partie importante de l'infrastructure : les équipements physiques,
+          les plateformes de virtualisation, la maintenance et, selon le modèle utilisé, les systèmes ou les applications.
+        </p>
+        <p>C'est évidemment un avantage.</p>
+        <p>Mais cela ne signifie pas que tous les choix d'architecture sont désormais de sa responsabilité.</p>
+        <p>
+          Sur une architecture IaaS, par exemple, le fournisseur met à disposition les ressources
+          et les mécanismes de disponibilité.
+        </p>
+        <p>Encore faut-il les utiliser correctement.</p>
+        <p>Deux machines virtuelles réparties sur deux zones ne rendent pas automatiquement une application résiliente.</p>
+        <p>Il reste les données, les communications réseau, l'authentification, les services partagés
+          et les mécanismes nécessaires à la reprise.</p>
+        <p>Avec le SaaS, le périmètre est différent.</p>
+        <p>
+          On n'administre plus directement l'infrastructure du service. Lorsqu'un incident se produit chez le fournisseur,
+          les investigations et les opérations de rétablissement lui appartiennent largement.
+        </p>
+        <p>Mais les conséquences sur notre activité restent bien réelles.</p>
+        <p>
+          C'est pourquoi il faut distinguer la disponibilité annoncée d'un service cloud
+          de la continuité réelle de l'application ou de l'activité qui en dépend.
+        </p>
+        <ArticleQuote>
+          On peut déléguer l'exploitation d'un service.
+          On ne délègue pas pour autant toutes les conséquences de son indisponibilité.
+        </ArticleQuote>
+
+        <h2 id="verifier">Vérifier ce qui est réellement indépendant</h2>
+        <p>
+          Lorsqu'on examine une architecture cloud ou hybride, la première étape consiste donc
+          à identifier les dépendances communes.
+        </p>
+        <p>Pas uniquement les serveurs et les équipements réseau.</p>
+        <p>
+          Il faut regarder les services d'identité, les mécanismes DNS, les ressources de stockage,
+          les services de gestion des secrets et les composants nécessaires aux opérations d'administration.
+        </p>
+        <p>Pour chaque élément critique, la question est assez simple : que se passe-t-il si ce service devient indisponible ?</p>
+        <p>Est-ce que les applications continuent à fonctionner ?</p>
+        <p>Est-ce que les utilisateurs peuvent toujours se connecter ?</p>
+        <p>Est-ce que les équipes techniques peuvent encore intervenir ?</p>
+        <p>Et surtout, est-ce que les mécanismes de secours prévus restent accessibles ?</p>
+        <p>Il faut également vérifier la portée réelle des mécanismes de redondance.</p>
+        <p>
+          Une ressource peut être répartie sur plusieurs zones, tandis qu'un service dont elle dépend
+          possède un autre périmètre de disponibilité.
+        </p>
+        <p>Ces différences doivent apparaître dans l'analyse d'architecture.</p>
+        <p>Une fois les dépendances identifiées, les tests de continuité peuvent être adaptés.</p>
+        <p>
+          On peut vérifier le comportement d'une application lorsque son service d'authentification n'est plus accessible,
+          tester un compte d'administration d'urgence ou contrôler qu'une nouvelle instance peut démarrer
+          lorsque certains services partagés sont indisponibles.
+        </p>
+        <p>Évidemment, ces tests se préparent sur un périmètre maîtrisé.</p>
+        <p>Le but n'est pas de provoquer une panne en production pour découvrir que le plan de secours ne fonctionne pas.</p>
+        <p>Et toutes les dépendances ne nécessitent pas forcément une solution de secours complète.</p>
+        <p>Certaines peuvent être acceptées, dès lors que leurs conséquences sont connues et compatibles avec les besoins de disponibilité.</p>
+        <p>Le principal est de ne pas découvrir leur existence au moment où l'on en a besoin.</p>
+        <TerrainNote context="Security Platform Engineering • Cloud • Résilience">
+          <p>
+            Une architecture répartie entre plusieurs zones ou datacenters doit également être examinée
+            sous l'angle de ses dépendances logiques. Les ressources peuvent être redondées sans que les
+            mécanismes d'authentification, d'administration ou certains services partagés disposent
+            d'une indépendance équivalente.
+          </p>
+        </TerrainNote>
+
+        <h2 id="conclusion">Conclusion</h2>
+        <p>Le cloud apporte des mécanismes de disponibilité et de redondance particulièrement performants.</p>
+        <p>Mais leur présence ne garantit pas que tous les services nécessaires au fonctionnement d'une application soient indépendants.</p>
+        <p>Une infrastructure peut continuer à fonctionner alors que ses utilisateurs ne peuvent plus s'authentifier.</p>
+        <p>Des serveurs peuvent rester disponibles alors que les administrateurs ne peuvent plus intervenir.</p>
+        <p>Des applications peuvent être répliquées sans que toutes leurs dépendances le soient.</p>
+        <p>Ce sont des situations qu'il vaut mieux identifier dès la conception ou lors d'une revue d'architecture.</p>
+        <p>
+          Et c'est aussi un sujet de cybersécurité : les mécanismes d'authentification, de contrôle des accès
+          et d'administration doivent rester cohérents avec les besoins de disponibilité et de reprise.
+        </p>
+        <p>L'objectif n'est pas de remettre en question les architectures cloud.</p>
+        <p>
+          Il est de vérifier ce qui peut réellement les mettre en difficulté,
+          y compris lorsque leurs composants principaux sont toujours disponibles.
+        </p>
+        <ArticleQuote>
+          Avoir deux environnements redondants, c'est bien.
+          Savoir ce qui peut les rendre indisponibles tous les deux, c'est mieux.
+        </ArticleQuote>
+
+        <Callout type="warning">
+          <p>
+            <strong>Point d'attention :</strong> cette note présente des scénarios d'architecture génériques,
+            applicables à des environnements cloud et hybrides. Elle ne prétend pas reproduire
+            l'architecture interne de Microsoft ni expliquer les causes de l'incident Microsoft 365
+            des 12 et 13 novembre 2026. Les mécanismes de secours évoqués dépendent des services
+            et des configurations utilisés : leur efficacité doit être vérifiée dans les scénarios
+            d'indisponibilité qu'ils sont censés couvrir.
+          </p>
+          <p>
+            Le rapport Microsoft consulté est préliminaire, daté du 15 novembre 2026.
+            <a href="https://www.365fanatic.com/wp-content/uploads/2026/11/postincidentreport.pdf" target="_blank" rel="noopener noreferrer">
+              Consulter le rapport post-incident préliminaire (PDF)
+            </a>.
+          </p>
+        </Callout>
+
+        <CarnetCTA />
+        <RelatedArticles
+          articles={[
+            {
+              href: '/articles/acces-privilegies-bastion-contournement',
+              category: 'SECURITY PLATFORM ENGINEERING',
+              title: "Un bastion ne sécurise pas les accès qu'on peut contourner",
+              description: "Un bastion opérationnel ne suffit pas si les accès directs historiques restent possibles.",
+            },
+            {
+              href: '/articles/plateformes-figees-apres-deploiement',
+              category: 'SECURITY PLATFORM ENGINEERING',
+              title: 'Les plateformes qui se figent après leur déploiement',
+              description: "Le projet d'intégration est terminé. Le projet de la plateforme, lui, ne fait que commencer.",
+            },
+          ]}
+        />
+      </ArticleLayout>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+	body {
+		background: #f8fafc;
+	}
+
+	main {
+		width: min(1320px, calc(100% - 4rem));
+		margin: 0 auto;
+		padding: 3rem 0 5rem;
+	}
+
+	.series-intro {
+		position: relative;
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin: 1.5rem 0 2rem;
+		padding: 1rem 1.25rem;
+		border: 1px solid rgba(124, 58, 237, 0.2);
+		border-radius: 1rem;
+		background:
+			linear-gradient(
+				135deg,
+				rgba(124, 58, 237, 0.09),
+				rgba(37, 99, 235, 0.04)
+			),
+			#ffffff;
+		box-shadow: 0 14px 35px rgba(76, 29, 149, 0.07);
+	}
+
+	.series-intro::before {
+		content: '';
+		position: absolute;
+		inset: 0 auto 0 0;
+		width: 4px;
+		background: linear-gradient(180deg, #7c3aed, #4f46e5);
+	}
+
+	.series-intro__eyebrow {
+		flex: 0 0 auto;
+		font-size: 0.72rem;
+		font-weight: 800;
+		letter-spacing: 0.12em;
+		color: #6d28d9;
+	}
+
+	.series-intro p {
+		margin: 0;
+		color: #334155;
+		line-height: 1.65;
+	}
+
+	@media (max-width: 640px) {
+		main {
+			width: min(100% - 2rem, 1320px);
+		}
+
+		.series-intro {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 0.45rem;
+		}
+	}
+
+  /* NOTE014 : son titre est plus long que celui de NOTE012. Ajustement local uniquement. */
+  :global(.article-hero h1) {
+    max-width: 100%;
+    font-size: clamp(2rem, 3.9vw, 3.4rem);
+    line-height: 1.13;
+    letter-spacing: -.035em;
+  }
+
+  /* Le NDLR apparaît sous le titre, en italique, sans changer ArticleHero. */
+  :global(.article-hero .article-subtitle) {
+    font-style: italic;
+  }
+</style>

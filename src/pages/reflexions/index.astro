@@ -10,6 +10,15 @@ const pistes = [
     titre: 'On n’apprend pas seulement à utiliser une IA. On apprend à travailler avec la sienne.',
     description: 'Deux personnes, une même technologie, des manières différentes d’interagir : et si l’IA changeait aussi notre façon de réfléchir ?',
     statut: 'Lire la réflexion →',
+    href: '/reflexions/travailler-avec-son-ia/',
+  },
+  {
+    categorie: 'Infrastructures · Résilience',
+    theme: 'infrastructures',
+    titre: 'Et si la plus grande faiblesse de nos infrastructures était leur capacité à reproduire nos erreurs ?',
+    description: 'Haute disponibilité, cloud et automatisation : que se passe-t-il lorsqu’une même erreur se propage partout ?',
+    statut: 'Lire la réflexion →',
+    href: '/reflexions/infrastructures-reproduire-nos-erreurs/',
   },
   {
     categorie: 'Cybersécurité',
@@ -56,7 +65,6 @@ const pistes = [
       title="Réflexions | Marc Michon"
       description="Des réflexions personnelles sur l’IT, la cybersécurité, l’intelligence artificielle et notre rapport au numérique."
     />
-    <!-- Prototype non publié : retirer cette balise lors de la mise en production. -->
   </head>
   <body>
     <Header />
@@ -91,8 +99,8 @@ const pistes = [
                 <span class="numero">{String(index + 1).padStart(2, '0')}</span>
                 <span class="categorie">{piste.categorie}</span>
               </div>
-              {index === 0 ? (
-                <a class="piste-lien" href="/reflexions/travailler-avec-son-ia/" aria-label={`Lire la réflexion : ${piste.titre}`}>
+              {piste.href ? (
+                <a class="piste-lien" href={piste.href} aria-label={`Lire la réflexion : ${piste.titre}`}>
                   <h3>{piste.titre}</h3>
                   <p>{piste.description}</p>
                   <span class="piste-statut">{piste.statut}</span>
@@ -207,6 +215,7 @@ const pistes = [
     border-top: 3px solid var(--piste-accent);
   }
   .piste--ia-humain     { --piste-accent: #2563eb; --piste-fond: #eff6ff; }
+  .piste--infrastructures { --piste-accent: #475569; --piste-fond: #f1f5f9; }
   .piste--cyber         { --piste-accent: #047857; --piste-fond: #ecfdf5; }
   .piste--organisation  { --piste-accent: #b45309; --piste-fond: #fffbeb; }
   .piste--competences   { --piste-accent: #6d28d9; --piste-fond: #f5f3ff; }
@@ -232,6 +241,7 @@ const pistes = [
   .piste-lien:focus-visible { outline: 3px solid #2563eb; outline-offset: 5px; }
   .piste-lien:hover h3 { color: #1d4ed8; }
   .piste-lien .piste-statut { color: #2563eb; }
+  .piste--infrastructures .piste-lien .piste-statut { color: var(--piste-accent); }
   .piste h3 {
     margin: 1.2rem 0 .75rem;
     color: #0f172a;

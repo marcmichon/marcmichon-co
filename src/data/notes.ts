@@ -61,6 +61,16 @@ export const collections: NoteCollection[] = [
 
 export const notes: TerrainNote[] = [
 	{
+		id: 'NT-014',
+		href: '/articles/cloud-problemes-architecture-dependances',
+		title: 'Le cloud ne fait pas disparaître les problèmes d’architecture',
+		description:
+			 'Deux environnements redondants peuvent dépendre des mêmes services critiques. Identité, DNS, administration : les dépendances à vérifier dans une architecture cloud.',
+		readTime: '6 min',
+		date: 'Novembre 2026',
+		collectionId: 'security-platform-engineering',
+	},
+	{
 		id: 'NT-013',
 		href: '/articles/qui-securise-outils-qui-nous-protegent',
 		title: 'Qui sécurise les outils qui nous protègent ?',

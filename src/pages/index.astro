@@ -13,7 +13,6 @@ import msspImage from '../assets/home/mssp.png';
 import bastionImage from '../assets/home/bastion-acces-privilegies.png';
 import note013Image from '../assets/home/note-013-outils-qui-nous-protegent.webp';
 import edrAssetsImage from '../assets/home/edr-assets.png';
-import taggingImage from '../assets/home/tagging.png';
 import {
     graphSchema,
     personSchema,
@@ -93,6 +92,17 @@ const schema = graphSchema([
                     <a href="/notes-de-terrain" class="see-all">Voir tous les articles →</a>
                 </div>
                 <div class="articles-grid">
+                    <a href="/articles/cloud-problemes-architecture-dependances" class="article-card category-engineering">
+                        <div class="article-image">
+                            <img src="/Images/Archi_cloud.png" alt="Deux architectures cloud redondantes reliées à une même dépendance critique" width="640" height="360" loading="lazy" decoding="async" />
+                        </div>
+                        <div class="article-content">
+                            <p class="article-category">SECURITY PLATFORM ENGINEERING</p>
+                            <h3>Le cloud n'a pas fait disparaître les problèmes d'architecture</h3>
+                            <p>Deux environnements redondants peuvent dépendre des mêmes services critiques. Identité, DNS, administration : les dépendances à vérifier dans une architecture cloud.</p>
+                            <span>⏱ 8 min de lecture</span>
+                        </div>
+                    </a>
                     <a href="/articles/qui-securise-outils-qui-nous-protegent" class="article-card category-engineering">
                         <div class="article-image">
                             <Image src={note013Image} alt="Outils de cybersécurité et protection de leurs accès d’administration" width={640} quality={82} loading="lazy" decoding="async" />
@@ -115,8 +125,7 @@ const schema = graphSchema([
                             <span>⏱ 6 min de lecture</span>
                         </div>
                     </a>
-
-<a href="/articles/ce-que-votre-edr-ne-voit-pas" class="article-card category-endpoint">
+                    <a href="/articles/ce-que-votre-edr-ne-voit-pas" class="article-card category-endpoint">
                         <div class="article-image">
                             <Image src={edrAssetsImage} alt="Votre EDR voit-il vraiment tout ?" width={640} quality={82} loading="lazy" decoding="async" />
                         </div>
@@ -128,17 +137,6 @@ const schema = graphSchema([
                                 Les équipements absents de la console constituent souvent des angles morts de sécurité.
                             </p>
                             <span>⏱ 3 min de lecture</span>
-                        </div>
-                    </a>
-                    <a href="/articles/tagging-vulnerability-management" class="article-card category-vm">
-                        <div class="article-image">
-                            <Image src={taggingImage} alt="" width={640} quality={82} loading="lazy" decoding="async" />
-                        </div>
-                        <div class="article-content">
-                            <p class="article-category">VM FUNDAMENTALS</p>
-                            <h3>Pourquoi le tagging est une fonctionnalité sous-estimée</h3>
-                            <p>Transformer une donnée brute en contexte exploitable.</p>
-                            <span>⏱ 4 min de lecture</span>
                         </div>
                     </a>
                 </div>
@@ -211,36 +209,33 @@ const schema = graphSchema([
                     </div>
                 </div>
             </section>
-            			<section class="reflexions-teaser" aria-labelledby="reflexions-teaser-title">
-				<div class="reflexions-teaser-intro">
-					<p class="reflexions-teaser-kicker">RÉFLEXIONS · IT, CYBERSÉCURITÉ & IA</p>
-					<h2 id="reflexions-teaser-title">Prendre le temps de creuser.</h2>
-					<p>
-						Au-delà des situations de terrain, des essais personnels sur le numérique,
-						la cybersécurité, l'IA et nos façons de travailler.
-					</p>
-					<p class="reflexions-teaser-signature">Des convictions, des questions et le droit de se tromper.</p>
-					<a href="/reflexions/" class="reflexions-teaser-button">
-						Explorer Réflexions <span aria-hidden="true">↗</span>
-					</a>
-				</div>
-				<div class="reflexions-teaser-article">
-					<p class="reflexions-teaser-article-label">PREMIER ESSAI</p>
-					<h3>
-						<a href="/reflexions/travailler-avec-son-ia/">
-							On n’apprend pas seulement à utiliser une IA.<br />
-							On apprend à travailler avec la sienne.
-						</a>
-					</h3>
-					<p>
-						La relation que l’on construit avec une IA change aussi notre manière
-						de réfléchir, de vérifier et de décider.
-					</p>
-					<a class="reflexions-teaser-read" href="/reflexions/travailler-avec-son-ia/">Lire l’essai →</a>
-				</div>
-			</section>
-
-			<section class="off-teaser" aria-labelledby="off-teaser-title">
+                        <section class="reflexions-teaser" aria-labelledby="reflexions-teaser-title">
+                <div class="reflexions-teaser-intro">
+                    <p class="reflexions-teaser-kicker">RÉFLEXIONS · IT, CYBERSÉCURITÉ & IA</p>
+                    <h2 id="reflexions-teaser-title">Prendre le temps de creuser.</h2>
+                    <p>
+                        Au-delà des situations de terrain, des essais personnels sur le numérique,
+                        la cybersécurité, l'IA et nos façons de travailler.
+                    </p>
+                    <p class="reflexions-teaser-signature">Des convictions, des questions et le droit de se tromper.</p>
+                    <a href="/reflexions/" class="reflexions-teaser-button">
+                        Explorer Réflexions <span aria-hidden="true">↗</span>
+                    </a>
+                </div>
+                <div class="reflexions-teaser-article">
+                    <p class="reflexions-teaser-article-label">DERNIÈRE RÉFLEXION · 002</p>
+                    <h3>
+                        <a href="/reflexions/infrastructures-reproduire-nos-erreurs/">
+                            Et si la plus grande faiblesse de nos infrastructures était leur capacité à reproduire nos erreurs ?
+                        </a>
+                    </h3>
+                    <p>
+                        Haute disponibilité, cloud et automatisation : que se passe-t-il lorsqu’une même erreur se propage partout ?
+                    </p>
+                    <a class="reflexions-teaser-read" href="/reflexions/infrastructures-reproduire-nos-erreurs/">Lire l’essai →</a>
+                </div>
+            </section>
+            <section class="off-teaser" aria-labelledby="off-teaser-title">
                 <div class="off-teaser-copy">
                     <p class="off-teaser-kicker">EN OFF · CYBER & SECOND DEGRÉ</p>
                     <h2 id="off-teaser-title">La cybersécurité, avec un peu moins de sérieux.</h2>
@@ -663,105 +658,104 @@ background 0.2s ease;
         background: #1d4ed8;
     }
     /* Réflexions — aperçu éditorial sur l'accueil */
-	.reflexions-teaser {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-		align-items: stretch;
-		gap: clamp(1.5rem, 4vw, 3.5rem);
-		padding: clamp(1.5rem, 3vw, 2.5rem);
-		margin-top: 3rem;
-		background: linear-gradient(125deg, #eef2ff 0%, #e8edff 53%, #eee6ff 100%);
-		border: 1px solid #dce5ff;
-		border-radius: 22px;
-		box-shadow: 0 16px 42px rgba(45, 55, 110, 0.08);
-	}
-	.reflexions-teaser-intro { min-width: 0; }
-	.reflexions-teaser-kicker,
-	.reflexions-teaser-article-label {
-		margin: 0 0 0.8rem;
-		color: #5b48c8;
-		font-size: 0.7rem;
-		font-weight: 900;
-		letter-spacing: 0.13em;
-	}
-	.reflexions-teaser h2 {
-		margin: 0 0 0.9rem;
-		color: #101d3d;
-		font-size: clamp(1.9rem, 3vw, 2.65rem);
-		line-height: 1.13;
-	}
-	.reflexions-teaser-intro > p:not(.reflexions-teaser-kicker) {
-		max-width: 43rem;
-		margin: 0;
-		color: #40516c;
-		font-size: 0.95rem;
-		line-height: 1.7;
-	}
-	.reflexions-teaser-intro .reflexions-teaser-signature {
-		margin-top: 0.9rem !important;
-		color: #5346a9 !important;
-		font-weight: 800;
-	}
-	.reflexions-teaser-button {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		gap: 0.65rem;
-		margin-top: 1.6rem;
-		padding: 0.85rem 1.2rem;
-		color: #fff;
-		background: #4f46e5;
-		border-radius: 12px;
-		font-size: 0.86rem;
-		font-weight: 850;
-		text-decoration: none;
-		transition: background 0.2s ease, transform 0.2s ease;
-	}
-	.reflexions-teaser-button:hover { background: #4338ca; transform: translateY(-2px); }
-	.reflexions-teaser-article {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		min-width: 0;
-		padding: clamp(1.3rem, 2.4vw, 2rem);
-		background: rgba(255, 255, 255, 0.85);
-		border: 1px solid rgba(99, 102, 241, 0.15);
-		border-radius: 16px;
-	}
-	.reflexions-teaser-article h3 {
-		margin: 0 0 1rem;
-		font-size: clamp(1.25rem, 2vw, 1.6rem);
-		line-height: 1.3;
-		letter-spacing: -0.03em;
-	}
-	.reflexions-teaser-article h3 a { color: #101d3d; text-decoration: none; }
-	.reflexions-teaser-article h3 a:hover { color: #4f46e5; }
-	.reflexions-teaser-article > p:not(.reflexions-teaser-article-label) {
-		margin: 0 0 1rem;
-		color: #475569;
-		font-size: 0.9rem;
-		line-height: 1.65;
-	}
-	.reflexions-teaser-read {
-		margin-top: auto;
-		color: #4f46e5;
-		font-size: 0.86rem;
-		font-weight: 850;
-		text-decoration: none;
-	}
-	.reflexions-teaser-read:hover { text-decoration: underline; }
-	@media (max-width: 850px) {
-		.reflexions-teaser { grid-template-columns: 1fr; gap: 1.5rem; }
-	}
-	@media (max-width: 480px) {
-		.reflexions-teaser-button { width: 100%; }
-	}
-	@media (prefers-reduced-motion: reduce) {
-		.reflexions-teaser-button { transition: none; }
-		.reflexions-teaser-button:hover { transform: none; }
-	}
-
-	/* EN OFF — aperçu sur l'accueil */
+    .reflexions-teaser {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        align-items: stretch;
+        gap: clamp(1.5rem, 4vw, 3.5rem);
+        padding: clamp(1.5rem, 3vw, 2.5rem);
+        margin-top: 3rem;
+        background: linear-gradient(125deg, #eef2ff 0%, #e8edff 53%, #eee6ff 100%);
+        border: 1px solid #dce5ff;
+        border-radius: 22px;
+        box-shadow: 0 16px 42px rgba(45, 55, 110, 0.08);
+    }
+    .reflexions-teaser-intro { min-width: 0; }
+    .reflexions-teaser-kicker,
+    .reflexions-teaser-article-label {
+        margin: 0 0 0.8rem;
+        color: #5b48c8;
+        font-size: 0.7rem;
+        font-weight: 900;
+        letter-spacing: 0.13em;
+    }
+    .reflexions-teaser h2 {
+        margin: 0 0 0.9rem;
+        color: #101d3d;
+        font-size: clamp(1.9rem, 3vw, 2.65rem);
+        line-height: 1.13;
+    }
+    .reflexions-teaser-intro > p:not(.reflexions-teaser-kicker) {
+        max-width: 43rem;
+        margin: 0;
+        color: #40516c;
+        font-size: 0.95rem;
+        line-height: 1.7;
+    }
+    .reflexions-teaser-intro .reflexions-teaser-signature {
+        margin-top: 0.9rem !important;
+        color: #5346a9 !important;
+        font-weight: 800;
+    }
+    .reflexions-teaser-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.65rem;
+        margin-top: 1.6rem;
+        padding: 0.85rem 1.2rem;
+        color: #fff;
+        background: #4f46e5;
+        border-radius: 12px;
+        font-size: 0.86rem;
+        font-weight: 850;
+        text-decoration: none;
+        transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .reflexions-teaser-button:hover { background: #4338ca; transform: translateY(-2px); }
+    .reflexions-teaser-article {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        min-width: 0;
+        padding: clamp(1.3rem, 2.4vw, 2rem);
+        background: rgba(255, 255, 255, 0.85);
+        border: 1px solid rgba(99, 102, 241, 0.15);
+        border-radius: 16px;
+    }
+    .reflexions-teaser-article h3 {
+        margin: 0 0 1rem;
+        font-size: clamp(1.25rem, 2vw, 1.6rem);
+        line-height: 1.3;
+        letter-spacing: -0.03em;
+    }
+    .reflexions-teaser-article h3 a { color: #101d3d; text-decoration: none; }
+    .reflexions-teaser-article h3 a:hover { color: #4f46e5; }
+    .reflexions-teaser-article > p:not(.reflexions-teaser-article-label) {
+        margin: 0 0 1rem;
+        color: #475569;
+        font-size: 0.9rem;
+        line-height: 1.65;
+    }
+    .reflexions-teaser-read {
+        margin-top: auto;
+        color: #4f46e5;
+        font-size: 0.86rem;
+        font-weight: 850;
+        text-decoration: none;
+    }
+    .reflexions-teaser-read:hover { text-decoration: underline; }
+    @media (max-width: 850px) {
+        .reflexions-teaser { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
+    @media (max-width: 480px) {
+        .reflexions-teaser-button { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .reflexions-teaser-button { transition: none; }
+        .reflexions-teaser-button:hover { transform: none; }
+    }
+    /* EN OFF — aperçu sur l'accueil */
     .off-teaser {
         display: flex;
         align-items: center;
